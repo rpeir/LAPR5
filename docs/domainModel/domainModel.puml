@@ -1,0 +1,190 @@
+@startuml
+
+title "Domain Model"
+' left to right direction
+' top to bottom direction
+skinparam Padding 10
+skinparam Nodesep 80
+skinparam ranksep 100
+skinparam groupInheritance 1
+' skinparam linetype ortho
+skinparam separation 1000
+skinparam NoteBackgroundColor #A9A9A9
+skinparam PackageStyle rectangle
+skinparam package {
+    BackgroundColor #D3D3D3
+    FontStyle bold
+}
+
+' hide circle
+' hide methods
+
+package Administrador{
+    entity Administrador{
+
+    }
+}
+
+package GestorDeFrota{
+    entity GestorDeFrota{
+
+    }
+}
+
+
+package GestorDeCampus{
+    entity GestorDeCampus{
+
+    }
+}
+
+package GestorDeTarefas{
+    entity GestorDeTarefas{
+
+    }
+}
+
+package Utente{
+    entity Utente{
+
+    }
+
+    enum TipoDeUtente{
+        - aluno
+        - docente 
+        - funcionario
+    }
+}
+
+package Robot {
+    entity Robot <<Agregate root>>{
+        -marca
+        -modelo
+        -numeroDeSerie
+        -estado
+        -codigo
+        -nickname
+    }
+}
+
+
+package TipoTarefa{
+    enum TipoTarefa{
+
+    }
+}
+
+package Tarefa {
+    interface Tarefa <<Agregate root>>{
+        - codigo
+        - descricao
+
+    }
+
+    entity TarefaVigilancia {
+        - nrEmergencia
+    }
+    entity TarefaPickUpDelivery {
+        - nomeRemetente
+        - nomeDestinatario
+        - contatoRemetente
+        - contatoDestinatario
+        - codigoConfirmacao
+    }
+}
+
+package Edificio{
+    entity Edificio <<Agregate root>>{
+        - nome
+        - linhas
+        - colunas
+        - codigo
+        - descricao
+    }
+}
+
+package Piso{
+    entity Piso <<Agregate root>> {
+        - descricao
+    }
+    object Elevador {
+        - linha
+        - coluna
+        - orientacao
+    }
+
+}
+
+package Compartimento{
+    Entity Compartimento <<Agregate root>> {
+        - linhaInicial
+        - colunaInicial
+        - linhaFinal
+        - colunaFinal
+        - descricao
+    }
+
+    enum TipoCompartimento <<enum>>{
+            - Sala
+            - Gabinete
+            - Laboratorio
+            - Auditorio
+    }
+
+    entity Porta{
+        - linha
+        - coluna
+        - orientacao
+    }
+ 
+}
+package Passagem{
+    entity Passagem <<Agregate root>>{
+        - linhaA
+        - colunaA
+        - linhaB
+        - colunaB
+        - orientacaoA
+        - orientacaoB
+    }
+}
+
+TarefaVigilancia ..> Tarefa:  estende
+TarefaPickUpDelivery ..> Tarefa: estende
+
+
+Utente --> TipoDeUtente :  e de
+
+Compartimento --> Porta: tem
+Compartimento --> TipoCompartimento: tipo
+
+Utente --> Tarefa: requisita
+
+Robot --> TipoTarefa: executa
+
+Administrador --> Utente: administra
+Administrador --> GestorDeFrota: administra
+Administrador --> GestorDeCampus: administra
+Administrador --> GestorDeTarefas: administra
+
+Tarefa --> TipoTarefa: e do tipo
+
+GestorDeFrota --> Robot : configura
+GestorDeCampus --> Edificio : gere
+GestorDeCampus --> Piso :  gere
+
+GestorDeTarefas --> Robot: escalona
+GestorDeTarefas --> Tarefa: escalona
+
+Piso --> Edificio: pertence
+Piso *-- Elevador : tem
+Piso --> Compartimento: tem
+
+TarefaPickUpDelivery --> Piso: destino
+TarefaPickUpDelivery --> Piso: origem
+
+TarefaVigilancia --> Piso: destino
+
+Passagem --> Piso: tem
+
+@enduml
