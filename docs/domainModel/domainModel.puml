@@ -84,7 +84,7 @@ package Tarefa {
     entity TarefaVigilancia {
         - nrEmergencia
     }
-    entity TarefaPickUpDelivery {
+    entity TarefaTransporte {
         - nomeRemetente
         - nomeDestinatario
         - contatoRemetente
@@ -150,7 +150,7 @@ package Passagem{
 }
 
 TarefaVigilancia ..> Tarefa:  estende
-TarefaPickUpDelivery ..> Tarefa: estende
+TarefaTransporte ..> Tarefa: estende
 
 
 Utente --> TipoDeUtente :  e de
