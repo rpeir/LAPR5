@@ -124,8 +124,8 @@ Piso --> Edificio: pertence
 Piso *-- Elevador : tem
 Piso --> Compartimento: tem
 
-TarefaPickUpDelivery --> Piso: destino
-TarefaPickUpDelivery --> Piso: origem
+TarefaTransporte --> Piso: destino
+TarefaTransporte --> Piso: origem
 
 TarefaVigilancia --> Piso: destino
 
