@@ -30,10 +30,15 @@ package Robot {
     }
 }
 
+package TipoDeRobot {
+    Enum TipoDeRobot {
+    }
+}
 
 package TipoTarefa{
     enum TipoTarefa{
-
+        -Vigilancia
+        -Transporte
     }
 }
 
@@ -58,11 +63,10 @@ package Tarefa {
 
 package Edificio{
     entity Edificio <<Agregate root>>{
-        - nome
-        - linhas
-        - colunas
         - codigo
+        - nome
         - descricao
+        - dimensao
     }
 }
 
@@ -70,20 +74,16 @@ package Piso{
     entity Piso <<Agregate root>> {
         - descricao
     }
-    entity Elevador {
-        - linha
-        - coluna
-        - orientacao
-    }
 
+}
+
+package Elevador {
+    entity Elevador <<Agregate root>> {
+      }
 }
 
 package Compartimento{
     Entity Compartimento <<Agregate root>> {
-        - linhaInicial
-        - colunaInicial
-        - linhaFinal
-        - colunaFinal
         - descricao
     }
 
@@ -95,9 +95,6 @@ package Compartimento{
     }
 
     entity Porta{
-        - linha
-        - coluna
-        - orientacao
     }
 
 }
@@ -112,8 +109,8 @@ package Passagem{
     }
 }
 
-TarefaVigilancia ..> Tarefa:  estende
-TarefaTransporte ..> Tarefa: estende
+TarefaVigilancia ..|> Tarefa:  estende
+TarefaTransporte ..|> Tarefa: estende
 
 Compartimento --> Porta: tem
 Compartimento --> TipoCompartimento: tipo
@@ -121,8 +118,10 @@ Compartimento --> TipoCompartimento: tipo
 Robot --> TipoTarefa: executa
 
 Piso --> Edificio: pertence
-Piso *-- Elevador : tem
+Piso "*" <-- Elevador : serve
 Piso --> Compartimento: tem
+
+Elevador --> Edificio: pertence
 
 TarefaTransporte --> Piso: destino
 TarefaTransporte --> Piso: origem
@@ -130,5 +129,11 @@ TarefaTransporte --> Piso: origem
 TarefaVigilancia --> Piso: destino
 
 Passagem --> Piso: tem
+
+Robot --> TipoDeRobot : é de
+
+Tarefa --> TipoTarefa : é de
+
+Robot ..> "*" Tarefa : executa
 
 @enduml
