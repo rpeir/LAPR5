@@ -47,7 +47,7 @@ package Tarefa {
     entity TarefaVigilancia {
         - nrEmergencia
     }
-    entity TarefaPickUpDelivery {
+    entity TarefaTransporte {
         - nomeRemetente
         - nomeDestinatario
         - contatoRemetente
@@ -113,7 +113,7 @@ package Passagem{
 }
 
 TarefaVigilancia ..> Tarefa:  estende
-TarefaPickUpDelivery ..> Tarefa: estende
+TarefaTransporte ..> Tarefa: estende
 
 Compartimento --> Porta: tem
 Compartimento --> TipoCompartimento: tipo
