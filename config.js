@@ -12,9 +12,9 @@ if (!envFound) {
 
 export default {
   /**
-   * Your favorite port
+   * Your favorite port : optional change to 4000 by JRT
    */
-  port: parseInt(process.env.PORT, 10) || 3000,
+  port: parseInt(process.env.PORT, 10) || 4000,
 
   /**
    * That long string from mlab

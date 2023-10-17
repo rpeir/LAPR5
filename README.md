@@ -3,14 +3,14 @@ Projeto Integrador LAPR5 ISEP - 3DB - G8 2023/24
 
 ## Development
 
-We use `node` version `10.15.0`
+We use `node` version `18.18.0`
 
 ```
-nvm install 10.15.0
+nvm install 18.18.0
 ```
 
 ```
-nvm use 10.15.0
+nvm use 18.18.0
 ```
 
 The first time, you will need to run
