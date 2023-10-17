@@ -1,4 +1,4 @@
-@startuml
+@startuml Domain Model
 
 title "Domain Model"
 ' left to right direction
@@ -18,43 +18,6 @@ skinparam package {
 
 ' hide circle
 ' hide methods
-
-package Administrador{
-    entity Administrador{
-
-    }
-}
-
-package GestorDeFrota{
-    entity GestorDeFrota{
-
-    }
-}
-
-
-package GestorDeCampus{
-    entity GestorDeCampus{
-
-    }
-}
-
-package GestorDeTarefas{
-    entity GestorDeTarefas{
-
-    }
-}
-
-package Utente{
-    entity Utente{
-
-    }
-
-    enum TipoDeUtente{
-        - aluno
-        - docente 
-        - funcionario
-    }
-}
 
 package Robot {
     entity Robot <<Agregate root>>{
@@ -107,7 +70,7 @@ package Piso{
     entity Piso <<Agregate root>> {
         - descricao
     }
-    object Elevador {
+    entity Elevador {
         - linha
         - coluna
         - orientacao
@@ -136,7 +99,7 @@ package Compartimento{
         - coluna
         - orientacao
     }
- 
+
 }
 package Passagem{
     entity Passagem <<Agregate root>>{
@@ -152,29 +115,10 @@ package Passagem{
 TarefaVigilancia ..> Tarefa:  estende
 TarefaPickUpDelivery ..> Tarefa: estende
 
-
-Utente --> TipoDeUtente :  e de
-
 Compartimento --> Porta: tem
 Compartimento --> TipoCompartimento: tipo
 
-Utente --> Tarefa: requisita
-
 Robot --> TipoTarefa: executa
-
-Administrador --> Utente: administra
-Administrador --> GestorDeFrota: administra
-Administrador --> GestorDeCampus: administra
-Administrador --> GestorDeTarefas: administra
-
-Tarefa --> TipoTarefa: e do tipo
-
-GestorDeFrota --> Robot : configura
-GestorDeCampus --> Edificio : gere
-GestorDeCampus --> Piso :  gere
-
-GestorDeTarefas --> Robot: escalona
-GestorDeTarefas --> Tarefa: escalona
 
 Piso --> Edificio: pertence
 Piso *-- Elevador : tem
