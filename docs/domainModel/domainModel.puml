@@ -82,44 +82,34 @@ package Elevador {
       }
 }
 
-package Compartimento{
-    Entity Compartimento <<Agregate root>> {
+package Sala{
+    Entity Sala <<Agregate root>> {
         - descricao
     }
 
-    enum TipoCompartimento <<enum>>{
-            - Sala
+    enum CategoriaSala <<enum>>{
+            - SalaDeAula
             - Gabinete
             - Laboratorio
             - Auditorio
     }
-
-    entity Porta{
-    }
-
 }
+
 package Passagem{
     entity Passagem <<Agregate root>>{
-        - linhaA
-        - colunaA
-        - linhaB
-        - colunaB
-        - orientacaoA
-        - orientacaoB
     }
 }
 
-TarefaVigilancia ..|> Tarefa:  estende
+TarefaVigilancia ..|> Tarefa: estende
 TarefaTransporte ..|> Tarefa: estende
 
-Compartimento --> Porta: tem
-Compartimento --> TipoCompartimento: tipo
+Sala --> CategoriaSala: tipo
 
-Robot --> TipoTarefa: executa
+TipoDeRobot --> "*" TipoTarefa: executa
 
-Piso --> Edificio: pertence
+Piso "*" <-- Edificio: tem
 Piso "*" <-- Elevador : serve
-Piso --> Compartimento: tem
+Piso --> "*" Sala: tem
 
 Elevador --> Edificio: pertence
 
@@ -128,7 +118,7 @@ TarefaTransporte --> Piso: origem
 
 TarefaVigilancia --> Piso: destino
 
-Passagem --> Piso: tem
+Passagem --> "2" Piso: tem
 
 Robot --> TipoDeRobot : é de
 
