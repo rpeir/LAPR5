@@ -1,0 +1,20 @@
+@startuml
+
+
+
+participant GestaoDeInformacao <<component>> 
+
+
+
+?o-> GestaoDeInformacao : criar piso
+activate GestaoDeInformacao
+GestaoDeInformacao --> GestaoDeInformacao: criar piso
+
+GestaoDeInformacao ->o] : save piso
+]-> GestaoDeInformacao : saved piso
+
+?<-- GestaoDeInformacao  : saved piso
+deactivate GestaoDeInformacao
+
+
+@enduml

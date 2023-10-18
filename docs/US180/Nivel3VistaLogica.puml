@@ -1,0 +1,50 @@
+@startuml
+
+
+
+component  GestaoDeInformacao <<system>> {
+
+    package "Framework and DriversLayer"{
+        component Routing  <<component>>{
+            
+        }
+
+        component Persistence  <<component>>{
+            
+        }
+    }
+
+
+    package "Interface And AdaptersLayer"{
+        component Controller <<component>>{
+            
+        }
+
+        component Repository as Repo <<component>>{
+            
+        }
+    }
+
+
+    package "Application Business Rules" {
+        component Application_Service as Service  <<component>>{
+            
+        }
+    }
+        
+    package "Enterprise Business Rules" {
+        component Domain_Model(DDD) as Domain <<component>>{
+            
+        }
+    }
+
+
+() ModelApi
+
+Domain #-- ModelApi
+ModelApi  )-- Service
+ModelApi  )-- Repo
+
+}
+    
+@enduml
