@@ -12,6 +12,9 @@ interface RobotProps{
   nickname:string;
 }
 export class Robot extends AggregateRoot<RobotProps>{
+  get id(): UniqueEntityID {
+    return this._id;
+  }
   get brand():string{
     return this.props.brand;
   }
