@@ -1,0 +1,26 @@
+@startuml
+title "Vista de Process-Nível 1"
+
+
+
+
+participant RobDroneGo <<system>>
+
+
+
+?o-> RobDroneGo : criar edificio
+activate RobDroneGo
+RobDroneGo --> RobDroneGo :criar edificio
+
+RobDroneGo ->o] : save edificio
+]o-> RobDroneGo : saved edificio
+
+?<-- RobDroneGo  : saved edificio
+deactivate RobDroneGo
+
+
+@enduml
+
+
+
+

@@ -2,13 +2,13 @@
 
 
 
-participant RobDroneGo <<system>> 
+participant RobDroneGo <<system>>
 
 
 
 ?o-> RobDroneGo : criar piso
 activate RobDroneGo
-RobDroneGo --> RobDroneGo :crear piso
+RobDroneGo --> RobDroneGo :criar piso
 
 RobDroneGo ->o] : save piso
 ]-> RobDroneGo : saved piso
