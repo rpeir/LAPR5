@@ -4,6 +4,7 @@ import mongooseLoader from './mongoose';
 import Logger from './logger';
 
 import config from '../../config';
+import { TipoTarefa } from '../domain/tipoTarefa';
 
 export default async ({ expressApp }) => {
   const mongoConnection = await mongooseLoader();
@@ -21,6 +22,11 @@ export default async ({ expressApp }) => {
     schema: '../persistence/schemas/roleSchema',
   };
 
+  const tipoTarefaSchema = {
+    name: 'tipoTarefaSchema',
+    schema: '../persistence/schemas/tipoTarefaSchema',
+  }
+
   const roleController = {
     name: config.controllers.role.name,
     path: config.controllers.role.path
@@ -34,6 +40,11 @@ export default async ({ expressApp }) => {
   const userRepo = {
     name: config.repos.user.name,
     path: config.repos.user.path
+  }
+
+  const TipoTarefaRepo = {
+    name: config.repos.tipoTarefa.name,
+    path: config.repos.tipoTarefa.path
   }
 
   const roleService = {
@@ -52,7 +63,8 @@ export default async ({ expressApp }) => {
     ],
     repos: [
       roleRepo,
-      userRepo
+      userRepo,
+      TipoTarefaRepo
     ],
     services: [
       roleService

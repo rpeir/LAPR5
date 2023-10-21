@@ -55,6 +55,10 @@ export default {
     user: {
       name: "UserRepo",
       path: "../repos/userRepo"
+    },
+    tipoTarefa:{
+      name: "TipoTarefaRepo",
+      path: "../repos/tipoTarefaRepo"
     }
   },
 
