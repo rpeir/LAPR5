@@ -44,6 +44,11 @@ export default {
     role: {
       name: "RoleController",
       path: "../controllers/roleController"
+    },
+
+    tipoRobot: {
+      name: "TipoRobotController",
+      path: "../controllers/tipoRobotController"
     }
   },
 
@@ -52,13 +57,20 @@ export default {
       name: "RoleRepo",
       path: "../repos/roleRepo"
     },
+
     user: {
       name: "UserRepo",
       path: "../repos/userRepo"
     },
+
     tipoTarefa:{
       name: "TipoTarefaRepo",
       path: "../repos/tipoTarefaRepo"
+    },
+
+    tipoRobot:{
+      name: "TipoRobotRepo",
+      path: "../repos/tipoRobotRepo"
     }
   },
 
@@ -66,6 +78,11 @@ export default {
     role: {
       name: "RoleService",
       path: "../services/roleService"
+    },
+
+    tipoRobot: {
+      name: "TipoRobotService",
+      path: "../services/tipoRobotService"
     }
   },
 };

@@ -27,9 +27,19 @@ export default async ({ expressApp }) => {
     schema: '../persistence/schemas/tipoTarefaSchema',
   }
 
+  const tipoRobotSchema = {
+    name: 'tipoRobotSchema',
+    schema: '../persistence/schemas/tipoRobotSchema',
+  }
+
   const roleController = {
     name: config.controllers.role.name,
     path: config.controllers.role.path
+  }
+
+  const tipoRobotController = {
+    name: config.controllers.tipoRobot.name,
+    path: config.controllers.tipoRobot.path
   }
 
   const roleRepo = {
@@ -42,9 +52,14 @@ export default async ({ expressApp }) => {
     path: config.repos.user.path
   }
 
-  const TipoTarefaRepo = {
+  const tipoTarefaRepo = {
     name: config.repos.tipoTarefa.name,
     path: config.repos.tipoTarefa.path
+  }
+
+  const tipoRoboRepo = {
+    name: config.repos.tipoRobot.name,
+    path: config.repos.tipoRobot.path
   }
 
   const roleService = {
@@ -52,22 +67,32 @@ export default async ({ expressApp }) => {
     path: config.services.role.path
   }
 
+  const tipoRobotService = {
+    name: config.services.tipoRobot.name,
+    path: config.services.tipoRobot.path
+  }
+
   await dependencyInjectorLoader({
     mongoConnection,
     schemas: [
       userSchema,
-      roleSchema
+      roleSchema,
+      tipoTarefaSchema,
+      tipoRobotSchema
     ],
     controllers: [
-      roleController
+      roleController,
+      tipoRobotController
     ],
     repos: [
       roleRepo,
       userRepo,
-      TipoTarefaRepo
+      tipoTarefaRepo,
+      tipoRoboRepo
     ],
     services: [
-      roleService
+      roleService,
+      tipoRobotService
     ]
   });
   Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');
