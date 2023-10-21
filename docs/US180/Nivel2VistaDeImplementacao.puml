@@ -1,20 +1,12 @@
 @startuml
 
 package RobDroneGo{
-    package Planeamento{
-
-    }
 
     package GestaoDeInformacao{
 
     }
 
-    package Visualizacao{
-
-    }
 }
 
-Visualizacao ..> Planeamento
-Planeamento ..> GestaoDeInformacao
 
 @enduml
