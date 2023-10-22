@@ -1,6 +1,6 @@
 @startuml
-
-
+skinparam layoutDirection left to right
+skinparam padding 10
 
 component  GestaoDeInformacao <<system>> {
 
@@ -16,7 +16,7 @@ component  GestaoDeInformacao <<system>> {
 
 
     package "Interface And AdaptersLayer"{
-        component Controller <<component>>{
+        component Controller as ctrl <<component>>{
             
         }
 
@@ -38,12 +38,45 @@ component  GestaoDeInformacao <<system>> {
         }
     }
 
+component DTO <<component>>{
+            
+}
+
+component DataModel <<component>>{
+            
+}
 
 () ModelApi
+() DTO_API
+() APP_Service_API
+() RepoApi
+() ControllerApi
+() PersistenceApi
+() DataModelApi
+
 
 Domain #-- ModelApi
 ModelApi  )-- Service
 ModelApi  )-- Repo
+
+DTO  #--  DTO_API
+DTO_API  )-- ctrl
+DTO_API  )-- Service
+
+Service #-- APP_Service_API
+APP_Service_API  )-- ctrl
+
+Repo #-- RepoApi
+RepoApi  )-- Service
+
+ctrl  #-- ControllerApi
+ControllerApi  )-- Routing
+
+Persistence #-- PersistenceApi
+PersistenceApi  )-- Repo
+
+DataModel #-- DataModelApi
+DataModelApi  )-- Persistence
 
 }
     

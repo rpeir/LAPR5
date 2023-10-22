@@ -5,24 +5,12 @@ component  RobDroneGo <<system>> {
     component GestaoDeInformacao <<component>>{
 
     }
-
-    component Planeamento <<component>>{
-
-    }
-
-    component Visualizacao3D <<web component>>{
-
-    }
     
 }
 
 
 
 GestaoDeInformacao #~ api
-
-Planeamento #--(0- GestaoDeInformacao
-
-Visualizacao3D #--(0- Planeamento
 
 
 @enduml
