@@ -1,8 +1,7 @@
-import { Service } from "typedi/types/decorators/service.decorator";
 import ITipoRobotRepo from "../services/IRepos/ITipoRobotRepo";
 import { TipoRobot } from "../domain/tipoRobot";
 import { TipoRobotId } from "../domain/tipoRobotId";
-import { Inject } from "typedi";
+import { Inject, Service } from "typedi";
 import { Model } from "mongoose";
 import { ITipoRobotPersistence } from "../dataschema/ITipoRobotPersistence";
 import { Document } from "mongodb";

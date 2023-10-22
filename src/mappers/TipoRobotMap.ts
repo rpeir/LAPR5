@@ -16,7 +16,6 @@ export class TipoRobotMap extends Mapper<TipoRobot>{
     }
     
     public static async toDomain (raw: any): Promise<TipoRobot> {
-        const tipoTarefaRepository = Container.get(TipoTarefaRepo);
 
         const tipoRobotOrError = TipoRobot.create({
             name: raw.name,
@@ -31,6 +30,7 @@ export class TipoRobotMap extends Mapper<TipoRobot>{
     public static toPersistence (tipoRobot: TipoRobot): any{
         const a = {
             domainId: tipoRobot.id.toString(),
+            name: tipoRobot.name,
             tipoTarefas: tipoRobot.tipoTarefas.map((tipoTarefa) => TipoTarefaMap.toPersistence(tipoTarefa))
         }
         return a;
