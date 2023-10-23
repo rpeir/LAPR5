@@ -1,0 +1,17 @@
+@startuml
+
+
+
+participant GestaoDeInformacao <<component>>
+
+
+
+?o-> GestaoDeInformacao : criar elevador no edificio
+activate GestaoDeInformacao
+
+
+?<-- GestaoDeInformacao  : saved elevador
+deactivate GestaoDeInformacao
+
+
+@enduml

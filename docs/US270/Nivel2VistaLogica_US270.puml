@@ -1,0 +1,16 @@
+@startuml
+
+
+component  RobDroneGo <<system>> {
+    component GestaoDeInformacao <<component>>{
+
+    }
+
+}
+
+
+
+GestaoDeInformacao #~ api
+
+
+@enduml
