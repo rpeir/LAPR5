@@ -1,7 +1,12 @@
 @startuml
-title Vista Lógica- nível 1
+
+
 component  RobDroneGo <<system>> {
+
+
 }
+
+
 
 RobDroneGo #~ api
 
