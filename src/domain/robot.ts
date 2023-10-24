@@ -1,83 +1,62 @@
-import {AggregateRoot} from "../core/domain/AggregateRoot";
-import {UniqueEntityID} from "../core/domain/UniqueEntityID";
-import {Result} from "../core/logic/Result";
-import {Guard} from "../core/logic/Guard";
+import { AggregateRoot } from "../core/domain/AggregateRoot";
+import { UniqueEntityID } from "../core/domain/UniqueEntityID";
+import { Guard } from "../core/logic/Guard";
+import { Result } from "../core/logic/Result";
+import { RobotDescricao } from "./robotDescricao";
+import { RobotNickName } from "./robotNickName";
+import { RobotNrSerie } from "./robotNrSerie";
+import { TipoRobot } from "./tipoRobot";
 
-interface RobotProps{
-  brand:string;
-  model:string;
-  serialNumber:number;
-  state: string;
-  code: number;
-  nickname:string;
+interface RobotProps {
+    nickName: RobotNickName;
+    tipoRobot: TipoRobot;
+    nrSerie: RobotNrSerie;
+    descricao: RobotDescricao;
 }
+
 export class Robot extends AggregateRoot<RobotProps>{
-  get id(): UniqueEntityID {
-    return this._id;
-  }
-  get brand():string{
-    return this.props.brand;
-  }
-  get model():string{
-    return this.props.model;
-  }
-  get serialNumber():number{
-    return this.props.serialNumber;
-  }
-  get state():string{
-    return this.props.state;
-  }
-  get code():number{
-    return this.props.code;
-  }
-  get nickname():string{
-    return this.props.nickname;
-  }
-  set brand(value:string){
-    this.props.brand=value;
-  }
-  set model(value:string){
-    this.props.model=value;
-  }
-  set serialNumber(value:number){
-    this.props.serialNumber=value;
-  }
-  set state(value:string){
-    this.props.state=value;
-  }
-  set code(value:number){
-    this.props.code=value;
-  }
-  set nickname(value:string){
-    this.props.nickname=value;
-  }
-  private constructor(props:RobotProps, id?:UniqueEntityID) {
-    super(props,id);
-  }
-  public static create (props: RobotProps, id?: UniqueEntityID): Result<Robot> {
-
-    const guardedProps = [
-
-      { argument: props.brand, argumentName: 'brand' },
-      { argument: props.model, argumentName: 'model' },
-      { argument: props.serialNumber, argumentName: 'serial number' },
-      { argument: props.state, argumentName: 'state' },
-      { argument: props.code, argumentName: 'code' },
-      { argument: props.nickname, argumentName: 'nickname' }
-    ];
-
-    const guardResult = Guard.againstNullOrUndefinedBulk(guardedProps);
-
-    if (!guardResult.succeeded) {
-      return Result.fail<Robot>(guardResult.message)
+    get id (): UniqueEntityID {
+        return this._id;
     }
-    else {
-      const user = new Robot({
-        ...props
-      }, id);
 
-      return Result.ok<Robot>(user);
+    get nickName(): RobotNickName{
+        return this.props.nickName;
     }
-  }
+
+    get tipoRobot(): TipoRobot{
+        return this.props.tipoRobot;
+    }
+
+    get nrSerie(): RobotNrSerie{
+        return this.props.nrSerie;
+    }
+
+    get descricao():RobotDescricao{
+        return this.props.descricao;
+    }
+
+    private constructor(props: RobotProps, id?: UniqueEntityID){
+        super(props,id);
+    }
+
+
+
+    public static create (props: RobotProps, id?: UniqueEntityID): Result<Robot>{
+        const guardedProps = [
+            {argument: props.tipoRobot, argumentName: 'tipoRobot'}
+        ];
+
+        const guardResult = Guard.againstNullOrUndefinedBulk(guardedProps);
+
+        if (!guardResult.succeeded) {
+            return Result.fail<Robot>(guardResult.message);
+        } else{
+            const robot = new Robot({
+                ...props
+            },id);
+            return Result.ok<Robot>(robot)
+        }
+
+    }
 
 }

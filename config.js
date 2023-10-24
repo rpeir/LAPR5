@@ -49,6 +49,11 @@ export default {
     tipoRobot: {
       name: "TipoRobotController",
       path: "../controllers/tipoRobotController"
+    },
+
+    robot:{
+      name: "RobotController",
+      path: "../controllers/robotController"
     }
   },
 
@@ -66,6 +71,11 @@ export default {
     tipoRobot:{
       name: "TipoRobotRepo",
       path: "../repos/tipoRobotRepo"
+    },
+
+    robot:{
+      name: "RobotRepo",
+      path: "../repos/robotRepo"
     }
   },
 
@@ -78,6 +88,11 @@ export default {
     tipoRobot: {
       name: "TipoRobotService",
       path: "../services/tipoRobotService"
+    },
+
+    robot: {
+      name: "RobotService",
+      path: "../services/robotService"
     }
   },
 };

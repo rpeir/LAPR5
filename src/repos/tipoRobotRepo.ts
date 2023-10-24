@@ -26,6 +26,8 @@ export default class TipoRobotRepo implements ITipoRobotRepo {
             } else{
                 tipoRobotDocument.name = tipoRobot.name;
                 tipoRobotDocument.tipoTarefas = tipoRobot.tipoTarefas;
+                tipoRobotDocument.modelo = tipoRobot.modelo;
+                tipoRobotDocument.marca = tipoRobot.marca;
                 await tipoRobotDocument.save();
                 return tipoRobot;
             }
@@ -48,7 +50,7 @@ export default class TipoRobotRepo implements ITipoRobotRepo {
 
     public async findById(tipoRobotId: TipoRobotId |string): Promise<TipoRobot> {
         const idX = tipoRobotId instanceof TipoRobotId ? (<TipoRobotId> tipoRobotId).id.toValue() : tipoRobotId;
-        const query = { domainId: idX}; 
+        const query = { domainId: idX};
         const tipoRobotRecord = await this.tipoRobotSchema.findOne(query);
 
         if (tipoRobotRecord != null) {
@@ -60,9 +62,9 @@ export default class TipoRobotRepo implements ITipoRobotRepo {
 
     public async exists(tipoRobotId: TipoRobotId): Promise<boolean> {
         const idX = tipoRobotId instanceof TipoRobotId ? (<TipoRobotId> tipoRobotId).id.toValue() : tipoRobotId;
-        const query = { domainId: idX}; 
+        const query = { domainId: idX};
         const tipoRobotDocument = await this.tipoRobotSchema.findOne( query);
-        return !!tipoRobotDocument === true; 
+        return !!tipoRobotDocument === true;
     }
-    
+
 }

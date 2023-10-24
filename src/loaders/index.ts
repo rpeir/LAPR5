@@ -26,6 +26,11 @@ export default async ({ expressApp }) => {
     schema: '../persistence/schemas/tipoRobotSchema',
   }
 
+  const robotSchema = {
+    name: "robotSchema",
+    schema: "../persistence/schemas/robotSchema"
+  }
+
   const roleController = {
     name: config.controllers.role.name,
     path: config.controllers.role.path
@@ -34,6 +39,11 @@ export default async ({ expressApp }) => {
   const tipoRobotController = {
     name: config.controllers.tipoRobot.name,
     path: config.controllers.tipoRobot.path
+  }
+
+  const robotController = {
+    name: config.controllers.robot.name,
+    path: config.controllers.robot.path
   }
 
   const roleRepo = {
@@ -51,6 +61,11 @@ export default async ({ expressApp }) => {
     path: config.repos.tipoRobot.path
   }
 
+  const robotRepo = {
+    name: config.repos.robot.name,
+    path: config.repos.robot.path
+  }
+
   const roleService = {
     name: config.services.role.name,
     path: config.services.role.path
@@ -61,25 +76,37 @@ export default async ({ expressApp }) => {
     path: config.services.tipoRobot.path
   }
 
+  const robotService = {
+    name: config.services.robot.name,
+    path: config.services.robot.path
+  }
+
   await dependencyInjectorLoader({
     mongoConnection,
     schemas: [
       userSchema,
       roleSchema,
-      tipoRobotSchema
+      tipoRobotSchema,
+      robotSchema
     ],
+
     controllers: [
       roleController,
-      tipoRobotController
+      tipoRobotController,
+      robotController
     ],
+
     repos: [
       roleRepo,
       userRepo,
-      tipoRobotRepo
+      tipoRobotRepo,
+      robotRepo
     ],
+
     services: [
       roleService,
-      tipoRobotService
+      tipoRobotService,
+      robotService
     ]
   });
   Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');
