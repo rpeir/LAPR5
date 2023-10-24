@@ -1,4 +1,4 @@
-@startuml Domain Model
+@startuml Domain Driven Design
 
 title "Domain Model"
 ' left to right direction
@@ -16,34 +16,31 @@ skinparam package {
     FontStyle bold
 }
 
-' hide circle
-' hide methods
+hide circle
+hide methods
 
-package Robot {
-    entity Robot <<Agregate root>>{
-        -marca
-        -modelo
+    entity Robot {
         -numeroDeSerie
-        -estado
         -codigo
+        -estado
         -nickname
+        -descricao
     }
-}
 
-package TipoDeRobot {
-    Enum TipoDeRobot {
+    entity TipoDeRobot {
+        - nomeTipo
+        - marca
+        - modelo
     }
-}
 
-package TipoTarefa{
-    enum TipoTarefa{
-        -Vigilancia
-        -Transporte
+    enum TipoTarefa {
     }
-}
+    note bottom of TipoTarefa {
+        - Vigilancia
+        - Transporte
+    }
 
-package Tarefa {
-    interface Tarefa <<Agregate root>>{
+    interface Tarefa {
         - codigo
         - descricao
 
@@ -52,6 +49,7 @@ package Tarefa {
     entity TarefaVigilancia {
         - nrEmergencia
     }
+
     entity TarefaTransporte {
         - nomeRemetente
         - nomeDestinatario
@@ -59,46 +57,45 @@ package Tarefa {
         - contatoDestinatario
         - codigoConfirmacao
     }
-}
 
-package Edificio{
-    entity Edificio <<Agregate root>>{
+    entity Edificio {
         - codigo
         - nome
         - descricao
         - dimensao
     }
-}
 
-package Piso{
-    entity Piso <<Agregate root>> {
+    entity Piso {
+        - descricao
+        - mapaPiso
+    }
+
+    entity Elevador {
+        - numeroIdentificacao
+        - marca
+        - modelo
+        - numeroDeSerie
         - descricao
     }
 
-}
 
-package Elevador {
-    entity Elevador <<Agregate root>> {
-      }
-}
-
-package Sala{
-    Entity Sala <<Agregate root>> {
+    entity Sala {
+        - nome
         - descricao
     }
 
-    enum CategoriaSala <<enum>>{
-            - SalaDeAula
-            - Gabinete
-            - Laboratorio
-            - Auditorio
-    }
-}
+    enum CategoriaSala
 
-package Passagem{
-    entity Passagem <<Agregate root>>{
+    note bottom of CategoriaSala {
+        - SalaDeAula
+        - Gabinete
+        - Laboratorio
+        - Auditorio
     }
-}
+
+    entity Passagem {
+    }
+
 
 TarefaVigilancia ..|> Tarefa: estende
 TarefaTransporte ..|> Tarefa: estende
@@ -107,18 +104,19 @@ Sala --> CategoriaSala: tipo
 
 TipoDeRobot --> "*" TipoTarefa: executa
 
-Piso "*" <-- Edificio: tem
+Piso --> Edificio: é de
 Piso "*" <-- Elevador : serve
-Piso --> "*" Sala: tem
+Piso <-- Sala: está em
+Piso --> MapaPiso: tem
 
 Elevador --> Edificio: pertence
 
-TarefaTransporte --> Piso: destino
-TarefaTransporte --> Piso: origem
+TarefaTransporte --> Sala: delivery
+TarefaTransporte --> Sala: pickup
 
-TarefaVigilancia --> Piso: destino
+TarefaVigilancia --> Piso: realiza-se
 
-Passagem --> "2" Piso: tem
+Passagem --> "2" Piso: conecta
 
 Robot --> TipoDeRobot : é de
 
