@@ -1,0 +1,13 @@
+@startuml
+
+
+component  RobDroneGo <<system>> {
+
+
+}
+
+
+
+RobDroneGo #~ api
+
+@enduml
