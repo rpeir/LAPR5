@@ -1,4 +1,4 @@
-@startuml Domain Driven Design
+@startuml Domain Model
 
 title "Domain Model"
 ' left to right direction
@@ -20,108 +20,104 @@ hide circle
 hide methods
 
     entity Robot {
-        -numeroDeSerie
-        -codigo
-        -estado
+        -serialNumber
+        -code
+        -state
         -nickname
-        -descricao
+        -description
     }
 
-    entity TipoDeRobot {
-        - nomeTipo
-        - marca
-        - modelo
+    entity RobotType {
+        - typeName
+        - brand
+        - model
     }
 
-    enum TipoTarefa {
-    }
-    note bottom of TipoTarefa {
-        - Vigilancia
-        - Transporte
-    }
-
-    interface Tarefa {
-        - codigo
-        - descricao
-
+    enum TaskType {}
+    note bottom of TaskType {
+            - Vigilance
+            - PickupDelivery
     }
 
-    entity TarefaVigilancia {
-        - nrEmergencia
+    interface Task {
+        - code
+        - description
+
     }
 
-    entity TarefaTransporte {
-        - nomeRemetente
-        - nomeDestinatario
-        - contatoRemetente
-        - contatoDestinatario
-        - codigoConfirmacao
+    entity VigilanceTask {
+        - emergencyNumber
     }
 
-    entity Edificio {
-        - codigo
-        - nome
-        - descricao
-        - dimensao
+    entity PickupDeliveryTask {
+        - senderName
+        - receiverName
+        - senderContact
+        - receiverContact
+        - confirmationCode
     }
 
-    entity Piso {
-        - descricao
-        - mapaPiso
+    entity Building {
+        - code
+        - name
+        - description
+        - dimensions
     }
 
-    entity Elevador {
-        - numeroIdentificacao
-        - marca
-        - modelo
-        - numeroDeSerie
-        - descricao
+    entity Floor {
+        - description
+        - floorMap
     }
 
-
-    entity Sala {
-        - nome
-        - descricao
+    entity Elevator {
+        - identificationNumber
+        - brand
+        - model
+        - serialNumber
+        - description
     }
 
-    enum CategoriaSala
-
-    note bottom of CategoriaSala {
-        - SalaDeAula
-        - Gabinete
-        - Laboratorio
-        - Auditorio
+    entity Room {
+        - name
+        - description
     }
 
-    entity Passagem {
+    enum RoomCategory {}
+
+    note bottom of RoomCategory {
+            - Classroom
+            - Cabinet
+            - Laboratory
+            - Auditorium
     }
 
+    entity Passage {
+    }
 
-TarefaVigilancia ..|> Tarefa: estende
-TarefaTransporte ..|> Tarefa: estende
+VigilanceTask ..|> Task: extends
+PickupDeliveryTask ..|> Task: extends
 
-Sala --> CategoriaSala: tipo
+Room --> RoomCategory: is of a
 
-TipoDeRobot --> "*" TipoTarefa: executa
+RobotType --> "*" TaskType: executes
 
-Piso --> Edificio: é de
-Piso "*" <-- Elevador : serve
-Piso <-- Sala: está em
-Piso --> MapaPiso: tem
+Floor --> Building: is on
+Floor "*" <-- Elevator : serves
+Floor <-- Room: is on
 
-Elevador --> Edificio: pertence
+Elevator --> Building: is on
 
-TarefaTransporte --> Sala: delivery
-TarefaTransporte --> Sala: pickup
+PickupDeliveryTask --> Room: delivery
+PickupDeliveryTask --> Room: pickup
 
-TarefaVigilancia --> Piso: realiza-se
+VigilanceTask --> Floor: is executed on
 
-Passagem --> "2" Piso: conecta
+Passage --> "2" Floor: connects
 
-Robot --> TipoDeRobot : é de
+Robot --> RobotType : is of a
 
-Tarefa --> TipoTarefa : é de
+Task --> TaskType : is of a
 
-Robot ..> "*" Tarefa : executa
+Robot ..> "*" Task : executes
 
 @enduml

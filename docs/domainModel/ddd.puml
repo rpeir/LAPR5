@@ -21,120 +21,120 @@ skinparam package {
 
 package Robot {
     entity Robot <<Agregate root>>{
-        -numeroDeSerie
-        -codigo
-        -estado
+        -serialNumber
+        -code
+        -state
         -nickname
-        -descricao
+        -description
     }
 }
 
-package TipoDeRobot {
-    entity TipoDeRobot <<Agregate root>> {
-        - nomeTipo
-        - marca
-        - modelo
+package RobotType {
+    entity RobotType <<Agregate root>> {
+        - typeName
+        - brand
+        - model
     }
 
 }
-package TipoTarefa {
-    enum TipoTarefa <<enum>> {
-        -Vigilancia
-        -Transporte
+package TaskType {
+    enum TaskType <<enum>> {
+        -Vigilance
+        -PickupDelivery
     }
 }
 
-package Tarefa {
-    interface Tarefa <<Agregate root>>{
-        - codigo
-        - descricao
+package Task {
+    interface Task <<Agregate root>> {
+        - code
+        - description
 
     }
 
-    entity TarefaVigilancia {
-        - nrEmergencia
+    entity VigilanceTask {
+        - emergencyNumber
     }
-    entity TarefaTransporte {
-        - nomeRemetente
-        - nomeDestinatario
-        - contatoRemetente
-        - contatoDestinatario
-        - codigoConfirmacao
-    }
-}
-
-package Edificio{
-    entity Edificio <<Agregate root>>{
-        - codigo
-        - nome
-        - descricao
-        - dimensao
+    entity PickupDeliveryTask {
+        - senderName
+        - receiverName
+        - senderContact
+        - receiverContact
+        - confirmationCode
     }
 }
 
-package Piso{
-    entity Piso <<Agregate root>> {
-        - descricao
+package Building {
+    entity Building <<Agregate root>>{
+        - code
+        - name
+        - description
+        - dimensions
+    }
+}
+
+package Floor{
+    entity Floor <<Agregate root>> {
+        - description
     }
 
-    entity MapaPiso <<value object>>
+    entity FloorMap <<value object>>
 
 }
 
-package Elevador {
-    entity Elevador <<Agregate root>> {
-        - numeroIdentificacao
-        - marca
-        - modelo
-        - numeroDeSerie
-        - descricao
+package Elevator {
+    entity Elevator <<Agregate root>> {
+        - identificationNumber
+        - brand
+        - model
+        - serialNumber
+        - description
       }
 }
 
-package Sala{
-    Entity Sala <<Agregate root>> {
-        - nome
-        - descricao
+package Room{
+    entity Room <<Agregate root>> {
+        - name
+        - description
     }
 
-    enum CategoriaSala <<enum>>{
-            - SalaDeAula
-            - Gabinete
-            - Laboratorio
-            - Auditorio
-    }
-}
-
-package Passagem{
-    entity Passagem <<Agregate root>>{
+    enum RoomCategory <<enum>>{
+            - Classroom
+            - Cabinet
+            - Laboratory
+            - Auditorium
     }
 }
 
-Tarefa.TarefaVigilancia ..|> Tarefa.Tarefa: estende
-Tarefa.TarefaTransporte ..|> Tarefa.Tarefa: estende
+package Passage {
+    entity Passage <<Agregate root>>{
+    }
+}
 
-Sala.Sala --> CategoriaSala: tipo
+Task.VigilanceTask ..|> Task.Task: extends
+Task.PickupDeliveryTask ..|> Task.Task: extends
 
-TipoDeRobot.TipoDeRobot --> "*" TipoTarefa.TipoTarefa: executa
+Room.Room --> RoomCategory: is of a
 
-Piso.Piso --> Edificio.Edificio: é de
-Piso.Piso "*" <-- Elevador.Elevador : serve
-Piso.Piso <-- Sala.Sala: está em
-Piso.Piso --> Piso.MapaPiso: tem
+RobotType.RobotType --> "*" TaskType.TaskType: executes
 
-Elevador.Elevador --> Edificio.Edificio: pertence
+Floor.Floor --> Building.Building: is on
+Floor.Floor "*" <-- Elevator.Elevator : serves
+Floor.Floor <-- Room.Room: is on
+Floor.Floor --> Floor.FloorMap: has
 
-Tarefa.TarefaTransporte -> Sala.Sala: delivery
-Tarefa.TarefaTransporte -> Sala.Sala: pickup
+Elevator.Elevator --> Building.Building: is on
 
-Tarefa.TarefaVigilancia -> Piso.Piso: realiza-se
+Task.PickupDeliveryTask -> Room.Room: delivery
+Task.PickupDeliveryTask -> Room.Room: pickup
 
-Passagem.Passagem -> "2" Piso.Piso: conecta
+Task.VigilanceTask -> Floor.Floor: is executed on
 
-Robot.Robot -> TipoDeRobot.TipoDeRobot : é de
+Passage.Passage -> "2" Floor.Floor: connects
 
-Tarefa.Tarefa --> TipoTarefa.TipoTarefa : é de
+Robot.Robot -> RobotType.RobotType : is of a
 
-Robot.Robot ..> "*" Tarefa.Tarefa : executa
+Task.Task --> TaskType.TaskType : is of a
+
+Robot.Robot ..> "*" Task.Task : executes
 
 @enduml

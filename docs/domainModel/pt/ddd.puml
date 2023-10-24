@@ -1,0 +1,140 @@
+@startuml Domain Driven Design
+
+title "Domain Driven Design"
+' left to right direction
+' top to bottom direction
+skinparam Padding 10
+skinparam Nodesep 80
+skinparam ranksep 100
+skinparam groupInheritance 1
+' skinparam linetype ortho
+skinparam separation 1000
+skinparam NoteBackgroundColor #A9A9A9
+skinparam PackageStyle rectangle
+skinparam package {
+    BackgroundColor #D3D3D3
+    FontStyle bold
+}
+
+' hide circle
+' hide methods
+
+package Robot {
+    entity Robot <<Agregate root>>{
+        -numeroDeSerie
+        -codigo
+        -estado
+        -nickname
+        -descricao
+    }
+}
+
+package TipoDeRobot {
+    entity TipoDeRobot <<Agregate root>> {
+        - nomeTipo
+        - marca
+        - modelo
+    }
+
+}
+package TipoTarefa {
+    enum TipoTarefa <<enum>> {
+        -Vigilancia
+        -Transporte
+    }
+}
+
+package Tarefa {
+    interface Tarefa <<Agregate root>>{
+        - codigo
+        - descricao
+
+    }
+
+    entity TarefaVigilancia {
+        - nrEmergencia
+    }
+    entity TarefaTransporte {
+        - nomeRemetente
+        - nomeDestinatario
+        - contatoRemetente
+        - contatoDestinatario
+        - codigoConfirmacao
+    }
+}
+
+package Edificio{
+    entity Edificio <<Agregate root>>{
+        - codigo
+        - nome
+        - descricao
+        - dimensao
+    }
+}
+
+package Piso{
+    entity Piso <<Agregate root>> {
+        - descricao
+    }
+
+    entity MapaPiso <<value object>>
+
+}
+
+package Elevador {
+    entity Elevador <<Agregate root>> {
+        - numeroIdentificacao
+        - marca
+        - modelo
+        - numeroDeSerie
+        - descricao
+      }
+}
+
+package Sala{
+    Entity Sala <<Agregate root>> {
+        - nome
+        - descricao
+    }
+
+    enum CategoriaSala <<enum>>{
+            - SalaDeAula
+            - Gabinete
+            - Laboratorio
+            - Auditorio
+    }
+}
+
+package Passagem{
+    entity Passagem <<Agregate root>>{
+    }
+}
+
+Tarefa.TarefaVigilancia ..|> Tarefa.Tarefa: estende
+Tarefa.TarefaTransporte ..|> Tarefa.Tarefa: estende
+
+Sala.Sala --> CategoriaSala: tipo
+
+TipoDeRobot.TipoDeRobot --> "*" TipoTarefa.TipoTarefa: executa
+
+Piso.Piso --> Edificio.Edificio: é de
+Piso.Piso "*" <-- Elevador.Elevador : serve
+Piso.Piso <-- Sala.Sala: está em
+Piso.Piso --> Piso.MapaPiso: tem
+
+Elevador.Elevador --> Edificio.Edificio: pertence
+
+Tarefa.TarefaTransporte -> Sala.Sala: delivery
+Tarefa.TarefaTransporte -> Sala.Sala: pickup
+
+Tarefa.TarefaVigilancia -> Piso.Piso: realiza-se
+
+Passagem.Passagem -> "2" Piso.Piso: conecta
+
+Robot.Robot -> TipoDeRobot.TipoDeRobot : é de
+
+Tarefa.Tarefa --> TipoTarefa.TipoTarefa : é de
+
+Robot.Robot ..> "*" Tarefa.Tarefa : executa
+
+@enduml
