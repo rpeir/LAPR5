@@ -19,7 +19,7 @@ export default {
   /**
    * That long string from mlab
    */
-  databaseURL: process.env.MONGODB_URI || "mongodb://mongoadmin:2649722995d4b7383714b53b@vs802.dei.isep.ipp.pt:27017/admin",
+  databaseURL: process.env.MONGODB_URI || "mongodb://g008:sapo1234@vs802.dei.isep.ipp.pt:27017/db",
 
   /**
    * Your secret sauce
