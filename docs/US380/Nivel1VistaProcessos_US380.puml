@@ -1,0 +1,18 @@
+@startuml
+
+
+actor GestorFrota
+participant RobDroneGo <<system>>
+
+
+
+
+GestorFrota-> RobDroneGo : consulta todos os robos da frota
+activate RobDroneGo
+
+
+GestorFrota<-- RobDroneGo  : lista de robos da frota
+deactivate RobDroneGo
+
+
+@enduml

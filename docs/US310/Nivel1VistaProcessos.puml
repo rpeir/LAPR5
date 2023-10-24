@@ -1,0 +1,17 @@
+@startuml
+
+
+
+participant RobDroneGo <<system>>
+
+
+
+?o-> RobDroneGo : criar sala
+activate RobDroneGo
+
+
+?<-- RobDroneGo  : saved sala
+deactivate RobDroneGo
+
+
+@enduml

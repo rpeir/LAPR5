@@ -1,0 +1,83 @@
+startuml
+skinparam layoutDirection left to right
+skinparam padding 10
+
+component  GestaoDeInformacao <<system>> {
+
+    package "Framework and Drivers Layer"{
+        component Routing  <<component>>{
+
+        }
+
+        component Persistence  <<component>>{
+
+        }
+    }
+
+
+    package "Interface And Adapters Layer"{
+        component Controller as ctrl <<component>>{
+
+        }
+
+        component Repository as Repo <<component>>{
+
+        }
+    }
+
+
+    package "Application Business Rules" {
+        component Application_Service as Service  <<component>>{
+
+        }
+    }
+
+    package "Enterprise Business Rules" {
+        component Domain_Model(DDD) as Domain <<component>>{
+
+        }
+    }
+
+component DTO <<component>>{
+
+}
+
+component DataModel <<component>>{
+
+}
+
+() ModelApi
+() DTO_API
+() APP_Service_API
+() RepoApi
+() ControllerApi
+() PersistenceApi
+() DataModelApi
+
+
+Domain #-- ModelApi
+ModelApi  )-- Service
+ModelApi  )-- Repo
+
+DTO  #--  DTO_API
+DTO_API  )-- ctrl
+DTO_API  )-- Service
+
+Service #-- APP_Service_API
+APP_Service_API  )-- ctrl
+
+Repo #-- RepoApi
+RepoApi  )-- Service
+
+ctrl  #-- ControllerApi
+ControllerApi  )-- Routing
+
+Persistence #-- PersistenceApi
+PersistenceApi  )-- Repo
+
+DataModel #-- DataModelApi
+DataModelApi  )-- Persistence
+
+}
+
+@enduml

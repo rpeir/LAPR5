@@ -4,7 +4,6 @@ import mongooseLoader from './mongoose';
 import Logger from './logger';
 
 import config from '../../config';
-import { TipoTarefa } from '../domain/tipoTarefa';
 
 export default async ({ expressApp }) => {
   const mongoConnection = await mongooseLoader();
@@ -57,7 +56,7 @@ export default async ({ expressApp }) => {
     path: config.repos.tipoTarefa.path
   }
 
-  const tipoRoboRepo = {
+  const tipoRobotRepo = {
     name: config.repos.tipoRobot.name,
     path: config.repos.tipoRobot.path
   }
@@ -88,7 +87,7 @@ export default async ({ expressApp }) => {
       roleRepo,
       userRepo,
       tipoTarefaRepo,
-      tipoRoboRepo
+      tipoRobotRepo
     ],
     services: [
       roleService,

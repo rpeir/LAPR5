@@ -1,0 +1,17 @@
+@startuml
+
+
+
+participant RobDroneGo <<system>>
+
+
+
+?o-> RobDroneGo : criar edificio
+activate RobDroneGo
+
+
+?<-- RobDroneGo  :  edificio
+deactivate RobDroneGo
+
+
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+
+
+actor GestorFrota
+participant GestaoDeInformacao <<component>>
+
+
+
+GestorFrota-> GestaoDeInformacao : consulta todos os robos da frota
+activate GestaoDeInformacao
+
+
+GestorFrota<-- GestaoDeInformacao  : lista de robos da frota
+deactivate GestaoDeInformacao
+
+
+@enduml

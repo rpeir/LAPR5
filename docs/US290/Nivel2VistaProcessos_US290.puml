@@ -1,0 +1,17 @@
+@startuml
+
+
+
+participant GestaoDeInformacao <<component>>
+
+
+
+?o-> GestaoDeInformacao : listar elevadores no edificio
+activate GestaoDeInformacao
+
+
+?<-- GestaoDeInformacao  : lista de elevadores no edificio
+deactivate GestaoDeInformacao
+
+
+@enduml

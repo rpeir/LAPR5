@@ -1,0 +1,17 @@
+@startuml
+
+
+
+participant GestaoDeInformacao <<component>>
+
+
+
+?o-> GestaoDeInformacao : criar edificio
+activate GestaoDeInformacao
+
+
+?<-- GestaoDeInformacao  :  edificio
+deactivate GestaoDeInformacao
+
+
+@enduml
