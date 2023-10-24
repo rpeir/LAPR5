@@ -1,0 +1,126 @@
+@startuml Domain Model
+
+title "Domain Model"
+' left to right direction
+' top to bottom direction
+skinparam Padding 10
+skinparam Nodesep 80
+skinparam ranksep 100
+skinparam groupInheritance 1
+' skinparam linetype ortho
+skinparam separation 1000
+skinparam NoteBackgroundColor #A9A9A9
+skinparam PackageStyle rectangle
+skinparam package {
+    BackgroundColor #D3D3D3
+    FontStyle bold
+}
+
+hide circle
+hide methods
+
+    entity Robot {
+        -numeroDeSerie
+        -codigo
+        -estado
+        -nickname
+        -descricao
+    }
+
+    entity TipoDeRobot {
+        - nomeTipo
+        - marca
+        - modelo
+    }
+
+    enum TipoTarefa {
+    }
+    note bottom of TipoTarefa {
+        - Vigilancia
+        - Transporte
+    }
+
+    interface Tarefa {
+        - codigo
+        - descricao
+
+    }
+
+    entity TarefaVigilancia {
+        - nrEmergencia
+    }
+
+    entity TarefaTransporte {
+        - nomeRemetente
+        - nomeDestinatario
+        - contatoRemetente
+        - contatoDestinatario
+        - codigoConfirmacao
+    }
+
+    entity Edificio {
+        - codigo
+        - nome
+        - descricao
+        - dimensao
+    }
+
+    entity Piso {
+        - descricao
+        - mapaPiso
+    }
+
+    entity Elevador {
+        - numeroIdentificacao
+        - marca
+        - modelo
+        - numeroDeSerie
+        - descricao
+    }
+
+
+    entity Sala {
+        - nome
+        - descricao
+    }
+
+    enum CategoriaSala
+
+    note bottom of CategoriaSala {
+        - SalaDeAula
+        - Gabinete
+        - Laboratorio
+        - Auditorio
+    }
+
+    entity Passagem {
+    }
+
+
+TarefaVigilancia ..|> Tarefa: estende
+TarefaTransporte ..|> Tarefa: estende
+
+Sala --> CategoriaSala: tipo
+
+TipoDeRobot --> "*" TipoTarefa: executa
+
+Piso --> Edificio: é de
+Piso "*" <-- Elevador : serve
+Piso <-- Sala: está em
+
+Elevador --> Edificio: pertence
+
+TarefaTransporte --> Sala: delivery
+TarefaTransporte --> Sala: pickup
+
+TarefaVigilancia --> Piso: realiza-se
+
+Passagem --> "2" Piso: conecta
+
+Robot --> TipoDeRobot : é de
+
+Tarefa --> TipoTarefa : é de
+
+Robot ..> "*" Tarefa : executa
+
+@enduml

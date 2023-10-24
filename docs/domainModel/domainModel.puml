@@ -16,114 +16,108 @@ skinparam package {
     FontStyle bold
 }
 
-' hide circle
-' hide methods
+hide circle
+hide methods
 
-package Robot {
-    entity Robot <<Agregate root>>{
-        -marca
-        -modelo
-        -numeroDeSerie
-        -estado
-        -codigo
+    entity Robot {
+        -serialNumber
+        -code
+        -state
         -nickname
-    }
-}
-
-package TipoDeRobot {
-    Enum TipoDeRobot {
-    }
-}
-
-package TipoTarefa{
-    enum TipoTarefa{
-        -Vigilancia
-        -Transporte
-    }
-}
-
-package Tarefa {
-    interface Tarefa <<Agregate root>>{
-        - codigo
-        - descricao
-
+        -description
     }
 
-    entity TarefaVigilancia {
-        - nrEmergencia
-    }
-    entity TarefaTransporte {
-        - nomeRemetente
-        - nomeDestinatario
-        - contatoRemetente
-        - contatoDestinatario
-        - codigoConfirmacao
-    }
-}
-
-package Edificio{
-    entity Edificio <<Agregate root>>{
-        - codigo
-        - nome
-        - descricao
-        - dimensao
-    }
-}
-
-package Piso{
-    entity Piso <<Agregate root>> {
-        - descricao
+    entity RobotType {
+        - typeName
+        - brand
+        - model
     }
 
-}
-
-package Elevador {
-    entity Elevador <<Agregate root>> {
-      }
-}
-
-package Sala{
-    Entity Sala <<Agregate root>> {
-        - descricao
+    enum TaskType {}
+    note bottom of TaskType {
+            - Vigilance
+            - PickupDelivery
     }
 
-    enum CategoriaSala <<enum>>{
-            - SalaDeAula
-            - Gabinete
-            - Laboratorio
-            - Auditorio
+    interface Task {
+        - code
+        - description
+
     }
-}
 
-package Passagem{
-    entity Passagem <<Agregate root>>{
+    entity VigilanceTask {
+        - emergencyNumber
     }
-}
 
-TarefaVigilancia ..|> Tarefa: estende
-TarefaTransporte ..|> Tarefa: estende
+    entity PickupDeliveryTask {
+        - senderName
+        - receiverName
+        - senderContact
+        - receiverContact
+        - confirmationCode
+    }
 
-Sala --> CategoriaSala: tipo
+    entity Building {
+        - code
+        - name
+        - description
+        - dimensions
+    }
 
-TipoDeRobot --> "*" TipoTarefa: executa
+    entity Floor {
+        - description
+        - floorMap
+    }
 
-Piso "*" <-- Edificio: tem
-Piso "*" <-- Elevador : serve
-Piso --> "*" Sala: tem
+    entity Elevator {
+        - identificationNumber
+        - brand
+        - model
+        - serialNumber
+        - description
+    }
 
-Elevador --> Edificio: pertence
+    entity Room {
+        - name
+        - description
+    }
 
-TarefaTransporte --> Piso: destino
-TarefaTransporte --> Piso: origem
+    enum RoomCategory {}
 
-TarefaVigilancia --> Piso: destino
+    note bottom of RoomCategory {
+            - Classroom
+            - Cabinet
+            - Laboratory
+            - Auditorium
+    }
 
-Passagem --> "2" Piso: tem
+    entity Passage {
+    }
 
-Robot --> TipoDeRobot : é de
+VigilanceTask ..|> Task: extends
+PickupDeliveryTask ..|> Task: extends
 
-Tarefa --> TipoTarefa : é de
+Room --> RoomCategory: is of a
 
-Robot ..> "*" Tarefa : executa
+RobotType --> "*" TaskType: executes
+
+Floor --> Building: is on
+Floor "*" <-- Elevator : serves
+Floor <-- Room: is on
+
+Elevator --> Building: is on
+
+PickupDeliveryTask --> Room: delivery
+PickupDeliveryTask --> Room: pickup
+
+VigilanceTask --> Floor: is executed on
+
+Passage --> "2" Floor: connects
+
+Robot --> RobotType : is of a
+
+Task --> TaskType : is of a
+
+Robot ..> "*" Task : executes
 
 @enduml

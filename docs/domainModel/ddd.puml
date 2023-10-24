@@ -1,0 +1,140 @@
+@startuml Domain Driven Design
+
+title "Domain Driven Design"
+' left to right direction
+' top to bottom direction
+skinparam Padding 10
+skinparam Nodesep 80
+skinparam ranksep 100
+skinparam groupInheritance 1
+' skinparam linetype ortho
+skinparam separation 1000
+skinparam NoteBackgroundColor #A9A9A9
+skinparam PackageStyle rectangle
+skinparam package {
+    BackgroundColor #D3D3D3
+    FontStyle bold
+}
+
+' hide circle
+' hide methods
+
+package Robot {
+    entity Robot <<Agregate root>>{
+        -serialNumber
+        -code
+        -state
+        -nickname
+        -description
+    }
+}
+
+package RobotType {
+    entity RobotType <<Agregate root>> {
+        - typeName
+        - brand
+        - model
+    }
+
+}
+package TaskType {
+    enum TaskType <<enum>> {
+        -Vigilance
+        -PickupDelivery
+    }
+}
+
+package Task {
+    interface Task <<Agregate root>> {
+        - code
+        - description
+
+    }
+
+    entity VigilanceTask {
+        - emergencyNumber
+    }
+    entity PickupDeliveryTask {
+        - senderName
+        - receiverName
+        - senderContact
+        - receiverContact
+        - confirmationCode
+    }
+}
+
+package Building {
+    entity Building <<Agregate root>>{
+        - code
+        - name
+        - description
+        - dimensions
+    }
+}
+
+package Floor{
+    entity Floor <<Agregate root>> {
+        - description
+    }
+
+    entity FloorMap <<value object>>
+
+}
+
+package Elevator {
+    entity Elevator <<Agregate root>> {
+        - identificationNumber
+        - brand
+        - model
+        - serialNumber
+        - description
+      }
+}
+
+package Room{
+    entity Room <<Agregate root>> {
+        - name
+        - description
+    }
+
+    enum RoomCategory <<enum>>{
+            - Classroom
+            - Cabinet
+            - Laboratory
+            - Auditorium
+    }
+}
+
+package Passage {
+    entity Passage <<Agregate root>>{
+    }
+}
+
+Task.VigilanceTask ..|> Task.Task: extends
+Task.PickupDeliveryTask ..|> Task.Task: extends
+
+Room.Room --> RoomCategory: is of a
+
+RobotType.RobotType --> "*" TaskType.TaskType: executes
+
+Floor.Floor --> Building.Building: is on
+Floor.Floor "*" <-- Elevator.Elevator : serves
+Floor.Floor <-- Room.Room: is on
+Floor.Floor --> Floor.FloorMap: has
+
+Elevator.Elevator --> Building.Building: is on
+
+Task.PickupDeliveryTask -> Room.Room: delivery
+Task.PickupDeliveryTask -> Room.Room: pickup
+
+Task.VigilanceTask -> Floor.Floor: is executed on
+
+Passage.Passage -> "2" Floor.Floor: connects
+
+Robot.Robot -> RobotType.RobotType : is of a
+
+Task.Task --> TaskType.TaskType : is of a
+
+Robot.Robot ..> "*" Task.Task : executes
+
+@enduml
