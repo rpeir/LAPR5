@@ -63,11 +63,6 @@ export default {
       path: "../repos/userRepo"
     },
 
-    tipoTarefa:{
-      name: "TipoTarefaRepo",
-      path: "../repos/tipoTarefaRepo"
-    },
-
     tipoRobot:{
       name: "TipoRobotRepo",
       path: "../repos/tipoRobotRepo"

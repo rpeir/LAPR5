@@ -21,11 +21,6 @@ export default async ({ expressApp }) => {
     schema: '../persistence/schemas/roleSchema',
   };
 
-  const tipoTarefaSchema = {
-    name: 'tipoTarefaSchema',
-    schema: '../persistence/schemas/tipoTarefaSchema',
-  }
-
   const tipoRobotSchema = {
     name: 'tipoRobotSchema',
     schema: '../persistence/schemas/tipoRobotSchema',
@@ -51,11 +46,6 @@ export default async ({ expressApp }) => {
     path: config.repos.user.path
   }
 
-  const tipoTarefaRepo = {
-    name: config.repos.tipoTarefa.name,
-    path: config.repos.tipoTarefa.path
-  }
-
   const tipoRobotRepo = {
     name: config.repos.tipoRobot.name,
     path: config.repos.tipoRobot.path
@@ -76,7 +66,6 @@ export default async ({ expressApp }) => {
     schemas: [
       userSchema,
       roleSchema,
-      tipoTarefaSchema,
       tipoRobotSchema
     ],
     controllers: [
@@ -86,7 +75,6 @@ export default async ({ expressApp }) => {
     repos: [
       roleRepo,
       userRepo,
-      tipoTarefaRepo,
       tipoRobotRepo
     ],
     services: [

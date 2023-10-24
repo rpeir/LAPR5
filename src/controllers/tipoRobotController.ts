@@ -20,7 +20,7 @@ constructor(
             const tipoRobotOrError = await this.tipoRobotServiceInstance.createTipoRobot(req.body as ITipoRobotDTO) as Result<ITipoRobotDTO>;
 
             if (tipoRobotOrError.isFailure) {
-                return res.status(402).send();
+                return res.status(402).send(tipoRobotOrError.error);
             }
 
             const tipoRobotDTO = tipoRobotOrError.getValue();
@@ -29,5 +29,5 @@ constructor(
             return next(error);
         }
     }
-    
+
 }

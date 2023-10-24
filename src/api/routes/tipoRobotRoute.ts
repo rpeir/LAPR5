@@ -17,10 +17,10 @@ export default(app: Router) =>{
             body: Joi.object({
                 name: Joi.string().required(),
                 tipoTarefas: Joi.array().items(
-                    Joi.object({
-                        name: Joi.string().required()
-                    }).required()
-                    ).required()
+                  Joi.string().required()
+                  ).required(),
+                modelo: Joi.string().required(),
+                marca: Joi.string().required()
             })
         }),
         (req, res, next) => ctrl.createTipoRobot(req, res, next)

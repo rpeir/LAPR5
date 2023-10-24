@@ -2,37 +2,50 @@ import Container from "typedi";
 import { Mapper } from "../core/infra/Mapper";
 import { TipoRobot } from "../domain/tipoRobot";
 import { ITipoRobotDTO } from "../dto/ITipoRobotDTO";
-import TipoTarefaRepo from "../repos/tipoTarefaRepo";
 import { UniqueEntityID } from "../core/domain/UniqueEntityID";
-import { TipoTarefaMap } from "./TipoTarefaMap";
+import { TipoTarefa } from "../domain/tipoTarefa";
+import { Result } from "../core/logic/Result";
+import { MarcaTipoRobot } from "../domain/marcaTipoRobot";
+import { ModeloTipoRobot } from "../domain/modeloTipoRobot";
+import { TipoRobotName } from "../domain/tipoRobotName";
 
-export class TipoRobotMap extends Mapper<TipoRobot>{
+export class TipoRobotMap extends Mapper<TipoRobot> {
 
-    public static toDTO( tipoRobot: TipoRobot): ITipoRobotDTO{
-        return {
-            name: tipoRobot.name,
-            tipoTarefas: tipoRobot.tipoTarefas.map((tipoTarefa) => TipoTarefaMap.toDTO(tipoTarefa))
-        } as ITipoRobotDTO;
-    }
-    
-    public static async toDomain (raw: any): Promise<TipoRobot> {
+  public static toDTO(tipoRobot: TipoRobot): ITipoRobotDTO {
+    return {
+      name: tipoRobot.name.value,
+      tipoTarefas: tipoRobot.tipoTarefas.map((tipoTarefa) => tipoTarefa.toString()),
+      marca: tipoRobot.marca.value,
+      modelo: tipoRobot.modelo.value
+    } as ITipoRobotDTO;
+  }
 
-        const tipoRobotOrError = TipoRobot.create({
-            name: raw.name,
-            tipoTarefas: raw.tipoTarefas.map((tipoTarefa) => TipoTarefaMap.toDomain(tipoTarefa))
-        }, new UniqueEntityID(raw.domainId))
+  public static async toDomain(raw: any): Promise<TipoRobot> {
+    const marcaTipoRobotOrError = MarcaTipoRobot.create(raw.marca);
+    const modeloTipoRobotOrError = ModeloTipoRobot.create(raw.modelo);
+    const nameTipoRobotOrError = TipoRobotName.create(raw.name);
+    const tipoRobotOrError = TipoRobot.create({
+      name: nameTipoRobotOrError.getValue(),
+      tipoTarefas: raw.tipoTarefas.map((tipoTarefa) => {
+        return tipoTarefa as TipoTarefa;
+      }),
+      modelo: modeloTipoRobotOrError.getValue(),
+      marca: marcaTipoRobotOrError.getValue()
+    }, new UniqueEntityID(raw.domainId));
 
-        tipoRobotOrError.isFailure ? console.log(tipoRobotOrError.error) : '';
+    tipoRobotOrError.isFailure ? console.log(tipoRobotOrError.error) : "";
 
-        return tipoRobotOrError.isSuccess ? tipoRobotOrError.getValue() : null;
-    }
+    return tipoRobotOrError.isSuccess ? tipoRobotOrError.getValue() : null;
+  }
 
-    public static toPersistence (tipoRobot: TipoRobot): any{
-        const a = {
-            domainId: tipoRobot.id.toString(),
-            name: tipoRobot.name,
-            tipoTarefas: tipoRobot.tipoTarefas.map((tipoTarefa) => TipoTarefaMap.toPersistence(tipoTarefa))
-        }
-        return a;
-    }
+  public static toPersistence(tipoRobot: TipoRobot): any {
+    const a = {
+      domainId: tipoRobot.id.toString(),
+      name: tipoRobot.name.value,
+      tipoTarefas: tipoRobot.tipoTarefas.map((tipoTarefa) => tipoTarefa.toString()),
+      modelo: tipoRobot.modelo.toString(),
+      marca: tipoRobot.marca.value
+    };
+    return a;
+  }
 }
