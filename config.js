@@ -54,6 +54,10 @@ export default {
     robot:{
       name: "RobotController",
       path: "../controllers/robotController"
+    },
+    building:{
+      name: "BuildingController",
+      path: "../controllers/buildingController"
     }
   },
 
@@ -68,31 +72,39 @@ export default {
       path: "../repos/userRepo"
     },
 
-    tipoRobot:{
+    tipoRobot: {
       name: "TipoRobotRepo",
       path: "../repos/tipoRobotRepo"
     },
 
-    robot:{
+    robot: {
       name: "RobotRepo",
       path: "../repos/robotRepo"
-    }
+    },
+    building: {
+      name: "BuildingRepo",
+      path: "../repos/buildingRepo"
+    },
   },
 
-  services: {
-    role: {
-      name: "RoleService",
-      path: "../services/roleService"
-    },
+    services: {
+      role: {
+        name: "RoleService",
+        path: "../services/roleService"
+      },
 
-    tipoRobot: {
-      name: "TipoRobotService",
-      path: "../services/tipoRobotService"
-    },
+      tipoRobot: {
+        name: "TipoRobotService",
+        path: "../services/tipoRobotService"
+      },
 
-    robot: {
-      name: "RobotService",
-      path: "../services/robotService"
-    }
-  },
+      robot: {
+        name: "RobotService",
+        path: "../services/robotService"
+      },
+      building: {
+        name: "BuildingService",
+        path: "../services/buildingService"
+      }
+    },
 };

@@ -2,21 +2,21 @@ import {AggregateRoot} from "../core/domain/AggregateRoot";
 import {UniqueEntityID} from "../core/domain/UniqueEntityID";
 import {Result} from "../core/logic/Result";
 import {Guard} from "../core/logic/Guard";
+import {BuildingCode} from "./BuildingCode";
 
 interface BuildingProps {
-  code: number;
+  code: BuildingCode;
   designation: string;
   description: string;
   length: number;
   width: number;
   height: number;
-  dimension: number;
 }
 export class Building extends AggregateRoot<BuildingProps> {
   get id(): UniqueEntityID {
     return this._id;
   }
-  get code(): number {
+  get code(): BuildingCode {
     return this.props.code;
   }
   get designation():string{
@@ -34,7 +34,7 @@ export class Building extends AggregateRoot<BuildingProps> {
   get height():number{
     return this.props.height;
   }
-  set code(value:number){
+  set code(value:BuildingCode){
     this.props.code=value;
   }
   set length(value:number){

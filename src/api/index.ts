@@ -4,7 +4,7 @@ import user from './routes/userRoute';
 import role from './routes/roleRoute';
 import tipoRobotRoute from './routes/tipoRobotRoute';
 import robotRoute from "./routes/robotRoute";
-
+import buildingRoute from "./routes/buildingRoute";
 export default () => {
 	const app = Router();
 
@@ -12,7 +12,8 @@ export default () => {
 	user(app);
 	role(app);
 	tipoRobotRoute(app);
-  robotRoute(app)
+  robotRoute(app);
+  buildingRoute(app);
 
 	return app
 }
