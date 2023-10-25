@@ -41,7 +41,6 @@ export default class RobotService implements IRobotService {
         serialNr: serialNr
       });
 
-      console.log(robotOrError.getValue())
       if (robotOrError.isFailure){
         throw Result.fail<IRobotDTO>(robotOrError.errorValue());
       }
