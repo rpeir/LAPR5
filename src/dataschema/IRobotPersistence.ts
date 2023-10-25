@@ -1,7 +1,7 @@
 export interface IRobotPersistence{
   domainId: string;
   nickName: string;
-  tipoRobot: string;
-  nrSerie: string;
-  descricao: string;
+  robotType: string;
+  serialNr: string;
+  description: string;
 }

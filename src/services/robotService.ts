@@ -27,9 +27,9 @@ export default class RobotService implements IRobotService {
       const serialNr = await RobotSerialNr.create(robotDTO.serialNr).getValue();
       let robotType;
 
-      const robotTypeOrError   = await this.getRobotTypeName(robotDTO.robotType);
+      const robotTypeOrError = await this.getRobotTypeName(robotDTO.robotType);
       if (robotTypeOrError.isFailure) {
-        return Result.fail<IRobotDTO>(robotTypeOrError  );
+        return Result.fail<IRobotDTO>(robotTypeOrError);
       } else {
         robotType = robotTypeOrError.getValue();
       }
@@ -41,7 +41,7 @@ export default class RobotService implements IRobotService {
         serialNr: serialNr
       });
 
-      if (robotOrError.isFailure){
+      if (robotOrError.isFailure) {
         throw Result.fail<IRobotDTO>(robotOrError.errorValue());
       }
       const robotResult = robotOrError.getValue();
