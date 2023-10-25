@@ -60,9 +60,9 @@ export default class RobotRepo implements IRobotRepo {
       }else {
         robotDocument.nickName = robot.nickName;
         console.log(robot.nickName);
-        robotDocument.tipoRobot = robot.tipoRobot;
-        robotDocument.nrSerie = robot.nrSerie;
-        robotDocument.descricao = robot.descricao;
+        robotDocument.robotType = robot.robotType;
+        robotDocument.serialNr = robot.serialNr;
+        robotDocument.description = robot.description;
         await robotDocument.save();
         return robot;
       }

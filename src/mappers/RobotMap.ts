@@ -2,34 +2,34 @@ import { Mapper } from "../core/infra/Mapper";
 import { Robot } from "../domain/robot";
 import { IRobotDTO } from "../dto/IRobotDTO";
 import { RobotNickName } from "../domain/robotNickName";
-import { RobotNrSerie } from "../domain/robotNrSerie";
-import { RobotDescricao } from "../domain/robotDescricao";
+import { RobotSerialNr } from "../domain/robotSerialNr";
+import { RobotDescription } from "../domain/robotDescription";
 import { Container } from "typedi";
-import TipoRobotRepo from "../repos/tipoRobotRepo";
 import { UniqueEntityID } from "../core/domain/UniqueEntityID";
+import RobotTypeRepo from "../repos/robotTypeRepo";
 
 export class RobotMap extends  Mapper<Robot>{
   public static toDTO(robot: Robot){
     return {
       nickName: robot.nickName.value,
-      tipoRobot: robot.tipoRobot.id.toString(),
-      nrSerie: robot.nrSerie.value,
-      descricao: robot.descricao.value
+      robotType: robot.robotType.id.toString(),
+      serialNr: robot.serialNr.value,
+      description: robot.description.value
     } as IRobotDTO;
   }
 
   public static async toDomain(raw: any) {
-    const nrSerie = RobotNrSerie.create(raw.nrSerie);
+    const serialNr = RobotSerialNr.create(raw.serialNr);
     const nickName = RobotNickName.create(raw.nickName);
-    const descricao = RobotDescricao.create(raw.descricao);
-    const repo = Container.get(TipoRobotRepo);
-    const tipoRobot = await repo.findByName(raw.name);
+    const description = RobotDescription.create(raw.description);
+    const repo  = Container.get(RobotTypeRepo);
+    const robotType = await repo.findByName(raw.name);
 
     const robotOrError = Robot.create({
       nickName: nickName.getValue(),
-      nrSerie: nrSerie.getValue(),
-      descricao: descricao.getValue(),
-      tipoRobot: tipoRobot
+      serialNr: serialNr.getValue(),
+      description: description.getValue(),
+      robotType: robotType
     },new UniqueEntityID(raw.domainId))
 
     robotOrError.isFailure ? console.log(robotOrError.error) : "";
@@ -41,9 +41,9 @@ export class RobotMap extends  Mapper<Robot>{
     const  raw = {
       domainId: robot.id.toString(),
       nickName: robot.nickName.value,
-      nrSerie: robot.nrSerie.value,
-      descricao: robot.descricao.value,
-      tipoRobot: robot.tipoRobot.id.toValue()
+      serialNr: robot.serialNr.value,
+      description: robot.description.value,
+      robotType: robot.robotType.id.toValue()
     }
     return raw;
   }

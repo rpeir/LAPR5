@@ -5,10 +5,10 @@ import { Result } from "../core/logic/Result";
 import config from "../../config";
 import IRobotRepo from "./IRepos/IRobotRepo";
 import { RobotNickName } from "../domain/robotNickName";
-import { RobotDescricao } from "../domain/robotDescricao";
-import { RobotNrSerie } from "../domain/robotNrSerie";
-import ITipoRobotRepo from "./IRepos/ITipoRobotRepo";
-import { TipoRobot } from "../domain/tipoRobot";
+import { RobotDescription } from "../domain/robotDescription";
+import { RobotSerialNr } from "../domain/robotSerialNr";
+import IRobotTypeRepo from "./IRepos/IRobotTypeRepo";
+import { RobotType } from "../domain/robotType";
 import { Robot } from "../domain/robot";
 import { RobotMap } from "../mappers/RobotMap";
 
@@ -16,31 +16,32 @@ import { RobotMap } from "../mappers/RobotMap";
 export default class RobotService implements IRobotService {
   constructor(
     @Inject(config.repos.robot.name) private robotRepo: IRobotRepo,
-    @Inject(config.repos.tipoRobot.name) private tipoRobotRepo: ITipoRobotRepo
+    @Inject(config.repos.robotType.name) private robotTypeRepo: IRobotTypeRepo
   ) {
   }
 
   public async createRobot(robotDTO: IRobotDTO): Promise<Result<IRobotDTO>> {
     try {
       const nickName = await RobotNickName.create(robotDTO.nickName).getValue();
-      const descricao = await RobotDescricao.create(robotDTO.descricao).getValue();
-      const nrSerie = await RobotNrSerie.create(robotDTO.nrSerie).getValue();
-      let tipoRobot;
+      const description = await RobotDescription.create(robotDTO.description).getValue();
+      const serialNr = await RobotSerialNr.create(robotDTO.serialNr).getValue();
+      let robotType;
 
-      const tipoRobotOrError = await this.getTipoRobot(robotDTO.tipoRobot);
-      if (tipoRobotOrError.isFailure) {
-        return Result.fail<IRobotDTO>(tipoRobotOrError);
+      const robotTypeOrError   = await this.getRobotTypeName(robotDTO.robotType);
+      if (robotTypeOrError.isFailure) {
+        return Result.fail<IRobotDTO>(robotTypeOrError  );
       } else {
-        tipoRobot = tipoRobotOrError.getValue();
+        robotType = robotTypeOrError.getValue();
       }
 
       const robotOrError = Robot.create({
         nickName: nickName,
-        tipoRobot: tipoRobot,
-        descricao: descricao,
-        nrSerie: nrSerie
+        robotType: robotType,
+        description: description,
+        serialNr: serialNr
       });
 
+      console.log(robotOrError.getValue())
       if (robotOrError.isFailure){
         throw Result.fail<IRobotDTO>(robotOrError.errorValue());
       }
@@ -53,12 +54,12 @@ export default class RobotService implements IRobotService {
     }
   }
 
-  private async getTipoRobot(tipoRobotName: string) {
-    const tipoRobot = await this.tipoRobotRepo.findByName(tipoRobotName);
-    if (!!tipoRobot) {
-      return Result.ok<TipoRobot>(tipoRobot);
+  private async getRobotTypeName(robotTypeName: string) {
+    const robotType = await this.robotTypeRepo.findByName(robotTypeName);
+    if (!!robotType) {
+      return Result.ok<RobotType>(robotType);
     } else {
-      return Result.fail<TipoRobot>("Couldn't find robot with name: " + tipoRobotName);
+      return Result.fail<RobotType>("Couldn't find robot with name: " + robotTypeName);
     }
   }
 

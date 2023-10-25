@@ -2,16 +2,16 @@ import { AggregateRoot } from "../core/domain/AggregateRoot";
 import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 import { Guard } from "../core/logic/Guard";
 import { Result } from "../core/logic/Result";
-import { RobotDescricao } from "./robotDescricao";
+import { RobotDescription } from "./robotDescription";
 import { RobotNickName } from "./robotNickName";
-import { RobotNrSerie } from "./robotNrSerie";
-import { TipoRobot } from "./tipoRobot";
+import { RobotSerialNr } from "./robotSerialNr";
+import { RobotType } from "./robotType";
 
 interface RobotProps {
     nickName: RobotNickName;
-    tipoRobot: TipoRobot;
-    nrSerie: RobotNrSerie;
-    descricao: RobotDescricao;
+    robotType: RobotType;
+    serialNr: RobotSerialNr;
+    description: RobotDescription;
 }
 
 export class Robot extends AggregateRoot<RobotProps>{
@@ -23,16 +23,16 @@ export class Robot extends AggregateRoot<RobotProps>{
         return this.props.nickName;
     }
 
-    get tipoRobot(): TipoRobot{
-        return this.props.tipoRobot;
+    get robotType(): RobotType{
+        return this.props.robotType;
     }
 
-    get nrSerie(): RobotNrSerie{
-        return this.props.nrSerie;
+    get serialNr(): RobotSerialNr{
+        return this.props.serialNr;
     }
 
-    get descricao():RobotDescricao{
-        return this.props.descricao;
+    get description():RobotDescription{
+        return this.props.description;
     }
 
     private constructor(props: RobotProps, id?: UniqueEntityID){
@@ -43,7 +43,7 @@ export class Robot extends AggregateRoot<RobotProps>{
 
     public static create (props: RobotProps, id?: UniqueEntityID): Result<Robot>{
         const guardedProps = [
-            {argument: props.tipoRobot, argumentName: 'tipoRobot'}
+            {argument: props.robotType, argumentName: 'robotType'}
         ];
 
         const guardResult = Guard.againstNullOrUndefinedBulk(guardedProps);

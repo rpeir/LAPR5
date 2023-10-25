@@ -46,9 +46,9 @@ export default {
       path: "../controllers/roleController"
     },
 
-    tipoRobot: {
-      name: "TipoRobotController",
-      path: "../controllers/tipoRobotController"
+    robotType: {
+      name: "RobotTypeController",
+      path: "../controllers/robotTypeController"
     },
 
     robot:{
@@ -72,15 +72,16 @@ export default {
       path: "../repos/userRepo"
     },
 
-    tipoRobot: {
-      name: "TipoRobotRepo",
-      path: "../repos/tipoRobotRepo"
+    robotType:{
+      name: "RobotTypeRepo",
+      path: "../repos/robotTypeRepo"
     },
 
     robot: {
       name: "RobotRepo",
       path: "../repos/robotRepo"
     },
+
     building: {
       name: "BuildingRepo",
       path: "../repos/buildingRepo"
@@ -93,10 +94,10 @@ export default {
         path: "../services/roleService"
       },
 
-      tipoRobot: {
-        name: "TipoRobotService",
-        path: "../services/tipoRobotService"
-      },
+    robotType: {
+      name: "robotTypeService",
+      path: "../services/robotTypeService"
+    },
 
       robot: {
         name: "RobotService",

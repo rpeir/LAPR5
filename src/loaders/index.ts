@@ -21,9 +21,9 @@ export default async ({ expressApp }) => {
     schema: '../persistence/schemas/roleSchema',
   };
 
-  const tipoRobotSchema = {
-    name: 'tipoRobotSchema',
-    schema: '../persistence/schemas/tipoRobotSchema',
+  const robotTypeSchema = {
+    name: 'robotTypeSchema',
+    schema: '../persistence/schemas/robotTypeSchema',
   }
 
   const robotSchema = {
@@ -40,9 +40,9 @@ export default async ({ expressApp }) => {
     path: config.controllers.role.path
   }
 
-  const tipoRobotController = {
-    name: config.controllers.tipoRobot.name,
-    path: config.controllers.tipoRobot.path
+  const robotTypeController = {
+    name: config.controllers.robotType.name,
+    path: config.controllers.robotType.path
   }
 
   const robotController = {
@@ -64,9 +64,9 @@ export default async ({ expressApp }) => {
     path: config.repos.user.path
   }
 
-  const tipoRobotRepo = {
-    name: config.repos.tipoRobot.name,
-    path: config.repos.tipoRobot.path
+  const robotTypeRepo = {
+    name: config.repos.robotType.name,
+    path: config.repos.robotType.path
   }
 
   const robotRepo = {
@@ -83,9 +83,9 @@ export default async ({ expressApp }) => {
     path: config.services.role.path
   }
 
-  const tipoRobotService = {
-    name: config.services.tipoRobot.name,
-    path: config.services.tipoRobot.path
+  const robotTypeService = {
+    name: config.services.robotType.name,
+    path: config.services.robotType.path
   }
 
   const robotService = {
@@ -102,14 +102,14 @@ export default async ({ expressApp }) => {
     schemas: [
       userSchema,
       roleSchema,
-      tipoRobotSchema,
+      robotTypeSchema,
       robotSchema,
       buildingSchema
     ],
 
     controllers: [
       roleController,
-      tipoRobotController,
+      robotTypeController,
       robotController,
       buildingController
     ],
@@ -117,14 +117,14 @@ export default async ({ expressApp }) => {
     repos: [
       roleRepo,
       userRepo,
-      tipoRobotRepo,
+      robotTypeRepo,
       robotRepo,
       buildingRepo
     ],
 
     services: [
       roleService,
-      tipoRobotService,
+      robotTypeService,
       robotService,
       buildingService
     ]

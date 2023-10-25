@@ -5,9 +5,9 @@ const Robot = new mongoose.Schema(
   {
     domainId: { type: String , unique: true },
     nickName: { type: String, unique: true },
-    tipoRobot: { type: String },
-    nrSerie:  { type: String },
-    descricao:  { type: String }
+    robotType: { type: String },
+    serialNr:  { type: String },
+    description:  { type: String }
   }
 );
 

@@ -2,8 +2,9 @@ import { Router } from 'express';
 import auth from './routes/userRoute';
 import user from './routes/userRoute';
 import role from './routes/roleRoute';
-import tipoRobotRoute from './routes/tipoRobotRoute';
 import robotRoute from "./routes/robotRoute";
+import robotTypeRoute from "./routes/robotTypeRoute";
+
 import buildingRoute from "./routes/buildingRoute";
 export default () => {
 	const app = Router();
@@ -11,7 +12,7 @@ export default () => {
 	auth(app);
 	user(app);
 	role(app);
-	tipoRobotRoute(app);
+  robotTypeRoute(app);
   robotRoute(app);
   buildingRoute(app);
 

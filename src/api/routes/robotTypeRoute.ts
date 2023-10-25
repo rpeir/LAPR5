@@ -1,28 +1,28 @@
 import { Router } from "express";
 import Container from "typedi";
 import config from "../../../config";
-import ITipoRobotController from "../../controllers/IControllers/ITipoRobotController";
+import IRobotTypeController from "../../controllers/IControllers/IRobotTypeController";
 import { Joi, celebrate } from "celebrate";
 
 const route = Router();
 
 export default(app: Router) =>{
-    app.use('/tipoRobot', route);
+    app.use('/robotType', route);
 
-    const ctrl = Container.get(config.controllers.tipoRobot.name) as ITipoRobotController;
+    const ctrl = Container.get(config.controllers.robotType.name) as IRobotTypeController;
 
     route.post(
         '/create',
         celebrate({
             body: Joi.object({
                 name: Joi.string().required(),
-                tipoTarefas: Joi.array().items(
+                taskTypes: Joi.array().items(
                   Joi.string().required()
                   ).required(),
-                modelo: Joi.string().required(),
-                marca: Joi.string().required()
+                robotTypeModel: Joi.string().required(),
+                brand: Joi.string().required()
             })
         }),
-        (req, res, next) => ctrl.createTipoRobot(req, res, next)
+        (req, res, next) => ctrl.createRobotType(req, res, next)
     );
 };
