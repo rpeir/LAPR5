@@ -27,7 +27,7 @@ export default class ElevatorService implements IElevatorService{
             const latestElevatorCode=await this.elevatorRepo.findLatestElevatorByBuilding(building.designation);
             let newElevatorCode=1;
             if(latestElevatorCode!=null){
-                newElevatorCode=newElevatorCode+1;
+                newElevatorCode=+latestElevatorCode.code+1;
             }
             const elevatorFloorsServed=await Promise.all(elevatorDTO.floorsServed.map(floor => this.floorRepo.findByBuildingAndNumber(building.id.toString(), +floor)));
 
