@@ -7,12 +7,12 @@ import { Joi, celebrate } from "celebrate";
 const route = Router();
 
 export default(app: Router) =>{
-    app.use('/robotType', route);
+    app.use('/robotTypes', route);
 
     const ctrl = Container.get(config.controllers.robotType.name) as IRobotTypeController;
 
     route.post(
-        '/create',
+        '',
         celebrate({
             body: Joi.object({
                 name: Joi.string().required(),

@@ -7,11 +7,11 @@ import { celebrate, Joi } from "celebrate";
 const route = Router();
 
 export default (app: Router) => {
-  app.use("/pathway", route);
+  app.use("/pathways", route);
   const ctrl = Container.get(config.controllers.pathway.name) as IPathwayController;
 
   route.post(
-    "/create",
+    "",
     celebrate({
       body: Joi.object({
         buildingSource: Joi.string().required(),
