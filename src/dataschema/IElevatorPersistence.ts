@@ -3,4 +3,8 @@ export interface IElevatorPersistence{
   designation: string;
   buildingDesignation: string;
   floorsServed: string[];
+  brand: string;
+  modelE: string;
+  serialNumber: string;
+  description: string;
 }

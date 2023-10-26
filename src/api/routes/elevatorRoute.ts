@@ -14,7 +14,11 @@ export default (app: Router) => {
       body: Joi.object({
         designation: Joi.string().required(),
         buildingDesignation: Joi.string().required(),
-        floorsServed: Joi.array().required()
+        floorsServed: Joi.array().required(),
+        brand: Joi.string(),
+        modelE: Joi.string(),
+        serialNumber: Joi.string(),
+        description: Joi.string(),
       })
     }),
     (req,res,next) => ctrl.createElevator(req,res,next)
@@ -23,9 +27,26 @@ export default (app: Router) => {
       "/list",
       celebrate({
           body: Joi.object({
-              designation: Joi.string().required()
+              buildingDesignation: Joi.string().required()
           })
       }),
-      (req,res,next) => ctrl.listElevators(req,res,next)
+      (req,res,next) => ctrl.listElevator(req,res,next)
+  );
+  route.put(
+      "/edit",
+      celebrate({
+            body: Joi.object({
+                id: Joi.string().required(),
+                code: Joi.string(),
+                designation: Joi.string(),
+                buildingDesignation: Joi.string(),
+                floorsServed: Joi.array(),
+                brand: Joi.string(),
+                modelE: Joi.string(),
+                serialNumber: Joi.string(),
+                description: Joi.string(),
+            })
+        }),
+        (req,res,next) => ctrl.updateElevator(req,res,next)
   );
 }

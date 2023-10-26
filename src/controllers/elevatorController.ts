@@ -23,7 +23,7 @@ export default class ElevatorController implements IElevatorController{
       return next(error);
     }
   }
-  public async listElevators(req:Request,res:Response,next:NextFunction){
+  public async listElevator(req:Request,res:Response,next:NextFunction){
     try{
       const listOrError=await this.elevatorServiceInstance.listElevator(req.body.buildingDesignation) as Result<IElevatorDTO[]>;
       if(listOrError.isFailure){
@@ -32,6 +32,18 @@ export default class ElevatorController implements IElevatorController{
       const elevators=listOrError.getValue();
       return res.json(elevators).status(201);
     } catch (error){
+      return next(error);
+    }
+  }
+  public async updateElevator(req:Request,res:Response,next:NextFunction){
+    try{
+      const elevatorOrError=await this.elevatorServiceInstance.updateElevator(req.body as IElevatorDTO) as Result<IElevatorDTO>;
+      if(elevatorOrError.isFailure){
+        return res.status(402).send();
+      }
+      const elevatorDTO= elevatorOrError.getValue();
+      return res.json( elevatorDTO).status(201);
+    }catch (error){
       return next(error);
     }
   }

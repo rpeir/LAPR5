@@ -7,6 +7,10 @@ const ElevatorSchema = new mongoose.Schema({
   designation: {type: String},
   buildingDesignation: {type: String},
   floorsServed: {type: [String]},
+      brand: {type: String},
+    modelE: {type: String},
+    serialNumber: {type: String},
+      description: {type: String},
 },
 {timestamps:true}
 );
