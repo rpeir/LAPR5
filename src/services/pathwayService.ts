@@ -53,7 +53,6 @@ export default class PathwayService implements IPathwayService {
         floorDestination = floorDestinationOrError.getValue();
       }
 
-      console.log(floorDestination)
 
       const pathwayOrError = Pathway.create({
         buildingSource: buildingSource,

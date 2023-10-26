@@ -21,7 +21,7 @@ export class PathwayMap extends Mapper<Pathway> {
     const buildingSource = await buildingRepo.findById(raw.buildingSource);
     const buildingDestination = await buildingRepo.findById(raw.buildingDestiny);
     const floorSource = await floorRepo.findById( raw.floorSource);
-    const floorDestination = await floorRepo.findById(raw.floorDestiny);
+    const floorDestination = await floorRepo.findById(raw.floorDestination);
 
     const pathwayOrError = Pathway.create({
       buildingSource: buildingSource,
