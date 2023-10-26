@@ -19,4 +19,13 @@ export default (app: Router) => {
     }),
     (req,res,next) => ctrl.createElevator(req,res,next)
   );
+  route.get(
+      "/list",
+      celebrate({
+          body: Joi.object({
+              designation: Joi.string().required()
+          })
+      }),
+      (req,res,next) => ctrl.listElevators(req,res,next)
+  );
 }
