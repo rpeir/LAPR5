@@ -39,6 +39,10 @@ export default async ({ expressApp }) => {
     name: "floorSchema",
     schema: "../persistence/schemas/floorSchema"
   };
+  const elevatorSchema = {
+    name: "elevatorSchema",
+    schema: "../persistence/schemas/elevatorSchema"
+  };
 
   const roleController = {
     name: config.controllers.role.name,
@@ -63,7 +67,11 @@ export default async ({ expressApp }) => {
   const floorController ={
     name: config.controllers.floor.name,
     path: config.controllers.floor.path
-  }
+  };
+  const elevatorController = {
+    name: config.controllers.elevator.name,
+    path: config.controllers.elevator.path
+  };
 
   const roleRepo = {
     name: config.repos.role.name,
@@ -92,7 +100,11 @@ export default async ({ expressApp }) => {
   const floorRepo = {
     name: config.repos.floor.name,
     path: config.repos.floor.path
-  }
+  };
+  const elevatorRepo = {
+    name: config.repos.elevator.name,
+    path: config.repos.elevator.path
+  };
 
   const roleService = {
     name: config.services.role.name,
@@ -116,7 +128,11 @@ export default async ({ expressApp }) => {
   const floorService = {
     name: config.services.floor.name,
     path: config.services.floor.path
-  }
+  };
+    const elevatorService = {
+        name: config.services.elevator.name,
+        path: config.services.elevator.path
+    };
 
   await dependencyInjectorLoader({
     mongoConnection,
@@ -126,7 +142,8 @@ export default async ({ expressApp }) => {
       robotTypeSchema,
       robotSchema,
       buildingSchema,
-      floorSchema
+      floorSchema,
+        elevatorSchema
     ],
 
     controllers: [
@@ -134,7 +151,8 @@ export default async ({ expressApp }) => {
       robotTypeController,
       robotController,
       buildingController,
-      floorController
+      floorController,
+        elevatorController
     ],
 
     repos: [
@@ -143,7 +161,8 @@ export default async ({ expressApp }) => {
       robotTypeRepo,
       robotRepo,
       buildingRepo,
-      floorRepo
+      floorRepo,
+        elevatorRepo
     ],
 
     services: [
@@ -151,7 +170,8 @@ export default async ({ expressApp }) => {
       robotTypeService,
       robotService,
       buildingService,
-      floorService
+      floorService,
+        elevatorService
     ]
   });
   Logger.info("✌️ Schemas, Controllers, Repositories, Services, etc. loaded");

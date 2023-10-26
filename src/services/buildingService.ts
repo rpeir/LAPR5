@@ -23,7 +23,6 @@ export default class BuildingService implements IBuildingService {
       const buildingLength=buildingDTO.length;
       const buildingWidth=buildingDTO.width;
       const buildingHeight=buildingDTO.height;
-      ;
 
 
 
