@@ -1,4 +1,4 @@
-export interface IFloorDTO{
+export interface IFloorDTO {
   domainId: string;
   building: string;
   description: string;

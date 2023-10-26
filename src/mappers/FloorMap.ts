@@ -1,16 +1,16 @@
-import { Mapper } from "../core/infra/Mapper";
-import { Floor } from "../domain/floor";
-import { IFloorDTO } from "../dto/IFloorDTO";
-import { Container } from "typedi";
-import BuildingRepo from "../repos/buildingRepo";
-import { UniqueEntityID } from "../core/domain/UniqueEntityID";
+import { Mapper } from '../core/infra/Mapper';
+import { Floor } from '../domain/floor';
+import { IFloorDTO } from '../dto/IFloorDTO';
+import { Container } from 'typedi';
+import BuildingRepo from '../repos/buildingRepo';
+import { UniqueEntityID } from '../core/domain/UniqueEntityID';
 
 export class FloorMap extends Mapper<Floor> {
   public static toDTO(floor: Floor) {
     return {
       building: floor.building.id.toString(),
       description: floor.description,
-      floorNr: floor.floorNr
+      floorNr: floor.floorNr,
     } as IFloorDTO;
   }
 
@@ -18,13 +18,16 @@ export class FloorMap extends Mapper<Floor> {
     const repo = Container.get(BuildingRepo);
     const building = await repo.findById(raw.building);
 
-    const floorOrError = Floor.create({
-      building: building,
-      description: raw.description,
-      floorNr: raw.floorNr
-    }, new UniqueEntityID(raw.domainId));
+    const floorOrError = Floor.create(
+      {
+        building: building,
+        description: raw.description,
+        floorNr: raw.floorNr,
+      },
+      new UniqueEntityID(raw.domainId),
+    );
 
-    floorOrError.isFailure ? console.log(floorOrError.error) : "";
+    floorOrError.isFailure ? console.log(floorOrError.error) : '';
 
     return floorOrError.isSuccess ? floorOrError.getValue() : null;
   }
@@ -34,7 +37,7 @@ export class FloorMap extends Mapper<Floor> {
       domainId: floor.id.toString(),
       building: floor.building.id.toString(),
       description: floor.description,
-      floorNr: floor.floorNr
+      floorNr: floor.floorNr,
     };
     return raw;
   }

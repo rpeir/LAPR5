@@ -1,31 +1,27 @@
-import { Inject, Service } from "typedi";
-import { Floor } from "../domain/floor";
-import IFloorRepo from "../services/IRepos/IFloorRepo";
-import { Model } from "mongoose";
-import { Document } from "mongodb";
-import { IFloorPersistence } from "../dataschema/IFloorPersistence";
-import { FloorMap } from "../mappers/FloorMap";
-import { FloorId } from "../domain/floorId";
-import { BuildingId } from "../domain/buildingId";
-import {Building} from "../domain/building";
+import { Inject, Service } from 'typedi';
+import { Floor } from '../domain/floor';
+import IFloorRepo from '../services/IRepos/IFloorRepo';
+import { Model } from 'mongoose';
+import { Document } from 'mongodb';
+import { IFloorPersistence } from '../dataschema/IFloorPersistence';
+import { FloorMap } from '../mappers/FloorMap';
+import { FloorId } from '../domain/floorId';
+import { BuildingId } from '../domain/buildingId';
+import { Building } from '../domain/building';
 
 @Service()
 export default class FloorRepo implements IFloorRepo {
-  constructor(
-    @Inject("floorSchema") private floorSchema: Model<IFloorPersistence & Document>
-  ) {
-  }
+  constructor(@Inject('floorSchema') private floorSchema: Model<IFloorPersistence & Document>) {}
 
   public async findByBuildingIdAndFloorNr(buildingId: string, floorNr: number): Promise<Floor> {
     const query = { building: buildingId, floorNr: floorNr };
     const floorRecord = await this.floorSchema.findOne(query);
     return FloorMap.toDomain(floorRecord);
-
   }
 
   private createBaseQuery(): any {
     return {
-      where: {}
+      where: {},
     };
   }
 
@@ -70,7 +66,7 @@ export default class FloorRepo implements IFloorRepo {
     }
   }
   public async findByBuildingAndNumber(building: string | number, number: number): Promise<Floor> {
-    const query = {building: building, floorNr: number};
+    const query = { building: building, floorNr: number };
     const floorRecord = await this.floorSchema.findOne(query);
     if (floorRecord != null) {
       return FloorMap.toDomain(floorRecord);
@@ -96,13 +92,13 @@ export default class FloorRepo implements IFloorRepo {
     const records = await this.floorSchema.aggregate([
       {
         $group: {
-          _id: "$building",
-          count: { $sum: 1 }
+          _id: '$building',
+          count: { $sum: 1 },
         },
       },
       {
         $match: {
-          count: { $gte: min, $lte: max }
+          count: { $gte: min, $lte: max },
         },
       },
     ]);
@@ -111,9 +107,3 @@ export default class FloorRepo implements IFloorRepo {
     return buildingsId;
   }
 }
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-export interface IFloorPersistence{
+export interface IFloorPersistence {
   domainId: string;
   building: string;
   description: string;

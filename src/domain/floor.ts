@@ -1,8 +1,8 @@
-import { AggregateRoot } from "../core/domain/AggregateRoot";
-import { UniqueEntityID } from "../core/domain/UniqueEntityID";
-import { Result } from "../core/logic/Result";
-import { Guard } from "../core/logic/Guard";
-import { Building } from "./building";
+import { AggregateRoot } from '../core/domain/AggregateRoot';
+import { UniqueEntityID } from '../core/domain/UniqueEntityID';
+import { Result } from '../core/logic/Result';
+import { Guard } from '../core/logic/Guard';
+import { Building } from './building';
 
 interface FloorProps {
   description: string;
@@ -40,11 +40,10 @@ export class Floor extends AggregateRoot<FloorProps> {
   }
 
   public static create(props: FloorProps, id?: UniqueEntityID): Result<Floor> {
-
     const guardedProps = [
-      { argument: props.description, argumentName: "description" },
-      { argument: props.floorNr, argumentName: "floorNr" },
-      { argument: props.building, argumentName: "building" }
+      { argument: props.description, argumentName: 'description' },
+      { argument: props.floorNr, argumentName: 'floorNr' },
+      { argument: props.building, argumentName: 'building' },
     ];
 
     const guardResult = Guard.againstNullOrUndefinedBulk(guardedProps);
@@ -52,9 +51,12 @@ export class Floor extends AggregateRoot<FloorProps> {
     if (!guardResult.succeeded) {
       return Result.fail<Floor>(guardResult.message);
     } else {
-      const user = new Floor({
-        ...props
-      }, id);
+      const user = new Floor(
+        {
+          ...props,
+        },
+        id,
+      );
 
       return Result.ok<Floor>(user);
     }

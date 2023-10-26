@@ -1,27 +1,24 @@
-import IFloorService from "./IServices/IFloorService";
-import { IFloorDTO } from "../dto/IFloorDTO";
-import { Result } from "../core/logic/Result";
-import { Inject, Service } from "typedi";
-import config from "../../config";
-import IBuildingRepo from "./IRepos/IBuildingRepo";
-import IFloorRepo from "./IRepos/IFloorRepo";
-import { Building } from "../domain/building";
-import { Floor } from "../domain/floor";
-import { FloorMap } from "../mappers/FloorMap";
-import { IBuildingDTO } from "../dto/IBuildingDTO";
-import { BuildingMap } from "../mappers/BuildingMap";
+import IFloorService from './IServices/IFloorService';
+import { IFloorDTO } from '../dto/IFloorDTO';
+import { Result } from '../core/logic/Result';
+import { Inject, Service } from 'typedi';
+import config from '../../config';
+import IBuildingRepo from './IRepos/IBuildingRepo';
+import IFloorRepo from './IRepos/IFloorRepo';
+import { Building } from '../domain/building';
+import { Floor } from '../domain/floor';
+import { FloorMap } from '../mappers/FloorMap';
+import { IBuildingDTO } from '../dto/IBuildingDTO';
+import { BuildingMap } from '../mappers/BuildingMap';
 
 @Service()
 export default class FloorService implements IFloorService {
   constructor(
     @Inject(config.repos.building.name) private buildingRepo: IBuildingRepo,
-    @Inject(config.repos.floor.name) private floorRepo: IFloorRepo
-  ) {
-  }
+    @Inject(config.repos.floor.name) private floorRepo: IFloorRepo,
+  ) {}
 
   public async createFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>> {
-
-
     try {
       let building;
       const buildingOrError = await this.getBuildingByDesignation(floorDTO.building);
@@ -34,7 +31,7 @@ export default class FloorService implements IFloorService {
       const floorOrError = Floor.create({
         description: floorDTO.description,
         floorNr: floorDTO.floorNr,
-        building: building
+        building: building,
       });
 
       if (floorOrError.isFailure) {
@@ -48,7 +45,6 @@ export default class FloorService implements IFloorService {
       throw err;
     }
   }
-
 
   public async getBuildingByDesignation(buildingDesignation: string) {
     const building = await this.buildingRepo.findByDesignation(buildingDesignation);
@@ -83,7 +79,7 @@ export default class FloorService implements IFloorService {
     try {
       const buildings = await this.floorRepo.findBuildingByFloorMaxMin(max, min);
       if (buildings.length === 0) {
-        return Result.fail<IBuildingDTO[]>("Couldn't find buildings with floors between " + min + " and " + max);
+        return Result.fail<IBuildingDTO[]>("Couldn't find buildings with floors between " + min + ' and ' + max);
       }
 
       const buildingsOrError = [];
@@ -104,7 +100,7 @@ export default class FloorService implements IFloorService {
     try {
       const floor = await this.floorRepo.findById(floorDTO.domainId);
       if (floor === null) {
-        return Result.fail<IFloorDTO>("Floor not found");
+        return Result.fail<IFloorDTO>('Floor not found');
       } else {
         floor.floorNr = floorDTO.floorNr;
         floor.description = floorDTO.description;
@@ -117,5 +113,3 @@ export default class FloorService implements IFloorService {
     }
   }
 }
-
-
