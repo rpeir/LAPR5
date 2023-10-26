@@ -54,9 +54,9 @@ export class RobotType extends AggregateRoot<RobotTypeProps> {
     if (!guardResult.succeeded) {
       return Result.fail<RobotType>(guardResult.message);
     } else {
-      const tipoRobot = new RobotType({ ...props }, id);
+      const robotType = new RobotType({ ...props }, id);
 
-      return Result.ok<RobotType>(tipoRobot);
+      return Result.ok<RobotType>(robotType);
     }
   }
 

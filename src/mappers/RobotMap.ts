@@ -23,7 +23,8 @@ export class RobotMap extends  Mapper<Robot>{
     const nickName = RobotNickName.create(raw.nickName);
     const description = RobotDescription.create(raw.description);
     const repo  = Container.get(RobotTypeRepo);
-    const robotType = await repo.findByName(raw.name);
+    const robotType = await repo.findById(raw.robotType);
+    
 
     const robotOrError = Robot.create({
       nickName: nickName.getValue(),

@@ -16,7 +16,7 @@ export class FloorMap extends Mapper<Floor> {
 
   public static async toDomain(raw: any) {
     const repo = Container.get(BuildingRepo);
-    const building = await repo.findByDesignation(raw.designation);
+    const building = await repo.findById(raw.building);
 
     const floorOrError = Floor.create({
       building: building,
