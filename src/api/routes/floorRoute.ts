@@ -22,7 +22,7 @@ export default (app: Router) => {
     (req, res, next) => ctrl.createFloor(req, res, next)
   );
 
-  route.get("",
+  route.get("/building",
     (req, res, next) => ctrl.getFloors(req, res, next)
   );
 
