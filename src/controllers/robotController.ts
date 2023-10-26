@@ -1,6 +1,6 @@
 import { Inject, Service } from "typedi";
 import IRobotController from "./IControllers/IRobotController";
-import e from "express";
+import { NextFunction, Request, Response } from "express";
 import config from "../../config";
 import IRobotService from "../services/IServices/IRobotService";
 import { IRobotDTO } from "../dto/IRobotDTO";
@@ -14,18 +14,17 @@ export default class RobotController implements IRobotController {
   ) {
   }
 
-  public async createRobot(req: e.Request, res: e.Response, next: e.NextFunction) {
+  public async createRobot(req: Request, res: Response, next: NextFunction) {
     try {
       const robotOrError = await this.robotService.createRobot(req.body as IRobotDTO) as Result<IRobotDTO>;
 
-      if (robotOrError.isFailure){
+      if (robotOrError.isFailure) {
         return res.status(402).send(robotOrError.error);
       }
 
-      const  robotDTO = robotOrError.getValue();
+      const robotDTO = robotOrError.getValue();
       return res.json(robotDTO).status(201);
-    }
-    catch (error){
+    } catch (error) {
       throw error;
     }
   }

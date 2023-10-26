@@ -1,7 +1,7 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 // Set the NODE_ENV to 'development' by default
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
 const envFound = dotenv.config();
 if (!envFound) {
@@ -30,14 +30,14 @@ export default {
    * Used by winston logger
    */
   logs: {
-    level: process.env.LOG_LEVEL || 'info',
+    level: process.env.LOG_LEVEL || "info"
   },
 
   /**
    * API configs
    */
   api: {
-    prefix: '/api',
+    prefix: "/api"
   },
 
   controllers: {
@@ -51,13 +51,18 @@ export default {
       path: "../controllers/robotTypeController"
     },
 
-    robot:{
+    robot: {
       name: "RobotController",
       path: "../controllers/robotController"
     },
-    building:{
+    building: {
       name: "BuildingController",
       path: "../controllers/buildingController"
+    },
+
+    floor: {
+      name: "FloorController",
+      path: "../controllers/floorController"
     }
   },
 
@@ -72,7 +77,7 @@ export default {
       path: "../repos/userRepo"
     },
 
-    robotType:{
+    robotType: {
       name: "RobotTypeRepo",
       path: "../repos/robotTypeRepo"
     },
@@ -86,26 +91,37 @@ export default {
       name: "BuildingRepo",
       path: "../repos/buildingRepo"
     },
+
+    floor: {
+      name: "FloorRepo",
+      path: "../repos/floorRepo"
+    }
   },
 
-    services: {
-      role: {
-        name: "RoleService",
-        path: "../services/roleService"
-      },
+  services: {
+    role: {
+      name: "RoleService",
+      path: "../services/roleService"
+    },
 
     robotType: {
       name: "robotTypeService",
       path: "../services/robotTypeService"
     },
 
-      robot: {
-        name: "RobotService",
-        path: "../services/robotService"
-      },
-      building: {
-        name: "BuildingService",
-        path: "../services/buildingService"
-      }
+    robot: {
+      name: "RobotService",
+      path: "../services/robotService"
     },
+
+    building: {
+      name: "BuildingService",
+      path: "../services/buildingService"
+    },
+
+    floor: {
+      name: "FloorService",
+      path: "../services/floorService"
+    }
+  }
 };

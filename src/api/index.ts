@@ -6,6 +6,7 @@ import robotRoute from "./routes/robotRoute";
 import robotTypeRoute from "./routes/robotTypeRoute";
 
 import buildingRoute from "./routes/buildingRoute";
+import floorRoute from "./routes/floorRoute";
 export default () => {
 	const app = Router();
 
@@ -15,6 +16,7 @@ export default () => {
   robotTypeRoute(app);
   robotRoute(app);
   buildingRoute(app);
+  floorRoute(app);
 
 	return app
 }
