@@ -6,11 +6,11 @@ import { celebrate, Joi } from "celebrate";
 
 const route = Router();
 export default (app: Router) => {
-  app.use("/robot", route);
+  app.use("/robots", route);
   const ctrl = Container.get(config.controllers.robot.name) as IRobotController;
 
   route.post(
-    "/create",
+    "",
     celebrate({
       body: Joi.object({
         nickName: Joi.string().required(),

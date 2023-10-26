@@ -67,6 +67,11 @@ export default {
     elevator:{
         name: "ElevatorController",
         path: "../controllers/elevatorController"
+    },
+
+    pathway: {
+      name: "PathwayController",
+      path: "../controllers/pathwayController"
     }
   },
 
@@ -100,6 +105,11 @@ export default {
       name: "FloorRepo",
       path: "../repos/floorRepo"
     },
+
+    pathway: {
+      name: "PathwayRepo",
+      path: "../repos/pathwayRepo"
+    },
     elevator: {
       name: "ElevatorRepo",
       path: "../repos/elevatorRepo"
@@ -130,6 +140,11 @@ export default {
     floor: {
       name: "FloorService",
       path: "../services/floorService"
+    },
+
+    pathway: {
+      name: "PathwayService",
+      path: "../services/pathwayService"
     },
     elevator:{
       name: "ElevatorService",

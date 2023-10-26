@@ -44,6 +44,11 @@ export default async ({ expressApp }) => {
     schema: "../persistence/schemas/elevatorSchema"
   };
 
+  const pathwaySchema = {
+    name: "pathwaySchema",
+    schema: "../persistence/schemas/pathwaySchema"
+  }
+
   const roleController = {
     name: config.controllers.role.name,
     path: config.controllers.role.path
@@ -72,6 +77,11 @@ export default async ({ expressApp }) => {
     name: config.controllers.elevator.name,
     path: config.controllers.elevator.path
   };
+
+  const pathwayController = {
+    name: config.controllers.pathway.name,
+    path: config.controllers.pathway.path
+  }
 
   const roleRepo = {
     name: config.repos.role.name,
@@ -106,6 +116,11 @@ export default async ({ expressApp }) => {
     path: config.repos.elevator.path
   };
 
+  const pathwayRepo = {
+    name: config.repos.pathway.name,
+    path: config.repos.pathway.path
+  }
+
   const roleService = {
     name: config.services.role.name,
     path: config.services.role.path
@@ -134,6 +149,11 @@ export default async ({ expressApp }) => {
         path: config.services.elevator.path
     };
 
+  const pathwayService = {
+    name: config.services.pathway.name,
+    path: config.services.pathway.path
+  }
+
   await dependencyInjectorLoader({
     mongoConnection,
     schemas: [
@@ -143,7 +163,9 @@ export default async ({ expressApp }) => {
       robotSchema,
       buildingSchema,
       floorSchema,
-        elevatorSchema
+        elevatorSchema,
+      floorSchema,
+      pathwaySchema
     ],
 
     controllers: [
@@ -151,6 +173,8 @@ export default async ({ expressApp }) => {
       robotTypeController,
       robotController,
       buildingController,
+      floorController,
+      pathwayController,
       floorController,
         elevatorController
     ],
@@ -162,7 +186,9 @@ export default async ({ expressApp }) => {
       robotRepo,
       buildingRepo,
       floorRepo,
-        elevatorRepo
+        elevatorRepo,
+      floorRepo,
+      pathwayRepo
     ],
 
     services: [
@@ -170,6 +196,8 @@ export default async ({ expressApp }) => {
       robotTypeService,
       robotService,
       buildingService,
+      floorService,
+      pathwayService,
       floorService,
         elevatorService
     ]

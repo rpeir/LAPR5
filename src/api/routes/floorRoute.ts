@@ -7,11 +7,11 @@ import { celebrate, Joi } from "celebrate";
 const route = Router();
 
 export default (app: Router) => {
-  app.use("/floor", route);
+  app.use("/floors", route);
   const ctrl = Container.get(config.controllers.floor.name) as IFloorController;
 
   route.post(
-    "/create",
+    "",
     celebrate({
       body: Joi.object({
         floorNr: Joi.number().required(),
