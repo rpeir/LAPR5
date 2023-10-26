@@ -62,9 +62,9 @@ export default class BuildingRepo implements IBuildingRepo {
       return !!buildingDocument === true;
     }
 
-  public async  findById(buildingId: RobotTypeID | string): Promise<Building> {
+  public async  findById(buildingId: BuildingId | string): Promise<Building> {
     const idx=buildingId instanceof BuildingId ? (<BuildingId> buildingId) : buildingId;
-    const query = { buildingCode: idx};
+    const query = { domainId: idx};
     const buildingRecord = await this.buildingSchema.findOne( query);
     if (buildingRecord != null) {
       return BuildingMap.toDomain(buildingRecord);

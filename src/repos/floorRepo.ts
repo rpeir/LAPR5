@@ -83,6 +83,25 @@ export default class FloorRepo implements IFloorRepo {
       return [];
     }
   }
+
+  public async findBuildingByFloorMaxMin(max: number, min: number) {
+    const records = await this.floorSchema.aggregate([
+      {
+        $group: {
+          _id: "$building",
+          count: { $sum: 1 }
+        },
+      },
+      {
+        $match: {
+          count: { $gte: min, $lte: max }
+        },
+      },
+    ]);
+
+    const buildingsId = records.map(record => record._id);
+    return buildingsId;
+  }
 }
 
 

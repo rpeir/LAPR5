@@ -26,6 +26,9 @@ export default (app: Router) => {
     (req, res, next) => ctrl.getFloorsOfBuilding(req, res, next)
   );
 
-
+  route.get(
+    "/building/max/min",
+    (req, res, next) => ctrl.getBuildingFloorMaxMin(req, res, next)
+  );
 
 }
