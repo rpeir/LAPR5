@@ -21,4 +21,11 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.createFloor(req, res, next)
   );
+
+  route.get("/building",
+    (req, res, next) => ctrl.getFloorsOfBuilding(req, res, next)
+  );
+
+
+
 }

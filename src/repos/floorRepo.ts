@@ -6,6 +6,7 @@ import { Document } from "mongodb";
 import { IFloorPersistence } from "../dataschema/IFloorPersistence";
 import { FloorMap } from "../mappers/FloorMap";
 import { FloorId } from "../domain/floorId";
+import { BuildingId } from "../domain/buildingId";
 import {Building} from "../domain/building";
 
 @Service()
@@ -18,7 +19,7 @@ export default class FloorRepo implements IFloorRepo {
   public async findByBuildingIdAndFloorNr(buildingId: string, floorNr: number): Promise<Floor> {
     const query = { building: buildingId, floorNr: floorNr };
     const floorRecord = await this.floorSchema.findOne(query);
-      return FloorMap.toDomain(floorRecord);
+    return FloorMap.toDomain(floorRecord);
 
   }
 
@@ -69,16 +70,21 @@ export default class FloorRepo implements IFloorRepo {
       throw err;
     }
   }
-  public async findByBuildingAndNumber(building: string | number, number: number): Promise<Floor> {
-    const query = {building: building, floorNr: number};
-    const floorRecord = await this.floorSchema.findOne(query);
-    if (floorRecord != null) {
-      return FloorMap.toDomain(floorRecord);
+
+  public async findByBuildingId(buildingId: BuildingId | string): Promise<Floor[]> {
+    const idX = buildingId instanceof BuildingId ? (<BuildingId>buildingId).id.toValue() : buildingId;
+
+    const query = { building: idX };
+    const floorRecords = await this.floorSchema.find(query);
+
+    if (floorRecords.length !== 0) {
+      return await Promise.all(floorRecords.map(floorRecord => FloorMap.toDomain(floorRecord)));
     } else {
-      return null;
+      return [];
     }
   }
 }
+
 
 
 
