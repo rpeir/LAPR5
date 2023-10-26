@@ -9,4 +9,5 @@ export default interface IFloorRepo extends Repo<Floor> {
   findByBuildingId(buildingId: string): Promise<Floor[]> ;
   findByBuildingAndNumber(domainID: string, number: number): Promise<Floor>;
 
+  findBuildingByFloorMaxMin(max: number, min: number);
 }

@@ -8,6 +8,8 @@ import IFloorRepo from "./IRepos/IFloorRepo";
 import { Building } from "../domain/building";
 import { Floor } from "../domain/floor";
 import { FloorMap } from "../mappers/FloorMap";
+import { IBuildingDTO } from "../dto/IBuildingDTO";
+import { BuildingMap } from "../mappers/BuildingMap";
 
 @Service()
 export default class FloorService implements IFloorService {
@@ -72,6 +74,27 @@ export default class FloorService implements IFloorService {
       }
       const floorDTOs = floors.map(floor => FloorMap.toDTO(floor)) as IFloorDTO[]
       return Result.ok<IFloorDTO[]>(floorDTOs);
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  public async getBuildingFloorMaxMin(max: number, min: number): Promise<Result<IBuildingDTO[]>> {
+    try {
+      const buildings = await this.floorRepo.findBuildingByFloorMaxMin(max, min);
+      if (buildings.length === 0) {
+        return Result.fail<IBuildingDTO[]>("Couldn't find buildings with floors between " + min + " and " + max);
+      }
+
+      const buildingsOrError = [];
+
+      for (const buildingId of buildings) {
+        const building = await this.buildingRepo.findById(buildingId);
+        buildingsOrError.push(building);
+      }
+
+      const buildingsDTOs =  buildingsOrError.map((building: Building) => BuildingMap.toDTO(building)) as IBuildingDTO[];
+      return Result.ok<IBuildingDTO[]>(buildingsDTOs);
     } catch (err) {
       throw err;
     }
