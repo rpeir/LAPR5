@@ -39,6 +39,10 @@ export default async ({ expressApp }) => {
     name: "floorSchema",
     schema: "../persistence/schemas/floorSchema"
   };
+  const elevatorSchema = {
+    name: "elevatorSchema",
+    schema: "../persistence/schemas/elevatorSchema"
+  };
 
   const pathwaySchema = {
     name: "pathwaySchema",
@@ -68,7 +72,11 @@ export default async ({ expressApp }) => {
   const floorController ={
     name: config.controllers.floor.name,
     path: config.controllers.floor.path
-  }
+  };
+  const elevatorController = {
+    name: config.controllers.elevator.name,
+    path: config.controllers.elevator.path
+  };
 
   const pathwayController = {
     name: config.controllers.pathway.name,
@@ -102,7 +110,11 @@ export default async ({ expressApp }) => {
   const floorRepo = {
     name: config.repos.floor.name,
     path: config.repos.floor.path
-  }
+  };
+  const elevatorRepo = {
+    name: config.repos.elevator.name,
+    path: config.repos.elevator.path
+  };
 
   const pathwayRepo = {
     name: config.repos.pathway.name,
@@ -131,7 +143,11 @@ export default async ({ expressApp }) => {
   const floorService = {
     name: config.services.floor.name,
     path: config.services.floor.path
-  }
+  };
+    const elevatorService = {
+        name: config.services.elevator.name,
+        path: config.services.elevator.path
+    };
 
   const pathwayService = {
     name: config.services.pathway.name,
@@ -147,6 +163,8 @@ export default async ({ expressApp }) => {
       robotSchema,
       buildingSchema,
       floorSchema,
+        elevatorSchema,
+      floorSchema,
       pathwaySchema
     ],
 
@@ -156,7 +174,9 @@ export default async ({ expressApp }) => {
       robotController,
       buildingController,
       floorController,
-      pathwayController
+      pathwayController,
+      floorController,
+        elevatorController
     ],
 
     repos: [
@@ -165,6 +185,8 @@ export default async ({ expressApp }) => {
       robotTypeRepo,
       robotRepo,
       buildingRepo,
+      floorRepo,
+        elevatorRepo,
       floorRepo,
       pathwayRepo
     ],
@@ -175,7 +197,9 @@ export default async ({ expressApp }) => {
       robotService,
       buildingService,
       floorService,
-      pathwayService
+      pathwayService,
+      floorService,
+        elevatorService
     ]
   });
   Logger.info("✌️ Schemas, Controllers, Repositories, Services, etc. loaded");

@@ -7,6 +7,7 @@ import { IFloorPersistence } from "../dataschema/IFloorPersistence";
 import { FloorMap } from "../mappers/FloorMap";
 import { FloorId } from "../domain/floorId";
 import { BuildingId } from "../domain/buildingId";
+import {Building} from "../domain/building";
 
 @Service()
 export default class FloorRepo implements IFloorRepo {
@@ -82,7 +83,18 @@ export default class FloorRepo implements IFloorRepo {
       return [];
     }
   }
+
+  public async findByBuildingAndNumber(building: string | number, number: number): Promise<Floor> {
+    const query = {building: building, floorNr: number};
+    const floorRecord = await this.floorSchema.findOne(query);
+    if (floorRecord != null) {
+      return FloorMap.toDomain(floorRecord);
+    } else {
+      return null;
+    }
+  }
 }
+
 
 
 

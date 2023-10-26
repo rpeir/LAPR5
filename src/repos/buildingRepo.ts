@@ -11,10 +11,11 @@ import { BuildingId } from "../domain/buildingId";
 import { FloorMap } from "../mappers/FloorMap";
 
 @Service()
-export default class BuildingRepo implements IBuildingRepo{
-    private models: any;
+export default class BuildingRepo implements IBuildingRepo {
+  private models: any;
 
-    constructor(@Inject('buildingSchema')private buildingSchema : Model<IBuildingPersistence & Document>) {}
+  constructor(@Inject('buildingSchema') private buildingSchema: Model<IBuildingPersistence & Document>) {}
+
   private createBaseQuery(): any {
     return {
       where: {}
