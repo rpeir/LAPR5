@@ -56,6 +56,26 @@ export default class FloorService implements IFloorService {
       return Result.fail("Couldn't find building: " + buildingDesignation);
     }
   }
+
+  public async getFloors(buildingDesignation : string): Promise<Result<IFloorDTO[]>> {
+    try {
+      let building;
+      const buildingOrError = await this.getBuildingByDesignation(buildingDesignation);
+      if (buildingOrError.isFailure) {
+        return Result.fail<IFloorDTO[]>(buildingOrError.error);
+      } else {
+        building = buildingOrError.getValue();
+      }
+      const floors = await this.floorRepo.findByBuildingId(building.id.toString());
+      if (floors.length === 0) {
+        return Result.fail<IFloorDTO[]>("Couldn't find floors for building: " + buildingDesignation);
+      }
+      const floorDTOs = floors.map(floor => FloorMap.toDTO(floor)) as IFloorDTO[]
+      return Result.ok<IFloorDTO[]>(floorDTOs);
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 
