@@ -40,6 +40,11 @@ export default async ({ expressApp }) => {
     schema: "../persistence/schemas/floorSchema"
   };
 
+  const pathwaySchema = {
+    name: "pathwaySchema",
+    schema: "../persistence/schemas/pathwaySchema"
+  }
+
   const roleController = {
     name: config.controllers.role.name,
     path: config.controllers.role.path
@@ -63,6 +68,11 @@ export default async ({ expressApp }) => {
   const floorController ={
     name: config.controllers.floor.name,
     path: config.controllers.floor.path
+  }
+
+  const pathwayController = {
+    name: config.controllers.pathway.name,
+    path: config.controllers.pathway.path
   }
 
   const roleRepo = {
@@ -94,6 +104,11 @@ export default async ({ expressApp }) => {
     path: config.repos.floor.path
   }
 
+  const pathwayRepo = {
+    name: config.repos.pathway.name,
+    path: config.repos.pathway.path
+  }
+
   const roleService = {
     name: config.services.role.name,
     path: config.services.role.path
@@ -118,6 +133,11 @@ export default async ({ expressApp }) => {
     path: config.services.floor.path
   }
 
+  const pathwayService = {
+    name: config.services.pathway.name,
+    path: config.services.pathway.path
+  }
+
   await dependencyInjectorLoader({
     mongoConnection,
     schemas: [
@@ -126,7 +146,8 @@ export default async ({ expressApp }) => {
       robotTypeSchema,
       robotSchema,
       buildingSchema,
-      floorSchema
+      floorSchema,
+      pathwaySchema
     ],
 
     controllers: [
@@ -134,7 +155,8 @@ export default async ({ expressApp }) => {
       robotTypeController,
       robotController,
       buildingController,
-      floorController
+      floorController,
+      pathwayController
     ],
 
     repos: [
@@ -143,7 +165,8 @@ export default async ({ expressApp }) => {
       robotTypeRepo,
       robotRepo,
       buildingRepo,
-      floorRepo
+      floorRepo,
+      pathwayRepo
     ],
 
     services: [
@@ -151,7 +174,8 @@ export default async ({ expressApp }) => {
       robotTypeService,
       robotService,
       buildingService,
-      floorService
+      floorService,
+      pathwayService
     ]
   });
   Logger.info("✌️ Schemas, Controllers, Repositories, Services, etc. loaded");

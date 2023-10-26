@@ -14,6 +14,13 @@ export default class FloorRepo implements IFloorRepo {
   ) {
   }
 
+  public async findByBuildingIdAndFloorNr(buildingId: string, floorNr: number): Promise<Floor> {
+    const query = { building: buildingId, floorNr: floorNr };
+    const floorRecord = await this.floorSchema.findOne(query);
+      return FloorMap.toDomain(floorRecord);
+
+  }
+
   private createBaseQuery(): any {
     return {
       where: {}
@@ -42,15 +49,15 @@ export default class FloorRepo implements IFloorRepo {
   }
 
   public async save(floor: Floor): Promise<Floor> {
-    const query = { domainId: floor.id.toString()};
+    const query = { domainId: floor.id.toString() };
     const floorDocument = await this.floorSchema.findOne(query);
 
     try {
-      if (floorDocument === null){
+      if (floorDocument === null) {
         const rawFloor = FloorMap.toPersistence(floor);
-        const  floorCreated = await this.floorSchema.create(rawFloor);
+        const floorCreated = await this.floorSchema.create(rawFloor);
         return FloorMap.toDomain(floorCreated);
-      }else {
+      } else {
         floorDocument.building = floor.building;
         floorDocument.floorNr = floor.floorNr;
         floorDocument.description = floor.description;

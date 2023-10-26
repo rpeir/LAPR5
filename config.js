@@ -63,6 +63,11 @@ export default {
     floor: {
       name: "FloorController",
       path: "../controllers/floorController"
+    },
+
+    pathway: {
+      name: "PathwayController",
+      path: "../controllers/pathwayController"
     }
   },
 
@@ -95,6 +100,11 @@ export default {
     floor: {
       name: "FloorRepo",
       path: "../repos/floorRepo"
+    },
+
+    pathway: {
+      name: "PathwayRepo",
+      path: "../repos/pathwayRepo"
     }
   },
 
@@ -122,6 +132,11 @@ export default {
     floor: {
       name: "FloorService",
       path: "../services/floorService"
+    },
+
+    pathway: {
+      name: "PathwayService",
+      path: "../services/pathwayService"
     }
   }
 };
