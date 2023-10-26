@@ -74,6 +74,7 @@ package Edificio{
 
 package Piso{
     entity Piso <<Agregate root>> {
+        - numeroPiso
         - descricao
     }
 
@@ -114,6 +115,7 @@ Tarefa.TarefaVigilancia ..|> Tarefa.Tarefa: estende
 Tarefa.TarefaTransporte ..|> Tarefa.Tarefa: estende
 
 Sala.Sala --> CategoriaSala: tipo
+Sala.Sala --> Edificio.Edificio : está em
 
 TipoDeRobot.TipoDeRobot --> "*" TipoTarefa.TipoTarefa: executa
 

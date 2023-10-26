@@ -4,6 +4,7 @@ import { IBuildingDTO } from '../dto/IBuildingDTO';
 import { UniqueEntityID } from '../core/domain/UniqueEntityID';
 
 export class BuildingMap extends Mapper<Building> {
+
   public static toDTO(building: Building): IBuildingDTO {
     return {
       code: building.code.value,

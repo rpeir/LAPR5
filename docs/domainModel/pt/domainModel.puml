@@ -66,6 +66,7 @@ hide methods
     }
 
     entity Piso {
+        - numeroPiso
         - descricao
         - mapaPiso
     }
@@ -101,6 +102,7 @@ TarefaVigilancia ..|> Tarefa: estende
 TarefaTransporte ..|> Tarefa: estende
 
 Sala --> CategoriaSala: tipo
+Sala --> Edificio : está em
 
 TipoDeRobot --> "*" TipoTarefa: executa
 

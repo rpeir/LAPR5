@@ -1,7 +1,7 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
 // Set the NODE_ENV to 'development' by default
-process.env.NODE_ENV = process.env.NODE_ENV || "development";
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 const envFound = dotenv.config();
 if (!envFound) {
@@ -64,6 +64,7 @@ export default {
       name: "FloorController",
       path: "../controllers/floorController"
     },
+
     elevator:{
         name: "ElevatorController",
         path: "../controllers/elevatorController"
@@ -72,6 +73,11 @@ export default {
     pathway: {
       name: "PathwayController",
       path: "../controllers/pathwayController"
+    },
+
+    room: {
+      name: "RoomController",
+      path: "../controllers/roomController"
     }
   },
 
@@ -110,9 +116,15 @@ export default {
       name: "PathwayRepo",
       path: "../repos/pathwayRepo"
     },
+
     elevator: {
       name: "ElevatorRepo",
       path: "../repos/elevatorRepo"
+    },
+
+    room: {
+      name: "RoomRepo",
+      path: "../repos/roomRepo"
     }
   },
 
@@ -146,9 +158,15 @@ export default {
       name: "PathwayService",
       path: "../services/pathwayService"
     },
+
     elevator:{
       name: "ElevatorService",
       path: "../services/elevatorService"
+    },
+
+    room: {
+      name: "RoomService",
+      path: "../services/roomService"
     }
   }
 };

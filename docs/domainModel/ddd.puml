@@ -75,6 +75,7 @@ package Building {
 package Floor{
     entity Floor <<Agregate root>> {
         - description
+        - floorNr
     }
 
     entity FloorMap <<value object>>
@@ -99,14 +100,14 @@ package Room{
 
     enum RoomCategory <<enum>>{
             - Classroom
-            - Cabinet
+            - Office
             - Laboratory
             - Auditorium
     }
 }
 
-package Passage {
-    entity Passage <<Agregate root>>{
+package Pathway {
+    entity Pathway <<Agregate root>>{
     }
 }
 
@@ -114,6 +115,7 @@ Task.VigilanceTask ..|> Task.Task: extends
 Task.PickupDeliveryTask ..|> Task.Task: extends
 
 Room.Room --> RoomCategory: is of a
+Room.Room --> Building.Building: is in
 
 RobotType.RobotType --> "*" TaskType.TaskType: executes
 
@@ -129,7 +131,7 @@ Task.PickupDeliveryTask -> Room.Room: pickup
 
 Task.VigilanceTask -> Floor.Floor: is executed on
 
-Passage.Passage -> "2" Floor.Floor: connects
+Pathway.Pathway -> "2" Floor.Floor: connects
 
 Robot.Robot -> RobotType.RobotType : is of a
 

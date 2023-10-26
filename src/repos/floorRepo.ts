@@ -106,4 +106,11 @@ export default class FloorRepo implements IFloorRepo {
     const buildingsId = records.map(record => record._id);
     return buildingsId;
   }
+
+  public async existsByBuildingAndNumber(building: string | number, number: number): Promise<boolean> {
+    const query = { building: building, floorNr : number };
+    const floorRecord = await this.floorSchema.findOne(query);
+
+    return !!floorRecord === true;
+  }
 }
