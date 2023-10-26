@@ -65,6 +65,7 @@ hide methods
     }
 
     entity Floor {
+        - floorNr
         - description
         - floorMap
     }
@@ -86,18 +87,19 @@ hide methods
 
     note bottom of RoomCategory {
             - Classroom
-            - Cabinet
+            - Office
             - Laboratory
             - Auditorium
     }
 
-    entity Passage {
+    entity Pathway {
     }
 
 VigilanceTask ..|> Task: extends
 PickupDeliveryTask ..|> Task: extends
 
 Room --> RoomCategory: is of a
+Room --> Building : is in
 
 RobotType --> "*" TaskType: executes
 
@@ -112,7 +114,7 @@ PickupDeliveryTask --> Room: pickup
 
 VigilanceTask --> Floor: is executed on
 
-Passage --> "2" Floor: connects
+Pathway --> "2" Floor: connects
 
 Robot --> RobotType : is of a
 

@@ -43,7 +43,7 @@ export class RobotMap extends  Mapper<Robot>{
   }
 
   public static  toPersistence (robot: Robot){
-    const  raw = {
+    const raw = {
       domainId: robot.id.toString(),
       robotCode: robot.robotCode.value,
       nickName: robot.nickName.value,

@@ -7,6 +7,7 @@ import {Elevator} from "../domain/elevator";
 import {ElevatorMap} from "../mappers/ElevatorMap";
 import {Building} from "../domain/building";
 import elevatorSchema from "../persistence/schemas/elevatorSchema";
+import {UniqueEntityID} from "../core/domain/UniqueEntityID";
 
 @Service()
 export default class ElevatorRepo implements IElevatorRepo{
@@ -30,6 +31,10 @@ export default class ElevatorRepo implements IElevatorRepo{
         elevatorDocument.designation= elevator.designation;
         elevatorDocument.buildingDesignation= elevator.buildingDesignation;
         elevatorDocument.floorsServed= elevator.floorsServed.map(floor=>floor.floorNr.toString());
+        elevatorDocument.brand= elevator.brand;
+        elevatorDocument.modelE= elevator.modelE;
+        elevatorDocument.serialNumber= elevator.serialNumber;
+        elevatorDocument.description= elevator.description;
         await elevatorDocument.save();
         return elevator;
       }
@@ -37,8 +42,8 @@ export default class ElevatorRepo implements IElevatorRepo{
         throw err;
     }
   }
-    public async findByCode(code: number): Promise<Elevator>{
-        const query={code: code};
+    public async findById(domainId: UniqueEntityID|string): Promise<Elevator>{
+        const query={domainId: domainId};
         const elevatorRecord = await this.elevatorSchema.findOne(query);
         if (elevatorRecord != null) {
         return ElevatorMap.toDomain(elevatorRecord);

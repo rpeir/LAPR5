@@ -47,7 +47,12 @@ export default async ({ expressApp }) => {
   const pathwaySchema = {
     name: "pathwaySchema",
     schema: "../persistence/schemas/pathwaySchema"
-  }
+  };
+
+  const roomSchema = {
+    name : "roomSchema",
+    schema : "../persistence/schemas/roomSchema"
+  };
 
   const roleController = {
     name: config.controllers.role.name,
@@ -81,6 +86,11 @@ export default async ({ expressApp }) => {
   const pathwayController = {
     name: config.controllers.pathway.name,
     path: config.controllers.pathway.path
+  }
+
+  const roomController = {
+    name : config.controllers.room.name,
+    path : config.controllers.room.path
   }
 
   const roleRepo = {
@@ -121,6 +131,11 @@ export default async ({ expressApp }) => {
     path: config.repos.pathway.path
   }
 
+  const roomRepo = {
+    name : config.repos.room.name,
+    path : config.repos.room.path
+  }
+
   const roleService = {
     name: config.services.role.name,
     path: config.services.role.path
@@ -144,14 +159,19 @@ export default async ({ expressApp }) => {
     name: config.services.floor.name,
     path: config.services.floor.path
   };
-    const elevatorService = {
-        name: config.services.elevator.name,
-        path: config.services.elevator.path
-    };
+  const elevatorService = {
+    name: config.services.elevator.name,
+    path: config.services.elevator.path
+  };
 
   const pathwayService = {
     name: config.services.pathway.name,
     path: config.services.pathway.path
+  }
+
+  const roomService = {
+    name : config.services.room.name,
+    path : config.services.room.path
   }
 
   await dependencyInjectorLoader({
@@ -163,9 +183,9 @@ export default async ({ expressApp }) => {
       robotSchema,
       buildingSchema,
       floorSchema,
-        elevatorSchema,
-      floorSchema,
-      pathwaySchema
+      elevatorSchema,
+      pathwaySchema,
+      roomSchema
     ],
 
     controllers: [
@@ -175,8 +195,8 @@ export default async ({ expressApp }) => {
       buildingController,
       floorController,
       pathwayController,
-      floorController,
-        elevatorController
+      elevatorController,
+      roomController
     ],
 
     repos: [
@@ -186,9 +206,9 @@ export default async ({ expressApp }) => {
       robotRepo,
       buildingRepo,
       floorRepo,
-        elevatorRepo,
-      floorRepo,
-      pathwayRepo
+      elevatorRepo,
+      pathwayRepo,
+      roomRepo
     ],
 
     services: [
@@ -198,8 +218,8 @@ export default async ({ expressApp }) => {
       buildingService,
       floorService,
       pathwayService,
-      floorService,
-        elevatorService
+      elevatorService,
+      roomService
     ]
   });
   Logger.info("✌️ Schemas, Controllers, Repositories, Services, etc. loaded");
