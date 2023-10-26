@@ -55,10 +55,8 @@ export default class BuildingService implements IBuildingService {
           building[key] = buildingDTO[key];
         }
       }
-
       // Save the updated building
       await this.buildingRepo.updateOne(building);
-
       // Return the updated DTO
       const updatedBuildingDTO = BuildingMap.toDTO(building) as IBuildingDTO;
       return Result.ok<IBuildingDTO>(updatedBuildingDTO);
@@ -67,4 +65,21 @@ export default class BuildingService implements IBuildingService {
       throw err;
     }
   }
+  public async listAllBuilding(): Promise<Result<IBuildingDTO[]>> {
+    try {
+      const buildings = await this.buildingRepo.findAll();
+      const buildingsDTO: IBuildingDTO[] = [];
+      for (const buildingPromise of buildings) {
+        // Use await to get the resolved value of the Promise
+        const building = await buildingPromise;
+        if (building) {
+          buildingsDTO.push(BuildingMap.toDTO(building) as IBuildingDTO);
+        }
+      }
+      return Result.ok<IBuildingDTO[]>(buildingsDTO);
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }
