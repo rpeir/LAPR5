@@ -13,4 +13,6 @@ const Floor = new mongoose.Schema(
   },
 );
 
+Floor.index({building: 1, floorNr: 1}, {unique: true});
+
 export default mongoose.model<IFloorPersistence & Document>('Floor', Floor);
