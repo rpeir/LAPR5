@@ -23,7 +23,7 @@ export default (app: Router) => {
   );
 
   route.get("/building",
-    (req, res, next) => ctrl.getFloors(req, res, next)
+    (req, res, next) => ctrl.getFloorsOfBuilding(req, res, next)
   );
 
 

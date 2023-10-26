@@ -28,9 +28,9 @@ export default class FloorController implements IFloorController {
     }
   }
 
-  public async getFloors(req: Request, res: Response, next: NextFunction) {
+  public async getFloorsOfBuilding(req: Request, res: Response, next: NextFunction) {
     try {
-      const floorOrError = await this.floorService.getFloors(req.header("buildingDesignation")) as Result<IFloorDTO[]>;
+      const floorOrError = await this.floorService.getFloorsOfBuilding(req.header("buildingDesignation")) as Result<IFloorDTO[]>;
 
 
       if (floorOrError.isFailure) {

@@ -57,7 +57,7 @@ export default class FloorService implements IFloorService {
     }
   }
 
-  public async getFloors(buildingDesignation : string): Promise<Result<IFloorDTO[]>> {
+  public async getFloorsOfBuilding(buildingDesignation : string): Promise<Result<IFloorDTO[]>> {
     try {
       let building;
       const buildingOrError = await this.getBuildingByDesignation(buildingDesignation);
