@@ -6,8 +6,10 @@ import { RobotDescription } from "./robotDescription";
 import { RobotNickName } from "./robotNickName";
 import { RobotSerialNr } from "./robotSerialNr";
 import { RobotType } from "./robotType";
+import { RobotCode } from "./robotCode";
 
 interface RobotProps {
+    robotCode: RobotCode;
     nickName: RobotNickName;
     robotType: RobotType;
     serialNr: RobotSerialNr;
@@ -33,6 +35,10 @@ export class Robot extends AggregateRoot<RobotProps>{
 
     get description():RobotDescription{
         return this.props.description;
+    }
+
+    get robotCode(): RobotCode{
+        return this.props.robotCode;
     }
 
     private constructor(props: RobotProps, id?: UniqueEntityID){

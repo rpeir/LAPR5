@@ -4,6 +4,7 @@ import { IRobotPersistence } from "../../dataschema/IRobotPersistence";
 const Robot = new mongoose.Schema(
   {
     domainId: { type: String, unique: true },
+    robotCode: { type: String, unique: true },
     nickName: { type: String, unique: true },
     robotType: { type: String },
     serialNr: { type: String },

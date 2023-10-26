@@ -11,6 +11,7 @@ import IRobotTypeRepo from "./IRepos/IRobotTypeRepo";
 import { RobotType } from "../domain/robotType";
 import { Robot } from "../domain/robot";
 import { RobotMap } from "../mappers/RobotMap";
+import { RobotCode } from "../domain/robotCode";
 
 @Service()
 export default class RobotService implements IRobotService {
@@ -25,6 +26,7 @@ export default class RobotService implements IRobotService {
       const nickName = await RobotNickName.create(robotDTO.nickName).getValue();
       const description = await RobotDescription.create(robotDTO.description).getValue();
       const serialNr = await RobotSerialNr.create(robotDTO.serialNr).getValue();
+      const robotCode = await RobotCode.create(robotDTO.robotCode).getValue();
       let robotType;
 
       const robotTypeOrError = await this.getRobotTypeName(robotDTO.robotType);
@@ -38,7 +40,8 @@ export default class RobotService implements IRobotService {
         nickName: nickName,
         robotType: robotType,
         description: description,
-        serialNr: serialNr
+        serialNr: serialNr,
+        robotCode: robotCode
       });
 
       if (robotOrError.isFailure) {
