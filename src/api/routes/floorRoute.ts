@@ -31,4 +31,15 @@ export default (app: Router) => {
     (req, res, next) => ctrl.getBuildingFloorMaxMin(req, res, next)
   );
 
+  route.put(
+    "",
+    celebrate({
+      body: Joi.object({
+        domainId: Joi.string().required(),
+        floorNr: Joi.number().required(),
+        description: Joi.string().required()
+      })
+    }),
+    (req, res, next) => ctrl.updateBuildingFloor(req, res, next)
+  );
 }

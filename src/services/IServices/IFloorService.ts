@@ -8,4 +8,6 @@ export default interface IFloorService {
   getFloorsOfBuilding(buildingDesignation : string): Promise<Result<IFloorDTO[]>>;
 
   getBuildingFloorMaxMin(max: number, min: number): Promise<Result<IBuildingDTO[]>>;
+
+  updateBuildingFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>>;
 }

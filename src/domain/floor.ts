@@ -31,6 +31,10 @@ export class Floor extends AggregateRoot<FloorProps> {
     this.props.description = value;
   }
 
+  set floorNr(value: number) {
+    this.props.floorNr = value;
+  }
+
   private constructor(props: FloorProps, id?: UniqueEntityID) {
     super(props, id);
   }
