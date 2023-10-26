@@ -11,5 +11,6 @@ const ElevatorSchema = new mongoose.Schema({
 {timestamps:true}
 );
 ElevatorSchema.index({code:1, buildingDesignation:1}, {unique:true});
+ElevatorSchema.index({buildingDesignation:1,designation:1}, {unique:true});
 
 export default mongoose.model<IElevatorPersistence & mongoose.Document>("Elevator",ElevatorSchema);
