@@ -6,4 +6,6 @@ export default interface IFloorController {
   getFloorsOfBuilding(req: Request, res: Response, next: NextFunction);
 
   getBuildingFloorMaxMin(req: Request, res: Response, next: NextFunction);
+
+  updateBuildingFloor(req: Request, res: Response, next: NextFunction);
 }

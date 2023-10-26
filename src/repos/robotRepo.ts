@@ -59,6 +59,7 @@ export default class RobotRepo implements IRobotRepo {
         return RobotMap.toDomain(robotCreated);
       }else {
         robotDocument.nickName = robot.nickName;
+        robotDocument.robotCode = robot.robotCode;
         robotDocument.robotType = robot.robotType;
         robotDocument.serialNr = robot.serialNr;
         robotDocument.description = robot.description;

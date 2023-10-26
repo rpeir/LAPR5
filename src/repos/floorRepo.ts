@@ -60,7 +60,6 @@ export default class FloorRepo implements IFloorRepo {
         const floorCreated = await this.floorSchema.create(rawFloor);
         return FloorMap.toDomain(floorCreated);
       } else {
-        floorDocument.building = floor.building;
         floorDocument.floorNr = floor.floorNr;
         floorDocument.description = floor.description;
         await floorDocument.save();

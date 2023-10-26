@@ -14,6 +14,7 @@ export default (app: Router) => {
     celebrate({
       body: Joi.object({
         nickName: Joi.string().required(),
+        robotCode: Joi.string().required(),
         serialNr: Joi.string().required(),
         description: Joi.string().required(),
         robotType: Joi.string().required()
