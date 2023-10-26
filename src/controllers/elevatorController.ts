@@ -5,6 +5,7 @@ import {NextFunction, Request, Response} from "express";
 import {Result} from "../core/logic/Result";
 import {IElevatorDTO} from "../dto/IElevatorDTO";
 import IElevatorService from "../services/IServices/IElevatorService";
+import {IBuildingDTO} from "../dto/IBuildingDTO";
 
 @Service()
 export default class ElevatorController implements IElevatorController{
@@ -19,6 +20,18 @@ export default class ElevatorController implements IElevatorController{
       const elevatorDTO= elevatorOrError.getValue();
       return res.json( elevatorDTO).status(201);
     }catch (error){
+      return next(error);
+    }
+  }
+  public async listElevators(req:Request,res:Response,next:NextFunction){
+    try{
+      const listOrError=await this.elevatorServiceInstance.listElevator(req.body.buildingDesignation) as Result<IElevatorDTO[]>;
+      if(listOrError.isFailure){
+        return res.status(402).send();
+      }
+      const elevators=listOrError.getValue();
+      return res.json(elevators).status(201);
+    } catch (error){
       return next(error);
     }
   }

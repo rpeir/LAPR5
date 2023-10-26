@@ -70,4 +70,13 @@ export default class ElevatorRepo implements IElevatorRepo{
         return null;
         }
     }
+    public async listElevators(buildingDesignation: String): Promise<Elevator[]>{
+      const query={buildingDesignation:buildingDesignation};
+      const results=await this.elevatorSchema.find(query);
+      if(results!=null){
+          return Promise.all(results.map(result =>ElevatorMap.toDomain(result)));
+      } else{
+          return null;
+      }
+    }
 }

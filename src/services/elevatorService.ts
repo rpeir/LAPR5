@@ -8,6 +8,7 @@ import {Elevator} from "../domain/elevator";
 import {ElevatorMap} from "../mappers/ElevatorMap";
 import IFloorRepo from "./IRepos/IFloorRepo";
 import IBuildingRepo from "./IRepos/IBuildingRepo";
+import {IBuildingDTO} from "../dto/IBuildingDTO";
 
 @Service()
 export default class ElevatorService implements IElevatorService{
@@ -47,6 +48,15 @@ export default class ElevatorService implements IElevatorService{
         } catch (err) {
             throw err;
         }
+    }
+    public async listElevator(buildingDesignation:string): Promise<Result<IElevatorDTO[]>>{
+        try {
+            const listOrError =await this.elevatorRepo.listElevators(buildingDesignation);
+           const listResult=listOrError.map(elevator=> ElevatorMap.toDTO(elevator));
+           return Result.ok<IElevatorDTO[]>(listResult);
 
+        } catch (err){
+            throw Result.fail<IElevatorDTO>(err);
+        }
     }
 }
