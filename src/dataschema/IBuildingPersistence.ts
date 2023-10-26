@@ -1,4 +1,4 @@
-export interface  IBuildingPersistence{
+export interface IBuildingPersistence {
   domainId: string;
   code: string;
   designation: string;
