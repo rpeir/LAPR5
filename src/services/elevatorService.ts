@@ -4,7 +4,7 @@ import config from "../../config";
 import IElevatorRepo from "./IRepos/IElevatorRepo";
 import {IElevatorDTO} from "../dto/IElevatorDTO";
 import {Result} from "../core/logic/Result";
-import {Elevator} from "../domain/elevator";
+import {Elevator} from "../domain/elevator/elevator";
 import {ElevatorMap} from "../mappers/ElevatorMap";
 import IFloorRepo from "./IRepos/IFloorRepo";
 import IBuildingRepo from "./IRepos/IBuildingRepo";

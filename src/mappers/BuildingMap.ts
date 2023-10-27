@@ -1,5 +1,5 @@
 import { Mapper } from '../core/infra/Mapper';
-import { Building } from '../domain/building';
+import { Building } from '../domain/building/building';
 import { IBuildingDTO } from '../dto/IBuildingDTO';
 import { UniqueEntityID } from '../core/domain/UniqueEntityID';
 

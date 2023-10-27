@@ -1,4 +1,4 @@
-import {Elevator} from "../../domain/elevator";
+import {Elevator} from "../../domain/elevator/elevator";
 import {Repo} from "../../core/infra/Repo";
 import {UniqueEntityID} from "../../core/domain/UniqueEntityID";
 

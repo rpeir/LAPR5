@@ -4,8 +4,8 @@ import config from '../../config';
 import IBuildingService from './IServices/IBuildingService';
 import IBuildingRepo from './IRepos/IBuildingRepo';
 import { IBuildingDTO } from '../dto/IBuildingDTO';
-import { Building } from '../domain/building';
-import { BuildingCode } from '../domain/BuildingCode';
+import { Building } from '../domain/building/building';
+import { BuildingCode } from '../domain/building/BuildingCode';
 import { BuildingMap } from '../mappers/BuildingMap';
 
 @Service()

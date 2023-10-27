@@ -6,7 +6,7 @@ import config from "../../config";
 import IBuildingRepo from "./IRepos/IBuildingRepo";
 import IFloorRepo from "./IRepos/IFloorRepo";
 import IPathwayRepo from "./IRepos/IPathwayRepo";
-import { Building } from "../domain/building";
+import { Building } from "../domain/building/building";
 import { Pathway } from "../domain/pathway";
 import { PathwayMap } from "../mappers/PathwayMap";
 

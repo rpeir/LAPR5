@@ -6,8 +6,8 @@ import { Document } from 'mongodb';
 import { IFloorPersistence } from '../dataschema/IFloorPersistence';
 import { FloorMap } from '../mappers/FloorMap';
 import { FloorId } from '../domain/floorId';
-import { BuildingId } from '../domain/buildingId';
-import { Building } from '../domain/building';
+import { BuildingId } from '../domain/building/buildingId';
+import { Building } from '../domain/building/building';
 
 @Service()
 export default class FloorRepo implements IFloorRepo {

@@ -3,9 +3,9 @@ import IElevatorRepo from "../services/IRepos/IElevatorRepo";
 import {Model} from "mongoose";
 import {IElevatorPersistence} from "../dataschema/IElevatorPersistence";
 import {Document} from "mongodb";
-import {Elevator} from "../domain/elevator";
+import {Elevator} from "../domain/elevator/elevator";
 import {ElevatorMap} from "../mappers/ElevatorMap";
-import {Building} from "../domain/building";
+import {Building} from "../domain/building/building";
 import elevatorSchema from "../persistence/schemas/elevatorSchema";
 import {UniqueEntityID} from "../core/domain/UniqueEntityID";
 

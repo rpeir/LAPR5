@@ -8,7 +8,7 @@ import IRoomDTO from "../dto/IRoomDTO";
 import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 import { IRoomPersistence } from "../dataschema/IRoomPersistence";
 import { RoomCategory } from "../domain/room/roomCategory";
-import { BuildingCode } from "../domain/BuildingCode";
+import { BuildingCode } from "../domain/building/BuildingCode";
 
 export class RoomMap extends Mapper<Room> {
 

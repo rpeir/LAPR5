@@ -5,7 +5,7 @@ import { Result } from "../../core/logic/Result";
 import { Floor } from "../floor"
 import { RoomCategory } from "./roomCategory";
 import { FloorId } from "../floorId";
-import { BuildingCode } from "../BuildingCode";
+import { BuildingCode } from "../building/BuildingCode";
 
 interface RoomProps {
     name : string;

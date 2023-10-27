@@ -2,12 +2,12 @@ import { Inject, Service } from 'typedi';
 import IBuildingRepo from '../services/IRepos/IBuildingRepo';
 import { Model } from 'mongoose';
 import { Document } from 'mongodb';
-import { Building } from '../domain/building';
+import { Building } from '../domain/building/building';
 import { BuildingMap } from '../mappers/BuildingMap';
-import { BuildingCode } from '../domain/BuildingCode';
+import { BuildingCode } from '../domain/building/BuildingCode';
 import { IBuildingPersistence } from '../dataschema/IBuildingPersistence';
 import { RobotTypeID } from '../domain/robotTypeID';
-import { BuildingId } from '../domain/buildingId';
+import { BuildingId } from '../domain/building/buildingId';
 import { FloorMap } from '../mappers/FloorMap';
 import {UniqueEntityID} from "../core/domain/UniqueEntityID";
 

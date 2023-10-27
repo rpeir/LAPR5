@@ -1,5 +1,5 @@
 import {Mapper} from "../core/infra/Mapper";
-import {Elevator} from "../domain/elevator";
+import {Elevator} from "../domain/elevator/elevator";
 import {IElevatorDTO} from "../dto/IElevatorDTO";
 import {UniqueEntityID} from "../core/domain/UniqueEntityID";
 

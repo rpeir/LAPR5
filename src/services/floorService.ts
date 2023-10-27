@@ -5,7 +5,7 @@ import { Inject, Service } from 'typedi';
 import config from '../../config';
 import IBuildingRepo from './IRepos/IBuildingRepo';
 import IFloorRepo from './IRepos/IFloorRepo';
-import { Building } from '../domain/building';
+import { Building } from '../domain/building/building';
 import { Floor } from '../domain/floor';
 import { FloorMap } from '../mappers/FloorMap';
 import { IBuildingDTO } from '../dto/IBuildingDTO';
