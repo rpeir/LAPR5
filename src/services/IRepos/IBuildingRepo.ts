@@ -9,4 +9,5 @@ export default interface IBuildingRepo extends Repo<Building> {
   findByDesignation(designation: string): Promise<Building>;
   findByCode(buildingCode: BuildingCode | string): Promise<Building>;
   findById(buildingId: string): Promise<Building>;
+  findAll(): Promise<Building[]>;
 }
