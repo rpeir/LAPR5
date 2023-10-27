@@ -2,10 +2,11 @@ import { Inject, Service } from "typedi";
 import { Pathway } from "../domain/pathway";
 import { PathwayID } from "../domain/pathwayID";
 import IPathwayRepo from "../services/IRepos/IPathwayRepo";
-import { Document } from "mongodb";
+import { Document, MongoServerError } from "mongodb";
 import { IPathwayPersistence } from "../dataschema/IPathwayPersistence";
 import { Model } from "mongoose";
 import { PathwayMap } from "../mappers/PathwayMap";
+import { Floor } from "../domain/floor";
 
 @Service()
 export default class PathwayRepo implements IPathwayRepo {
@@ -33,6 +34,11 @@ export default class PathwayRepo implements IPathwayRepo {
         return pathway;
       }
     } catch (err) {
+      if (err instanceof MongoServerError) {
+        if (err.code == 11000) {
+          throw `Already exists pathway with ${JSON.stringify(err.keyPattern)}`;
+        }
+      }
       throw err;
     }
   }
@@ -54,6 +60,7 @@ export default class PathwayRepo implements IPathwayRepo {
     const pathwayRecord = await this.pathwaySchema.findOne(query);
     return !!pathwayRecord === true;
   }
+
   public async findAll(source:string,dest:string):Promise<Pathway[]>{
     const query = {buildingSource:source,buildingDestination:dest};
     const pathwayRecord = await this.pathwaySchema.find(query);
@@ -62,5 +69,25 @@ export default class PathwayRepo implements IPathwayRepo {
     } else {
       return null;
     }
+  }
+
+  public async existsPathwayBetweenFloors(floor1 : Floor, floor2 : Floor) : Promise<boolean> {
+    let query = {
+      floorSource:floor1.id.toString(),
+      floorDestination:floor2.id.toString(),
+      buildingSource:floor1.building.id.toString(),
+      buildingDestination:floor2.building.id.toString()
+    };
+    let pathwayRecord = await this.pathwaySchema.findOne(query);
+    if (pathwayRecord != null) return true;
+
+    query = {
+      floorSource:floor2.id.toString(),
+      floorDestination:floor1.id.toString(),
+      buildingSource:floor2.building.id.toString(),
+      buildingDestination:floor1.building.id.toString()
+    };
+    pathwayRecord = await this.pathwaySchema.findOne(query);
+    return pathwayRecord != null;
   }
 }

@@ -60,6 +60,8 @@ export class Pathway extends AggregateRoot<PathwayProps> {
 
     if (!guardResult.succeeded) {
       return Result.fail<Pathway>(guardResult.message);
+    } else if (props.floorDestination.equals(props.floorSource)) {
+      return Result.fail<Pathway>("Source and destination floors are the same");
     } else {
       const user = new Pathway({
         ...props
