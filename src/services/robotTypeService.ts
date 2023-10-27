@@ -42,11 +42,16 @@ export default class RobotTypeService implements IRobotTypeService {
       );
 
       if (robotTypeOrError.isFailure) {
-        throw Result.fail<IRobotType>(robotTypeOrError.errorValue());
+        return  Result.fail<IRobotType>(robotTypeOrError.errorValue());
       }
-      const robotTypeResult = robotTypeOrError.getValue();
 
-      await this.robotTypeRepo.save(robotTypeResult);
+      let robotTypeResult = robotTypeOrError.getValue();
+      try {
+        robotTypeResult = await this.robotTypeRepo.save(robotTypeResult);
+      }catch (err){
+        return Result.fail<IRobotType>(err);
+      }
+
       const robotTypeResultDTO = RobotTypeMap.toDTO(robotTypeResult) as IRobotType;
       return Result.ok<IRobotType>(robotTypeResultDTO);
     } catch (err) {
