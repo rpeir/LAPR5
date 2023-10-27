@@ -1,5 +1,5 @@
-import mongoose, { Document } from "mongoose";
-import { IRobotPersistence } from "../../dataschema/IRobotPersistence";
+import mongoose, { Document } from 'mongoose';
+import { IRobotPersistence } from '../../dataschema/IRobotPersistence';
 
 const Robot = new mongoose.Schema(
   {
@@ -8,11 +8,12 @@ const Robot = new mongoose.Schema(
     nickName: { type: String, unique: true },
     robotType: { type: String },
     serialNr: { type: String },
-    description: { type: String }
+    description: { type: String },
+    state: { type: String },
   },
   {
-    timestamps: true
-  }
+    timestamps: true,
+  },
 );
 
-export default mongoose.model<IRobotPersistence & Document>("Robot", Robot);
+export default mongoose.model<IRobotPersistence & Document>('Robot', Robot);

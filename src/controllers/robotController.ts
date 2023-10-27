@@ -1,22 +1,18 @@
-import { Inject, Service } from "typedi";
-import IRobotController from "./IControllers/IRobotController";
-import { NextFunction, Request, Response } from "express";
-import config from "../../config";
-import IRobotService from "../services/IServices/IRobotService";
-import { IRobotDTO } from "../dto/IRobotDTO";
-import { Result } from "../core/logic/Result";
+import { Inject, Service } from 'typedi';
+import IRobotController from './IControllers/IRobotController';
+import { NextFunction, Request, Response } from 'express';
+import config from '../../config';
+import IRobotService from '../services/IServices/IRobotService';
+import { IRobotDTO } from '../dto/IRobotDTO';
+import { Result } from '../core/logic/Result';
 
 @Service()
 export default class RobotController implements IRobotController {
-
-  constructor(
-    @Inject(config.services.robot.name) private robotService: IRobotService
-  ) {
-  }
+  constructor(@Inject(config.services.robot.name) private robotServiceInstance: IRobotService) {}
 
   public async createRobot(req: Request, res: Response, next: NextFunction) {
     try {
-      const robotOrError = await this.robotService.createRobot(req.body as IRobotDTO) as Result<IRobotDTO>;
+      const robotOrError = (await this.robotServiceInstance.createRobot(req.body as IRobotDTO)) as Result<IRobotDTO>;
 
       if (robotOrError.isFailure) {
         return res.status(402).send(robotOrError.error);
@@ -25,8 +21,20 @@ export default class RobotController implements IRobotController {
       const robotDTO = robotOrError.getValue();
       return res.json(robotDTO).status(201);
     } catch (error) {
-      throw error;
+      throw next(error);
     }
   }
 
+  public async disableRobot(req: Request, res: Response, next: NextFunction) {
+    try {
+      const robotOrError = (await this.robotServiceInstance.disableRobot(req.body as IRobotDTO)) as Result<IRobotDTO>;
+      if (robotOrError.isFailure) {
+        return res.status(402).send(robotOrError.error);
+      }
+      const robotDTO = robotOrError.getValue();
+      return res.json(robotDTO).status(201);
+    } catch (error) {
+      throw next(error);
+    }
+  }
 }
