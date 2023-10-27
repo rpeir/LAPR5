@@ -16,7 +16,7 @@ export default class BuildingController implements IBuildingController {
         IBuildingDTO
       >;
       if (buildingOrError.isFailure) {
-        return res.status(402).send(buildingOrError);
+        return res.status(402).json({error:buildingOrError.error}).send();
       }
       const buildingDTO = buildingOrError.getValue();
       return res.json(buildingDTO).status(201);

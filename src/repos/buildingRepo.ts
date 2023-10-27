@@ -1,7 +1,7 @@
 import { Inject, Service } from 'typedi';
 import IBuildingRepo from '../services/IRepos/IBuildingRepo';
 import { Model } from 'mongoose';
-import { Document } from 'mongodb';
+import {Document, MongoServerError} from 'mongodb';
 import { Building } from '../domain/building/building';
 import { BuildingMap } from '../mappers/BuildingMap';
 import { BuildingCode } from '../domain/building/BuildingCode';
@@ -41,6 +41,11 @@ export default class BuildingRepo implements IBuildingRepo {
         return building;
       }
     } catch (err) {
+      if (err instanceof MongoServerError) {
+        if (err.code == 11000) {
+          throw `Already exists building with ${JSON.stringify(err.keyValue)}`;
+        }
+      }
       throw err;
     }
   }
