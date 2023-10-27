@@ -2,7 +2,7 @@ import {Inject, Service} from "typedi";
 import IElevatorRepo from "../services/IRepos/IElevatorRepo";
 import {Model} from "mongoose";
 import {IElevatorPersistence} from "../dataschema/IElevatorPersistence";
-import {Document} from "mongodb";
+import {Document, MongoServerError} from "mongodb";
 import {Elevator} from "../domain/elevator/elevator";
 import {ElevatorMap} from "../mappers/ElevatorMap";
 import {Building} from "../domain/building/building";
@@ -27,10 +27,16 @@ export default class ElevatorRepo implements IElevatorRepo{
         const elevatorCreated=await this.elevatorSchema.create(rawElevator);
         return ElevatorMap.toDomain(elevatorCreated);
       }else{
+        let floors;
+        try {
+          floors = elevator.floorsServed.map(floor=>floor.floorNr.toString());
+        } catch (err) {
+          floors = elevator.floorsServed;
+        }
         elevatorDocument.code= elevator.code;
         elevatorDocument.designation= elevator.designation;
         elevatorDocument.buildingDesignation= elevator.buildingDesignation;
-        elevatorDocument.floorsServed= elevator.floorsServed.map(floor=>floor.floorNr.toString());
+        elevatorDocument.floorsServed= floors;
         elevatorDocument.brand= elevator.brand;
         elevatorDocument.modelE= elevator.modelE;
         elevatorDocument.serialNumber= elevator.serialNumber;
@@ -39,6 +45,11 @@ export default class ElevatorRepo implements IElevatorRepo{
         return elevator;
       }
     }catch (err){
+      if (err instanceof MongoServerError) {
+        if (err.code == 11000) {
+          throw `Already exists elevator with ${JSON.stringify(err.keyValue)}`;
+        }
+      }
         throw err;
     }
   }

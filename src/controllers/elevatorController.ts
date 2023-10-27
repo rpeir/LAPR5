@@ -39,7 +39,19 @@ export default class ElevatorController implements IElevatorController{
     try{
       const elevatorOrError=await this.elevatorServiceInstance.updateElevator(req.body as IElevatorDTO) as Result<IElevatorDTO>;
       if(elevatorOrError.isFailure){
-        return res.status(402).send();
+        return res.status(402).json({error:elevatorOrError.error}).send();
+      }
+      const elevatorDTO= elevatorOrError.getValue();
+      return res.json( elevatorDTO).status(201);
+    }catch (error){
+      return next(error);
+    }
+  }
+  public async replaceElevator(req:Request,res:Response,next:NextFunction){
+    try{
+      const elevatorOrError=await this.elevatorServiceInstance.replaceElevator(req.body as IElevatorDTO) as Result<IElevatorDTO>;
+      if(elevatorOrError.isFailure){
+        return res.status(402).json({error:elevatorOrError.error}).send();
       }
       const elevatorDTO= elevatorOrError.getValue();
       return res.json( elevatorDTO).status(201);
