@@ -12,16 +12,18 @@ import { RobotMap } from '../mappers/RobotMap';
 export default class RobotRepo implements IRobotRepo {
   private models: any;
 
-  constructor(@Inject('robotSchema') private robotSchema: Model<IRobotPersistence & Document>) {}
+  constructor(@Inject('robotSchema') private robotSchema: Model<IRobotPersistence & Document>) {
+  }
 
   private createBaseQuery(): any {
     return {
       where: {},
     };
   }
+
   public async updateOne(robot: Robot): Promise<Robot> {
     const robotDocument = await this.robotSchema.updateOne(
-      { domainId: robot.id },
+      {domainId: robot.id},
       {
         state: robot.state,
       },
@@ -29,10 +31,11 @@ export default class RobotRepo implements IRobotRepo {
     await robotDocument;
     return robot;
   }
+
   public async findById(robotId: RobotId | string): Promise<Robot> {
     const idX = robotId instanceof RobotId ? (<RobotId>robotId).id.toValue() : robotId;
 
-    const query = { domainId: idX };
+    const query = {domainId: idX};
     const robotRecord = await this.robotSchema.findOne(query);
 
     if (robotRecord != null) {
@@ -41,8 +44,9 @@ export default class RobotRepo implements IRobotRepo {
       return null;
     }
   }
+
   public async findByRobotCode(robotCode: string): Promise<Robot> {
-    const query = { robotCode: robotCode };
+    const query = {robotCode: robotCode};
     const robotRecord = await this.robotSchema.findOne(query);
     if (robotRecord != null) {
       return RobotMap.toDomain(robotRecord);
@@ -52,7 +56,7 @@ export default class RobotRepo implements IRobotRepo {
   }
 
   public async findByNickName(nickName: RobotNickName | string): Promise<Robot | null> {
-    const query = { nickName: nickName instanceof RobotNickName ? nickName.value : nickName };
+    const query = {nickName: nickName instanceof RobotNickName ? nickName.value : nickName};
     const robotRecord = await this.robotSchema.findOne(query);
     if (robotRecord != null) {
       return RobotMap.toDomain(robotRecord);
@@ -62,7 +66,7 @@ export default class RobotRepo implements IRobotRepo {
   }
 
   public async save(robot: Robot): Promise<Robot> {
-    const query = { domainId: robot.id.toString() };
+    const query = {domainId: robot.id.toString()};
     const robotDocument = await this.robotSchema.findOne(query);
 
     try {
@@ -88,9 +92,19 @@ export default class RobotRepo implements IRobotRepo {
   public async exists(robotId: Robot): Promise<boolean> {
     const idX = robotId instanceof RobotId ? (<RobotId>robotId).id.toValue() : robotId;
 
-    const query = { domainId: idX };
+    const query = {domainId: idX};
     const robotRecord = await this.robotSchema.findOne(query);
 
     return !!robotRecord === true;
+  }
+
+  public async findAll(): Promise<Robot[]> {
+    const query = {};
+    const robotRecord = await this.robotSchema.find(query);
+    if (robotRecord != null) {
+      return Promise.all(robotRecord.map((robot) => RobotMap.toDomain(robot)));
+    } else {
+      return null;
+    }
   }
 }

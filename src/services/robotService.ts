@@ -94,4 +94,13 @@ export default class RobotService implements IRobotService {
       return Result.fail<RobotType>("Couldn't find robot with name: " + robotTypeName);
     }
   }
+  public async consultAllRobots(): Promise<Result<IRobotDTO[]>> {
+    try{
+      const robots = await this.robotRepo.findAll();
+      const robotsDTO = robots.map((robot) => RobotMap.toDTO(robot) as IRobotDTO);
+      return Result.ok<IRobotDTO[]>(robotsDTO);
+    }catch(err){
+      throw err;
+    }
+  }
 }
