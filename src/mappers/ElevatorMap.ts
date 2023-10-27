@@ -33,8 +33,11 @@ export class ElevatorMap extends Mapper<Elevator>{
       modelE: raw.modelE,
       serialNumber: raw.serialNumber,
       description: raw.description,
-    },new UniqueEntityID(raw.domainId))
+    },new UniqueEntityID(raw.domainId||raw.id))
     elevatorOrError.isFailure ? console.log(elevatorOrError.error) : '';
+    if (elevatorOrError.isFailure) { // @ts-ignore
+      throw new Error(elevatorOrError.error)
+    }
     return elevatorOrError.isSuccess ? elevatorOrError.getValue() : null;
     }
   public static toPersistence (elevator: Elevator): any{

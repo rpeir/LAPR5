@@ -5,5 +5,6 @@ import {IBuildingDTO} from "../../dto/IBuildingDTO";
 export default interface IElevatorService {
     createElevator(elevatorDTO: IElevatorDTO): Promise<Result<IElevatorDTO>>;
     updateElevator(elevatorDTO: IElevatorDTO): Promise<Result<IElevatorDTO>>;
+    replaceElevator(elevatorDTO: IElevatorDTO): Promise<Result<IElevatorDTO>>;
     listElevator(buildingDesignation:string): Promise<Result<IElevatorDTO[]>>;
 }
