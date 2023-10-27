@@ -12,4 +12,6 @@ const Pathway = new mongoose.Schema(
   }
 )
 
+Pathway.index({buildingSource:1, buildingDestination:1, floorSource:1, floorDestination:1}, {unique: true});
+
 export default mongoose.model<IPathwayPersistence & Document>("Pathway", Pathway);

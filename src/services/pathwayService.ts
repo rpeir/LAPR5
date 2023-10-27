@@ -24,7 +24,7 @@ export default class PathwayService implements IPathwayService {
       let buildingSource;
       const buildingSourceOrError = await this.getBuildingByDesignation(pathwayDTO.buildingSource);
       if (buildingSourceOrError.isFailure) {
-        return Result.fail<IPathwayDTO>(buildingSourceOrError);
+        return Result.fail<IPathwayDTO>(buildingSourceOrError.error);
       } else {
         buildingSource = buildingSourceOrError.getValue();
       }
@@ -32,7 +32,7 @@ export default class PathwayService implements IPathwayService {
       let buildingDestination;
       const buildingDestinationOrError = await this.getBuildingByDesignation(pathwayDTO.buildingDestination);
       if (buildingDestinationOrError.isFailure) {
-        return Result.fail<IPathwayDTO>(buildingDestinationOrError);
+        return Result.fail<IPathwayDTO>(buildingDestinationOrError.error);
       } else {
         buildingDestination = buildingDestinationOrError.getValue();
       }
@@ -40,7 +40,7 @@ export default class PathwayService implements IPathwayService {
       let floorSource;
       const floorSourceOrError = await this.getFloorByBuildingIdAndFloorNr(buildingSource.id.toString(), pathwayDTO.floorSource);
       if (floorSourceOrError.isFailure) {
-        return Result.fail<IPathwayDTO>(floorSourceOrError);
+        return Result.fail<IPathwayDTO>(floorSourceOrError.error);
       } else {
         floorSource = floorSourceOrError.getValue();
       }
@@ -48,11 +48,14 @@ export default class PathwayService implements IPathwayService {
       let floorDestination;
       const floorDestinationOrError = await this.getFloorByBuildingIdAndFloorNr(buildingDestination.id.toString(), pathwayDTO.floorDestination);
       if (floorDestinationOrError.isFailure) {
-        return Result.fail<IPathwayDTO>(floorDestinationOrError);
+        return Result.fail<IPathwayDTO>(floorDestinationOrError.error);
       } else {
         floorDestination = floorDestinationOrError.getValue();
       }
 
+      if (await this.pathwayRepo.existsPathwayBetweenFloors(floorSource, floorDestination)) {
+       return Result.fail<IPathwayDTO>(`Pathway between floors ${floorSource.floorNr} and ${floorDestination.floorNr} already exists`);
+      }
 
       const pathwayOrError = Pathway.create({
         buildingSource: buildingSource,
@@ -63,10 +66,15 @@ export default class PathwayService implements IPathwayService {
       });
 
       if (pathwayOrError.isFailure) {
-        throw Result.fail<IPathwayDTO>(pathwayOrError.errorValue());
+        return Result.fail<IPathwayDTO>(pathwayOrError.errorValue());
       }
-      const pathwayResult = pathwayOrError.getValue();
-      await this.pathwayRepo.save(pathwayResult);
+      let pathwayResult = pathwayOrError.getValue();
+      try {
+        pathwayResult = await this.pathwayRepo.save(pathwayResult);
+      } catch (err) {
+        return Result.fail<IPathwayDTO>(err);
+      }
+
       const pathwayDTOResult = PathwayMap.toDTO(pathwayResult) as IPathwayDTO;
       return Result.ok<IPathwayDTO>(pathwayDTOResult);
     } catch (err) {

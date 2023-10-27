@@ -3,6 +3,7 @@ import IPathwayController from "../../controllers/IControllers/IPathwayControlle
 import config from "../../../config";
 import { Container } from "typedi";
 import { celebrate, Joi } from "celebrate";
+import middlewares from "../middlewares";
 
 const route = Router();
 
@@ -22,7 +23,8 @@ export default (app: Router) => {
       })
     }),
     (req, res, next) => ctrl.createPathway(req, res, next)
-);
+  );
+
   route.get('/list',
     celebrate({
       body: Joi.object({
@@ -32,4 +34,7 @@ export default (app: Router) => {
       }),
     (req, res, next) => ctrl.listPathways(req, res, next)
   );
+
+  // Celebrate failure error handler middleware
+  route.use(middlewares.validateBody);
 }
