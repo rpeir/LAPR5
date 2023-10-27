@@ -16,4 +16,5 @@ const Robot = new mongoose.Schema(
   },
 );
 
+Robot.index({ robotType: 1, serialNr: 1 }, { unique: true });
 export default mongoose.model<IRobotPersistence & Document>('Robot', Robot);
