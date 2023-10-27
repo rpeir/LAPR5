@@ -3,7 +3,7 @@ import {IElevatorPersistence} from "../../dataschema/IElevatorPersistence";
 
 const ElevatorSchema = new mongoose.Schema({
   domainId: {type:String, unique:true},
-  code: {type: String},
+  code: {type: Number},
   designation: {type: String},
   buildingDesignation: {type: String},
   floorsServed: {type: [String]},

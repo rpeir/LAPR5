@@ -38,14 +38,14 @@ export default class ElevatorService implements IElevatorService{
                 designation: elevatorDesignation,
                 buildingDesignation: elevatorBuildingDesignation,
                 floorsServed: elevatorFloorsServed,
-                brand: elevatorDTO.brand,
-                modelE: elevatorDTO.modelE,
-                serialNumber: elevatorDTO.serialNumber,
-                description: elevatorDTO.description,
+                brand: elevatorDTO.brand?elevatorDTO.brand:"",
+                modelE: elevatorDTO.modelE?elevatorDTO.modelE:"",
+                serialNumber: elevatorDTO.serialNumber?elevatorDTO.serialNumber:"",
+                description: elevatorDTO.description?elevatorDTO.description:"",
             },new UniqueEntityID(elevatorDTO.id)
             );
             if(elevatorOrError.isFailure){
-                throw Result.fail<IElevatorDTO>(elevatorOrError.errorValue());
+                return  Result.fail<IElevatorDTO>(elevatorOrError.errorValue());
             }
             const elevatorResult=elevatorOrError.getValue();
             await this.elevatorRepo.save(elevatorResult);
