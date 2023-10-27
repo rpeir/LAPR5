@@ -49,7 +49,7 @@ export default class RobotTypeService implements IRobotTypeService {
       try {
         robotTypeResult = await this.robotTypeRepo.save(robotTypeResult);
       }catch (err){
-        return Result.fail<IRobotType>(err);
+        return Result.fail<IRobotType>(err.message);
       }
 
       const robotTypeResultDTO = RobotTypeMap.toDTO(robotTypeResult) as IRobotType;

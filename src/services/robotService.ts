@@ -82,7 +82,7 @@ export default class RobotService implements IRobotService {
       try {
         robotResult = await this.robotRepo.save(robotResult);
       }    catch (err) {
-        return  Result.fail<IRobotDTO>(err);
+        return  Result.fail<IRobotDTO>(err.message);
       }
 
       const robotDTOResult = RobotMap.toDTO(robotResult) as IRobotDTO;

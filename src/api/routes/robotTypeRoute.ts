@@ -3,6 +3,7 @@ import Container from "typedi";
 import config from "../../../config";
 import IRobotTypeController from "../../controllers/IControllers/IRobotTypeController";
 import { Joi, celebrate } from "celebrate";
+import middlewares from "../middlewares";
 
 const route = Router();
 
@@ -25,4 +26,7 @@ export default(app: Router) =>{
         }),
         (req, res, next) => ctrl.createRobotType(req, res, next)
     );
-};
+
+  // Celebrate failure error handler middleware
+  route.use(middlewares.validateBody);
+}

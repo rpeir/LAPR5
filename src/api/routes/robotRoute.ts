@@ -10,7 +10,7 @@ export default (app: Router) => {
   const ctrl = Container.get(config.controllers.robot.name) as IRobotController;
 
   route.post(
-    '/create',
+    '',
     celebrate({
       body: Joi.object({
         nickName: Joi.string().required(),
