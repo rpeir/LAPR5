@@ -77,21 +77,21 @@ export class Elevator extends AggregateRoot<ElevatorProps>{
       {argument: props.designation, argumentName: 'designation'},
       {argument: props.buildingDesignation, argumentName: 'buildingDesignation'},
       {argument: props.floorsServed, argumentName: 'floorsServed'},
-      {argument: props.brand, argumentName: 'brand'},
-      {argument: props.modelE, argumentName: 'modelE'},
-      {argument: props.serialNumber, argumentName: 'serialNumber'},
-      {argument: props.description, argumentName: 'description'}
     ];
-const guardBrand =Guard.inRange(props.brand.length,1,50,"brandLength");
-const guardModel =Guard.inRange(props.modelE.length,1,50,"modelLength");
-const guardSerial =Guard.inRange(props.serialNumber.length,1,50,"serialLength");
-const guardDescription =Guard.inRange(props.description.length,1,250,"descriptionLength");
 
-const guardProps = Guard.againstNullOrUndefinedBulk(guardedProps);
+    const guardBrandModel = (props.brand!="" && props.modelE=="");
+    const guardBrand =Guard.inRange(props.brand.length,0,50,"brandLength");
+    const guardModel =Guard.inRange(props.modelE.length,0,50,"modelLength");
+    const guardSerial =Guard.inRange(props.serialNumber.length,0,50,"serialLength");
+    const guardDescription =Guard.inRange(props.description.length,0,250,"descriptionLength");
+
+    const guardProps = Guard.againstNullOrUndefinedBulk(guardedProps);
     const guardResult = Guard.combine([guardProps,guardBrand,guardModel,guardSerial,guardDescription]);
 
     if (!guardResult.succeeded) {
       return Result.fail<Elevator>(guardResult.message)
+    } else if (guardBrandModel) {
+      return Result.fail<Elevator>("Model must be filled if brand is filled")
     } else {
       const user = new Elevator({
         ...props
