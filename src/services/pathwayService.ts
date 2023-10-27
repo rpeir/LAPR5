@@ -24,7 +24,7 @@ export default class PathwayService implements IPathwayService {
       let buildingSource;
       const buildingSourceOrError = await this.getBuildingByDesignation(pathwayDTO.buildingSource);
       if (buildingSourceOrError.isFailure) {
-        return Result.fail<IPathwayDTO>(buildingSourceOrError);
+        return Result.fail<IPathwayDTO>(buildingSourceOrError.error);
       } else {
         buildingSource = buildingSourceOrError.getValue();
       }
@@ -32,7 +32,7 @@ export default class PathwayService implements IPathwayService {
       let buildingDestination;
       const buildingDestinationOrError = await this.getBuildingByDesignation(pathwayDTO.buildingDestination);
       if (buildingDestinationOrError.isFailure) {
-        return Result.fail<IPathwayDTO>(buildingDestinationOrError);
+        return Result.fail<IPathwayDTO>(buildingDestinationOrError.error);
       } else {
         buildingDestination = buildingDestinationOrError.getValue();
       }
@@ -40,7 +40,7 @@ export default class PathwayService implements IPathwayService {
       let floorSource;
       const floorSourceOrError = await this.getFloorByBuildingIdAndFloorNr(buildingSource.id.toString(), pathwayDTO.floorSource);
       if (floorSourceOrError.isFailure) {
-        return Result.fail<IPathwayDTO>(floorSourceOrError);
+        return Result.fail<IPathwayDTO>(floorSourceOrError.error);
       } else {
         floorSource = floorSourceOrError.getValue();
       }
@@ -48,7 +48,7 @@ export default class PathwayService implements IPathwayService {
       let floorDestination;
       const floorDestinationOrError = await this.getFloorByBuildingIdAndFloorNr(buildingDestination.id.toString(), pathwayDTO.floorDestination);
       if (floorDestinationOrError.isFailure) {
-        return Result.fail<IPathwayDTO>(floorDestinationOrError);
+        return Result.fail<IPathwayDTO>(floorDestinationOrError.error);
       } else {
         floorDestination = floorDestinationOrError.getValue();
       }
