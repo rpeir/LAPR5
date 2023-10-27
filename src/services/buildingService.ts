@@ -14,7 +14,11 @@ export default class BuildingService implements IBuildingService {
 
   public async createBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>> {
     try {
-      const buildingCode = BuildingCode.create(buildingDTO.code).getValue();
+      const rawBuildingCode = BuildingCode.create(buildingDTO.code);
+      if (rawBuildingCode.isFailure) {
+        return Result.fail<IBuildingDTO>(rawBuildingCode.errorValue());
+      }
+      const buildingCode = rawBuildingCode.getValue();
       const buildingDesignation = buildingDTO.designation;
       const buildingDescription = buildingDTO.description;
       const buildingLength = buildingDTO.length;
@@ -31,13 +35,17 @@ export default class BuildingService implements IBuildingService {
       });
 
       if (buildingOrError.isFailure) {
-        throw Result.fail<IBuildingDTO>(buildingOrError.errorValue());
+        return  Result.fail<IBuildingDTO>(buildingOrError.errorValue());
       }
       const buildingResult = buildingOrError.getValue();
-
-      await this.buildingRepo.save(buildingResult);
+      try {
+        await this.buildingRepo.save(buildingResult);
+      } catch (error) {
+        return Result.fail<IBuildingDTO>(error);
+      }
       const buildingDTOResult = BuildingMap.toDTO(buildingResult) as IBuildingDTO;
       return Result.ok<IBuildingDTO>(buildingDTOResult);
+
     } catch (err) {
       throw err;
     }

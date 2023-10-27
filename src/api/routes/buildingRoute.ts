@@ -3,6 +3,7 @@ import { Container } from 'typedi';
 import config from '../../../config';
 import IBuildingController from '../../controllers/IControllers/IBuildingController';
 import { celebrate, Joi } from 'celebrate';
+import middlewares from "../middlewares";
 
 const route = Router();
 export default (app: Router) => {
@@ -38,4 +39,6 @@ export default (app: Router) => {
     (req, res, next) => ctrl.updateBuilding(req, res, next),
   );
   route.get('/list-all', (req, res, next) => ctrl.listAllBuilding(req, res, next));
+  // Error handler middleware
+  route.use(middlewares.validateBody);
 };
