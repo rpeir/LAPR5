@@ -1,11 +1,9 @@
 import { Inject, Service } from "typedi";
 import IRobotTypeController from "./IControllers/IRobotTypeController";
 import { Request, Response, NextFunction } from "express";
-import { ParamsDictionary } from "express-serve-static-core";
-import { ParsedQs } from "qs";
 import config from "../../config";
 import IRobotTypeService from "../services/IServices/IRobotTypeService";
-import { IRobotType } from "../dto/IRobotType";
+import { IRobotTypeDTO } from "../dto/IRobotTypeDTO";
 import { Result } from "../core/logic/Result";
 
 @Service()
@@ -17,7 +15,7 @@ constructor(
 
     public async createRobotType(req: Request, res: Response, next: NextFunction) {
         try {
-            const robotTypeOrError = await this.robotTypeService.createRobotType(req.body as IRobotType) as Result<IRobotType>;
+            const robotTypeOrError = await this.robotTypeService.createRobotType(req.body as IRobotTypeDTO) as Result<IRobotTypeDTO>;
 
             if (robotTypeOrError.isFailure) {
                 return res.status(402).send(robotTypeOrError.error);

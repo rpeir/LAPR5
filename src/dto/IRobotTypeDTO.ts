@@ -1,6 +1,7 @@
 import { TaskType } from "../domain/taskType";
 
-export interface IRobotType {
+export interface IRobotTypeDTO {
+  id: string,
   name: string,
   taskTypes: string[],
   robotTypeModel: string,

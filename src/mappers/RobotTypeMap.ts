@@ -1,6 +1,6 @@
 import { Mapper } from "../core/infra/Mapper";
 import { RobotType } from "../domain/robotType";
-import { IRobotType } from "../dto/IRobotType";
+import { IRobotTypeDTO } from "../dto/IRobotTypeDTO";
 import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 import { TaskType } from "../domain/taskType";
 import { RobotTypeBrand } from "../domain/robotTypeBrand";
@@ -9,13 +9,13 @@ import { RobotTypeName } from "../domain/robotTypeName";
 
 export class RobotTypeMap extends Mapper<RobotType> {
 
-  public static toDTO(robotType: RobotType): IRobotType {
+  public static toDTO(robotType: RobotType): IRobotTypeDTO {
     return {
       name: robotType.name.value,
       taskTypes: robotType.taskTypes.map((taskType) => taskType.toString()),
       brand: robotType.brand.value,
       robotTypeModel: robotType.robotTypeModel.value
-    } as IRobotType;
+    } as IRobotTypeDTO;
   }
 
   public static async toDomain(raw: any): Promise<RobotType> {

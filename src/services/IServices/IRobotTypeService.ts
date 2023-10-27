@@ -1,6 +1,6 @@
 import { Result } from "../../core/logic/Result";
-import { IRobotType } from "../../dto/IRobotType";
+import { IRobotTypeDTO } from "../../dto/IRobotTypeDTO";
 
 export default interface IRobotTypeService {
-    createRobotType(robotType: IRobotType): Promise<Result<IRobotType>>;
+    createRobotType(robotType: IRobotTypeDTO): Promise<Result<IRobotTypeDTO>>;
 }

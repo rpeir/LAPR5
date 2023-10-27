@@ -1,6 +1,6 @@
 import { Inject, Service } from "typedi";
 import { Result } from "../core/logic/Result";
-import { IRobotType } from "../dto/IRobotType";
+import { IRobotTypeDTO } from "../dto/IRobotTypeDTO";
 import IRobotTypeService from "./IServices/IRobotTypeService";
 
 import IRobotTypeRepo from "./IRepos/IRobotTypeRepo";
@@ -19,16 +19,16 @@ export default class RobotTypeService implements IRobotTypeService {
   ) {
   }
 
-  public async createRobotType(robotType: IRobotType): Promise<Result<IRobotType>> {
+  public async createRobotType(robotTypeDTO: IRobotTypeDTO): Promise<Result<IRobotTypeDTO>> {
     try {
-      const robotTypeName = RobotTypeName.create(robotType.name).getValue();
-      const robotTypeBrand = RobotTypeBrand.create(robotType.brand).getValue();
-      const robotTypeModel = RobotTypeModel.create(robotType.robotTypeModel).getValue();
+      const robotTypeName = RobotTypeName.create(robotTypeDTO.name).getValue();
+      const robotTypeBrand = RobotTypeBrand.create(robotTypeDTO.brand).getValue();
+      const robotTypeModel = RobotTypeModel.create(robotTypeDTO.robotTypeModel).getValue();
 
-      for (const taskType of robotType.taskTypes) {
+      for (const taskType of robotTypeDTO.taskTypes) {
         const taskTypeOrError = await this.validateTaskType(taskType);
         if (taskTypeOrError.isFailure) {
-          return Result.fail<IRobotType>(taskTypeOrError.error);
+          return Result.fail<IRobotTypeDTO>(taskTypeOrError.error);
         }
       }
 
@@ -37,23 +37,23 @@ export default class RobotTypeService implements IRobotTypeService {
           name: robotTypeName,
           robotTypeModel: robotTypeModel,
           brand: robotTypeBrand,
-          taskTypes: robotType.taskTypes.map((taskType) => taskType as TaskType)
+          taskTypes: robotTypeDTO.taskTypes.map((taskType) => taskType as TaskType)
         }
       );
 
       if (robotTypeOrError.isFailure) {
-        return  Result.fail<IRobotType>(robotTypeOrError.errorValue());
+        return  Result.fail<IRobotTypeDTO>(robotTypeOrError.errorValue());
       }
 
       let robotTypeResult = robotTypeOrError.getValue();
       try {
         robotTypeResult = await this.robotTypeRepo.save(robotTypeResult);
       }catch (err){
-        return Result.fail<IRobotType>(err.message);
+        return Result.fail<IRobotTypeDTO>(err.message);
       }
 
-      const robotTypeResultDTO = RobotTypeMap.toDTO(robotTypeResult) as IRobotType;
-      return Result.ok<IRobotType>(robotTypeResultDTO);
+      const robotTypeResultDTO = RobotTypeMap.toDTO(robotTypeResult) as IRobotTypeDTO;
+      return Result.ok<IRobotTypeDTO>(robotTypeResultDTO);
     } catch (err) {
       throw err;
     }
