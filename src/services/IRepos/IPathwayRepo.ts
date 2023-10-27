@@ -6,4 +6,6 @@ export default interface IPathwayRepo extends Repo<Pathway> {
   save(pathway: Pathway): Promise<Pathway>;
 
   findById(pathwayId: PathwayID | string): Promise<Pathway>;
+
+  findAll(sourceBuilding:string,destinationBuilding:string): Promise<Pathway[]>;
 }

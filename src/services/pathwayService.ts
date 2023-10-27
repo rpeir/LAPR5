@@ -91,4 +91,13 @@ export default class PathwayService implements IPathwayService {
       return Result.fail("Couldn't find floor: " + floorNr);
     }
   }
+  public async listPathways(source:string,dest:string): Promise<Result<Array<IPathwayDTO>>> {
+    try {
+      const pathways = await this.pathwayRepo.findAll(source,dest);
+      const pathwaysDTO = pathways.map((pathway) => PathwayMap.toDTO(pathway) as IPathwayDTO);
+      return Result.ok<Array<IPathwayDTO>>(pathwaysDTO);
+    } catch (err) {
+      throw err;
+    }
+  }
 }

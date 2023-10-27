@@ -7,8 +7,8 @@ import { Container } from "typedi";
 export class PathwayMap extends Mapper<Pathway> {
   public static toDTO(pathway: Pathway): any {
     return {
-      buildingSource: pathway.buildingSource.id.toString(),
-      buildingDestination: pathway.buildingDestination.id.toString(),
+      buildingSource: pathway.buildingSource.designation,
+      buildingDestination: pathway.buildingDestination.designation,
       floorSource: pathway.floorSource.floorNr,
       floorDestination: pathway.floorDestination.floorNr,
       description: pathway.description
@@ -19,7 +19,7 @@ export class PathwayMap extends Mapper<Pathway> {
     const buildingRepo = Container.get(BuildingRepo);
     const floorRepo = Container.get(FloorRepo);
     const buildingSource = await buildingRepo.findById(raw.buildingSource);
-    const buildingDestination = await buildingRepo.findById(raw.buildingDestiny);
+    const buildingDestination = await buildingRepo.findById(raw.buildingDestination);
     const floorSource = await floorRepo.findById( raw.floorSource);
     const floorDestination = await floorRepo.findById(raw.floorDestination);
 

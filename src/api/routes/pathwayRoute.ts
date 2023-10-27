@@ -21,5 +21,15 @@ export default (app: Router) => {
         description: Joi.string().required()
       })
     }),
-    (req, res, next) => ctrl.createPathway(req, res, next));
+    (req, res, next) => ctrl.createPathway(req, res, next)
+);
+  route.get('/list',
+    celebrate({
+      body: Joi.object({
+        buildingSource: Joi.string().required(),
+        buildingDestination: Joi.string().required()
+      })
+      }),
+    (req, res, next) => ctrl.listPathways(req, res, next)
+  );
 }
