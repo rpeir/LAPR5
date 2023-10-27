@@ -4,6 +4,7 @@ export enum RoomCategory {
     CLASSROOM = 'classroom',
     LABORATORY = 'laboratory',
     OFFICE = 'office',
-    AUDITORIUM = 'auditorium'
+    AUDITORIUM = 'auditorium',
+    OTHER = 'other'
 
 }
