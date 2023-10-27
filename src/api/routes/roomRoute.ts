@@ -24,6 +24,6 @@ export default (app: Router) => {
     (req,res,next) => ctrl.createRoom(req, res,next)
   );
 
-  // Error handler middleware
+  // Celebrate failure error handler middleware
   route.use(middlewares.validateBody);
 }

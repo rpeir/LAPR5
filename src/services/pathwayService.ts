@@ -72,7 +72,7 @@ export default class PathwayService implements IPathwayService {
       try {
         pathwayResult = await this.pathwayRepo.save(pathwayResult);
       } catch (err) {
-        return Result.fail<IPathwayDTO>(err);
+        return Result.fail<IPathwayDTO>(err.message);
       }
 
       const pathwayDTOResult = PathwayMap.toDTO(pathwayResult) as IPathwayDTO;
