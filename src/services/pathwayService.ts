@@ -103,6 +103,9 @@ export default class PathwayService implements IPathwayService {
     try {
       const pathways = await this.pathwayRepo.findAll(source,dest);
       const pathwaysDTO = pathways.map((pathway) => PathwayMap.toDTO(pathway) as IPathwayDTO);
+      if(pathwaysDTO.length==0){
+        return Result.fail<Array<IPathwayDTO>>("No pathways found for specified buildings");
+      }
       return Result.ok<Array<IPathwayDTO>>(pathwaysDTO);
     } catch (err) {
       throw err;
