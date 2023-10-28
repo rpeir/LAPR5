@@ -41,10 +41,10 @@ export default class RobotController implements IRobotController {
     try{
       const robotOrError = (await this.robotServiceInstance.consultAllRobots()) as Result<IRobotDTO[]>;
       if (robotOrError.isFailure) {
-        return res.status(402).send(robotOrError.error);
+        return res.status(402).json(robotOrError.error).send();
       }
       const robotDTO = robotOrError.getValue();
-      return res.json(robotDTO).status(201);
+      return res.json(robotDTO).status(200);
 
     }catch(error){
       throw next(error);

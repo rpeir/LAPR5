@@ -46,7 +46,7 @@ export default class ElevatorController implements IElevatorController{
       }
 
       const elevators = listOrError.getValue();
-      return res.json(elevators).status(201);
+      return res.json(elevators).status(200);
     } catch (error) {
       return next(error);
     }
