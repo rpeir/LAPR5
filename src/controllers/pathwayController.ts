@@ -27,7 +27,7 @@ export default class PathwayController implements IPathwayController {
       const pathwayDTO = pathwayOrError.getValue();
       return res.json(pathwayDTO).status(202);
     } catch (error) {
-      throw error;
+      return  error;
     }
   }
   public async listPathways(req: Request, res: Response, next: NextFunction) {

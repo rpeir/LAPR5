@@ -21,7 +21,7 @@ export default class RobotController implements IRobotController {
       const robotDTO = robotOrError.getValue();
       return res.json(robotDTO).status(201);
     } catch (error) {
-      throw next(error);
+      return  next(error);
     }
   }
 

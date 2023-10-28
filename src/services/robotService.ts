@@ -59,7 +59,7 @@ export default class RobotService implements IRobotService {
       const robotCode = await RobotCode.create(robotDTO.robotCode).getValue();
       let robotType;
 
-      const robotTypeOrError = await this.getRobotTypeName(robotDTO.robotType);
+      const robotTypeOrError = await this.getRobotTypeByName(robotDTO.robotType);
       if (robotTypeOrError.isFailure) {
         return Result.fail<IRobotDTO>(robotTypeOrError);
       } else {
@@ -92,7 +92,7 @@ export default class RobotService implements IRobotService {
     }
   }
 
-  private async getRobotTypeName(robotTypeName: string) {
+  private async getRobotTypeByName(robotTypeName: string) {
     const robotType = await this.robotTypeRepo.findByName(robotTypeName);
     if (!!robotType) {
       return Result.ok<RobotType>(robotType);
