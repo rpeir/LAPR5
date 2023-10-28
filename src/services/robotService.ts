@@ -105,6 +105,9 @@ export default class RobotService implements IRobotService {
     try {
       const robots = await this.robotRepo.findAll();
       const robotsDTO = robots.map((robot) => RobotMap.toDTO(robot) as IRobotDTO);
+      if(robotsDTO.length==0){
+        return Result.fail<IRobotDTO[]>("No robots found");
+      }
       return Result.ok<IRobotDTO[]>(robotsDTO);
     } catch (err) {
       throw err;
