@@ -65,7 +65,7 @@ export default class ElevatorService implements IElevatorService{
             throw err;
         }
     }
-    public async listElevator(buildingDesignation:string): Promise<Result<IElevatorDTO[]>>{
+  /*  public async listElevator(buildingDesignation:string): Promise<Result<IElevatorDTO[]>>{
         try {
           const listOrError = await this.elevatorRepo.listElevators(buildingDesignation);
           const listResult=listOrError.map(elevator=> ElevatorMap.toDTO(elevator));
@@ -78,7 +78,25 @@ export default class ElevatorService implements IElevatorService{
             throw Result.fail<IElevatorDTO>(err);
         }
     }
-    public async updateElevator(elevatorDTO: IElevatorDTO): Promise<Result<IElevatorDTO>> {
+
+   */
+  public async listElevator(buildingDesignation: string): Promise<Result<IElevatorDTO[]>> {
+    try {
+      const listOrError = await this.elevatorRepo.listElevators(buildingDesignation);
+      const listResult = listOrError.map((elevator) => ElevatorMap.toDTO(elevator));
+
+      if (listResult.length === 0) {
+        return Result.fail<IElevatorDTO[]>("No elevators found for the specified building");
+      }
+
+      return Result.ok<IElevatorDTO[]>(listResult);
+    } catch (err) {
+      // Handle errors here if needed.
+      throw Result.fail<IElevatorDTO>(err);
+    }
+  }
+
+  public async updateElevator(elevatorDTO: IElevatorDTO): Promise<Result<IElevatorDTO>> {
         try {
             let elevatorOrError=await this.elevatorRepo.findById(elevatorDTO.id);
             if(elevatorOrError==null){
