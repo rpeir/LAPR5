@@ -12,7 +12,7 @@ export default (app: Router) => {
   const ctrl = Container.get(config.controllers.pathway.name) as IPathwayController;
 
   route.post(
-    "",
+    "/create",
     celebrate({
       body: Joi.object({
         buildingSource: Joi.string().required(),
@@ -24,16 +24,16 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.createPathway(req, res, next)
   );
-
   route.get('/list',
     celebrate({
-      body: Joi.object({
+      query: {
         buildingSource: Joi.string().required(),
         buildingDestination: Joi.string().required()
-      })
-      }),
+      }
+    }),
     (req, res, next) => ctrl.listPathways(req, res, next)
   );
+
 
   // Celebrate failure error handler middleware
   route.use(middlewares.validateBody);

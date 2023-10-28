@@ -32,14 +32,16 @@ export default class PathwayController implements IPathwayController {
   }
   public async listPathways(req: Request, res: Response, next: NextFunction) {
     try {
-      const pathwayOrError = await this.pathwayService.listPathways(req.body.buildingSource,req.body.buildingDestination) as Result<Array<IPathwayDTO>>;
+      const buildingSource = req.query.buildingSource as string;
+      const buildingDestination = req.query.buildingDestination as string;
+      const pathwayOrError = await this.pathwayService.listPathways(buildingSource,buildingDestination) as Result<Array<IPathwayDTO>>;
 
       if (pathwayOrError.isFailure) {
-        return res.status(402).send(pathwayOrError);
+        return res.status(402).json({error:pathwayOrError.error}).send();
       }
 
       const pathwayDTO = pathwayOrError.getValue();
-      return res.json(pathwayDTO).status(202);
+      return res.json(pathwayDTO).status(200);
     } catch (error) {
       throw error;
     }
