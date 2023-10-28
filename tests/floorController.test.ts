@@ -5,6 +5,11 @@ import { Result } from "../src/core/logic/Result";
 import { IFloorDTO } from "../src/dto/IFloorDTO";
 import FloorController from "../src/controllers/floorController";
 import IFloorService from "../src/services/IServices/IFloorService";
+import { BuildingId } from "../src/domain/building/buildingId";
+import { Building } from "../src/domain/building/building";
+import { BuildingCode } from "../src/domain/building/BuildingCode";
+import { UniqueEntityID } from "../src/core/domain/UniqueEntityID";
+import { Floor } from "../src/domain/floor";
 
 
 describe("floor controller", function() {
@@ -43,7 +48,7 @@ describe("floor controller", function() {
     //Arrange
     let body = {
       "floorNr": 1,
-      "building": "desgi",
+      "building": "desgi2",
       "description": "salas"
     };
     let req: Partial<Request> = {};
@@ -59,7 +64,7 @@ describe("floor controller", function() {
     let floorServiceInstance = Container.get("FloorService");
     sinon.stub(floorServiceInstance, "createFloor").returns(Result.ok<IFloorDTO>(
       {
-        "domainId": "123",
+        "domainId": "12345",
         "floorNr": req.body.floor,
         "building": req.body.building,
         "description": req.body.description
@@ -74,7 +79,7 @@ describe("floor controller", function() {
     //Assert
     sinon.assert.calledOnce(res.json);
     sinon.assert.calledWith(res.json, sinon.match({
-        "domainId": "123",
+        "domainId": "12345",
         "floorNr": req.body.floor,
         "building": req.body.building,
         "description": req.body.description
@@ -83,46 +88,127 @@ describe("floor controller", function() {
 
   });
 
-/*
-  it("floorController unit test (update) using floorService stub", async function() {
-    ///////////////////////
-    let updateBody = {
-      "domainId": "a7605971-bc36-43a2-96f6-64582017a508",
-      "floorNr": "4",
-      "description": "labs"
+  it("floorController + floorService integration test (create) using buildingRepo and floorRepo stub ", async function()  {
+    //Arrange
+    let body = {
+      "floorNr": 1,
+      "building": "desgi2",
+      "description": "salas"
     };
+    let req: Partial<Request> = {};
+    req.body = body;
 
-
-    let updateReq: Partial<Request> = {};
-    updateReq.body = updateBody;
-
-    let updateRes: Partial<Response> = {
+    let res: Partial<Response> = {
       json: sinon.spy()
     };
 
-    let updateNext: Partial<NextFunction> = () => {
+    let next: Partial<NextFunction> = () => {
     };
 
-    let floorServiceInstance = Container.get("FloorService");
-    sinon.stub(floorServiceInstance, "updateBuildingFloor").returns(Result.ok<IFloorDTO>({
-      "domainId": updateReq.body.domainId,
-      "floorNr": updateReq.body.floorNr,
-      "building": "Building B",
-      "description": updateReq.body.description
+    let buildingRepoInstance = Container.get("BuildingRepo");
+    sinon.stub(buildingRepoInstance, "findByDesignation").returns(new Promise<BuildingId>((resolve, reject) => {
+      resolve(Building.create({
+        code: BuildingCode.create("CODE3").getValue(),
+        designation: req.body.building,
+        description: "Building description",
+        length: 10,
+        width: 10,
+        height: 5
+      }, new UniqueEntityID("123")).getValue());
     }));
 
+    sinon.stub(Floor,"create").returns(Result.ok({
+      "domainId": "123",
+      "floorNr": req.body.floorNr,
+
+      "building": Building.create({
+        code: BuildingCode.create("CODE3").getValue(),
+        designation: req.body.building,
+        description: "Building description",
+        length: 10,
+        width: 10,
+        height: 5
+      }, new UniqueEntityID("123")).getValue(),
+
+      "description": req.body.description
+    }));
+
+    let floorRepoInstance = Container.get("FloorRepo");
+    sinon.stub(floorRepoInstance, "save").returns(new Promise<BuildingId>((resolve, reject) => {
+      resolve(Floor.create({
+        "floorNr": req.body.floorNr,
+
+        "building": Building.create({
+          code: BuildingCode.create("CODE3").getValue(),
+          designation: req.body.building,
+          description: "Building description",
+          length: 10,
+          width: 10,
+          height: 5
+        }, new UniqueEntityID("123")).getValue(),
+
+        "description": req.body.description
+      }, new UniqueEntityID("123")).getValue());
+    }));
+
+    let floorServiceInstance = Container.get("FloorService");
     const ctrl = new FloorController(floorServiceInstance as IFloorService);
-    await ctrl.updateBuildingFloor(<Request>updateReq, <Response>updateRes, <NextFunction>updateNext);
+
+    //Act
+    await ctrl.createFloor(<Request>req, <Response>res, <NextFunction>next);
 
     //Assert
-    sinon.assert.calledOnce(updateRes.json);
-    sinon.assert.calledWith(updateRes.json, sinon.match({
-      "domainId": updateReq.body.domainId,
-      "floorNr": updateReq.body.floorNr,
-      "building": "Building B",
-      "description": updateReq.body.description
-    }));
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, sinon.match({
+        "floorNr": req.body.floorNr,
+        "building": req.body.building,
+        "description": req.body.description
+      })
+    );
 
   });
-*/
+
+
+  /*
+    it("floorController unit test (update) using floorService stub", async function() {
+      ///////////////////////
+      let updateBody = {
+        "domainId": "a7605971-bc36-43a2-96f6-64582017a508",
+        "floorNr": "4",
+        "description": "labs"
+      };
+
+
+      let updateReq: Partial<Request> = {};
+      updateReq.body = updateBody;
+
+      let updateRes: Partial<Response> = {
+        json: sinon.spy()
+      };
+
+      let updateNext: Partial<NextFunction> = () => {
+      };
+
+      let floorServiceInstance = Container.get("FloorService");
+      sinon.stub(floorServiceInstance, "updateBuildingFloor").returns(Result.ok<IFloorDTO>({
+        "domainId": updateReq.body.domainId,
+        "floorNr": updateReq.body.floorNr,
+        "building": "Building B",
+        "description": updateReq.body.description
+      }));
+
+      const ctrl = new FloorController(floorServiceInstance as IFloorService);
+      await ctrl.updateBuildingFloor(<Request>updateReq, <Response>updateRes, <NextFunction>updateNext);
+
+      //Assert
+      sinon.assert.calledOnce(updateRes.json);
+      sinon.assert.calledWith(updateRes.json, sinon.match({
+        "domainId": updateReq.body.domainId,
+        "floorNr": updateReq.body.floorNr,
+        "building": "Building B",
+        "description": updateReq.body.description
+      }));
+
+    });
+  */
 });

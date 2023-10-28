@@ -7,6 +7,9 @@ import IRobotTypeService from "../src/services/IServices/IRobotTypeService";
 import { IRobotTypeDTO } from "../src/dto/IRobotTypeDTO";
 import { RobotType } from "../src/domain/robotType";
 import { UniqueEntityID } from "../src/core/domain/UniqueEntityID";
+import { RobotTypeName } from "../src/domain/robotTypeName";
+import { RobotTypeModel } from "../src/domain/robotTypeModel";
+import { RobotTypeBrand } from "../src/domain/robotTypeBrand";
 
 
 describe("robotType controller", function() {
@@ -80,63 +83,62 @@ describe("robotType controller", function() {
     }));
   });
 
-  // it("robotTypeController + robotTypeService integration test using roleRepository stubs", async function() {
-  //   // Arrange
-  //   let body = {
-  //     "name": "Marko",
-  //     "taskTypes": ["delivery"],
-  //     "robotTypeModel": "RB13",
-  //     "brand": "RB"
-  //   };
-  //
-  //   let req: Partial<Request> = {};
-  //   req.body = body;
-  //
-  //   let res: Partial<Response> = {
-  //     json: sinon.spy()
-  //   };
-  //
-  //   let next: Partial<NextFunction> = () => {};
-  //
-  //   sinon.stub(RobotType, "create").returns(Result.ok({
-  //     "id": "123",
-  //     "name": req.body.name,
-  //     "taskTypes": req.body.taskTypes,
-  //     "robotTypeModel": req.body.robotTypeModel,
-  //     "brand": req.body.brand
-  //   }));
-  //
-  //   let robotTypeRepoInstance = Container.get("RobotTypeRepo");
-  //   sinon.stub(robotTypeRepoInstance, "save").returns(new Promise<RobotType>((resolve, reject) => {
-  //     resolve(RobotType.create({
-  //       "name": req.body.name,
-  //       "taskTypes": req.body.taskTypes,
-  //       "robotTypeModel": req.body.robotTypeModel,
-  //       "brand": req.body.brand
-  //     }, new UniqueEntityID("123")).getValue());
-  //   }));
-  //
-  //
-  //
-  //
-  //   let robotTypeServiceInstance = Container.get("RobotTypeService") as IRobotTypeService;
-  //
-  //   const ctrl = new RobotTypeController(robotTypeServiceInstance as IRobotTypeService);
-  //
-  //
-  //   // Act
-  //   await ctrl.createRobotType(<Request>req, <Response>res, <NextFunction>next);
-  //
-  //   // Assert
-  //   sinon.assert.calledOnce(res.json);
-  //   sinon.assert.calledWith(res.json, sinon.match({
-  //     "id": "123",
-  //     "name": req.body.name,
-  //     "taskTypes": req.body.taskTypes,
-  //     "robotTypeModel": req.body.robotTypeModel,
-  //     "brand": req.body.brand
-  //   }));
-  //
-  // });
+  it("robotTypeController + robotTypeService integration test (create) using robotTypeRepository and robotType stubs", async function() {
+    // Arrange
+    let body = {
+      "name": "Marko",
+      "taskTypes": ["delivery"],
+      "robotTypeModel": "RB13",
+      "brand": "RB"
+    };
+
+    let req: Partial<Request> = {};
+    req.body = body;
+
+    let res: Partial<Response> = {
+      json: sinon.spy()
+    };
+
+    let next: Partial<NextFunction> = () => {};
+
+    sinon.stub(RobotType, "create").returns(Result.ok({
+      "id": "123",
+      "name": RobotTypeName.create(req.body.name).getValue(),
+      "taskTypes": req.body.taskTypes,
+      "robotTypeModel": RobotTypeModel.create(req.body.robotTypeModel).getValue(),
+      "brand": RobotTypeBrand.create(req.body.brand).getValue()
+    }));
+
+    let robotTypeRepoInstance = Container.get("RobotTypeRepo");
+    sinon.stub(robotTypeRepoInstance, "save").returns(new Promise<RobotType>((resolve, reject) => {
+      resolve(RobotType.create({
+        "name": RobotTypeName.create(req.body.name).getValue(),
+        "taskTypes": req.body.taskTypes,
+        "robotTypeModel": RobotTypeModel.create(req.body.robotTypeModel).getValue(),
+        "brand": RobotTypeBrand.create(req.body.brand).getValue()
+      }, new UniqueEntityID("123")).getValue());
+    }));
+
+
+    let robotTypeServiceInstance = Container.get("RobotTypeService");
+
+    const ctrl = new RobotTypeController(robotTypeServiceInstance as IRobotTypeService);
+
+
+    // Act
+    await ctrl.createRobotType(<Request>req, <Response>res, <NextFunction>next);
+
+    // Assert
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, sinon.match({
+      "id": "123",
+      "name": req.body.name,
+      "taskTypes": req.body.taskTypes,
+      "robotTypeModel": req.body.robotTypeModel,
+      "brand": req.body.brand
+    }));
+    /// a dar falso por poblemas no mapaemanto depois do save para dto
+
+  });
 
 });
