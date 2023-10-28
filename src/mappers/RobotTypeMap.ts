@@ -11,6 +11,7 @@ export class RobotTypeMap extends Mapper<RobotType> {
 
   public static toDTO(robotType: RobotType): IRobotTypeDTO {
     return {
+      id: robotType.id.toString(),
       name: robotType.name.value,
       taskTypes: robotType.taskTypes.map((taskType) => taskType.toString()),
       brand: robotType.brand.value,
@@ -41,7 +42,7 @@ export class RobotTypeMap extends Mapper<RobotType> {
       domainId: robotType.id.toString(),
       name: robotType.name.value,
       taskTypes: robotType.taskTypes.map((taskType) => taskType.toString()),
-      robotTypeModel: robotType.robotTypeModel.toString(),
+      robotTypeModel: robotType.robotTypeModel.value,
       brand: robotType.brand.value
     };
     return a;
