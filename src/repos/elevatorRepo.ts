@@ -8,6 +8,7 @@ import {ElevatorMap} from "../mappers/ElevatorMap";
 import {Building} from "../domain/building/building";
 import elevatorSchema from "../persistence/schemas/elevatorSchema";
 import {UniqueEntityID} from "../core/domain/UniqueEntityID";
+import {Result} from "../core/logic/Result";
 
 @Service()
 export default class ElevatorRepo implements IElevatorRepo{
@@ -89,10 +90,10 @@ export default class ElevatorRepo implements IElevatorRepo{
     public async listElevators(buildingDesignation: String): Promise<Elevator[]>{
       const query={buildingDesignation:buildingDesignation};
       const results=await this.elevatorSchema.find(query);
-      if(results!=null){
+      if(results.length!=0){
           return Promise.all(results.map(result =>ElevatorMap.toDomain(result)));
       } else{
-          return null;
+          return [];
       }
     }
 }

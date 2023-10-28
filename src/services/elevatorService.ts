@@ -67,9 +67,12 @@ export default class ElevatorService implements IElevatorService{
     }
     public async listElevator(buildingDesignation:string): Promise<Result<IElevatorDTO[]>>{
         try {
-            const listOrError =await this.elevatorRepo.listElevators(buildingDesignation);
-           const listResult=listOrError.map(elevator=> ElevatorMap.toDTO(elevator));
-           return Result.ok<IElevatorDTO[]>(listResult);
+          const listOrError = await this.elevatorRepo.listElevators(buildingDesignation);
+          const listResult=listOrError.map(elevator=> ElevatorMap.toDTO(elevator));
+          if(listResult.length==0){
+            return Result.fail<IElevatorDTO[]>("No elevators found for specified building");
+          }
+          return Result.ok<IElevatorDTO[]>(listResult);
 
         } catch (err){
             throw Result.fail<IElevatorDTO>(err);
