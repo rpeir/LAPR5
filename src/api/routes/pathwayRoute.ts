@@ -12,7 +12,7 @@ export default (app: Router) => {
   const ctrl = Container.get(config.controllers.pathway.name) as IPathwayController;
 
   route.post(
-    "/create",
+    "",
     celebrate({
       body: Joi.object({
         buildingSource: Joi.string().required(),

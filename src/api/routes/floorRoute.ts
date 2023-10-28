@@ -11,7 +11,7 @@ export default (app: Router) => {
   const ctrl = Container.get(config.controllers.floor.name) as IFloorController;
 
   route.post(
-    "/create",
+    "",
     celebrate({
       body: Joi.object({
         floorNr: Joi.number().required(),
