@@ -24,15 +24,17 @@ export default (app: Router) => {
     }),
     (req,res,next) => ctrl.createElevator(req,res,next)
   );
-  route.get(
-      "/list",
-      celebrate({
-          body: Joi.object({
-              buildingDesignation: Joi.string().required()
-          })
-      }),
-      (req,res,next) => ctrl.listElevator(req,res,next)
-  );
+  route.get("/list",
+  celebrate({
+    query: {
+      buildingDesignation: Joi.string().required(),
+    }
+  }),
+
+    (req, res, next) => {
+    ctrl.listElevator(req, res, next);
+  });
+
   route.put(
       "/edit",
       celebrate({
