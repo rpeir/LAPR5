@@ -10,7 +10,6 @@ import { Floor } from "../domain/floor";
 
 @Service()
 export default class PathwayRepo implements IPathwayRepo {
-
   constructor(
     @Inject("pathwaySchema") private pathwaySchema: Model<IPathwayPersistence & Document>
   ) {
@@ -25,10 +24,10 @@ export default class PathwayRepo implements IPathwayRepo {
         const pathwayCreated = await this.pathwaySchema.create(rawPathway);
         return PathwayMap.toDomain(pathwayCreated);
       } else {
-        pathwayDocument.buildingSource = pathway.buildingSource;
-        pathwayDocument.buildingDestiny = pathway.buildingDestination;
-        pathwayDocument.floorSource = pathway.floorSource;
-        pathwayDocument.floorDestiny = pathway.floorDestination;
+        pathwayDocument.buildingSource = pathway.buildingSource.id.toString();
+        pathwayDocument.buildingDestination = pathway.buildingDestination.id.toString();
+        pathwayDocument.floorSource = pathway.floorSource.id.toString();
+        pathwayDocument.floorDestination = pathway.floorDestination.id.toString();
         pathwayDocument.description = pathway.description;
         await pathwayDocument.save();
         return pathway;
@@ -72,14 +71,18 @@ export default class PathwayRepo implements IPathwayRepo {
   }
 
   public async existsPathwayBetweenFloors(floor1 : Floor, floor2 : Floor) : Promise<boolean> {
+    return await this.findPathwayBetweenFloors(floor1, floor2) != null;
+  }
+
+  public async findPathwayBetweenFloors(floor1 : Floor, floor2 : Floor): Promise<Pathway> {
     let query = {
       floorSource:floor1.id.toString(),
       floorDestination:floor2.id.toString(),
       buildingSource:floor1.building.id.toString(),
       buildingDestination:floor2.building.id.toString()
     };
-    let pathwayRecord = await this.pathwaySchema.findOne(query);
-    if (pathwayRecord != null) return true;
+    let pathwayRecord= await this.pathwaySchema.findOne(query);
+    if (pathwayRecord != null) return PathwayMap.toDomain(pathwayRecord);
 
     query = {
       floorSource:floor2.id.toString(),
@@ -87,7 +90,9 @@ export default class PathwayRepo implements IPathwayRepo {
       buildingSource:floor2.building.id.toString(),
       buildingDestination:floor1.building.id.toString()
     };
+
     pathwayRecord = await this.pathwaySchema.findOne(query);
-    return pathwayRecord != null;
+    if (pathwayRecord == null) return null;
+    return PathwayMap.toDomain(pathwayRecord);
   }
 }

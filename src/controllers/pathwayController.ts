@@ -30,6 +30,37 @@ export default class PathwayController implements IPathwayController {
       return  error;
     }
   }
+
+  public async replacePathway(req : Request, res : Response, next : NextFunction) {
+    try {
+      const pathwayOrError = await this.pathwayService.replacePathway(req.body as IPathwayDTO) as Result<IPathwayDTO>;
+
+      if (pathwayOrError.isFailure) {
+        return res.status(402).send(pathwayOrError);
+      }
+
+      const pathwayDTO = pathwayOrError.getValue();
+      return res.json(pathwayDTO).status(202);
+    } catch (error) {
+      return  res.status(500).send(error);
+    }
+  }
+
+  public async updatePathway(req : Request, res : Response, next : NextFunction) {
+    try {
+      const pathwayOrError = await this.pathwayService.updatePathway({...req.body, domainId: req.query.domainId} as IPathwayDTO) as Result<IPathwayDTO>;
+
+      if (pathwayOrError.isFailure) {
+        return res.status(402).send(pathwayOrError);
+      }
+
+      const pathwayDTO = pathwayOrError.getValue();
+      return res.json(pathwayDTO).status(202);
+    } catch (error) {
+      return  res.status(500).send(error);
+    }
+  }
+
   public async listPathways(req: Request, res: Response, next: NextFunction) {
     try {
       const buildingSource = req.query.buildingSource as string;

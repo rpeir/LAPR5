@@ -1,4 +1,5 @@
 export interface IPathwayDTO {
+  domainId :string;
   buildingSource: string;
   buildingDestination: string;
   floorSource: number;
