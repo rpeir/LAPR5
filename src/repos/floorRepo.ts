@@ -8,6 +8,7 @@ import { FloorMap } from '../mappers/FloorMap';
 import { FloorId } from '../domain/floorId';
 import { BuildingId } from '../domain/building/buildingId';
 import { Building } from '../domain/building/building';
+import {Pathway} from "../domain/pathway";
 
 @Service()
 export default class FloorRepo implements IFloorRepo {
@@ -117,5 +118,15 @@ export default class FloorRepo implements IFloorRepo {
     const floorRecord = await this.floorSchema.findOne(query);
 
     return !!floorRecord === true;
+  }
+  public async floorsInPathway(pathways:Pathway[]):Promise<Floor[]>{
+    let floors:Floor[] = [];
+    for(let pathway of pathways){
+      let floor = await this.findById(pathway.floorSource);
+      if(floor != null) floors.push(floor);
+      floor = await this.findById(pathway.floorDestination);
+      if(floor != null) floors.push(floor);
+    }
+    return floors;
   }
 }

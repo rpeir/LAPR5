@@ -13,4 +13,7 @@ export default interface IPathwayRepo extends Repo<Pathway> {
   existsPathwayBetweenFloors(floor1 : Floor, floor2: Floor) : Promise<boolean>;
 
   findPathwayBetweenFloors(floorSource, floorDestination): Promise<Pathway>;
+
+  findByBuilding(buildingDesignation:string):Promise<Pathway[]>;
+
 }

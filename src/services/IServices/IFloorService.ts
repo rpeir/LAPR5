@@ -10,4 +10,6 @@ export default interface IFloorService {
   getBuildingFloorMaxMin(max: number, min: number): Promise<Result<IBuildingDTO[]>>;
 
   updateBuildingFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>>;
+
+    listFloorsWithPathways(buildingDesignation: string): Promise<Result<IFloorDTO[]>>;
 }

@@ -10,12 +10,14 @@ import { Floor } from '../domain/floor';
 import { FloorMap } from '../mappers/FloorMap';
 import { IBuildingDTO } from '../dto/IBuildingDTO';
 import { BuildingMap } from '../mappers/BuildingMap';
+import IPathwayRepo from "./IRepos/IPathwayRepo";
 
 @Service()
 export default class FloorService implements IFloorService {
   constructor(
     @Inject(config.repos.building.name) private buildingRepo: IBuildingRepo,
     @Inject(config.repos.floor.name) private floorRepo: IFloorRepo,
+    @Inject(config.repos.pathway.name) private pathwayRepo: IPathwayRepo,
   ) {}
 
   public async createFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>> {
@@ -122,6 +124,24 @@ export default class FloorService implements IFloorService {
       }
     } catch (e) {
       throw e;
+    }
+  }
+  public async listFloorsWithPathways(buildingDesignation: string): Promise<Result<IFloorDTO[]>> {
+    try {
+      let building;
+      const buildingOrError = await this. getBuildingByDesignation(buildingDesignation);
+      if (buildingOrError.isFailure) {
+        return Result.fail<IFloorDTO[]>(buildingOrError.error);
+      } else {
+        building = buildingOrError.getValue();
+      }
+      const pathways= await this.pathwayRepo.findByBuilding(building.id.toString());
+      const floors= await this.floorRepo.floorsInPathway(pathways);
+      if (floors.length === 0) {
+        return Result.fail<IFloorDTO[]>("Couldn't find floors for building: " + buildingDesignation);
+      }
+    } catch (err) {
+      throw err;
     }
   }
 }

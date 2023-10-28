@@ -73,4 +73,19 @@ export default class FloorController implements IFloorController {
       throw error;
     }
   }
+  public async listFloorsWithPathways(req: Request, res: Response, next: NextFunction) {
+    try {
+      const buildingDesignation = req.query.buildingDesignation;
+      const floorsOrError = (await this.floorServiceInstance.listFloorsWithPathways(buildingDesignation.toString())) as Result<IFloorDTO[]>;
+
+      if (floorsOrError.isFailure) {
+        return res.status(402).send(floorsOrError);
+      }
+
+      const floorDTO = floorsOrError.getValue();
+      return res.json(floorDTO).status(202);
+    } catch (error) {
+      throw error;
+    }
+  }
 }
