@@ -16,9 +16,9 @@ export class RoomMap extends Mapper<Room> {
     return {
       name : room.name,
       description : room.description,
-      category : room.category.toString(),
+      category : room.category as string,
       floor : room.floor,
-      building : room.building.value.toString()
+      building : room.building.value
     } as IRoomDTO;
   }
 

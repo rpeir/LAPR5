@@ -1,14 +1,14 @@
 {
-  "name": "bulletproof-nodejs",
+  "name": "rob-drone-go",
   "version": "1.0.0",
-  "description": "Bulletproof node.js",
+  "description": "RobDroneGo node.js",
   "main": "src/app.ts",
   "scripts": {
     "build": "tsc",
     "heroku-postbuild": "npm run build",
     "start": "nodemon",
     "inspect": "nodemon --inspect src/app.ts",
-    "test": "mocha -r ts-node/register **/*.test.ts",
+    "test": "mocha -r ts-node/register **/*.test.ts tests/**/*.spec.ts",
     "lint": "npm run lint:js ",
     "lint:eslint": "eslint --ignore-path .gitignore --ext .ts",
     "lint:js": "npm run lint:eslint src/",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/santiq/bulletproof-nodejs.git"
+    "url": "git+https://bitbucket.org/rodrigopeireso/froggers_sem5pi.git"
   },
   "keywords": [
     "boilerplay",
@@ -86,7 +86,7 @@
     "typescript": "^4.5.2"
   },
   "bugs": {
-    "url": "https://github.com/santiq/bulletproof-nodejs/issues"
+    "url": "https://bitbucket.org/rodrigopeireso/froggers_sem5pi"
   },
-  "homepage": "https://github.com/santiq/bulletproof-nodejs#readme"
+  "homepage": "https://bitbucket.org/rodrigopeireso/froggers_sem5pi/src/master/README.md"
 }
