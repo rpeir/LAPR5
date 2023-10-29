@@ -1,5 +1,129 @@
 import mongoose, { Document } from 'mongoose';
-import { IFloorPersistence } from '../../dataschema/IFloorPersistence';
+import { IFloorPersistence } from '../../dataschema/IFloorPersistence'; // Import the relevant interfaces
+
+// Create a sub-schema for floorMap
+const floorMapSchema = new mongoose.Schema(
+  {
+    floor: {
+      size: {
+        width: Number,
+        depth: Number,
+      },
+      map: [[Number]],
+      rooms: [
+        {
+          roomId: String,
+          position: [Number],
+          size: {
+            width: Number,
+            height: Number,
+          },
+        },
+      ],
+      exits: [[Number]],
+      elevators: [[Number]],
+      exitLocation: [Number],
+    },
+    ground: {
+      size: {
+        width: Number,
+        height: Number,
+        depth: Number,
+      },
+      segments: {
+        width: Number,
+        height: Number,
+        depth: Number,
+      },
+      primaryColor: String,
+      maps: {
+        color: {
+          url: String,
+        },
+        ao: {
+          url: String,
+          intensity: Number,
+        },
+        displacement: {
+          url: String,
+          scale: Number,
+          bias: Number,
+        },
+        normal: {
+          url: String,
+          _type: Number,
+          scale: {
+            x: Number,
+            y: Number,
+          },
+        },
+        bump: {
+          url: String,
+          scale: Number,
+        },
+        roughness: {
+          url: String,
+          rough: Number,
+        },
+      },
+      wrapS: Number,
+      wrapT: Number,
+      repeat: {
+        u: Number,
+        v: Number,
+      },
+      magFilter: Number,
+      minFilter: Number,
+      secondaryColor: String,
+    },
+    wall: {
+      segments: {
+        width: Number,
+        height: Number,
+      },
+      primaryColor: String,
+      maps: {
+        color: {
+          url: String,
+        },
+        ao: {
+          url: String,
+          intensity: Number,
+        },
+        displacement: {
+          url: String,
+          scale: Number,
+          bias: Number,
+        },
+        normal: {
+          url: String,
+          _type: Number,
+          scale: {
+            x: Number,
+            y: Number,
+          },
+        },
+        bump: {
+          url: String,
+          scale: Number,
+        },
+        roughness: {
+          url: String,
+          rough: Number,
+        },
+      },
+      wrapS: Number,
+      wrapT: Number,
+      repeat: {
+        u: Number,
+        v: Number,
+      },
+      magFilter: Number,
+      minFilter: Number,
+      secondaryColor: String,
+    },
+  },{ strict: true }
+);
 
 const Floor = new mongoose.Schema(
   {
@@ -7,12 +131,13 @@ const Floor = new mongoose.Schema(
     building: { type: String },
     description: { type: String },
     floorNr: { type: Number },
+    floorMap: floorMapSchema, // Embed the sub-schema for floorMap
   },
   {
     timestamps: true,
   },
 );
 
-Floor.index({building: 1, floorNr: 1}, {unique: true});
+Floor.index({ building: 1, floorNr: 1 }, { unique: true });
 
 export default mongoose.model<IFloorPersistence & Document>('Floor', Floor);

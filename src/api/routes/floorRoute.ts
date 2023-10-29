@@ -16,7 +16,8 @@ export default (app: Router) => {
       body: Joi.object({
         floorNr: Joi.number().required(),
         building: Joi.string().required(),
-        description: Joi.string().required()
+        description: Joi.string().required(),
+        floorMap: Joi.object()
       })
     }),
     (req, res, next) => ctrl.createFloor(req, res, next)
@@ -42,4 +43,18 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.updateBuildingFloor(req, res, next)
   );
+
+  route.patch(
+    "/upload",
+    // check if i can do this with building nr and floor nr
+    celebrate({
+      body: Joi.object({
+        floorNr: Joi.number().required(),
+        building: Joi.string().required(),
+        description: Joi.string(),
+        floorMap: Joi.object().required(),
+      })
+    }),
+    (req, res, next) => ctrl.uploadFloorMap(req, res, next)
+  )
 }

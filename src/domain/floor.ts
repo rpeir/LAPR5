@@ -3,11 +3,13 @@ import { UniqueEntityID } from '../core/domain/UniqueEntityID';
 import { Result } from '../core/logic/Result';
 import { Guard } from '../core/logic/Guard';
 import { Building } from './building/building';
+import { FloorMapStructure } from './floorMapStructure';
 
 interface FloorProps {
   description: string;
   building: Building;
   floorNr: number;
+  floorMap?: FloorMapStructure; // Updated the type to FloorMap
 }
 
 export class Floor extends AggregateRoot<FloorProps> {
@@ -27,12 +29,22 @@ export class Floor extends AggregateRoot<FloorProps> {
     return this.props.floorNr;
   }
 
+  get floorMap(): FloorMapStructure | undefined {
+    // Updated the return type to FloorMap | undefined
+    return this.props.floorMap;
+  }
+
   set description(value: string) {
     this.props.description = value;
   }
 
   set floorNr(value: number) {
     this.props.floorNr = value;
+  }
+
+  set floorMap(value: FloorMapStructure | undefined) {
+    // Updated the type to FloorMap | undefined
+    this.props.floorMap = value;
   }
 
   private constructor(props: FloorProps, id?: UniqueEntityID) {
@@ -45,9 +57,7 @@ export class Floor extends AggregateRoot<FloorProps> {
       { argument: props.floorNr, argumentName: 'floorNr' },
       { argument: props.building, argumentName: 'building' },
     ];
-
     const guardResult = Guard.againstNullOrUndefinedBulk(guardedProps);
-
     if (!guardResult.succeeded) {
       return Result.fail<Floor>(guardResult.message);
     } else {

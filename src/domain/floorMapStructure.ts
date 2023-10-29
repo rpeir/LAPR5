@@ -1,4 +1,8 @@
-export interface IFloorMapPersistence {
+import { ValueObject } from '../core/domain/ValueObject';
+import { Result } from '../core/logic/Result';
+import { Guard } from '../core/logic/Guard';
+
+interface FloorMapProps {
   floor: {
     size: {
       width: number;
@@ -116,10 +120,28 @@ export interface IFloorMapPersistence {
     secondaryColor: string;
   };
 }
-export interface IFloorPersistence {
-  domainId: string;
-  building: string;
-  description: string;
-  floorNr: number;
-  floorMap?: IFloorMapPersistence; // reference to FloorMap
+
+export class FloorMapStructure extends ValueObject<FloorMapProps> {
+  private constructor(props: FloorMapProps) {
+    super(props);
+  }
+  public static create(props: FloorMapProps): Result<FloorMapStructure> {
+    const guardedProps = [
+      { argument: props.floor, argumentName: 'floor' },
+      { argument: props.ground, argumentName: 'ground' },
+      { argument: props.wall, argumentName: 'wall' },
+    ];
+
+    const guardResult = Guard.againstNullOrUndefinedBulk(guardedProps);
+
+    if (!guardResult.succeeded) {
+      return Result.fail<FloorMapStructure>(guardResult.message);
+    } else {
+      const user = new FloorMapStructure({
+        ...props,
+      });
+
+      return Result.ok<FloorMapStructure>(user);
+    }
+  }
 }

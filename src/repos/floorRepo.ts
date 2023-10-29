@@ -7,7 +7,6 @@ import { IFloorPersistence } from '../dataschema/IFloorPersistence';
 import { FloorMap } from '../mappers/FloorMap';
 import { FloorId } from '../domain/floorId';
 import { BuildingId } from '../domain/building/buildingId';
-import { Building } from '../domain/building/building';
 
 @Service()
 export default class FloorRepo implements IFloorRepo {
@@ -21,7 +20,6 @@ export default class FloorRepo implements IFloorRepo {
     } else {
       return null;
     }
-
   }
 
   private createBaseQuery(): any {
@@ -113,9 +111,33 @@ export default class FloorRepo implements IFloorRepo {
   }
 
   public async existsByBuildingAndNumber(building: string | number, number: number): Promise<boolean> {
-    const query = { building: building, floorNr : number };
+    const query = { building: building, floorNr: number };
     const floorRecord = await this.floorSchema.findOne(query);
 
     return !!floorRecord === true;
+  }
+
+  public async updateOne(floor: Floor): Promise<Floor> {
+    const floorDocument = await this.floorSchema.updateOne(
+      { domainId: floor.id },
+      {
+        building: floor.building.id.toString(),
+        description: floor.description,
+        floorNr: floor.floorNr,
+        floorMap: floor.floorMap,
+      },
+    );
+    await floorDocument;
+    return floor;
+  }
+  public async updateOneWithFloorMap(floor: Floor): Promise<Floor> {
+    const floorDocument = await this.floorSchema.updateOne(
+      { domainId: floor.id },
+      {
+        floorMap: floor.floorMap.props,
+      },
+    );
+    await floorDocument;
+    return floor;
   }
 }
