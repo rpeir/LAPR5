@@ -15,7 +15,7 @@ import { ExceptionHandler } from 'winston';
 import { error } from 'console';
 import { on } from 'events';
 import e from 'express';
-import IPathwayRepo from "./IRepos/IPathwayRepo";
+import IPathwayRepo from './IRepos/IPathwayRepo';
 
 @Service()
 export default class FloorService implements IFloorService {
@@ -134,7 +134,7 @@ export default class FloorService implements IFloorService {
 
   public async uploadFloorMap(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>> {
     try {
-      let floor = (await this.floorRepo.findByBuildingIdAndFloorNr(floorDTO.building, floorDTO.floorNr));
+      let floor = await this.floorRepo.findByBuildingIdAndFloorNr(floorDTO.building, floorDTO.floorNr);
       if (floor === null) {
         return Result.fail<IFloorDTO>('Floor not found');
       } else {
@@ -147,7 +147,7 @@ export default class FloorService implements IFloorService {
 
         const validated = await this.validateSize(floor);
         if (!validated) {
-          return Result.fail<IFloorDTO>("Floor size exceeds building size.");
+          return Result.fail<IFloorDTO>('Floor size exceeds building size.');
         }
 
         try {
@@ -164,7 +164,6 @@ export default class FloorService implements IFloorService {
   }
 
   async validateSize(floor: Floor): Promise<boolean> {
-
     const buildingLength = floor.building.length;
     const floorDepth = floor.floorMap.props.floor.size.depth;
     const buildingWidth = floor.building.width;
@@ -174,7 +173,6 @@ export default class FloorService implements IFloorService {
       return false;
     }
     return true;
-
   }
   public async listFloorsWithPathways(buildingDesignation: string): Promise<Result<IFloorDTO[]>> {
     try {
@@ -185,8 +183,8 @@ export default class FloorService implements IFloorService {
       } else {
         building = buildingOrError.getValue();
       }
-      const pathways= await this.pathwayRepo.findByBuilding(building.id.toString());
-      const floors= await this.floorRepo.floorsInPathway(pathways);
+      const pathways = await this.pathwayRepo.findByBuildingId(building.id.toString());
+      const floors = await this.floorRepo.floorsInPathway(pathways);
       if (floors.length === 0) {
         return Result.fail<IFloorDTO[]>("Couldn't find floors for building: " + buildingDesignation);
       }
