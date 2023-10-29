@@ -126,19 +126,52 @@ export default class FloorService implements IFloorService {
       throw e;
     }
   }
-  public async listFloorsWithPathways(buildingDesignation: string): Promise<Result<IFloorDTO[]>> {
+  public async listFloorsWithPathways(buildingDesignation: string){
     try {
       let building;
-      const buildingOrError = await this. getBuildingByDesignation(buildingDesignation);
+      const buildingOrError = await this.getBuildingByDesignation(buildingDesignation);
       if (buildingOrError.isFailure) {
         return Result.fail<IFloorDTO[]>(buildingOrError.error);
       } else {
         building = buildingOrError.getValue();
       }
-      const pathways= await this.pathwayRepo.findByBuilding(building.id.toString());
-      const floors= await this.floorRepo.floorsInPathway(pathways);
-      if (floors.length === 0) {
-        return Result.fail<IFloorDTO[]>("Couldn't find floors for building: " + buildingDesignation);
+      const pathways= await this.pathwayRepo.findByBuildingId(building.id.toString());
+
+      // map that for each floor of the building we want to list, has a list of reachable floors
+      let floors : Map<number, Floor[]> = new Map<number, Floor[]>()
+      pathways.map((pathway) => {
+        // if the building that we are trying to list is the source building of the pathway
+        let originFloor , destinationFloor : Floor;
+        if (pathway.buildingSource.equals(building)) {
+          originFloor = pathway.floorSource;
+          destinationFloor = pathway.floorDestination;
+        } else { // if the building that we are trying to list is the destination building of the pathway
+          originFloor = pathway.floorDestination;
+          destinationFloor = pathway.floorSource;
+        }
+
+        // if the origin floor is not in the map, add it
+        if (!floors.has(originFloor.floorNr)) {
+          floors.set(originFloor.floorNr, []);
+        }
+
+        // if the destination floor is not in the list of reachable floors of the origin floor, add it
+        if (!floors.get(originFloor.floorNr).includes(destinationFloor)) {
+          floors.get(originFloor.floorNr).push(destinationFloor);
+        }
+      })
+
+      if (floors.size === 0) {
+        return Result.fail("Couldn't find floors for building: " + buildingDesignation);
+      }
+      try {
+        let floorsDTOs : Map<number, IFloorDTO[]> = new Map<number, IFloorDTO[]>();
+        floors.forEach((value, key) => {
+          floorsDTOs.set(key, value.map((floor) => FloorMap.toDTO(floor)));
+        });
+        return Result.ok<Map<number, IFloorDTO[]>>(floorsDTOs);
+      } catch (err) {
+        return Result.fail(err);
       }
     } catch (err) {
       throw err;
