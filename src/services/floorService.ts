@@ -131,12 +131,12 @@ export default class FloorService implements IFloorService {
       throw e;
     }
   }
-  public async listFloorsWithPathways(buildingDesignation: string){
+  public async listFloorsWithPathways(buildingDesignation: string) : Promise<Result<Map<number,IFloorDTO[]>>> {
     try {
       let building;
       const buildingOrError = await this.getBuildingByDesignation(buildingDesignation);
       if (buildingOrError.isFailure) {
-        return Result.fail<IFloorDTO[]>(buildingOrError.error);
+        return Result.fail(buildingOrError.error);
       } else {
         building = buildingOrError.getValue();
       }
