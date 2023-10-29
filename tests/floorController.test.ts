@@ -26,6 +26,9 @@ describe("floor controller", function() {
     let buildingSchemaInstance = require("../src/persistence/schemas/buildingSchema").default;
     Container.set("buildingSchema", buildingSchemaInstance);
 
+    let pathwaySchemaInstance = require("../src/persistence/schemas/pathwaySchema").default;
+    Container.set("pathwaySchema", pathwaySchemaInstance);
+
     let floorRepoClass = require("../src/repos/floorRepo").default;
     let floorRepoInstance = Container.get(floorRepoClass);
     Container.set("FloorRepo", floorRepoInstance);
@@ -33,6 +36,10 @@ describe("floor controller", function() {
     let buildingRepoClass = require("../src/repos/buildingRepo").default;
     let buildingRepoIInstance = Container.get(buildingRepoClass);
     Container.set("BuildingRepo", buildingRepoIInstance);
+
+    let pathwayRepoClass = require("../src/repos/pathwayRepo").default;
+    let pathwayRepoInstance = Container.get(pathwayRepoClass);
+    Container.set("PathwayRepo", pathwayRepoInstance);
 
     let floorServiceClass = require("../src/services/floorService").default;
     let floorServiceInstance = Container.get(floorServiceClass);
@@ -131,6 +138,70 @@ describe("floor controller", function() {
       }, new UniqueEntityID("123")).getValue(),
 
       "description": req.body.description
+    }));
+
+    let floorRepoInstance = Container.get("FloorRepo");
+    sinon.stub(floorRepoInstance, "save").returns(new Promise<BuildingId>((resolve, reject) => {
+      resolve(Floor.create({
+        "floorNr": req.body.floorNr,
+
+        "building": Building.create({
+          code: BuildingCode.create("CODE3").getValue(),
+          designation: req.body.building,
+          description: "Building description",
+          length: 10,
+          width: 10,
+          height: 5
+        }, new UniqueEntityID("123")).getValue(),
+
+        "description": req.body.description
+      }, new UniqueEntityID("123")).getValue());
+    }));
+
+    let floorServiceInstance = Container.get("FloorService");
+    const ctrl = new FloorController(floorServiceInstance as IFloorService);
+
+    //Act
+    await ctrl.createFloor(<Request>req, <Response>res, <NextFunction>next);
+
+    //Assert
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, sinon.match({
+        "floorNr": req.body.floorNr,
+        "building": req.body.building,
+        "description": req.body.description
+      })
+    );
+
+  });
+
+  it("floorController + floorService + floor integration test (create) with floorRepo and buildingRepo stubs",async function() {
+    //Arrange
+    let body = {
+      "floorNr": 1,
+      "building": "desgi2",
+      "description": "salas"
+    };
+    let req: Partial<Request> = {};
+    req.body = body;
+
+    let res: Partial<Response> = {
+      json: sinon.spy()
+    };
+
+    let next: Partial<NextFunction> = () => {
+    };
+
+    let buildingRepoInstance = Container.get("BuildingRepo");
+    sinon.stub(buildingRepoInstance, "findByDesignation").returns(new Promise<BuildingId>((resolve, reject) => {
+      resolve(Building.create({
+        code: BuildingCode.create("CODE3").getValue(),
+        designation: req.body.building,
+        description: "Building description",
+        length: 10,
+        width: 10,
+        height: 5
+      }, new UniqueEntityID("123")).getValue());
     }));
 
     let floorRepoInstance = Container.get("FloorRepo");

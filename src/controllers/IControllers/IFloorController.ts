@@ -10,4 +10,6 @@ export default interface IFloorController {
   getBuildingFloorMaxMin(req: Request, res: Response, next: NextFunction);
 
   updateBuildingFloor(req: Request, res: Response, next: NextFunction);
+
+  listFloorsWithPathways(req: Request, res: Response, next: NextFunction);
 }

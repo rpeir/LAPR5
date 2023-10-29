@@ -7,6 +7,7 @@ import { Container } from "typedi";
 export class PathwayMap extends Mapper<Pathway> {
   public static toDTO(pathway: Pathway): any {
     return {
+      domainId: pathway.id.toString(),
       buildingSource: pathway.buildingSource.designation,
       buildingDestination: pathway.buildingDestination.designation,
       floorSource: pathway.floorSource.floorNr,

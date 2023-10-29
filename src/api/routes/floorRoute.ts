@@ -57,4 +57,13 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.uploadFloorMap(req, res, next)
   )
+  route.get(
+    '/list',
+    celebrate({
+      query: Joi.object({
+        buildingDesignation: Joi.string().required(),
+      })
+    })
+    , (req, res, next) => ctrl.listFloorsWithPathways(req, res, next)
+  )
 }

@@ -30,9 +30,10 @@ export default class PathwayController implements IPathwayController {
       return  error;
     }
   }
-  public async listPathways(req: Request, res: Response, next: NextFunction) {
+
+  public async replacePathway(req : Request, res : Response, next : NextFunction) {
     try {
-      const pathwayOrError = await this.pathwayService.listPathways(req.body.buildingSource,req.body.buildingDestination) as Result<Array<IPathwayDTO>>;
+      const pathwayOrError = await this.pathwayService.replacePathway(req.body as IPathwayDTO) as Result<IPathwayDTO>;
 
       if (pathwayOrError.isFailure) {
         return res.status(402).send(pathwayOrError);
@@ -40,6 +41,38 @@ export default class PathwayController implements IPathwayController {
 
       const pathwayDTO = pathwayOrError.getValue();
       return res.json(pathwayDTO).status(202);
+    } catch (error) {
+      return  res.status(500).send(error);
+    }
+  }
+
+  public async updatePathway(req : Request, res : Response, next : NextFunction) {
+    try {
+      const pathwayOrError = await this.pathwayService.updatePathway({...req.body, domainId: req.query.domainId} as IPathwayDTO) as Result<IPathwayDTO>;
+
+      if (pathwayOrError.isFailure) {
+        return res.status(402).send(pathwayOrError);
+      }
+
+      const pathwayDTO = pathwayOrError.getValue();
+      return res.json(pathwayDTO).status(202);
+    } catch (error) {
+      return  res.status(500).send(error);
+    }
+  }
+
+  public async listPathways(req: Request, res: Response, next: NextFunction) {
+    try {
+      const buildingSource = req.query.buildingSource as string;
+      const buildingDestination = req.query.buildingDestination as string;
+      const pathwayOrError = await this.pathwayService.listPathways(buildingSource,buildingDestination) as Result<Array<IPathwayDTO>>;
+
+      if (pathwayOrError.isFailure) {
+        return res.status(402).json({error:pathwayOrError.error}).send();
+      }
+
+      const pathwayDTO = pathwayOrError.getValue();
+      return res.json(pathwayDTO).status(200);
     } catch (error) {
       throw error;
     }

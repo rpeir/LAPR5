@@ -180,8 +180,74 @@ describe("robot controller", function() {
         "robotType": req.body.robotType
       }
     ));
-    // something wrong on the res.json on the controller
   });
 
+  it("robotController + robotService + robot integration test (create) with robotTypeRepo and robotRepo stubs", async function() {
+    // Arrange
+    let body = {
+      "nickName": "Son",
+      "robotCode": "FDR46",
+      "serialNr": "AS35",
+      "description": "ready to work",
+      "robotType": "TipoA"
+    };
+    let req: Partial<Request> = {};
+    req.body = body;
+
+    let res: Partial<Response> = {
+      json: sinon.spy()
+    };
+    let next: Partial<NextFunction> = () => {
+
+    };
+
+    let robotTypeRepoInstance = Container.get("RobotTypeRepo");
+    sinon.stub(robotTypeRepoInstance, "findByName").returns(new Promise<RobotType>((resolve, reject) => {
+      resolve(RobotType.create(
+        {
+          "name": RobotTypeName.create(req.body.robotType).getValue(),
+          "taskTypes": [TaskType.delivery],
+          "robotTypeModel": RobotTypeModel.create("RB13").getValue(),
+          "brand": RobotTypeBrand.create("RB").getValue()
+        }, new UniqueEntityID("123")).getValue());
+    }));
+
+    let robotRepoInstance = Container.get("RobotRepo");
+    sinon.stub(robotRepoInstance, "save").returns(new Promise<Robot>((resolve, reject) => {
+      resolve(Robot.create(      {
+          "nickName": RobotNickName.create(req.body.nickName).getValue(),
+          "robotCode": RobotCode.create(req.body.robotCode).getValue(),
+          "serialNr": RobotSerialNr.create(req.body.serialNr).getValue(),
+          "description": RobotDescription.create(req.body.description).getValue(),
+          "state": true,
+          "robotType": RobotType.create({
+            "name": RobotTypeName.create(req.body.robotType).getValue(),
+            "taskTypes": [TaskType.delivery],
+            "robotTypeModel": RobotTypeModel.create("RB13").getValue(),
+            "brand": RobotTypeBrand.create("RB").getValue()
+          }, new UniqueEntityID("123")).getValue()
+        }
+        , new UniqueEntityID("123")).getValue());
+    }));
+
+    let robotServiceInstance = Container.get("RobotService");
+
+    const ctrl = new RobotController(robotServiceInstance as IRobotService);
+
+    // Act
+    await ctrl.createRobot(<Request>req, <Response>res, <NextFunction>next);
+
+    // Assert
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, sinon.match({
+        "state": "true",
+        "nickName": req.body.nickName,
+        "robotCode": req.body.robotCode,
+        "serialNr": req.body.serialNr,
+        "description": req.body.description,
+        "robotType": req.body.robotType
+      }
+    ));
+  });
 
 });

@@ -15,12 +15,14 @@ import { ExceptionHandler } from 'winston';
 import { error } from 'console';
 import { on } from 'events';
 import e from 'express';
+import IPathwayRepo from "./IRepos/IPathwayRepo";
 
 @Service()
 export default class FloorService implements IFloorService {
   constructor(
     @Inject(config.repos.building.name) private buildingRepo: IBuildingRepo,
     @Inject(config.repos.floor.name) private floorRepo: IFloorRepo,
+    @Inject(config.repos.pathway.name) private pathwayRepo: IPathwayRepo,
   ) {}
 
   public async createFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>> {
@@ -38,7 +40,7 @@ export default class FloorService implements IFloorService {
         floorNr: floorDTO.floorNr,
         building: building,
       });
-      //TODO: add validation for floorMap
+
       if (floorOrError.isFailure) {
         return Result.fail<IFloorDTO>(floorOrError.errorValue());
       }
@@ -173,5 +175,23 @@ export default class FloorService implements IFloorService {
     }
     return true;
 
+  }
+  public async listFloorsWithPathways(buildingDesignation: string): Promise<Result<IFloorDTO[]>> {
+    try {
+      let building;
+      const buildingOrError = await this.getBuildingByDesignation(buildingDesignation);
+      if (buildingOrError.isFailure) {
+        return Result.fail<IFloorDTO[]>(buildingOrError.error);
+      } else {
+        building = buildingOrError.getValue();
+      }
+      const pathways= await this.pathwayRepo.findByBuilding(building.id.toString());
+      const floors= await this.floorRepo.floorsInPathway(pathways);
+      if (floors.length === 0) {
+        return Result.fail<IFloorDTO[]>("Couldn't find floors for building: " + buildingDesignation);
+      }
+    } catch (err) {
+      throw err;
+    }
   }
 }

@@ -12,4 +12,6 @@ export default interface IFloorService {
   updateBuildingFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>>;
 
   uploadFloorMap(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>>;
+
+  listFloorsWithPathways(buildingDesignation: string);
 }

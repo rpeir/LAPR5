@@ -99,7 +99,8 @@ describe("robotType controller", function() {
       json: sinon.spy()
     };
 
-    let next: Partial<NextFunction> = () => {};
+    let next: Partial<NextFunction> = () => {
+    };
 
     sinon.stub(RobotType, "create").returns(Result.ok({
       "id": "123",
@@ -137,7 +138,56 @@ describe("robotType controller", function() {
       "robotTypeModel": req.body.robotTypeModel,
       "brand": req.body.brand
     }));
-    /// a dar falso por poblemas no mapaemanto depois do save para dto
+
+  });
+
+  it("robotTypeController + robotTypeService + robotType integration test (create) with robotTypeRepo", async function() {
+    // Arrange
+    let body = {
+      "name": "Marko",
+      "taskTypes": ["delivery"],
+      "robotTypeModel": "RB13",
+      "brand": "RB"
+    };
+
+    let req: Partial<Request> = {};
+    req.body = body;
+
+    let res: Partial<Response> = {
+      json: sinon.spy()
+    };
+
+    let next: Partial<NextFunction> = () => {
+    };
+
+    let robotTypeRepoInstance = Container.get("RobotTypeRepo");
+    sinon.stub(robotTypeRepoInstance, "save").returns(new Promise<RobotType>((resolve, reject) => {
+      resolve(RobotType.create({
+        "name": RobotTypeName.create(req.body.name).getValue(),
+        "taskTypes": req.body.taskTypes,
+        "robotTypeModel": RobotTypeModel.create(req.body.robotTypeModel).getValue(),
+        "brand": RobotTypeBrand.create(req.body.brand).getValue()
+      }, new UniqueEntityID("123")).getValue());
+    }));
+
+
+    let robotTypeServiceInstance = Container.get("RobotTypeService");
+
+    const ctrl = new RobotTypeController(robotTypeServiceInstance as IRobotTypeService);
+
+
+    // Act
+    await ctrl.createRobotType(<Request>req, <Response>res, <NextFunction>next);
+
+    // Assert
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, sinon.match({
+      "id": "123",
+      "name": req.body.name,
+      "taskTypes": req.body.taskTypes,
+      "robotTypeModel": req.body.robotTypeModel,
+      "brand": req.body.brand
+    }));
 
   });
 
