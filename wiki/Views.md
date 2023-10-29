@@ -67,6 +67,9 @@ Para modelar/representar visualmente, tanto o que foi implementado como as ideia
 #### SSD US370
 ![N1-VP-US4](diagramas/nivel1/InibirRobot_SSD.jpg)
 
+#### SSD US230
+![N1-VP-US5](diagramas/nivel1/CarregarMapa_SSD.jpg)
+
 #### SSD Criação de X
 ![N1-VP-US5](diagramas/nivel1/VistaProcessosNvl1_CriarX.jpg)
 
@@ -97,6 +100,9 @@ Para modelar/representar visualmente, tanto o que foi implementado como as ideia
 
 #### SD US01
 TBD
+
+#### SD US230
+![N3-VP-US1](diagramas/nivel3/CarregarMapa_SSD_NVL3.jpg)
 
 #### (outros SSD arquiteturalmente relevantes)
 [...]
