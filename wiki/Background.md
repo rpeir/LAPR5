@@ -104,11 +104,6 @@ n/a
 ##### Design constraints
 8. O sistema deve ser composto por uma aplicação web do tipo Single Page Application (SPA) que permite aos utilizadores autorizados acederem aos diferentes módulos da aplicação, bem como por um conjunto de serviços que implementem as componentes de regras de negócio necessárias para o funcionamento da aplicação web.
 
-![Visão geral do sistema definido no enunciado/caderno de encargos](diagramas/nivel3/visaogeralsistema_enunciado.png)
-
-
-<img src="diagramas/nivel3/visaogeralsistema_enunciado.png" width="75%">
-
 De um modo geral, as principais funcionalidades de cada módulo são as seguintes:
 
 - Módulo de Gestão de Informação – em ambiente web que permita criar, alterar e consultar toda a informação necessária ao bom funcionamento do sistema.
