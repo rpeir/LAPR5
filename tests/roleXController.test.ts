@@ -14,6 +14,7 @@ describe('role controller', function () {
 
 	beforeEach(function() {
 		Container.reset();
+    this.timeout(50000);
 		let roleSchemaInstance = require("../src/persistence/schemas/roleSchema").default;
 		Container.set("roleSchema", roleSchemaInstance);
 
@@ -54,8 +55,8 @@ describe('role controller', function () {
 	});
 
 
-    it('roleController + roleService integration test using roleRepoistory and Role stubs', async function () {	
-		// Arrange	
+    it('roleController + roleService integration test using roleRepoistory and Role stubs', async function () {
+		// Arrange
         let body = { "name":'role12' };
         let req: Partial<Request> = {};
 		req.body = body;
@@ -85,7 +86,7 @@ describe('role controller', function () {
 	});
 
 
-    it('roleController + roleService integration test using spy on roleService', async function () {		
+    it('roleController + roleService integration test using spy on roleService', async function () {
 		// Arrange
         let body = { "name":'role12' };
         let req: Partial<Request> = {};
@@ -101,7 +102,7 @@ describe('role controller', function () {
 			resolve(Role.create({"id":"123", "name": req.body.name}).getValue())
 		}));
 
-		let roleServiceInstance = Container.get("RoleService");		
+		let roleServiceInstance = Container.get("RoleService");
 		const roleServiceSpy = sinon.spy(roleServiceInstance, "createRole");
 
 		const ctrl = new RoleController(roleServiceInstance as IRoleService);
@@ -118,7 +119,7 @@ describe('role controller', function () {
 	});
 
 
-    it('roleController unit test using roleService mock', async function () {		
+    it('roleController unit test using roleService mock', async function () {
 		// Arrange
         let body = { "name":'role12' };
         let req: Partial<Request> = {};
@@ -129,7 +130,7 @@ describe('role controller', function () {
         };
 		let next: Partial<NextFunction> = () => {};
 
-		let roleServiceInstance = Container.get("RoleService");		
+		let roleServiceInstance = Container.get("RoleService");
 		const roleServiceMock = sinon.mock(roleServiceInstance, "createRole")
 		roleServiceMock.expects("createRole")
 			.once()

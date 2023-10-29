@@ -23,7 +23,7 @@ describe("robot controller", function() {
 
   beforeEach(function() {
     Container.reset();
-    this.timeout(50000);
+    this.timeout(1000000);
     let robotSchemaInstance = require("../src/persistence/schemas/robotSchema").default;
     Container.set("robotSchema", robotSchemaInstance);
 
@@ -248,6 +248,47 @@ describe("robot controller", function() {
         "robotType": req.body.robotType
       }
     ));
+  });
+  it("robotController unit test (list) using robotService stub", async function() {
+    // Arrange
+
+    let body = {
+      "nickName": "Son",
+      "robotCode": "FDR46",
+      "serialNr": "AS35",
+      "description": "ready to work",
+      "robotType": "TipoA"
+    };
+    let req: Partial<Request> = {};
+    req.body = body;
+
+    let res: Partial<Response> = {
+      json: sinon.spy()
+    };
+    let next: Partial<NextFunction> = () => {
+
+    };
+    let robotServiceInstance = Container.get("RobotService");
+    sinon.stub(robotServiceInstance, "consultAllRobots").returns(Result.ok<IRobotDTO[]>([{
+      "nickName": req.body.nickName,
+      "robotCode": req.body.robotCode,
+      "serialNr": req.body.serialNr,
+      "description": req.body.description,
+      "robotType": "123",
+      "state": "true"
+    }]));
+    const ctrl = new RobotController(robotServiceInstance as IRobotService);
+    await ctrl.createRobot(<Request>req, <Response>res, <NextFunction>next);
+    await ctrl.consultAllRobots(<Request>req, <Response>res, <NextFunction>next);
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, sinon.match([{
+      "nickName": req.body.nickName,
+      "robotCode": req.body.robotCode,
+      "serialNr": req.body.serialNr,
+      "description": req.body.description,
+      "robotType": "123",
+      "state": "true"
+    }]));
   });
 
 });

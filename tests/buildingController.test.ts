@@ -93,8 +93,8 @@ describe("building controller", function() {
     let next: Partial<NextFunction> = () => {
 
     };
-    let builingRepoInstance = Container.get("BuildingRepo");
-    sinon.stub(builingRepoInstance, "save").returns(new Promise<Building>((resolve, reject) => {
+    let buildingRepoInstance = Container.get("BuildingRepo");
+    sinon.stub(buildingRepoInstance, "save").returns(new Promise<Building>((resolve, reject) => {
       resolve(Building.create({
         code: req.body.code,
         designation: req.body.designation,

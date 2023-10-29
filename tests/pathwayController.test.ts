@@ -315,4 +315,61 @@ describe("pathway controller", function() {
     floorMock.verify();
 
   })
+  it("pathway controller unit test (list) using pathwayService stub", async function() {
+    // Arrange
+    let req: Partial<Request> = {};
+
+    let res: Partial<Response> = {
+      json: sinon.spy()
+    };
+
+    let next: Partial<NextFunction> = () => {
+    };
+
+
+    let pathwayServiceInstance = Container.get("PathwayService");
+    sinon.stub(pathwayServiceInstance, "listPathways").returns(Result.ok<IPathwayDTO[]>([{
+        "domainId" : "123",
+        "buildingSource": "B103",
+        "buildingDestination": "B123",
+        "floorSource": 1,
+        "floorDestination": 1,
+        "description": "pathway B103-B123"
+      },
+      {
+        "domainId" : "124",
+        "buildingSource": "B103",
+        "buildingDestination": "B123",
+        "floorSource": 1,
+        "floorDestination": 1,
+        "description": "pathway B103-B123"
+      }])
+    );
+
+    const ctrl = new PathwayController(pathwayServiceInstance as IPathwayService);
+
+    //Act
+    await ctrl.listPathways(<Request>req, <Response>res, <NextFunction>next);
+
+    //Assert
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, sinon.match(
+      [
+        {
+          "buildingSource": "B103",
+          "buildingDestination": "B123",
+          "floorSource": 1,
+          "floorDestination": 1,
+          "description": "pathway B103-B123"
+        },
+        {
+          "buildingSource": "B103",
+          "buildingDestination": "B123",
+          "floorSource": 1,
+          "floorDestination": 1,
+          "description": "pathway B103-B123"
+        }
+      ]
+    ));
+  });
 });
