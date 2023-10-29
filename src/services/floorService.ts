@@ -113,7 +113,7 @@ export default class FloorService implements IFloorService {
     try {
       let floor = await this.floorRepo.findById(floorDTO.domainId);
       if (floor === null) {
-        return Result.fail<IFloorDTO>('Floor not found');
+        this.createFloor(floorDTO);
       } else {
         floor.floorNr = floorDTO.floorNr;
         floor.description = floorDTO.description;
