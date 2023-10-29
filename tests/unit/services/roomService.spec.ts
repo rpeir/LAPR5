@@ -66,7 +66,7 @@ describe('room service', () => {
     sandbox.restore();
   });
 
-  it('createRoom unit test with invalid roomCategory', async function () {
+  it('createRoom unit test with invalid roomCategory with stub repos', async function () {
     defaultRoomDTO.category = "Invalid Room Category";
 
     let buildingRepoInstance = Container.get("BuildingRepo");
@@ -99,7 +99,7 @@ describe('room service', () => {
 
   });
 
-  it('createRoom unit test with invalid building', async function () {
+  it('createRoom unit test with invalid building using stub repos', async function () {
     defaultRoomDTO.building = "Invalid";
 
     let buildingRepoInstance = Container.get("BuildingRepo");
@@ -132,7 +132,7 @@ describe('room service', () => {
 
   });
 
-  it('createRoom unit test with building with no floor', async function () {
+  it('createRoom unit test with building with no floor using stub repos', async function () {
     defaultRoomDTO.floor = 2;
 
     let buildingRepoInstance = Container.get("BuildingRepo");
@@ -165,7 +165,7 @@ describe('room service', () => {
 
   });
 
-    it('createRoom unit test with valid room', async function () {
+    it('createRoom unit test with valid room using stub repos', async function () {
         let buildingRepoInstance = Container.get("BuildingRepo");
         sinon.stub(buildingRepoInstance, 'findByCode').returns(
           Building.create(defaultBuildingProps).getValue()
@@ -198,7 +198,7 @@ describe('room service', () => {
 
     });
 
-  it('createRoom unit test with existing room', async function () {
+  it('createRoom unit test with existing room using stub repos', async function () {
     let buildingRepoInstance = Container.get("BuildingRepo");
     sinon.stub(buildingRepoInstance, 'findByCode').returns(
       Building.create(defaultBuildingProps).getValue()
