@@ -67,6 +67,9 @@ Para modelar/representar visualmente, tanto o que foi implementado como as ideia
 #### SSD US370
 ![N1-VP-US4](diagramas/nivel1/InibirRobot_SSD.jpg)
 
+#### SSD US230
+![N1-VP-US5](diagramas/nivel1/CarregarMapa_SSD.jpg)
+
 #### SSD Criação de X
 ![N1-VP-US5](diagramas/nivel1/VistaProcessosNvl1_CriarX.jpg)
 
@@ -95,6 +98,17 @@ Para modelar/representar visualmente, tanto o que foi implementado como as ideia
 
 ### Vista de Processos
 
+#### SD US220 Listar Pisos de Edificios com Passagens para Outros Edificios
+![N3-VP-US220](diagramas/nivel3/ListFloorsWithPathways_SSD_NVL3.jpg)
+
+#### SD US250 Editar Passagem entre Edificios
+![N3-VP-US250](diagramas/nivel3/UpdatePathway_SSD_NVL3.jpg)
+
+#### SD 310 Criar Sala de Piso de Edificio
+![N3-VP-US310](diagramas/nivel3/CreateRoom_SSD_NVL3.jpg)
+
+#### SD US230
+![N3-VP-US1](diagramas/nivel3/CarregarMapa_SSD_NVL3.jpg)
 #### SSD US150
 ![N3-VP-US150](diagramas/nivel3/CreateBuilding_SSD_NVL3.jpg)
 #### SSD US260
