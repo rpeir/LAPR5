@@ -11,6 +11,7 @@ import { FloorMap } from '../mappers/FloorMap';
 import { IBuildingDTO } from '../dto/IBuildingDTO';
 import { BuildingMap } from '../mappers/BuildingMap';
 import IPathwayRepo from "./IRepos/IPathwayRepo";
+import {Pathway} from "../domain/pathway";
 
 @Service()
 export default class FloorService implements IFloorService {
@@ -129,16 +130,23 @@ export default class FloorService implements IFloorService {
   public async listFloorsWithPathways(buildingDesignation: string): Promise<Result<IFloorDTO[]>> {
     try {
       let building;
-      const buildingOrError = await this. getBuildingByDesignation(buildingDesignation);
+      const buildingOrError = await this.getBuildingByDesignation(buildingDesignation);
       if (buildingOrError.isFailure) {
         return Result.fail<IFloorDTO[]>(buildingOrError.error);
       } else {
         building = buildingOrError.getValue();
       }
-      const pathways= await this.pathwayRepo.findByBuilding(building.id.toString());
-      const floors= await this.floorRepo.floorsInPathway(pathways);
+      const pathways= await this.pathwayRepo.findByBuildingId(building.id.toString());
+      let floors: Floor[] = [];
+      pathways.map((pathway) => {if (!pathway.floorSource.building.equals(building)) {floors.push(pathway.floorSource)}}) ;
+      pathways.map((pathway) => {if (!pathway.floorDestination.building.equals(building)) {floors.push(pathway.floorDestination)}});
       if (floors.length === 0) {
         return Result.fail<IFloorDTO[]>("Couldn't find floors for building: " + buildingDesignation);
+      }
+      try {
+        return Result.ok<IFloorDTO[]>(floors.map(floor => FloorMap.toDTO(floor)));
+      } catch (err) {
+        return Result.fail<IFloorDTO[]>(err);
       }
     } catch (err) {
       throw err;

@@ -14,6 +14,6 @@ export default interface IPathwayRepo extends Repo<Pathway> {
 
   findPathwayBetweenFloors(floorSource, floorDestination): Promise<Pathway>;
 
-  findByBuilding(buildingDesignation:string):Promise<Pathway[]>;
+  findByBuildingId(building:string):Promise<Pathway[]>
 
 }

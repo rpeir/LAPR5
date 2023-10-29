@@ -70,6 +70,7 @@ describe("pathway controller", function() {
 
     let pathwayServiceInstance = Container.get("PathwayService");
     sinon.stub(pathwayServiceInstance, "createPathway").returns(Result.ok<IPathwayDTO>({
+        "domainId" : req.body.domainId,
         "buildingSource": req.body.buildingSource,
         "buildingDestination": req.body.buildingDestination,
         "floorSource": req.body.floorSource,

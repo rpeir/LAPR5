@@ -119,14 +119,4 @@ export default class FloorRepo implements IFloorRepo {
 
     return !!floorRecord === true;
   }
-  public async floorsInPathway(pathways:Pathway[]):Promise<Floor[]>{
-    let floors:Floor[] = [];
-    for(let pathway of pathways){
-      let floor = await this.findById(pathway.floorSource);
-      if(floor != null) floors.push(floor);
-      floor = await this.findById(pathway.floorDestination);
-      if(floor != null) floors.push(floor);
-    }
-    return floors;
-  }
 }
