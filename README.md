@@ -26,62 +26,337 @@ npm run start
 ```
 It uses nodemon for livereloading :peace-fingers:
 
-# API Validation
+# API Modulo de Gestão de Informação
 
- By using celebrate the req.body schema becomes clary defined at route level, so even frontend devs can read what an API endpoint expects without need to writting a documentation that can get outdated quickly.
+## Buildings
 
- ```js
- route.post('/signup',
-  celebrate({
-    body: Joi.object({
-      name: Joi.string().required(),
-      email: Joi.string().required(),
-      password: Joi.string().required(),
-    }),
-  }),
-  controller.signup)
- ```
+- **URL:** `/buildings`
+- **Methods:** GET, POST, PATCH
 
- **Example error**
+### GET
+List all buildings
 
- ```json
- {
-  "errors": {
-    "message": "child \"email\" fails because [\"email\" is required]"
+### POST
+Create a new building
+
+Every parameter is required
+#### Request Body Example:
+```json
+{
+  "code" : "A",
+  "designation" : "A",
+  "description" : "Building A",
+  "length" : 50,
+  "width" : 50,
+  "height" : 50
+}
+
+```
+
+### PATCH
+Update an already existing building
+
+*code* is required
+#### Request Body Example
+```json
+{
+  "code" : "A",
+  "description" : "Edificio A"
+}
+```
+
+## Elevators
+
+- **URL:** `/elevators`
+- **Methods:** GET, POST, PATCH, PUT
+
+### GET
+List all elevators from a building
+
+*buildingDesignation* is required in the query string in the URL
+#### Request URL example
+````
+ ... /elevators?buildingDesignation=A
+````
+
+### POST
+Create a new elevaton in a building
+
+*designation*, *buildingDesignation* and *floorsServed* are required
+
+*brand*, *modelE*, *serialNumber* and *description* are optional
+
+#### Request Body Example
+````json
+{
+  "designation" : "elevA1",
+  "buildingDesignation" : "A",
+  "floorsServed" : [1,2,3],
+  "brand" : "isepELEV",
+  "modelE" : "frogELEV",
+  "serialNumber" : "2324-29OUT23",
+  "description" : "Elevator Building A"
+}
+````
+
+### PATCH
+Update an already existing elevator
+
+Must have the *id* parameter in the body request
+All other parameters are optional
+
+#### Request Body Example
+````json
+{
+  "id" : "4d7aed79-c83a-4f6b-ac74-59214e9d3db2",
+  "designation" : "elevA1",
+  "buildingDesignation" : "A",
+  "floorsServed" : [1,2,3],
+  "brand" : "isepELEV",
+  "modelE" : "frogELEV",
+  "serialNumber" : "2324-29OUT23",
+  "description" : "Elevator Building A"
+}
+````
+
+### PUT
+Update all of an already existing elevator, or create a new one if does not exist
+
+All parameters are required
+#### Request Body Example
+````json
+{
+  "id" : "4d7aed79-c83a-4f6b-ac74-59214e9d3db2",
+  "designation" : "elevA1",
+  "buildingDesignation" : "A",
+  "floorsServed" : [1,2,3],
+  "brand" : "isepELEV",
+  "modelE" : "frogELEV",
+  "serialNumber" : "2324-29OUT23",
+  "description" : "Elevator Building A"
+}
+````
+
+## Floors
+
+- **URL:** `/floors'
+- **Methods:** GET, POST, PUT, PATCH
+
+### GET
+#### get floors of a building
+  *buildingDesignation* required
+
+##### Request URL example
+````
+ ... /floors/building?buildingDesignation=A
+````
+#### get buildings with min and max floors
+  *max* required
+  *min* required
+
+##### Request URL example
+````
+ ... /floors/building/max/min?max=4&min=3
+````
+
+#### get floors of a building with pathways to other buildings
+  *buildingDesignation* is required in the string query
+
+##### Request URL example
+````
+ ... /floors/with-pathways?buildingDesignation=A
+````
+
+### POST
+Create a new floor in a building
+
+*floorNr*, *building*, and *description* are required
+
+*building* is the building's designation
+*floorMap* is optional
+#### Request Body Example
+````json
+{
+  "floorNr": 1,
+  "building": "A",
+  "description" : "Classrooms' Floor"
+}
+````
+
+### PUT
+Update an existing floor or create a new one if it does not exist
+
+*domainId*, *floorNr*, and *description* are required
+#### Request Body Example
+````json
+{
+  "domainId": "5ece65e3-567b-4717-a7c4-7bca6011f654",
+  "floorNr": 1,
+  "description" : "Classrooms' Floor"
+}
+````
+
+### PATCH
+Upload a floorMap of a floor
+
+*floorNr*, *building* and *floorMap* are required
+*building* is building id
+#### Request Body Example
+````json
+{
+  "building": "A",
+  "floorNr": 1,
+  "floorMap" : {
+    "..." : "..."
   }
- }
- ```
+}
+````
 
-[Read more about celebrate here](https://github.com/arb/celebrate) and [the Joi validation API](https://github.com/hapijs/joi/blob/v15.0.1/API.md)
+## Rooms
 
-# Roadmap
-- [x] API Validation layer (Celebrate+Joi)
-- [ ] Unit tests examples
-- [ ] [Cluster mode](https://softwareontheroad.com/nodejs-scalability-issues?utm_source=github&utm_medium=readme)
-- [x] The logging _'layer'_
-- [ ] Add ageda dashboard
-- [x] Continuous integration with CircleCI 😍
-- [ ] Deploys script and docs for AWS Elastic Beanstalk and Heroku
-- [ ] Integration test with newman 😉
-- [ ] Instructions on typescript debugging with VSCode
+- **URL:** `/rooms'
+- **Methods:** POST
+
+### POST
+Create a new room
+
+All parameters are required
+
+*building* parameter must be the building's code
+#### Request Body Example
+````json
+{
+  "name" : "A101",
+  "description" : "Classroom A101",
+  "category" : "classroom",
+  "floor" : 1,
+  "building" : "A"
+}
+````
+
+## Pathways
+
+- **URL:** `/pathways'
+- **Methods:** GET, POST, PUT, PATCH
+
+### GET
+Gets all pathways between two buildings
+
+*buildingSource* and *buildingDestination* are required parameters of the query string of the URL
+These are the domain ID of the buildings
+#### Request URL example
+````
+ ... /pathways?buildingSource=ac214d2f-b722-4546-a7f1-971023a5ddf8&buildingDestination=ee1a010a-141f-4e94-ac2c-99138bac5514
+````
+
+### POST
+Create a new pathway between two buildings
+
+All parameters are required
+#### Request Body Example
+````json
+{
+  "buildingSource" : "ac214d2f-b722-4546-a7f1-971023a5ddf8",
+  "buildingDestination" : "ee1a010a-141f-4e94-ac2c-99138bac5514",
+  "floorSource" : "0bbfd8f2-c474-42df-bf23-f6008c177f13",
+  "floorDestination" : "be8aaa66-2399-4662-acea-1cc49e72288c",
+  "description" : "Pathway from A1 to B1"
+}
+````
+
+### PUT
+Update an existing pathway, or create a new one if it does not exist
+
+All parameters are required
+#### Request Body Example
+````json
+{
+  "domainId" : "c32055e7-4943-450c-aa59-4c7a118f9550",
+  "buildingSource" : "ac214d2f-b722-4546-a7f1-971023a5ddf8",
+  "buildingDestination" : "ee1a010a-141f-4e94-ac2c-99138bac5514",
+  "floorSource" : "0bbfd8f2-c474-42df-bf23-f6008c177f13",
+  "floorDestination" : "be8aaa66-2399-4662-acea-1cc49e72288c",
+  "description" : "Pathway from A1 to B1"
+}
+````
+
+### PATCH
+Update an already existing pathway
+
+The *domainId* is required on the query string of the URL
+#### Request URL Example
+````
+ ... /pathways?domainId=c32055e7-4943-450c-aa59-4c7a118f9550
+````
+
+#### Request Body Example
+````json
+{
+  "description" : "Passagem do A1 para o B1"
+}
+````
 
 
-# FAQ
+## Robots
 
- ## Where should I put the FrontEnd code? Is this a good backend for Angular or React or Vue or _whatever_ ?
+- **URL:** `/robots'
+- **Methods:** GET, POST, PATCH
 
-  [It's not a good idea to have node.js serving static assets a.k.a the frontend](https://softwareontheroad.com/nodejs-scalability-issues?utm_source=github&utm_medium=readme)
+### GET
+Get all robots
 
-  Also, I don't wanna take part in frontend frameworks wars 😅
+### POST
+Create a new robot
 
-  Just use the frontend framework you like the most _or hate the less_ it will work 😁
+#### Request Body Example
+````json
+{
+  "nickName": "RobotA",
+  "robotCode": "picker-0001",
+  "serialNr": "1234567",
+  "description": "Robot A",
+  "robotType": "RobotTypeA"
+}
+````
 
- ## Don't you think you can add X layer to do Y? Why do you still use express if the Serverless Framework is better and it's more reliable?
+### PATCH
+Update an already existing robot
 
-  I know this is not a perfect architecture but it's the most scalable that I know with less code and headache that I know.
+#### disable by nickname
+It should have the URL `... /robots/disable-by-nick`
 
-  It's meant for small startups or one-developer army projects.
+##### Request Body Example
+````json
+{
+  "nickname" : "RobotA"
+}
+````
 
-  I know if you start moving layers into another technology, you will end up with your business/domain logic into npm packages, your routing layer will be pure AWS Lambda functions and your data layer a combination of DynamoDB, Redis, maybe redshift, and Agolia.
+#### disable by code
+It should have the URL `... /robots/disable-by-code`
 
-  Take a deep breath and go slowly, let the business grow and then scale up your product. You will need a team and talented developers anyway.
+##### Request Body Example
+````json
+{
+  "robotCode" : "picker-0001"
+}
+````
+
+## Robot Type
+
+- **URL:** `/robotTypes'
+- **Methods:** POST
+
+### POST
+Create a new Robot Type
+
+All parameters are required
+#### Request Body Example
+````json
+{
+  "name" : "RobotTypeA",
+  "taskTypes" : ["surveillance", "delivery"],
+  "robotTypeModel" : "Model1",
+  "brand" : "isepROBOTS"
+}
+````
