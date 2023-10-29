@@ -124,7 +124,7 @@ describe("floor controller", function() {
       }, new UniqueEntityID("123")).getValue());
     }));
 
-    sinon.stub(Floor,"create").returns(Result.ok({
+    let createStub = sinon.stub(Floor,"create").returns(Result.ok({
       "domainId": "123",
       "floorNr": req.body.floorNr,
 
@@ -172,7 +172,7 @@ describe("floor controller", function() {
         "description": req.body.description
       })
     );
-
+  createStub.restore();
   });
 
   it("floorController + floorService + floor integration test (create) with floorRepo and buildingRepo stubs",async function() {

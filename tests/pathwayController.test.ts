@@ -154,7 +154,7 @@ describe("pathway controller", function() {
 
     /////
 
-    sinon.stub(Pathway, "create").returns(Result.ok({
+    let createdStub = sinon.stub(Pathway, "create").returns(Result.ok({
         "id" : new UniqueEntityID("129"),
         "buildingSource": buildingSource,
         "buildingDestination": buildingDestination,
@@ -209,6 +209,7 @@ describe("pathway controller", function() {
     buildingMock.verify();
     floorMock.verify();
 
+    createdStub.restore();
   });
 
 

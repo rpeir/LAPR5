@@ -116,7 +116,7 @@ describe("robot controller", function() {
 
     };
 
-    sinon.stub(Robot, "create").returns(Result.ok(
+    let createStub = sinon.stub(Robot, "create").returns(Result.ok(
       {
         "id": "124",
         "nickName": RobotNickName.create(req.body.nickName).getValue(),
@@ -180,6 +180,8 @@ describe("robot controller", function() {
         "robotType": req.body.robotType
       }
     ));
+
+    createStub.restore();
   });
 
   it("robotController + robotService + robot integration test (create) with robotTypeRepo and robotRepo stubs", async function() {

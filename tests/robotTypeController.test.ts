@@ -102,7 +102,7 @@ describe("robotType controller", function() {
     let next: Partial<NextFunction> = () => {
     };
 
-    sinon.stub(RobotType, "create").returns(Result.ok({
+    let createStub = sinon.stub(RobotType, "create").returns(Result.ok({
       "id": "123",
       "name": RobotTypeName.create(req.body.name).getValue(),
       "taskTypes": req.body.taskTypes,
@@ -139,6 +139,7 @@ describe("robotType controller", function() {
       "brand": req.body.brand
     }));
 
+    createStub.restore();
   });
 
   it("robotTypeController + robotTypeService + robotType integration test (create) with robotTypeRepo", async function() {
