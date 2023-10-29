@@ -11,7 +11,7 @@ export default (app: Router) => {
   const ctrl = Container.get(config.controllers.floor.name) as IFloorController;
 
   route.post(
-    "/create",
+    "",
     celebrate({
       body: Joi.object({
         floorNr: Joi.number().required(),
@@ -45,7 +45,7 @@ export default (app: Router) => {
   );
 
   route.patch(
-    "/upload",
+    "",
     // check if i can do this with building nr and floor nr
     celebrate({
       body: Joi.object({
@@ -58,7 +58,7 @@ export default (app: Router) => {
     (req, res, next) => ctrl.uploadFloorMap(req, res, next)
   )
   route.get(
-    '/list',
+    '/with-pathways',
     celebrate({
       query: Joi.object({
         buildingDesignation: Joi.string().required(),

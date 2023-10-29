@@ -35,8 +35,8 @@ hide methods
 
     enum TaskType {}
     note bottom of TaskType {
-            - Vigilance
-            - PickupDelivery
+            - Surveillance
+            - Delivery
     }
 
     interface Task {

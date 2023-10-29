@@ -7,10 +7,10 @@ import middlewares from "../middlewares";
 
 const route=Router();
 export default (app: Router) => {
-  app.use("/elevator",route);
+  app.use("/elevators",route);
   const ctrl=Container.get(config.controllers.elevator.name) as IElevatorController;
   route.post(
-    "/create",
+    "",
     celebrate({
       body: Joi.object({
         designation: Joi.string().required(),
@@ -24,7 +24,7 @@ export default (app: Router) => {
     }),
     (req,res,next) => ctrl.createElevator(req,res,next)
   );
-  route.get("/list",
+  route.get("",
   celebrate({
     query: {
       buildingDesignation: Joi.string().required(),
@@ -36,7 +36,7 @@ export default (app: Router) => {
   });
 
   route.put(
-      "/edit",
+      "",
       celebrate({
             body: Joi.object({
                 id: Joi.string().required(),
@@ -52,7 +52,7 @@ export default (app: Router) => {
         (req,res,next) => ctrl.replaceElevator(req,res,next)
   );
   route.patch(
-    '/edit',
+    '',
     celebrate({
       body: Joi.object({
         id: Joi.string(),

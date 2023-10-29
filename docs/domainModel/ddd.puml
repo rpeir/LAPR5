@@ -39,8 +39,8 @@ package RobotType {
 }
 package TaskType {
     enum TaskType <<enum>> {
-        -Vigilance
-        -PickupDelivery
+        -Surveillance
+        -Delivery
     }
 }
 
