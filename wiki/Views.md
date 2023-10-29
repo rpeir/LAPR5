@@ -95,8 +95,14 @@ Para modelar/representar visualmente, tanto o que foi implementado como as ideia
 
 ### Vista de Processos
 
-#### SD US01
-TBD
+#### SD US220 Listar Pisos de Edificios com Passagens para Outros Edificios
+![N3-VP-US220](diagramas/nivel3/ListFloorsWithPathways_SSD_NVL3.jpg)
+
+#### SD US250 Editar Passagem entre Edificios
+![N3-VP-US250](diagramas/nivel3/UpdatePathway_SSD_NVL3.jpg)
+
+#### SD 310 Criar Sala de Piso de Edificio
+![N3-VP-US310](diagramas/nivel3/CreateRoom_SSD_NVL3.jpg)
 
 #### (outros SSD arquiteturalmente relevantes)
 [...]
