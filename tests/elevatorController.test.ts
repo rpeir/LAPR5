@@ -18,12 +18,16 @@ import {TaskType} from "../src/domain/taskType";
 import {RobotTypeModel} from "../src/domain/robotTypeModel";
 import {RobotTypeBrand} from "../src/domain/robotTypeBrand";
 import {UniqueEntityID} from "../src/core/domain/UniqueEntityID";
+import {Building} from "../src/domain/building/building";
+import {BuildingCode} from "../src/domain/building/BuildingCode";
+import {Floor} from "../src/domain/floor";
+import {BuildingId} from "../src/domain/building/buildingId";
 describe("elevator controller", function() {
 const sandbox = sinon.createSandbox();
 beforeEach(function() {
 
   Container.reset();
-  this.timeout(10000000000);
+  this.timeout(50000);
 
   let elevatorSchemaInstance = require("../src/persistence/schemas/elevatorSchema").default;
   Container.set("elevatorSchema", elevatorSchemaInstance);
@@ -104,21 +108,34 @@ beforeEach(function() {
       "description": req.body.description,
     }));
   });
-    it("elevatorController + elevatorService integration test (create) using elevatorRepo stub", async function() {
+    it("elevatorController + elevatorService integration test (create) using buildingRepo and floorRepo stub", async function(done) {
+        this.timeout(10000);
+        setTimeout(done, 10000);
       // Arrange
         let body = {
-            "id": "fd243698-b17e-4d0e-b78c-e20aa4cc1127",
             "designation": "Elevator 2",
             "buildingDesignation": "teste A",
             "floorsServed": [
-            1,
-            2
+            1
             ],
             "brand": "brandA",
             "modelE": "modelA",
             "serialNumber": "1234",
             "description": "Elevator 1A",
         };
+        let buildingBody = {
+            "code": "21 A",
+            "designation": "teste A",
+            "description": "a",
+            "length": 50,
+            "width": 50,
+            "height": 100,
+        };
+        let floorBody = {
+            "floorNr": 1,
+            "building": "6f4d26a7-b9ac-4d3a-a659-b3cec8ae3009",
+            "description": "Piso 1 do Edificio teste A"
+        }
         let req: Partial<Request> = {};
         req.body = body;
         let res: Partial<Response> = {
@@ -126,17 +143,40 @@ beforeEach(function() {
         };
         let next: Partial<NextFunction> = () => {
         };
+        let building=Building.create({
+            code: BuildingCode.create(buildingBody.code).getValue(),
+            designation: buildingBody.designation,
+            description: buildingBody.description,
+            length: buildingBody.length,
+            width: buildingBody.width,
+            height: buildingBody.height,
+        },new UniqueEntityID("123")).getValue();
+
+        let buildingRepoInstance = Container.get("BuildingRepo");
+        sinon.stub(buildingRepoInstance, "findByDesignation").returns(new Promise<BuildingId>((resolve, reject) => {
+            resolve(building);
+        }));
+        let floor=Floor.create({
+            description: floorBody.description,
+            building: building,
+            floorNr : floorBody.floorNr
+        }).getValue();
+        let floorRepoInstance = Container.get("FloorRepo");
+        sinon.stub(floorRepoInstance, "findByBuildingAndNumber").returns(new Promise<Floor>((resolve, reject) => {
+           resolve(floor);
+           }
+        ));
         let elevatorRepoInstance = Container.get("ElevatorRepo");
         sinon.stub(elevatorRepoInstance, "save").returns(new Promise<Elevator>((resolve, reject) => {
             resolve(Elevator.create({
-            code: 2,
-            designation:req.body.designation,
-            buildingDesignation: req.body.buildingDesignation,
-            floorsServed: req.body.floorsServed,
-            brand: req.body.brand,
-            modelE: req.body.modelE,
-            serialNumber: req.body.serialNumber,
-            description: req.body.description,
+                code: 2,
+                designation:req.body.designation,
+                buildingDesignation: req.body.buildingDesignation,
+                floorsServed: req.body.floorsServed,
+                brand: req.body.brand,
+                modelE: req.body.modelE,
+                serialNumber: req.body.serialNumber,
+                description: req.body.description,
             }).getValue());
         }));
         let elevatorServiceInstance = Container.get("ElevatorService");
