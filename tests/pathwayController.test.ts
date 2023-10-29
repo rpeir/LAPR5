@@ -101,7 +101,6 @@ describe("pathway controller", function() {
   it("pathwayController + pathwayService unit test (create) with buildingRepo, pathwayRepo, floorRepo mocks and pathway stub ", async function() {
     // Arrange
     let body = {
-      "id": "123",
       "buildingSource": "B103",
       "buildingDestination": "B123",
       "floorSource": 1,
@@ -156,6 +155,7 @@ describe("pathway controller", function() {
     /////
 
     sinon.stub(Pathway, "create").returns(Result.ok({
+        "id" : new UniqueEntityID("129"),
         "buildingSource": buildingSource,
         "buildingDestination": buildingDestination,
         "floorSource": floorSource,
@@ -179,7 +179,7 @@ describe("pathway controller", function() {
         "floorSource": floorSource,
         "floorDestination": floorDestination,
         "description": req.body.description
-      }, new UniqueEntityID("123")).getValue())
+      }, new UniqueEntityID("129")).getValue())
     }));
 
 
@@ -199,7 +199,6 @@ describe("pathway controller", function() {
     sinon.assert.calledOnce(res.json);
     sinon.assert.calledWith(res.json, sinon.match(
       {
-        "id": "123",
         "buildingSource": req.body.buildingSource,
         "buildingDestination": req.body.buildingDestination,
         "floorSource": req.body.floorSource,
