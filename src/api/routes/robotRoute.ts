@@ -42,7 +42,7 @@ export default (app: Router) => {
     (req, res, next) => ctrl.disableRobot(req, res, next),
   );
   route.get(
-    "/consultAll",
+    "",
     (req, res, next) => ctrl.consultAllRobots(req, res, next),
   );
 };

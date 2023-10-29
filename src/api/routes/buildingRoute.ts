@@ -7,10 +7,10 @@ import middlewares from "../middlewares";
 
 const route = Router();
 export default (app: Router) => {
-  app.use('/building', route);
+  app.use('/buildings', route);
   const ctrl = Container.get(config.controllers.building.name) as IBuildingController;
   route.post(
-    '/create',
+    '',
     celebrate({
       body: Joi.object({
         code: Joi.string().required(),
@@ -25,7 +25,7 @@ export default (app: Router) => {
   );
   //EDIT BUILDING
   route.patch(
-    '/update',
+    '',
     celebrate({
       body: Joi.object({
         code: Joi.string().required(),
@@ -38,7 +38,7 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.updateBuilding(req, res, next),
   );
-  route.get('/list-all', (req, res, next) => ctrl.listAllBuilding(req, res, next));
+  route.get('', (req, res, next) => ctrl.listAllBuilding(req, res, next));
   // Error handler middleware
   route.use(middlewares.validateBody);
 };
