@@ -17,12 +17,15 @@ export class FloorMap extends Mapper<Floor> {
   public static async toDomain(raw: any) {
     const repo = Container.get(BuildingRepo);
     const building = await repo.findById(raw.building);
+    // floorMap is optional
+    const floorMap = raw.floorMap ? raw.floorMap : undefined;
 
     const floorOrError = Floor.create(
       {
         building: building,
         description: raw.description,
         floorNr: raw.floorNr,
+        floorMap: floorMap,
       },
       new UniqueEntityID(raw.domainId),
     );
@@ -38,6 +41,7 @@ export class FloorMap extends Mapper<Floor> {
       building: floor.building.id.toString(),
       description: floor.description,
       floorNr: floor.floorNr,
+      floorMap: floor.floorMap,
     };
     return raw;
   }

@@ -48,9 +48,9 @@ export class Guard {
     if (isValid) {
       return { succeeded: true }
     } else {
-      return { 
-        succeeded: false, 
-        message: `${argumentName} isn't oneOf the correct types in ${JSON.stringify(validValues)}. Got "${value}".` 
+      return {
+        succeeded: false,
+        message: `${argumentName} isn't oneOf the correct types in ${JSON.stringify(validValues)}. Got "${value}".`
       }
     }
   }
@@ -75,6 +75,18 @@ export class Guard {
       return { succeeded: false, message: `${argumentName} is not within the range.`}
     } else {
       return { succeeded: true }
+    }
+  }
+  public static againstNullOrValueObject(value: any, argumentName: string): IGuardResult {
+    if (value === null || value === undefined) {
+      return { succeeded: false, message: `${argumentName} is null or undefined` };
+    } else if (typeof value !== 'object' || typeof value.equals !== 'function') {
+      return {
+        succeeded: false,
+        message: `${argumentName} is not a valid value object.`,
+      };
+    } else {
+      return { succeeded: true };
     }
   }
 }

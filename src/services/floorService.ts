@@ -10,7 +10,12 @@ import { Floor } from '../domain/floor';
 import { FloorMap } from '../mappers/FloorMap';
 import { IBuildingDTO } from '../dto/IBuildingDTO';
 import { BuildingMap } from '../mappers/BuildingMap';
-import IPathwayRepo from "./IRepos/IPathwayRepo";
+import { FloorMapStructure } from '../domain/floorMapStructure';
+import { ExceptionHandler } from 'winston';
+import { error } from 'console';
+import { on } from 'events';
+import e from 'express';
+import IPathwayRepo from './IRepos/IPathwayRepo';
 
 @Service()
 export default class FloorService implements IFloorService {
@@ -37,13 +42,13 @@ export default class FloorService implements IFloorService {
       });
 
       if (floorOrError.isFailure) {
-        return  Result.fail<IFloorDTO>(floorOrError.errorValue());
+        return Result.fail<IFloorDTO>(floorOrError.errorValue());
       }
 
       let floorResult = floorOrError.getValue();
       try {
         floorResult = await this.floorRepo.save(floorResult);
-      }catch (err){
+      } catch (err) {
         return Result.fail<IFloorDTO>(err.message);
       }
 
@@ -115,7 +120,7 @@ export default class FloorService implements IFloorService {
 
         try {
           floor = await this.floorRepo.save(floor);
-        }catch (err){
+        } catch (err) {
           return Result.fail<IFloorDTO>(err);
         }
 
@@ -176,5 +181,49 @@ export default class FloorService implements IFloorService {
     } catch (err) {
       throw err;
     }
+  }
+
+
+  public async uploadFloorMap(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>> {
+    try {
+      let floor = await this.floorRepo.findByBuildingIdAndFloorNr(floorDTO.building, floorDTO.floorNr);
+      if (floor === null) {
+        return Result.fail<IFloorDTO>('Floor not found');
+      } else {
+        //refactored to use value objects
+        const floorMapStructure = await FloorMapStructure.create(floorDTO.floorMap);
+        if (floorMapStructure.error) {
+          return Result.fail<IFloorDTO>(floorMapStructure.error);
+        }
+        floor.floorMap = floorMapStructure.getValue();
+
+        const validated = await this.validateSize(floor);
+        if (!validated) {
+          return Result.fail<IFloorDTO>('Floor size exceeds building size.');
+        }
+
+        try {
+          floor = await this.floorRepo.updateOneWithFloorMap(floor);
+        } catch (err) {
+          return Result.fail<IFloorDTO>(err);
+        }
+        const floorDTOResult = FloorMap.toDTO(floor) as IFloorDTO;
+        return Result.ok<IFloorDTO>(floorDTOResult);
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async validateSize(floor: Floor): Promise<boolean> {
+    const buildingLength = floor.building.length;
+    const floorDepth = floor.floorMap.props.floor.size.depth;
+    const buildingWidth = floor.building.width;
+    const floorWidth = floor.floorMap.props.floor.size.width;
+
+    if (floorDepth > buildingLength || floorWidth > buildingWidth) {
+      return false;
+    }
+    return true;
   }
 }

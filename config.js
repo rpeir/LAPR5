@@ -19,154 +19,154 @@ export default {
   /**
    * That long string from mlab
    */
-  databaseURL: process.env.MONGODB_URI || "mongodb://g008:sapo1234@vsgate-s1.dei.isep.ipp.pt:10802/db",
+  databaseURL: process.env.MONGODB_URI || 'mongodb://g008:sapo1234@vsgate-s1.dei.isep.ipp.pt:10802/db',
 
   /**
    * Your secret sauce
    */
-  jwtSecret: process.env.JWT_SECRET || "my sakdfho2390asjod$%jl)!sdjas0i secret",
+  jwtSecret: process.env.JWT_SECRET || 'my sakdfho2390asjod$%jl)!sdjas0i secret',
 
   /**
    * Used by winston logger
    */
   logs: {
-    level: process.env.LOG_LEVEL || "info"
+    level: process.env.LOG_LEVEL || 'info',
   },
 
   /**
    * API configs
    */
   api: {
-    prefix: "/api"
+    prefix: '/api',
   },
 
   controllers: {
     role: {
-      name: "RoleController",
-      path: "../controllers/roleController"
+      name: 'RoleController',
+      path: '../controllers/roleController',
     },
 
     robotType: {
-      name: "RobotTypeController",
-      path: "../controllers/robotTypeController"
+      name: 'RobotTypeController',
+      path: '../controllers/robotTypeController',
     },
 
     robot: {
-      name: "RobotController",
-      path: "../controllers/robotController"
+      name: 'RobotController',
+      path: '../controllers/robotController',
     },
     building: {
-      name: "BuildingController",
-      path: "../controllers/buildingController"
+      name: 'BuildingController',
+      path: '../controllers/buildingController',
     },
 
     floor: {
-      name: "FloorController",
-      path: "../controllers/floorController"
+      name: 'FloorController',
+      path: '../controllers/floorController',
     },
 
-    elevator:{
-        name: "ElevatorController",
-        path: "../controllers/elevatorController"
+    elevator: {
+      name: 'ElevatorController',
+      path: '../controllers/elevatorController',
     },
 
     pathway: {
-      name: "PathwayController",
-      path: "../controllers/pathwayController"
+      name: 'PathwayController',
+      path: '../controllers/pathwayController',
     },
 
     room: {
-      name: "RoomController",
-      path: "../controllers/roomController"
-    }
+      name: 'RoomController',
+      path: '../controllers/roomController',
+    },
   },
 
   repos: {
     role: {
-      name: "RoleRepo",
-      path: "../repos/roleRepo"
+      name: 'RoleRepo',
+      path: '../repos/roleRepo',
     },
 
     user: {
-      name: "UserRepo",
-      path: "../repos/userRepo"
+      name: 'UserRepo',
+      path: '../repos/userRepo',
     },
 
     robotType: {
-      name: "RobotTypeRepo",
-      path: "../repos/robotTypeRepo"
+      name: 'RobotTypeRepo',
+      path: '../repos/robotTypeRepo',
     },
 
     robot: {
-      name: "RobotRepo",
-      path: "../repos/robotRepo"
+      name: 'RobotRepo',
+      path: '../repos/robotRepo',
     },
 
     building: {
-      name: "BuildingRepo",
-      path: "../repos/buildingRepo"
+      name: 'BuildingRepo',
+      path: '../repos/buildingRepo',
     },
 
     floor: {
-      name: "FloorRepo",
-      path: "../repos/floorRepo"
+      name: 'FloorRepo',
+      path: '../repos/floorRepo',
     },
 
     pathway: {
-      name: "PathwayRepo",
-      path: "../repos/pathwayRepo"
+      name: 'PathwayRepo',
+      path: '../repos/pathwayRepo',
     },
 
     elevator: {
-      name: "ElevatorRepo",
-      path: "../repos/elevatorRepo"
+      name: 'ElevatorRepo',
+      path: '../repos/elevatorRepo',
     },
 
     room: {
-      name: "RoomRepo",
-      path: "../repos/roomRepo"
-    }
+      name: 'RoomRepo',
+      path: '../repos/roomRepo',
+    },
   },
 
   services: {
     role: {
-      name: "RoleService",
-      path: "../services/roleService"
+      name: 'RoleService',
+      path: '../services/roleService',
     },
 
     robotType: {
-      name: "robotTypeService",
-      path: "../services/robotTypeService"
+      name: 'robotTypeService',
+      path: '../services/robotTypeService',
     },
 
     robot: {
-      name: "RobotService",
-      path: "../services/robotService"
+      name: 'RobotService',
+      path: '../services/robotService',
     },
 
     building: {
-      name: "BuildingService",
-      path: "../services/buildingService"
+      name: 'BuildingService',
+      path: '../services/buildingService',
     },
 
     floor: {
-      name: "FloorService",
-      path: "../services/floorService"
+      name: 'FloorService',
+      path: '../services/floorService',
     },
 
     pathway: {
-      name: "PathwayService",
-      path: "../services/pathwayService"
+      name: 'PathwayService',
+      path: '../services/pathwayService',
     },
 
-    elevator:{
-      name: "ElevatorService",
-      path: "../services/elevatorService"
+    elevator: {
+      name: 'ElevatorService',
+      path: '../services/elevatorService',
     },
 
     room: {
-      name: "RoomService",
-      path: "../services/roomService"
-    }
-  }
+      name: 'RoomService',
+      path: '../services/roomService',
+    },
+  },
 };
