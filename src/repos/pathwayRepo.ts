@@ -103,5 +103,11 @@ export default class PathwayRepo implements IPathwayRepo {
     } else {
       return null;
     }
+    const query2 = {buildingDestination:building};
+    const pathwayRecord2 = await this.pathwaySchema.find(query2);
+    if (pathwayRecord2 != null) {
+      pathways.push(...await Promise.all(pathwayRecord2.map((pathway) => PathwayMap.toDomain(pathway))));
+    }
+    return pathways;
   }
 }
