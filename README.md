@@ -139,7 +139,7 @@ All parameters are required
 
 ## Floors
 
-- **URL:** `/floors'
+- **URL:** `/floors`
 - **Methods:** GET, POST, PUT, PATCH
 
 ### GET
@@ -214,7 +214,7 @@ Upload a floorMap of a floor
 
 ## Rooms
 
-- **URL:** `/rooms'
+- **URL:** `/rooms`
 - **Methods:** POST
 
 ### POST
@@ -236,7 +236,7 @@ All parameters are required
 
 ## Pathways
 
-- **URL:** `/pathways'
+- **URL:** `/pathways`
 - **Methods:** GET, POST, PUT, PATCH
 
 ### GET
@@ -299,7 +299,7 @@ The *domainId* is required on the query string of the URL
 
 ## Robots
 
-- **URL:** `/robots'
+- **URL:** `/robots`
 - **Methods:** GET, POST, PATCH
 
 ### GET
@@ -344,7 +344,7 @@ It should have the URL `... /robots/disable-by-code`
 
 ## Robot Type
 
-- **URL:** `/robotTypes'
+- **URL:** `/robotTypes`
 - **Methods:** POST
 
 ### POST
