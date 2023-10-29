@@ -24,11 +24,22 @@ export default (app: Router) => {
   );
 
   route.get("/building",
+    celebrate({
+      query: Joi.object({
+      buildingDesignation: Joi.string().required(),
+    })
+  }),
     (req, res, next) => ctrl.getFloorsOfBuilding(req, res, next)
   );
 
   route.get(
     "/building/max/min",
+    celebrate({
+      query: Joi.object({
+        max: Joi.number().required(),
+        min: Joi.number().required(),
+      })
+    }),
     (req, res, next) => ctrl.getBuildingFloorMaxMin(req, res, next)
   );
 
