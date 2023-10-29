@@ -51,6 +51,7 @@ describe("pathway controller", function() {
   it("pathway controller unit test (create) using pathwayService stub", async function() {
     // Arrange
     let body = {
+      "id": "123",
       "buildingSource": "B103",
       "buildingDestination": "B123",
       "floorSource": 1,
@@ -70,6 +71,7 @@ describe("pathway controller", function() {
 
     let pathwayServiceInstance = Container.get("PathwayService");
     sinon.stub(pathwayServiceInstance, "createPathway").returns(Result.ok<IPathwayDTO>({
+        "domainId" : "123",
         "buildingSource": req.body.buildingSource,
         "buildingDestination": req.body.buildingDestination,
         "floorSource": req.body.floorSource,
@@ -99,6 +101,7 @@ describe("pathway controller", function() {
   it("pathwayController + pathwayService unit test (create) with buildingRepo, pathwayRepo, floorRepo mocks and pathway stub ", async function() {
     // Arrange
     let body = {
+      "id": "123",
       "buildingSource": "B103",
       "buildingDestination": "B123",
       "floorSource": 1,
@@ -172,15 +175,11 @@ describe("pathway controller", function() {
     sinon.stub(pathwayRepoInstance, "save").returns(new Promise<Pathway>((resolve, reject) => {
       resolve(Pathway.create({
         "buildingSource":  buildingSource,
-
         "buildingDestination": buildingDestination,
-
         "floorSource": floorSource,
-
         "floorDestination": floorDestination,
-
         "description": req.body.description
-      }, new UniqueEntityID("129")).getValue())
+      }, new UniqueEntityID("123")).getValue())
     }));
 
 
@@ -200,6 +199,7 @@ describe("pathway controller", function() {
     sinon.assert.calledOnce(res.json);
     sinon.assert.calledWith(res.json, sinon.match(
       {
+        "id": "123",
         "buildingSource": req.body.buildingSource,
         "buildingDestination": req.body.buildingDestination,
         "floorSource": req.body.floorSource,

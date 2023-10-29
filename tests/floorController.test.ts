@@ -26,6 +26,9 @@ describe("floor controller", function() {
     let buildingSchemaInstance = require("../src/persistence/schemas/buildingSchema").default;
     Container.set("buildingSchema", buildingSchemaInstance);
 
+    let pathwaySchemaInstance = require("../src/persistence/schemas/pathwaySchema").default;
+    Container.set("pathwaySchema", pathwaySchemaInstance);
+
     let floorRepoClass = require("../src/repos/floorRepo").default;
     let floorRepoInstance = Container.get(floorRepoClass);
     Container.set("FloorRepo", floorRepoInstance);
@@ -33,6 +36,10 @@ describe("floor controller", function() {
     let buildingRepoClass = require("../src/repos/buildingRepo").default;
     let buildingRepoIInstance = Container.get(buildingRepoClass);
     Container.set("BuildingRepo", buildingRepoIInstance);
+
+    let pathwayRepoClass = require("../src/repos/pathwayRepo").default;
+    let pathwayRepoInstance = Container.get(pathwayRepoClass);
+    Container.set("PathwayRepo", pathwayRepoInstance);
 
     let floorServiceClass = require("../src/services/floorService").default;
     let floorServiceInstance = Container.get(floorServiceClass);
