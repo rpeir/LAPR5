@@ -3,6 +3,7 @@ import { UniqueEntityID } from '../../core/domain/UniqueEntityID';
 import { Result } from '../../core/logic/Result';
 import { Guard } from '../../core/logic/Guard';
 import { BuildingCode } from './BuildingCode';
+import {Entity} from "../../core/domain/Entity";
 
 interface BuildingProps {
   code: BuildingCode;
@@ -79,5 +80,15 @@ export class Building extends AggregateRoot<BuildingProps> {
 
       return Result.ok<Building>(user);
     }
+  }
+
+  equals(object?: Building): boolean {
+    return this.id.equals(object.id) &&
+      this.code ==object.code &&
+      this.designation == object.designation &&
+      this.description == object.description &&
+      this.length == object.length &&
+      this.width == object.width &&
+      this.height == object.height;
   }
 }
