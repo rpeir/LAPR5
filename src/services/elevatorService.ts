@@ -137,6 +137,7 @@ export default class ElevatorService implements IElevatorService{
       if(elevatorOrError==null){
         return await this.createElevator(elevatorDTO);
       }
+      elevatorDTO.code=elevatorOrError.code.toString();
       const elevator=await ElevatorMap.toDomain(elevatorDTO);
       try {
         await this.elevatorRepo.save(elevator);
