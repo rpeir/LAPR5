@@ -122,6 +122,25 @@ Para modelar/representar visualmente, tanto o que foi implementado como as ideia
 #### SSD US380
 ![N3-VP-US380](diagramas/nivel3/ListRobots_SSD_NVL3.jpg)
 
+#### SSD US360
+![N3-VP-US360](diagramas/nivel3/CreateRobot_SSD_NVL3.svg)
+
+#### SSD US240
+![N3-VP-US240](diagramas/nivel3/CreatePathway_SSD_NVL3.svg)
+
+#### SSD US350
+![N3-VP-US350](diagramas/nivel3/CreateRobotType_SSD_NVL3.svg)
+
+#### SSD US210
+![N3-VP-US210](diagramas/nivel3/ListBuildingFloor_SSD_NVL3.svg)
+
+#### SSD US180
+![N3-VP-US1](diagramas/nivel3/ListBuildingFloorMaxMin_SSD_NVL3.svg)
+
+#### SSD US200
+![N3-VP-US1](diagramas/nivel3/UpdateFloor_SSD_NVL3.svg)
+
+
 
 #### (outros SSD arquiteturalmente relevantes)
 [...]
