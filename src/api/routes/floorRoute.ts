@@ -26,7 +26,7 @@ export default (app: Router) => {
   route.get("/building",
     celebrate({
       query: Joi.object({
-      buildingDesignation: Joi.string().required(),
+      building: Joi.string().required(),
     })
   }),
     (req, res, next) => ctrl.getFloorsOfBuilding(req, res, next)
@@ -49,7 +49,8 @@ export default (app: Router) => {
       body: Joi.object({
         domainId: Joi.string().required(),
         floorNr: Joi.number().required(),
-        description: Joi.string().required()
+        description: Joi.string().required(),
+        building: Joi.string()
       })
     }),
     (req, res, next) => ctrl.updateBuildingFloor(req, res, next)
