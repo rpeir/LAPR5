@@ -16,10 +16,14 @@ export default class BuildingController implements IBuildingController {
         IBuildingDTO
       >;
       if (buildingOrError.isFailure) {
-        return res.status(402).json({error:buildingOrError.error}).send();
+        return res
+          .status(402)
+          .json({ error: buildingOrError.error })
+          .send();
       }
       const buildingDTO = buildingOrError.getValue();
-      return res.json(buildingDTO).status(201);
+      //TODO return res.status(201).json(buildingDTO);
+      return res.status(201).json(buildingDTO);
     } catch (error) {
       return next(error);
     }
@@ -34,7 +38,7 @@ export default class BuildingController implements IBuildingController {
         return res.status(402).send();
       }
       const buildingDTO = buildingOrError.getValue();
-      return res.json(buildingDTO).status(201);
+      return res.status(201).json(buildingDTO);
     } catch (error) {
       return next(error);
     }
@@ -46,7 +50,7 @@ export default class BuildingController implements IBuildingController {
         return res.status(402).send();
       }
       const buildingsDTO = buildingsOrError.getValue();
-      return res.json(buildingsDTO).status(200);
+      return res.status(200).json(buildingsDTO);
     } catch (error) {
       return next(error);
     }
