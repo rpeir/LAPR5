@@ -1,29 +1,31 @@
-import IFloorService from './IServices/IFloorService';
-import { IFloorDTO } from '../dto/IFloorDTO';
-import { Result } from '../core/logic/Result';
-import { Inject, Service } from 'typedi';
-import config from '../../config';
-import IBuildingRepo from './IRepos/IBuildingRepo';
-import IFloorRepo from './IRepos/IFloorRepo';
-import { Building } from '../domain/building/building';
-import { Floor } from '../domain/floor';
-import { FloorMap } from '../mappers/FloorMap';
-import { IBuildingDTO } from '../dto/IBuildingDTO';
-import { BuildingMap } from '../mappers/BuildingMap';
-import { FloorMapStructure } from '../domain/floorMapStructure';
-import { ExceptionHandler } from 'winston';
-import { error } from 'console';
-import { on } from 'events';
-import e from 'express';
-import IPathwayRepo from './IRepos/IPathwayRepo';
+import IFloorService from "./IServices/IFloorService";
+import { IFloorDTO } from "../dto/IFloorDTO";
+import { Result } from "../core/logic/Result";
+import { Inject, Service } from "typedi";
+import config from "../../config";
+import IBuildingRepo from "./IRepos/IBuildingRepo";
+import IFloorRepo from "./IRepos/IFloorRepo";
+import { Building } from "../domain/building/building";
+import { Floor } from "../domain/floor";
+import { FloorMap } from "../mappers/FloorMap";
+import { IBuildingDTO } from "../dto/IBuildingDTO";
+import { BuildingMap } from "../mappers/BuildingMap";
+import { FloorMapStructure } from "../domain/floorMapStructure";
+import { ExceptionHandler } from "winston";
+import { error } from "console";
+import { on } from "events";
+import e from "express";
+import IPathwayRepo from "./IRepos/IPathwayRepo";
+import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 
 @Service()
 export default class FloorService implements IFloorService {
   constructor(
     @Inject(config.repos.building.name) private buildingRepo: IBuildingRepo,
     @Inject(config.repos.floor.name) private floorRepo: IFloorRepo,
-    @Inject(config.repos.pathway.name) private pathwayRepo: IPathwayRepo,
-  ) {}
+    @Inject(config.repos.pathway.name) private pathwayRepo: IPathwayRepo
+  ) {
+  }
 
   public async createFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>> {
     try {
@@ -35,11 +37,17 @@ export default class FloorService implements IFloorService {
         building = buildingOrError.getValue();
       }
 
+      let id;
+      if (floorDTO.domainId === null) {
+        id = floorDTO.domainId;
+      } else {
+        id = new UniqueEntityID();
+      }
       const floorOrError = Floor.create({
         description: floorDTO.description,
         floorNr: floorDTO.floorNr,
-        building: building,
-      });
+        building: building
+      }, id);
 
       if (floorOrError.isFailure) {
         return Result.fail<IFloorDTO>(floorOrError.errorValue());
@@ -92,7 +100,7 @@ export default class FloorService implements IFloorService {
     try {
       const buildings = await this.floorRepo.findBuildingByFloorMaxMin(max, min);
       if (buildings.length === 0) {
-        return Result.fail<IBuildingDTO[]>("Couldn't find buildings with floors between " + min + ' and ' + max);
+        return Result.fail<IBuildingDTO[]>("Couldn't find buildings with floors between " + min + " and " + max);
       }
 
       const buildingsOrError = [];
@@ -113,7 +121,7 @@ export default class FloorService implements IFloorService {
     try {
       let floor = await this.floorRepo.findById(floorDTO.domainId);
       if (floor === null) {
-        this.createFloor(floorDTO);
+        return await this.createFloor(floorDTO);
       } else {
         floor.floorNr = floorDTO.floorNr;
         floor.description = floorDTO.description;
@@ -131,7 +139,8 @@ export default class FloorService implements IFloorService {
       throw e;
     }
   }
-  public async listFloorsWithPathways(buildingDesignation: string) : Promise<Result<Map<number,IFloorDTO[]>>> {
+
+  public async listFloorsWithPathways(buildingDesignation: string): Promise<Result<Map<number, IFloorDTO[]>>> {
     try {
       let building;
       const buildingOrError = await this.getBuildingByDesignation(buildingDesignation);
@@ -140,13 +149,13 @@ export default class FloorService implements IFloorService {
       } else {
         building = buildingOrError.getValue();
       }
-      const pathways= await this.pathwayRepo.findByBuildingId(building.id.toString());
+      const pathways = await this.pathwayRepo.findByBuildingId(building.id.toString());
 
       // map that for each floor of the building we want to list, has a list of reachable floors
-      let floors : Map<number, Floor[]> = new Map<number, Floor[]>()
+      let floors: Map<number, Floor[]> = new Map<number, Floor[]>();
       pathways.map((pathway) => {
         // if the building that we are trying to list is the source building of the pathway
-        let originFloor , destinationFloor : Floor;
+        let originFloor, destinationFloor: Floor;
         if (pathway.buildingSource.equals(building)) {
           originFloor = pathway.floorSource;
           destinationFloor = pathway.floorDestination;
@@ -164,13 +173,13 @@ export default class FloorService implements IFloorService {
         if (!floors.get(originFloor.floorNr).includes(destinationFloor)) {
           floors.get(originFloor.floorNr).push(destinationFloor);
         }
-      })
+      });
 
       if (floors.size === 0) {
         return Result.fail("Couldn't find floors for building: " + buildingDesignation);
       }
       try {
-        let floorsDTOs : Map<number, IFloorDTO[]> = new Map<number, IFloorDTO[]>();
+        let floorsDTOs: Map<number, IFloorDTO[]> = new Map<number, IFloorDTO[]>();
         floors.forEach((value, key) => {
           floorsDTOs.set(key, value.map((floor) => FloorMap.toDTO(floor)));
         });
@@ -188,7 +197,7 @@ export default class FloorService implements IFloorService {
     try {
       let floor = await this.floorRepo.findByBuildingIdAndFloorNr(floorDTO.building, floorDTO.floorNr);
       if (floor === null) {
-        return Result.fail<IFloorDTO>('Floor not found');
+        return Result.fail<IFloorDTO>("Floor not found");
       } else {
         //refactored to use value objects
         const floorMapStructure = await FloorMapStructure.create(floorDTO.floorMap);
@@ -199,7 +208,7 @@ export default class FloorService implements IFloorService {
 
         const validated = await this.validateSize(floor);
         if (!validated) {
-          return Result.fail<IFloorDTO>('Floor size exceeds building size.');
+          return Result.fail<IFloorDTO>("Floor size exceeds building size.");
         }
 
         try {
