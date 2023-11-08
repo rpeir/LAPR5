@@ -4,14 +4,14 @@ import { IRobotDTO } from "../dto/IRobotDTO";
 import { Result } from "../core/logic/Result";
 import config from "../../config";
 import IRobotRepo from "./IRepos/IRobotRepo";
-import { RobotNickName } from "../domain/robotNickName";
-import { RobotDescription } from "../domain/robotDescription";
-import { RobotSerialNr } from "../domain/robotSerialNr";
+import { RobotNickName } from "../domain/robot/robotNickName";
+import { RobotDescription } from "../domain/robot/robotDescription";
+import { RobotSerialNr } from "../domain/robot/robotSerialNr";
 import IRobotTypeRepo from "./IRepos/IRobotTypeRepo";
-import { RobotType } from "../domain/robotType";
-import { Robot } from "../domain/robot";
+import { RobotType } from "../domain/robotType/robotType";
+import { Robot } from "../domain/robot/robot";
 import { RobotMap } from "../mappers/RobotMap";
-import { RobotCode } from "../domain/robotCode";
+import { RobotCode } from "../domain/robot/robotCode";
 
 @Service()
 export default class RobotService implements IRobotService {
