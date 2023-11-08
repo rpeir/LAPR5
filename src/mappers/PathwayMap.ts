@@ -1,4 +1,4 @@
-import { Pathway } from "../domain/pathway";
+import { Pathway } from "../domain/pathway/pathway";
 import { Mapper } from "../core/infra/Mapper";
 import BuildingRepo from "../repos/buildingRepo";
 import FloorRepo from "../repos/floorRepo";

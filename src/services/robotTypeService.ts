@@ -5,12 +5,12 @@ import IRobotTypeService from "./IServices/IRobotTypeService";
 
 import IRobotTypeRepo from "./IRepos/IRobotTypeRepo";
 import config from "../../config";
-import { RobotType } from "../domain/robotType";
+import { RobotType } from "../domain/robotType/robotType";
 import { RobotTypeMap } from "../mappers/RobotTypeMap";
-import { TaskType } from "../domain/taskType";
-import { RobotTypeName } from "../domain/robotTypeName";
-import { RobotTypeBrand } from "../domain/robotTypeBrand";
-import { RobotTypeModel } from "../domain/robotTypeModel";
+import { TaskType } from "../domain/task/taskType";
+import { RobotTypeName } from "../domain/robotType/robotTypeName";
+import { RobotTypeBrand } from "../domain/robotType/robotTypeBrand";
+import { RobotTypeModel } from "../domain/robotType/robotTypeModel";
 
 @Service()
 export default class RobotTypeService implements IRobotTypeService {

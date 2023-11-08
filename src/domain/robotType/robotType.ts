@@ -1,9 +1,9 @@
-import { AggregateRoot } from "../core/domain/AggregateRoot";
-import { UniqueEntityID } from "../core/domain/UniqueEntityID";
-import { Guard } from "../core/logic/Guard";
-import { Result } from "../core/logic/Result";
+import { AggregateRoot } from "../../core/domain/AggregateRoot";
+import { UniqueEntityID } from "../../core/domain/UniqueEntityID";
+import { Guard } from "../../core/logic/Guard";
+import { Result } from "../../core/logic/Result";
 import { RobotTypeID } from "./robotTypeID";
-import { TaskType } from "./taskType";
+import { TaskType } from "../task/taskType";
 import { RobotTypeModel } from "./robotTypeModel";
 import { RobotTypeBrand } from "./robotTypeBrand";
 import { RobotTypeName } from "./robotTypeName";

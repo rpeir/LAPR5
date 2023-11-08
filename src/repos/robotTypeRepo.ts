@@ -1,6 +1,6 @@
 import IRobotTypeRepo from "../services/IRepos/IRobotTypeRepo";
-import { RobotType } from "../domain/robotType";
-import { RobotTypeID } from "../domain/robotTypeID";
+import { RobotType } from "../domain/robotType/robotType";
+import { RobotTypeID } from "../domain/robotType/robotTypeID";
 import { Inject, Service } from "typedi";
 import { Model } from "mongoose";
 import { IRobotTypePersistence } from "../dataschema/IRobotTypePersistence";

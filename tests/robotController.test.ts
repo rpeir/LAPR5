@@ -5,18 +5,18 @@ import { Result } from "../src/core/logic/Result";
 import { IRobotDTO } from "../src/dto/IRobotDTO";
 import RobotController from "../src/controllers/robotController";
 import IRobotService from "../src/services/IServices/IRobotService";
-import { RobotTypeName } from "../src/domain/robotTypeName";
-import { TaskType } from "../src/domain/taskType";
-import { RobotTypeModel } from "../src/domain/robotTypeModel";
-import { RobotTypeBrand } from "../src/domain/robotTypeBrand";
-import { RobotType } from "../src/domain/robotType";
+import { RobotTypeName } from "../src/domain/robotType/robotTypeName";
+import { TaskType } from "../src/domain/task/taskType";
+import { RobotTypeModel } from "../src/domain/robotType/robotTypeModel";
+import { RobotTypeBrand } from "../src/domain/robotType/robotTypeBrand";
+import { RobotType } from "../src/domain/robotType/robotType";
 import { UniqueEntityID } from "../src/core/domain/UniqueEntityID";
 import { IRobotTypeDTO } from "../src/dto/IRobotTypeDTO";
-import { Robot } from "../src/domain/robot";
-import { RobotNickName } from "../src/domain/robotNickName";
-import { RobotCode } from "../src/domain/robotCode";
-import { RobotSerialNr } from "../src/domain/robotSerialNr";
-import { RobotDescription } from "../src/domain/robotDescription";
+import { Robot } from "../src/domain/robot/robot";
+import { RobotNickName } from "../src/domain/robot/robotNickName";
+import { RobotCode } from "../src/domain/robot/robotCode";
+import { RobotSerialNr } from "../src/domain/robot/robotSerialNr";
+import { RobotDescription } from "../src/domain/robot/robotDescription";
 
 describe("robot controller", function() {
   const sandbox = sinon.createSandbox();

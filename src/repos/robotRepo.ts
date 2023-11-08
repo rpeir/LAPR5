@@ -1,11 +1,11 @@
 import { Inject, Service } from 'typedi';
 import IRobotRepo from '../services/IRepos/IRobotRepo';
 import { Document } from 'mongodb';
-import { RobotNickName } from '../domain/robotNickName';
-import { Robot } from '../domain/robot';
+import { RobotNickName } from '../domain/robot/robotNickName';
+import { Robot } from '../domain/robot/robot';
 import { Model } from 'mongoose';
 import { IRobotPersistence } from '../dataschema/IRobotPersistence';
-import { RobotId } from '../domain/robotId';
+import { RobotId } from '../domain/robot/robotId';
 import { RobotMap } from '../mappers/RobotMap';
 
 @Service()

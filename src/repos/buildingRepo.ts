@@ -6,7 +6,7 @@ import { Building } from '../domain/building/building';
 import { BuildingMap } from '../mappers/BuildingMap';
 import { BuildingCode } from '../domain/building/BuildingCode';
 import { IBuildingPersistence } from '../dataschema/IBuildingPersistence';
-import { RobotTypeID } from '../domain/robotTypeID';
+import { RobotTypeID } from '../domain/robotType/robotTypeID';
 import { BuildingId } from '../domain/building/buildingId';
 import { FloorMap } from '../mappers/FloorMap';
 import {UniqueEntityID} from "../core/domain/UniqueEntityID";

@@ -1,11 +1,11 @@
-import { AggregateRoot } from '../core/domain/AggregateRoot';
-import { UniqueEntityID } from '../core/domain/UniqueEntityID';
-import { Guard } from '../core/logic/Guard';
-import { Result } from '../core/logic/Result';
+import { AggregateRoot } from '../../core/domain/AggregateRoot';
+import { UniqueEntityID } from '../../core/domain/UniqueEntityID';
+import { Guard } from '../../core/logic/Guard';
+import { Result } from '../../core/logic/Result';
 import { RobotDescription } from './robotDescription';
 import { RobotNickName } from './robotNickName';
 import { RobotSerialNr } from './robotSerialNr';
-import { RobotType } from './robotType';
+import { RobotType } from '../robotType/robotType';
 import { RobotCode } from './robotCode';
 
 interface RobotProps {

@@ -1,11 +1,11 @@
 import { Mapper } from "../core/infra/Mapper";
-import { RobotType } from "../domain/robotType";
+import { RobotType } from "../domain/robotType/robotType";
 import { IRobotTypeDTO } from "../dto/IRobotTypeDTO";
 import { UniqueEntityID } from "../core/domain/UniqueEntityID";
-import { TaskType } from "../domain/taskType";
-import { RobotTypeBrand } from "../domain/robotTypeBrand";
-import { RobotTypeModel } from "../domain/robotTypeModel";
-import { RobotTypeName } from "../domain/robotTypeName";
+import { TaskType } from "../domain/task/taskType";
+import { RobotTypeBrand } from "../domain/robotType/robotTypeBrand";
+import { RobotTypeModel } from "../domain/robotType/robotTypeModel";
+import { RobotTypeName } from "../domain/robotType/robotTypeName";
 
 export class RobotTypeMap extends Mapper<RobotType> {
 

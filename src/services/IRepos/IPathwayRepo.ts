@@ -1,7 +1,7 @@
-import { Pathway } from "../../domain/pathway";
+import { Pathway } from "../../domain/pathway/pathway";
 import { Repo } from "../../core/infra/Repo";
-import { PathwayID } from "../../domain/pathwayID";
-import { Floor } from "../../domain/floor";
+import { PathwayID } from "../../domain/pathway/pathwayID";
+import { Floor } from "../../domain/floor/floor";
 
 export default interface IPathwayRepo extends Repo<Pathway> {
   save(pathway: Pathway): Promise<Pathway>;

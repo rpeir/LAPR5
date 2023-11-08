@@ -1,14 +1,14 @@
 import { Inject, Service } from 'typedi';
-import { Floor } from '../domain/floor';
+import { Floor } from '../domain/floor/floor';
 import IFloorRepo from '../services/IRepos/IFloorRepo';
 import { Model } from 'mongoose';
 import { Document } from 'mongodb';
 import { IFloorPersistence } from '../dataschema/IFloorPersistence';
 import { FloorMap } from '../mappers/FloorMap';
-import { FloorId } from '../domain/floorId';
+import { FloorId } from '../domain/floor/floorId';
 import { BuildingId } from '../domain/building/buildingId';
 import { Building } from '../domain/building/building';
-import {Pathway} from "../domain/pathway";
+import {Pathway} from "../domain/pathway/pathway";
 
 @Service()
 export default class FloorRepo implements IFloorRepo {
