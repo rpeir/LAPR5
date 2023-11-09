@@ -35,7 +35,7 @@ export default class PlanningService implements IPlanningService {
     }
     let planningElevators = [];
     for (const elevator of elevators.getValue()) {
-      let floors = elevator.floorsServed.map(floor => elevator.buildingDesignation.toLowerCase() + floor);
+      let floors = elevator.floorsServed.map(floor => elevator.buildingDesignation.toLowerCase() + "_" + floor);
 
       const planningElevatorOrError = PlanningElevator.create({
         building: elevator.buildingDesignation.toLowerCase(),
@@ -64,7 +64,7 @@ export default class PlanningService implements IPlanningService {
       if (buildingFloors.isFailure) {
         floors = [];
       } else {
-        floors = buildingFloors.getValue().map(floor => floor.building.toLowerCase() + floor.floorNr);
+        floors = buildingFloors.getValue().map(floor => floor.building.toLowerCase() + "_" + floor.floorNr);
       }
       const planningFloorOrError = PlanningFloor.create({
         building: building.designation.toLowerCase(),
@@ -92,8 +92,8 @@ export default class PlanningService implements IPlanningService {
       const pathwayOrError = PlanningPathway.create({
         buildingSource: pathway.buildingSource.toLowerCase(),
         buildingDestination: pathway.buildingDestination.toLowerCase(),
-        floorSource: pathway.buildingSource.toLowerCase() + pathway.floorSource.toString(),
-        floorDestination: pathway.buildingDestination.toLowerCase() + pathway.floorDestination.toString()
+        floorSource: pathway.buildingSource.toLowerCase() + "_" +  pathway.floorSource.toString(),
+        floorDestination: pathway.buildingDestination.toLowerCase() + "_" +  pathway.floorDestination.toString()
       });
 
       if (pathwayOrError.isFailure) {

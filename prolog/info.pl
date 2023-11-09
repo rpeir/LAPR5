@@ -29,7 +29,6 @@ process_Floor_json_data([BuildingObj | RestData]) :-
     % Create a building/2 fact with the extracted data
     F = floor(Building, Floors),
     assert(F),
-    write(F),nl,
     % Recursively process the rest of the JSON data
     process_Floor_json_data(RestData).
 
@@ -58,7 +57,6 @@ process_Elevator_json_data([ElevatorObj | RestData]) :-
     % Create a building/2 fact with the extracted data
     E = elevator(Building, Floors),
         assert(E),
-        write(E),nl,
     % Recursively process the rest of the JSON data
     process_Elevator_json_data(RestData).
 
@@ -89,6 +87,5 @@ process_Pathway_json_data([PathwayObj | RestData]) :-
     % Create a building/2 fact with the extracted data
     P = pathway(BuildingSource, BuildingDestination, FloorSource, FloorDestination),
         assert(P),
-        write(P),nl,
     % Recursively process the rest of the JSON data
     process_Pathway_json_data(RestData).
