@@ -1,5 +1,5 @@
 import { Building } from "../domain/building/building";
-import { Floor } from "../domain/floor";
+import { Floor } from "../domain/floor/floor";
 
 export interface IPathwayPersistence {
   domainId: string;

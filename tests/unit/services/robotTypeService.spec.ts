@@ -1,15 +1,15 @@
 import { Container } from "typedi";
 import * as sinon from "sinon";
-import { RobotType } from "../../../src/domain/robotType";
+import { RobotType } from "../../../src/domain/robotType/robotType";
 import { Result } from "../../../src/core/logic/Result";
-import { RobotTypeName } from "../../../src/domain/robotTypeName";
-import { RobotTypeModel } from "../../../src/domain/robotTypeModel";
-import { RobotTypeBrand } from "../../../src/domain/robotTypeBrand";
+import { RobotTypeName } from "../../../src/domain/robotType/robotTypeName";
+import { RobotTypeModel } from "../../../src/domain/robotType/robotTypeModel";
+import { RobotTypeBrand } from "../../../src/domain/robotType/robotTypeBrand";
 import { UniqueEntityID } from "../../../src/core/domain/UniqueEntityID";
 import { IRobotTypeDTO } from "../../../src/dto/IRobotTypeDTO";
 import RobotTypeService from "../../../src/services/robotTypeService";
 import IRobotTypeRepo from "../../../src/services/IRepos/IRobotTypeRepo";
-import { TaskType } from "../../../src/domain/taskType";
+import { TaskType } from "../../../src/domain/task/taskType";
 import { expect } from 'chai';
 
 describe("robotType service", function() {

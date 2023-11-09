@@ -1,13 +1,13 @@
 import { Mapper } from '../core/infra/Mapper';
-import { Robot } from '../domain/robot';
+import { Robot } from '../domain/robot/robot';
 import { IRobotDTO } from '../dto/IRobotDTO';
-import { RobotNickName } from '../domain/robotNickName';
-import { RobotSerialNr } from '../domain/robotSerialNr';
-import { RobotDescription } from '../domain/robotDescription';
+import { RobotNickName } from '../domain/robot/robotNickName';
+import { RobotSerialNr } from '../domain/robot/robotSerialNr';
+import { RobotDescription } from '../domain/robot/robotDescription';
 import { Container } from 'typedi';
 import { UniqueEntityID } from '../core/domain/UniqueEntityID';
 import RobotTypeRepo from '../repos/robotTypeRepo';
-import { RobotCode } from '../domain/robotCode';
+import { RobotCode } from '../domain/robot/robotCode';
 
 export class RobotMap extends Mapper<Robot> {
   public static toDTO(robot: Robot) {

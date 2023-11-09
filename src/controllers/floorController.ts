@@ -1,11 +1,10 @@
 import { Inject, Service } from 'typedi';
 import IFloorController from './IControllers/IFloorController';
-import e, { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import config from '../../config';
 import IFloorService from '../services/IServices/IFloorService';
 import { IFloorDTO } from '../dto/IFloorDTO';
 import { Result } from '../core/logic/Result';
-import { error } from 'winston';
 import { IBuildingDTO } from '../dto/IBuildingDTO';
 
 @Service()
@@ -19,7 +18,7 @@ export default class FloorController implements IFloorController {
         return res.status(402).send(floorOrError);
       }
       const floorDTO = floorOrError.getValue();
-      return res.json(floorDTO).status(202);
+      return res.status(202).json(floorDTO);
     } catch (error) {
       throw next(error);
     }
@@ -32,7 +31,7 @@ export default class FloorController implements IFloorController {
         return res.status(402).send(floorOrError);
       }
       const floorDTO = floorOrError.getValue();
-      return res.json(floorDTO).status(201);
+      return res.status(201).json(floorDTO);
     } catch (error) {
       return next(error);
     }
@@ -50,7 +49,7 @@ export default class FloorController implements IFloorController {
       }
 
       const floorDTO = floorOrError.getValue();
-      return res.json(floorDTO).status(202);
+      return res.status(202).json(floorDTO);
     } catch (error) {
       return next(error);
     }
@@ -69,7 +68,7 @@ export default class FloorController implements IFloorController {
       }
 
       const buildingDTO = buildings.getValue();
-      return res.json(buildingDTO).status(202);
+      return res.status(202).json(buildingDTO);
     } catch (error) {
       throw next(error);
     }
@@ -84,7 +83,7 @@ export default class FloorController implements IFloorController {
       }
 
       const floorDTO = floorOrError.getValue();
-      return res.json(floorDTO).status(200);
+      return res.status(200).json(floorDTO);
     } catch (error) {
       throw next(error);
     }

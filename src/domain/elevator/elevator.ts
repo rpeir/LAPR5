@@ -3,7 +3,7 @@ import {UniqueEntityID} from "../../core/domain/UniqueEntityID";
 import {Result} from "../../core/logic/Result";
 import {Guard} from "../../core/logic/Guard";
 import {BuildingCode} from "../building/BuildingCode";
-import {Floor} from "../floor";
+import {Floor} from "../floor/floor";
 
 interface ElevatorProps{
   code:number;

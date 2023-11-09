@@ -1,5 +1,5 @@
 import { Mapper } from '../core/infra/Mapper';
-import { Floor } from '../domain/floor';
+import { Floor } from '../domain/floor/floor';
 import { IFloorDTO } from '../dto/IFloorDTO';
 import { Container } from 'typedi';
 import BuildingRepo from '../repos/buildingRepo';

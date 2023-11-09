@@ -5,11 +5,11 @@ import { Result } from "../src/core/logic/Result";
 import RobotTypeController from "../src/controllers/robotTypeController";
 import IRobotTypeService from "../src/services/IServices/IRobotTypeService";
 import { IRobotTypeDTO } from "../src/dto/IRobotTypeDTO";
-import { RobotType } from "../src/domain/robotType";
+import { RobotType } from "../src/domain/robotType/robotType";
 import { UniqueEntityID } from "../src/core/domain/UniqueEntityID";
-import { RobotTypeName } from "../src/domain/robotTypeName";
-import { RobotTypeModel } from "../src/domain/robotTypeModel";
-import { RobotTypeBrand } from "../src/domain/robotTypeBrand";
+import { RobotTypeName } from "../src/domain/robotType/robotTypeName";
+import { RobotTypeModel } from "../src/domain/robotType/robotTypeModel";
+import { RobotTypeBrand } from "../src/domain/robotType/robotTypeBrand";
 
 
 describe("robotType controller", function() {

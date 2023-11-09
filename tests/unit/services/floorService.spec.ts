@@ -5,14 +5,14 @@ import { BuildingId } from "../../../src/domain/building/buildingId";
 import { Building } from "../../../src/domain/building/building";
 import { BuildingCode } from "../../../src/domain/building/BuildingCode";
 import { UniqueEntityID } from "../../../src/core/domain/UniqueEntityID";
-import { Floor } from "../../../src/domain/floor";
+import { Floor } from "../../../src/domain/floor/floor";
 import { Result } from "../../../src/core/logic/Result";
 import IBuildingRepo from "../../../src/services/IRepos/IBuildingRepo";
 import IFloorRepo from "../../../src/services/IRepos/IFloorRepo";
 import FloorService from "../../../src/services/floorService";
 import IPathwayRepo from "../../../src/services/IRepos/IPathwayRepo";
 import { IFloorDTO } from "../../../src/dto/IFloorDTO";
-import { Pathway } from "../../../src/domain/pathway";
+import { Pathway } from "../../../src/domain/pathway/pathway";
 import PathwayService from "../../../src/services/pathwayService";
 import { IPathwayDTO } from "../../../src/dto/IPathwayDTO";
 

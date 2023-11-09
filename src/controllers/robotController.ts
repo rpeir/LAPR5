@@ -19,9 +19,9 @@ export default class RobotController implements IRobotController {
       }
 
       const robotDTO = robotOrError.getValue();
-      return res.json(robotDTO).status(201);
+      return res.status(201).json(robotDTO);
     } catch (error) {
-      return  next(error);
+      return next(error);
     }
   }
 
@@ -32,21 +32,23 @@ export default class RobotController implements IRobotController {
         return res.status(402).send(robotOrError.error);
       }
       const robotDTO = robotOrError.getValue();
-      return res.json(robotDTO).status(201);
+      return res.status(201).json(robotDTO);
     } catch (error) {
       throw next(error);
     }
   }
   public async consultAllRobots(req: Request, res: Response, next: NextFunction) {
-    try{
+    try {
       const robotOrError = (await this.robotServiceInstance.consultAllRobots()) as Result<IRobotDTO[]>;
       if (robotOrError.isFailure) {
-        return res.status(402).json(robotOrError.error).send();
+        return res
+          .status(402)
+          .json(robotOrError.error)
+          .send();
       }
       const robotDTO = robotOrError.getValue();
-      return res.json(robotDTO).status(200);
-
-    }catch(error){
+      return res.status(200).json(robotDTO);
+    } catch (error) {
       throw next(error);
     }
   }

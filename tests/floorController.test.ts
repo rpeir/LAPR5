@@ -9,7 +9,7 @@ import { BuildingId } from "../src/domain/building/buildingId";
 import { Building } from "../src/domain/building/building";
 import { BuildingCode } from "../src/domain/building/BuildingCode";
 import { UniqueEntityID } from "../src/core/domain/UniqueEntityID";
-import { Floor } from "../src/domain/floor";
+import { Floor } from "../src/domain/floor/floor";
 
 
 describe("floor controller", function() {

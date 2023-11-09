@@ -6,10 +6,10 @@ import { IPathwayDTO } from "../src/dto/IPathwayDTO";
 import PathwayController from "../src/controllers/pathwayController";
 import IPathwayService from "../src/services/IServices/IPathwayService";
 import { BuildingCode } from "../src/domain/building/BuildingCode";
-import { Pathway } from "../src/domain/pathway";
+import { Pathway } from "../src/domain/pathway/pathway";
 import { Building } from "../src/domain/building/building";
 import { UniqueEntityID } from "../src/core/domain/UniqueEntityID";
-import { Floor } from "../src/domain/floor";
+import { Floor } from "../src/domain/floor/floor";
 
 describe("pathway controller", function() {
   const sandbox = sinon.createSandbox();

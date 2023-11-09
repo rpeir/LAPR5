@@ -1,12 +1,12 @@
 import { Inject, Service } from "typedi";
-import { Pathway } from "../domain/pathway";
-import { PathwayID } from "../domain/pathwayID";
+import { Pathway } from "../domain/pathway/pathway";
+import { PathwayID } from "../domain/pathway/pathwayID";
 import IPathwayRepo from "../services/IRepos/IPathwayRepo";
 import { Document, MongoServerError } from "mongodb";
 import { IPathwayPersistence } from "../dataschema/IPathwayPersistence";
 import { Model } from "mongoose";
 import { PathwayMap } from "../mappers/PathwayMap";
-import { Floor } from "../domain/floor";
+import { Floor } from "../domain/floor/floor";
 
 @Service()
 export default class PathwayRepo implements IPathwayRepo {

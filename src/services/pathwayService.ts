@@ -7,11 +7,10 @@ import IBuildingRepo from "./IRepos/IBuildingRepo";
 import IFloorRepo from "./IRepos/IFloorRepo";
 import IPathwayRepo from "./IRepos/IPathwayRepo";
 import { Building } from "../domain/building/building";
-import { Pathway } from "../domain/pathway";
+import { Pathway } from "../domain/pathway/pathway";
 import { PathwayMap } from "../mappers/PathwayMap";
 import {UniqueEntityID} from "../core/domain/UniqueEntityID";
-import {Floor} from "../domain/floor";
-import { IElevatorDTO } from "../dto/IElevatorDTO";
+import {Floor} from "../domain/floor/floor";
 
 @Service()
 export default class PathwayService implements IPathwayService {
