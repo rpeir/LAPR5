@@ -1,5 +1,5 @@
 import { Mapper } from "../core/infra/Mapper";
-import { PlanningFloor } from "../domain/planningFloor";
+import { PlanningFloor } from "../domain/planning/planningFloor";
 import { IPlanningFloorDTO } from "../dto/IPlanningFloorDTO";
 
 export class PlanningFloorMapper extends Mapper<PlanningFloor>{

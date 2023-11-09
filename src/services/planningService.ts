@@ -3,14 +3,18 @@ import IPlanningService from "./IServices/IPlanningService";
 import { Result } from "../core/logic/Result";
 import config from "../../config";
 import IBuildingService from "./IServices/IBuildingService";
-import { PlanningFloor } from "../domain/planningFloor";
+import { PlanningFloor } from "../domain/planning/planningFloor";
 import { IPlanningFloorDTO } from "../dto/IPlanningFloorDTO";
 import IFloorService from "./IServices/IFloorService";
 import { PlanningFloorMapper } from "../mappers/PlanningFloorMapper";
-import { IElevatorDTO } from "../dto/IElevatorDTO";
 import IElevatorService from "./IServices/IElevatorService";
-import { IPathwayDTO } from "../dto/IPathwayDTO";
 import IPathwayService from "./IServices/IPathwayService";
+import { PlanningPathway } from "../domain/planning/planningPathway";
+import { PlanningElevator } from "../domain/planning/planningElevator";
+import { PlanningElevatorMapper } from "../mappers/PlanningElevatorMapper";
+import { IPlanningElevatorDTO } from "../dto/IPlanningElevatorDTO";
+import { PlanningPathwayMapper } from "../mappers/PlanningPathwayMapper";
+import { IPlanningPathwayDTO } from "../dto/IPlanningPathwayDTO";
 
 @Service()
 export default class PlanningService implements IPlanningService {
@@ -23,8 +27,28 @@ export default class PlanningService implements IPlanningService {
   ) {
   }
 
-  public async getElevators(): Promise<Result<IElevatorDTO[]>> {
-    return await this.elevatorService.findAll();
+  public async getElevators(): Promise<Result<IPlanningElevatorDTO[]>> {
+    const elevators = await this.elevatorService.findAll();
+
+    if (elevators.isFailure) {
+      throw elevators.error;
+    }
+    let planningElevators = [];
+    for (const elevator of elevators.getValue()) {
+      let floors = elevator.floorsServed.map(floor => elevator.buildingDesignation + "_" + floor);
+
+      const planningElevatorOrError = PlanningElevator.create({
+        building: elevator.buildingDesignation,
+        floors: floors
+      });
+
+      if (planningElevatorOrError.isFailure) {
+        return Result.fail<IPlanningElevatorDTO[]>(planningElevatorOrError.error);
+      }
+      const planningElevator = planningElevatorOrError.getValue();
+      planningElevators.push(PlanningElevatorMapper.toDTO(planningElevator));
+    }
+    return Result.ok<IPlanningElevatorDTO[]>(planningElevators);
   }
 
   public async getFloors(): Promise<Result<IPlanningFloorDTO[]>> {
@@ -40,10 +64,10 @@ export default class PlanningService implements IPlanningService {
       if (buildingFloors.isFailure) {
         floors = [];
       } else {
-        floors = buildingFloors.getValue().map(floor => floor.floorNr);
+        floors = buildingFloors.getValue().map(floor => floor.building + "_" + floor.floorNr);
       }
       const planningFloorOrError = PlanningFloor.create({
-        building: building.designation.toLowerCase(),
+        building: building.designation,
         floors: floors
       });
 
@@ -58,8 +82,27 @@ export default class PlanningService implements IPlanningService {
     return Result.ok<IPlanningFloorDTO[]>(planningFloors);
   }
 
-  public async getPatways(): Promise<Result<IPathwayDTO[]>> {
-    return await this.pathwayService.findAll();
+  public async getPathways(): Promise<Result<IPlanningPathwayDTO[]>> {
+    const pathways = await this.pathwayService.findAll();
+    if (pathways.isFailure) {
+      throw pathways.error;
+    }
+    let planningPathways = [];
+    for (const pathway of pathways.getValue()) {
+      const pathwayOrError = PlanningPathway.create({
+        buildingSource: pathway.buildingSource,
+        buildingDestination: pathway.buildingDestination,
+        floorSource: pathway.buildingSource + "_" + pathway.floorSource.toString(),
+        floorDestination: pathway.buildingDestination + "_" + pathway.floorDestination.toString()
+      });
+
+      if (pathwayOrError.isFailure) {
+        return Result.fail<IPlanningPathwayDTO[]>(pathwayOrError.error);
+      }
+      const planningPathway = pathwayOrError.getValue();
+      planningPathways.push(PlanningPathwayMapper.toDTO(planningPathway));
+    }
+    return Result.ok<IPlanningPathwayDTO[]>(planningPathways);
   }
 
 }

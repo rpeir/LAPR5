@@ -1,6 +1,6 @@
 import { Inject, Service } from "typedi";
 import IPlanningController from "./IControllers/IPlanningController";
-import e, { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import config from "../../config";
 import IPlanningService from "../services/IServices/IPlanningService";
 
@@ -42,7 +42,7 @@ export default class PlanningController implements IPlanningController {
 
   public async getPatways(req: Request, res: Response, next: NextFunction) {
     try {
-      const infoOrError = await this.planningService.getPatways();
+      const infoOrError = await this.planningService.getPathways();
 
       if (infoOrError.isFailure) {
         return res.status(402).json({ error: infoOrError.error }).send();
