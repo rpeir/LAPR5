@@ -35,10 +35,10 @@ export default class PlanningService implements IPlanningService {
     }
     let planningElevators = [];
     for (const elevator of elevators.getValue()) {
-      let floors = elevator.floorsServed.map(floor => elevator.buildingDesignation + "_" + floor);
+      let floors = elevator.floorsServed.map(floor => elevator.buildingDesignation.toLowerCase() + floor);
 
       const planningElevatorOrError = PlanningElevator.create({
-        building: elevator.buildingDesignation,
+        building: elevator.buildingDesignation.toLowerCase(),
         floors: floors
       });
 
@@ -64,10 +64,10 @@ export default class PlanningService implements IPlanningService {
       if (buildingFloors.isFailure) {
         floors = [];
       } else {
-        floors = buildingFloors.getValue().map(floor => floor.building + "_" + floor.floorNr);
+        floors = buildingFloors.getValue().map(floor => floor.building.toLowerCase() + floor.floorNr);
       }
       const planningFloorOrError = PlanningFloor.create({
-        building: building.designation,
+        building: building.designation.toLowerCase(),
         floors: floors
       });
 
@@ -90,10 +90,10 @@ export default class PlanningService implements IPlanningService {
     let planningPathways = [];
     for (const pathway of pathways.getValue()) {
       const pathwayOrError = PlanningPathway.create({
-        buildingSource: pathway.buildingSource,
-        buildingDestination: pathway.buildingDestination,
-        floorSource: pathway.buildingSource + "_" + pathway.floorSource.toString(),
-        floorDestination: pathway.buildingDestination + "_" + pathway.floorDestination.toString()
+        buildingSource: pathway.buildingSource.toLowerCase(),
+        buildingDestination: pathway.buildingDestination.toLowerCase(),
+        floorSource: pathway.buildingSource.toLowerCase() + pathway.floorSource.toString(),
+        floorDestination: pathway.buildingDestination.toLowerCase() + pathway.floorDestination.toString()
       });
 
       if (pathwayOrError.isFailure) {
