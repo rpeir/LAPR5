@@ -151,4 +151,20 @@ export default class ElevatorService implements IElevatorService{
     }
   }
 
+  public async findAll(): Promise<Result<IElevatorDTO[]>> {
+    try {
+      const listOrError = await this.elevatorRepo.findAll();
+
+      if (listOrError.length === 0) {
+        return Result.fail<IElevatorDTO[]>("No elevators found");
+      }
+      const listResult = listOrError.map((elevator) => ElevatorMap.toDTO(elevator));
+
+      return Result.ok<IElevatorDTO[]>(listResult);
+    } catch (err) {
+      // Handle errors here if needed.
+      throw Result.fail<IElevatorDTO>(err);
+    }
+  }
+
 }

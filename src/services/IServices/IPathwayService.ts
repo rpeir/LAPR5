@@ -6,4 +6,5 @@ export default interface IPathwayService {
   listPathways(source:string,dest:string): Promise<Result<Array<IPathwayDTO>>>;
   replacePathway(pathwayDTO: IPathwayDTO): Promise<Result<IPathwayDTO>>;
   updatePathway(pathwayDTO: IPathwayDTO): Promise<Result<IPathwayDTO>>;
+  findAll(): Promise<Result<IPathwayDTO[]>>;
 }

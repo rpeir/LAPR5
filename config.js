@@ -79,6 +79,11 @@ export default {
       name: 'RoomController',
       path: '../controllers/roomController',
     },
+
+    planning: {
+      name: 'PlanningController',
+      path: '../controllers/planningController',
+    }
   },
 
   repos: {
@@ -168,5 +173,10 @@ export default {
       name: 'RoomService',
       path: '../services/roomService',
     },
+
+    planning: {
+      name: 'PlanningService',
+      path: '../services/planningService',
+    }
   },
 };

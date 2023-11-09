@@ -11,6 +11,7 @@ import { Pathway } from "../domain/pathway";
 import { PathwayMap } from "../mappers/PathwayMap";
 import {UniqueEntityID} from "../core/domain/UniqueEntityID";
 import {Floor} from "../domain/floor";
+import { IElevatorDTO } from "../dto/IElevatorDTO";
 
 @Service()
 export default class PathwayService implements IPathwayService {
@@ -228,12 +229,27 @@ export default class PathwayService implements IPathwayService {
   }
   public async listPathways(source:string,dest:string): Promise<Result<Array<IPathwayDTO>>> {
     try {
-      const pathways = await this.pathwayRepo.findAll(source,dest);
+      const pathways = await this.pathwayRepo.findAllFromSourceToDestination(source,dest);
       const pathwaysDTO = pathways.map((pathway) => PathwayMap.toDTO(pathway) as IPathwayDTO);
       if(pathwaysDTO.length==0){
         return Result.fail<Array<IPathwayDTO>>("No pathways found for specified buildings");
       }
       return Result.ok<Array<IPathwayDTO>>(pathwaysDTO);
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  public async findAll(): Promise<Result<IPathwayDTO[]>> {
+    try {
+      const pathwaysOrError = await this.pathwayRepo.findAll();
+
+      if (pathwaysOrError.length === 0) {
+        return Result.fail<IPathwayDTO[]>("No pathways found");
+      }
+
+      const pathwaysDTO = pathwaysOrError.map((pathway) => PathwayMap.toDTO(pathway) as IPathwayDTO);
+      return Result.ok<IPathwayDTO[]>(pathwaysDTO);
     } catch (err) {
       throw err;
     }

@@ -60,7 +60,7 @@ export default class PathwayRepo implements IPathwayRepo {
     return !!pathwayRecord === true;
   }
 
-  public async findAll(source:string,dest:string):Promise<Pathway[]>{
+  public async findAllFromSourceToDestination(source:string, dest:string):Promise<Pathway[]>{
     const query = {buildingSource:source,buildingDestination:dest};
     const pathwayRecord = await this.pathwaySchema.find(query);
     if (pathwayRecord != null) {
@@ -108,5 +108,14 @@ export default class PathwayRepo implements IPathwayRepo {
       pathways.push(...await Promise.all(pathwayRecord2.map((pathway) => PathwayMap.toDomain(pathway))));
     }
     return pathways;
+  }
+
+  public async findAll(): Promise<Pathway[]> {
+    const pathwayRecord = await this.pathwaySchema.find();
+    if (pathwayRecord != null) {
+      return Promise.all(pathwayRecord.map((pathway) => PathwayMap.toDomain(pathway)));
+    } else {
+      return [];
+    }
   }
 }

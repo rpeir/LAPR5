@@ -8,7 +8,7 @@ export default interface IPathwayRepo extends Repo<Pathway> {
 
   findById(pathwayId: PathwayID | string): Promise<Pathway>;
 
-  findAll(sourceBuilding:string,destinationBuilding:string): Promise<Pathway[]>;
+  findAllFromSourceToDestination(sourceBuilding:string, destinationBuilding:string): Promise<Pathway[]>;
 
   existsPathwayBetweenFloors(floor1 : Floor, floor2: Floor) : Promise<boolean>;
 
@@ -16,4 +16,5 @@ export default interface IPathwayRepo extends Repo<Pathway> {
 
   findByBuildingId(buildingId:string):Promise<Pathway[]>;
 
+  findAll(): Promise<Pathway[]>;
 }

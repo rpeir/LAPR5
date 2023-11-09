@@ -93,6 +93,11 @@ export default async ({ expressApp }) => {
     path : config.controllers.room.path
   }
 
+  const planningController = {
+    name: config.controllers.planning.name,
+    path: config.controllers.planning.path
+  }
+
   const roleRepo = {
     name: config.repos.role.name,
     path: config.repos.role.path
@@ -174,6 +179,11 @@ export default async ({ expressApp }) => {
     path : config.services.room.path
   }
 
+  const planningService = {
+    name: config.services.planning.name,
+    path: config.services.planning.path
+  }
+
   await dependencyInjectorLoader({
     mongoConnection,
     schemas: [
@@ -196,7 +206,8 @@ export default async ({ expressApp }) => {
       floorController,
       pathwayController,
       elevatorController,
-      roomController
+      roomController,
+      planningController
     ],
 
     repos: [
@@ -219,7 +230,8 @@ export default async ({ expressApp }) => {
       floorService,
       pathwayService,
       elevatorService,
-      roomService
+      roomService,
+      planningService
     ]
   });
   Logger.info("✌️ Schemas, Controllers, Repositories, Services, etc. loaded");
