@@ -1,1 +1,48 @@
-<p>robot-type works!</p>
+<body class="RobDroneGo">
+<div class="container">
+  <h2 class="text-center">Create Robot Type</h2>
+  <br>
+  <form (ngSubmit)="createRobotType()">
+    <div class="input-group">
+      <label for="name">Name:</label>
+      <input type="text" [(ngModel)]="robotType.name" id="name" name="name" class="form-control" required ngModel>
+      <span class="error-message"></span>
+    </div>
+
+    <br>
+
+    <div class="input-group">
+      <label for="brand">Brand:</label>
+      <input type="text" [(ngModel)]="robotType.brand" id="brand" name="brand" required ngModel>
+      <span class="error-message"></span>
+    </div>
+
+    <br>
+
+    <div class="input-group">
+      <label for="model">Model:</label>
+      <input type="text" [(ngModel)]="robotType.robotTypeModel" id="model" name="model" required ngModel>
+      <span class="error-message"></span>
+    </div>
+
+    <br>
+
+    <div>
+      <label>Select task type:</label>
+      <div class="input-group" *ngFor="let taskType of taskTypes">
+        <label>
+          <input type="checkbox" [checked]="isSelected(taskType)" (change)="toggleSelection(taskType)">
+          {{ taskType }}
+        </label>
+      </div>
+    </div>
+
+    <br>
+
+    <div>
+      <input type="submit" value="create">
+    </div>
+
+  </form>
+</div>
+</body>

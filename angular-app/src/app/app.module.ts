@@ -37,6 +37,8 @@ import { ListByParameterComponent } from './robot/list-by-parameter/list-by-para
 import { CampusComponent } from './campus/campus.component';
 import { PathComponent } from './path/path.component';
 import { GetByOptimizationCriteriaComponent } from './path/get-by-optimization-criteria/get-by-optimization-criteria.component';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -79,6 +81,9 @@ import { GetByOptimizationCriteriaComponent } from './path/get-by-optimization-c
     MatIconModule,
     MatMenuModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
