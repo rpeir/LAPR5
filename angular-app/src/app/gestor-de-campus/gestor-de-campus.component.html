@@ -1,1 +1,28 @@
-<p>gestor-de-campus works!</p>
+<mat-toolbar color="primary">
+    <button [matMenuTriggerFor]="gestorDeCampusMenu" mat-icon-button class="example-icon" aria-label=" icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #gestorDeCampusMenu="matMenu">
+      <button mat-menu-item (click)="goToBuildings()">
+        <span>Buildings</span>
+      </button>
+      <button mat-menu-item (click)="goToElevators()">
+        <span>Elevators</span>
+      </button>
+      <button mat-menu-item (click)="goToFloors()">
+        <span>Floors</span>
+      </button>
+      <button mat-menu-item (click)="goToRooms()">
+        <span>Rooms</span>
+      </button>
+      <button mat-menu-item (click)="goToPathways()">
+        <span>Pathways</span>
+      </button>
+    </mat-menu>
+
+    <span>Gestor de Campus</span>
+    <span class="spacer"></span>
+    <button mat-icon-button class="example-icon" aria-label=" icon-button with menu icon" (click)="goToLogin()">
+      <mat-icon>home</mat-icon>
+    </button>
+</mat-toolbar>

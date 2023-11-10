@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-gestor-de-frota',
@@ -6,5 +7,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./gestor-de-frota.component.css']
 })
 export class GestorDeFrotaComponent {
+  constructor(private router: Router) {
+  }
+  goToRobots() {
+    this.router.navigate(["/robots"]);
+  }
 
+  goToRobotTypes() {
+    this.router.navigate(["/robot-types"]);
+  }
+
+  goToLogin() {
+    this.router.navigate([""]);
+  }
 }

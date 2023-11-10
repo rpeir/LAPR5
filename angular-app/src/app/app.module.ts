@@ -17,6 +17,9 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { GestorDeFrotaComponent } from './gestor-de-frota/gestor-de-frota.component';
 import { GestorDeCampusComponent } from './gestor-de-campus/gestor-de-campus.component';
+import { MatIconModule } from "@angular/material/icon";
+import { MatMenuModule } from "@angular/material/menu";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -38,7 +41,10 @@ import { GestorDeCampusComponent } from './gestor-de-campus/gestor-de-campus.com
     BrowserModule,
     AppRoutingModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

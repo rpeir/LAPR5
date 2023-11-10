@@ -15,15 +15,15 @@ import { GestorDeCampusComponent } from "./gestor-de-campus/gestor-de-campus.com
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'building', component: BuildingComponent },
-  { path: 'elevator', component: ElevatorComponent },
-  { path: "floor", component: FloorComponent },
-  { path: "pathway", component: PathwayComponent },
-  { path: "room", component: RoomComponent },
-  { path: "robot", component: RobotComponent },
-  { path: "robot-type", component: RobotTypeComponent },
-  { path: "task", component: TaskComponent },
-  { path: "task-type", component: TaskTypeComponent },
+  { path: 'buildings', component: BuildingComponent },
+  { path: 'elevators', component: ElevatorComponent },
+  { path: "floors", component: FloorComponent },
+  { path: "pathways", component: PathwayComponent },
+  { path: "rooms", component: RoomComponent },
+  { path: "robots", component: RobotComponent },
+  { path: "robot-types", component: RobotTypeComponent },
+  { path: "tasks", component: TaskComponent },
+  { path: "task-types", component: TaskTypeComponent },
   { path: "gestor-de-frota", component: GestorDeFrotaComponent },
   { path: "gestor-de-campus", component: GestorDeCampusComponent}
 ];
