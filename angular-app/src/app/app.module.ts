@@ -20,6 +20,7 @@ import { GestorDeCampusComponent } from './gestor-de-campus/gestor-de-campus.com
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MapViewerComponent } from './map-viewer/map-viewer.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     LoginComponent,
     GestorDeFrotaComponent,
     GestorDeCampusComponent,
+    MapViewerComponent,
   ],
   imports: [
     BrowserModule,
