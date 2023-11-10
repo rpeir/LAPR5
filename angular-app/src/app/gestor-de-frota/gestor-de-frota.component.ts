@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gestor-de-frota',
@@ -10,14 +10,14 @@ export class GestorDeFrotaComponent {
   constructor(private router: Router) {
   }
   goToRobots() {
-    this.router.navigate(["/robots"]);
+    this.router.navigate(['/robots']);
   }
 
   goToRobotTypes() {
-    this.router.navigate(["/robot-types"]);
+    this.router.navigate(['/robot-types']);
   }
 
   goToLogin() {
-    this.router.navigate([""]);
+    this.router.navigate(['']);
   }
 }

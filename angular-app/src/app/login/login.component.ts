@@ -1,22 +1,19 @@
 import { Component } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-
-  constructor(private router: Router) {
-
-  }
+  constructor(private router: Router) {}
 
   goToGestorDeCampus() {
-    this.router.navigate(["/gestor-de-campus"]);
+    this.router.navigate(['/gestor-de-campus']);
   }
 
   goToGestorDeFrota() {
-    this.router.navigate(["/gestor-de-frota"]);
+    this.router.navigate(['/gestor-de-frota']);
   }
 }
