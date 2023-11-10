@@ -21,6 +21,22 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MapViewerComponent } from './map-viewer/map-viewer.component';
+import { CreateComponent } from './building/create/create.component';
+import { EditComponent } from './building/edit/edit.component';
+import { ListAllComponent } from './building/list-all/list-all.component';
+import { ListMinMaxComponent } from './building/list-min-max/list-min-max.component';
+import { ListOfBuldingComponent } from './floor/list-of-bulding/list-of-bulding.component';
+import { ListOfBuldingWithPathwayComponent } from './floor/list-of-bulding-with-pathway/list-of-bulding-with-pathway.component';
+import { UploadMapComponent } from './floor/upload-map/upload-map.component';
+import { ListBetweenBuildingsComponent } from './pathway/list-between-buildings/list-between-buildings.component';
+import { ListOfBuildingComponent } from './elevator/list-of-building/list-of-building.component';
+import { ListBuildingsServedComponent } from './elevator/list-buildings-served/list-buildings-served.component';
+import { DisableComponent } from './robot/disable/disable.component';
+import { ListComponent } from './robot/list/list.component';
+import { ListByParameterComponent } from './robot/list-by-parameter/list-by-parameter.component';
+import { CampusComponent } from './campus/campus.component';
+import { PathComponent } from './path/path.component';
+import { GetByOptimizationCriteriaComponent } from './path/get-by-optimization-criteria/get-by-optimization-criteria.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +54,22 @@ import { MapViewerComponent } from './map-viewer/map-viewer.component';
     GestorDeFrotaComponent,
     GestorDeCampusComponent,
     MapViewerComponent,
+    CreateComponent,
+    EditComponent,
+    ListAllComponent,
+    ListMinMaxComponent,
+    ListOfBuldingComponent,
+    ListOfBuldingWithPathwayComponent,
+    UploadMapComponent,
+    ListBetweenBuildingsComponent,
+    ListOfBuildingComponent,
+    ListBuildingsServedComponent,
+    DisableComponent,
+    ListComponent,
+    ListByParameterComponent,
+    CampusComponent,
+    PathComponent,
+    GetByOptimizationCriteriaComponent,
   ],
   imports: [
     BrowserModule,
