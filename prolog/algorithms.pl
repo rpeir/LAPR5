@@ -41,9 +41,9 @@ go_Through_floor(FloorAct,FloorDestination,[BuildingAct,BuildingNext|OtherBuildi
 
 
 
-% ========================================================
+% =============================================================================
 % Find path between floors using pathways and elevators (less elevators)
-% ========================================================
+% =============================================================================
 
 best_path_less_elevators(FloorSource,FloorDestination,BestPath):-
             findall(PathwayElevatorPath,path_between_floors(FloorSource,FloorDestination,_,PathwayElevatorPath),ListPathwayElevatorPath),
@@ -61,3 +61,26 @@ less_elevators([PathwayElevatorPath|OtherPathwayElevatorPath],PathwayElevatorPat
 count([],0,0).
 count([elev(_,_)|L],NElev,NPathway):-count(L,NElevL,NPathway),NElev is NElevL + 1.
 count([pathW(_,_)|L],NElev,NPathway):-count(L,NElev,NPathwayL),NPathway is NPathwayL + 1.
+
+
+% =============================================================================
+% Find path between floors using pathways and elevators (less buildings)
+% =============================================================================
+best_path_less_Buildings(FloorSource,FloorDestination,BestPath):-
+            findall([BuildingList, PathwayElevatorPath],path_between_floors(FloorSource,FloorDestination,BuildingList,PathwayElevatorPath),ListBuilidingAndPathwayElevatorPath),
+            less_buildings(ListBuilidingAndPathwayElevatorPath,BestPath,_,_,_).
+
+less_buildings([[BuildingList, PathwayElevatorPath]],[BuildingList, PathwayElevatorPath],NBuildings, NElev,NPathway):-
+            countBuildings(BuildingList,NBuildings),
+            count(PathwayElevatorPath, NElev, NPathway).
+
+less_buildings([[BuildingList, PathwayElevatorPath]|OtherBuilidingAndPathwayElevatorPath],[BuildingListR, PathwayElevatorPathR],NBuildingsR, NElevR,NPathwayR):-
+            less_buildings(OtherBuilidingAndPathwayElevatorPath,[BuildingListM, PathwayElevatorPathM],NBuildings, NElev,NPathway),
+            countBuildings(BuildingList,NBuildings1),
+            count(PathwayElevatorPath, NElev1, NPathway1),
+            (((NBuildings1 < NBuildings;(NBuildings1 == NBuildings, NElev1<NElev)),!,
+            NBuildingsR is NBuildings1,NElevR is NElev,NPathwayR is NPathway1,BuildingListR=BuildingList,PathwayElevatorPathR=PathwayElevatorPath);
+            (NBuildingsR is NBuildings,NElevR is NElev,NPathwayR is NPathway,BuildingListR=BuildingListM,PathwayElevatorPathR=PathwayElevatorPathM)).
+
+countBuildings([],0).
+countBuildings([_|L],NBuildings):-countBuildings(L,NBuildingsL),NBuildings is NBuildingsL + 1.
