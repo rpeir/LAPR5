@@ -43,6 +43,7 @@ import { CreateRobotComponent} from "./robot/create/createRobot.component";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { CreateFloorComponent } from "./floor/create/create-floor.component";
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     CampusComponent,
     PathComponent,
     GetByOptimizationCriteriaComponent,
-    CreateRobotComponent
+    CreateRobotComponent,
+    CreateFloorComponent
   ],
   imports: [
     BrowserModule,

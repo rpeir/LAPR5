@@ -17,12 +17,14 @@ import { EditComponent as BuildingEditComponent } from './building/edit/edit.com
 import { ListAllComponent as BuildingListAllComponent } from './building/list-all/list-all.component';
 import { ListMinMaxComponent as BuildingListMinMaxComponent } from './building/list-min-max/list-min-max.component';
 import { CreateRobotComponent } from "./robot/create/createRobot.component";
+import { CreateFloorComponent } from "./floor/create/create-floor.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'buildings', component: BuildingComponent },
   { path: 'elevators', component: ElevatorComponent },
   { path: 'floors', component: FloorComponent },
+  { path: 'floors/create', component: CreateFloorComponent },
   { path: 'pathways', component: PathwayComponent },
   { path: 'rooms', component: RoomComponent },
   { path: 'robots', component: RobotComponent },

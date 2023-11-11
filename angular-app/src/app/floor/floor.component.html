@@ -1,1 +1,23 @@
-<p>floor works!</p>
+<mat-toolbar color="primary">
+  <button [matMenuTriggerFor]="FloorsMenu" mat-icon-button class="example-icon" aria-label=" icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #FloorsMenu="matMenu">
+    <button mat-menu-item (click)="goCreate()">
+      <span>Create</span>
+    </button>
+    <button mat-menu-item (click)="goToEdit()">
+      <span>Edit</span>
+    </button>
+    <button mat-menu-item (click)="goToList()">
+      <span>List</span>
+    </button>
+
+  </mat-menu>
+
+  <span>Floors</span>
+  <span class="spacer"></span>
+  <button mat-icon-button class="example-icon" aria-label=" icon-button with menu icon" (click)="goToGestorDeCampus()">
+    <mat-icon>home</mat-icon>
+  </button>
+</mat-toolbar>
