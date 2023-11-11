@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RobotType } from "./robot-type";
 import { RobotTypeService } from './robot-type.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-robot-type',
@@ -9,7 +10,7 @@ import { RobotTypeService } from './robot-type.service';
 })
 export class RobotTypeComponent {
 
-  constructor(private robotTypeService: RobotTypeService) {
+  constructor(private robotTypeService: RobotTypeService, private location: Location) {
   }
 
    robotType: RobotType = new RobotType();
@@ -22,8 +23,11 @@ export class RobotTypeComponent {
                   + "Brand: " + data.brand + "\n"
                   + "Id: " + data.id + "\n"
                   + "TasksTypes: " + data.taskTypes + "\n");
+
+      this.location.back();
     }, error => {
       window.alert("Error! Robot type not created" + "\n" + error.error);
+      this.location.back();
     });
   }
 

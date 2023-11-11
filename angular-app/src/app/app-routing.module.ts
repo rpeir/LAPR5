@@ -16,6 +16,7 @@ import { CreateComponent as BuildingCreateComponent } from './building/create/cr
 import { EditComponent as BuildingEditComponent } from './building/edit/edit.component';
 import { ListAllComponent as BuildingListAllComponent } from './building/list-all/list-all.component';
 import { ListMinMaxComponent as BuildingListMinMaxComponent } from './building/list-min-max/list-min-max.component';
+import { CreateRobotComponent } from "./robot/create/createRobot.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: 'pathways', component: PathwayComponent },
   { path: 'rooms', component: RoomComponent },
   { path: 'robots', component: RobotComponent },
-  { path: 'robot-types', component: RobotTypeComponent },
+  { path: 'robots/create', component: CreateRobotComponent},
+  { path: 'robotTypes', component: RobotTypeComponent },
   { path: 'tasks', component: TaskComponent },
   { path: 'task-types', component: TaskTypeComponent },
   { path: 'gestor-de-frota', component: GestorDeFrotaComponent },

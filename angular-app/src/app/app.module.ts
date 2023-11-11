@@ -39,6 +39,10 @@ import { PathComponent } from './path/path.component';
 import { GetByOptimizationCriteriaComponent } from './path/get-by-optimization-criteria/get-by-optimization-criteria.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
+import { CreateRobotComponent} from "./robot/create/createRobot.component";
+import { MatInputModule } from "@angular/material/input";
+import { MatSelectModule } from "@angular/material/select";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -72,6 +76,7 @@ import { HttpClientModule } from "@angular/common/http";
     CampusComponent,
     PathComponent,
     GetByOptimizationCriteriaComponent,
+    CreateRobotComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +88,10 @@ import { HttpClientModule } from "@angular/common/http";
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatInputModule,
+    MatSelectModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

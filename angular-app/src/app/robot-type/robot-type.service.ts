@@ -16,4 +16,9 @@ export class RobotTypeService {
   createRobotType(robotType: RobotType): Observable<RobotType> {
     return this.httpClient.post<RobotType>(`${this.robotTypeUrl}`, robotType);
   }
+
+  getRobotTypes(): Observable<RobotType[]> {
+    return this.httpClient.get<RobotType[]>(`${this.robotTypeUrl}`);
+  }
+
 }

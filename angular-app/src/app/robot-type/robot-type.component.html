@@ -5,7 +5,10 @@
   <form (ngSubmit)="createRobotType()">
     <div class="input-group">
       <label for="name">Name:</label>
-      <input type="text" [(ngModel)]="robotType.name" id="name" name="name" class="form-control" required ngModel>
+      <input type="text" [(ngModel)]="robotType.name" id="name" name="name" class="form-control" required #name = "ngModel">
+      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+        Name is required
+      </div>
       <span class="error-message"></span>
     </div>
 
