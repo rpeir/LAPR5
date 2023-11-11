@@ -5,4 +5,5 @@ export default interface IRobotTypeRepo extends Repo<RobotType>{
     save(robotType: RobotType): Promise<RobotType>;
     findByName(name: string): Promise<RobotType>;
     findById(id: string): Promise<RobotType>;
+    findAll(): Promise<RobotType[]> ;
 }

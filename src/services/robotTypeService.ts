@@ -68,4 +68,14 @@ export default class RobotTypeService implements IRobotTypeService {
     return Result.fail<TaskType>("Task: " + taskType + " not supported.");
   }
 
+  public async getRobotTypes(): Promise<Result<IRobotTypeDTO[]>> {
+    try {
+      const robotTypes = await this.robotTypeRepo.findAll();
+      const robotTypesDTO = robotTypes.map((robotType) => RobotTypeMap.toDTO(robotType) as IRobotTypeDTO);
+      return Result.ok<IRobotTypeDTO[]>(robotTypesDTO);
+    } catch (err) {
+      throw err;
+    }
+  }
+
 }

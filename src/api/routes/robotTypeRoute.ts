@@ -27,6 +27,12 @@ export default(app: Router) =>{
         (req, res, next) => ctrl.createRobotType(req, res, next)
     );
 
+    route.get(
+        '',
+        (req, res, next) => ctrl.getRobotTypes(req, res, next)
+    );
+
+
   // Celebrate failure error handler middleware
   route.use(middlewares.validateBody);
 }

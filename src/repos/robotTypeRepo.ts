@@ -67,4 +67,9 @@ export default class RobotTypeRepo implements IRobotTypeRepo {
         return !!robotTypeDocument === true;
     }
 
+    public async findAll(): Promise<RobotType[]> {
+        const robotTypeRecord = await this.robotTypeSchema.find();
+        return Promise.all( robotTypeRecord.map((robotType) => RobotTypeMap.toDomain(robotType)));
+    }
+
 }

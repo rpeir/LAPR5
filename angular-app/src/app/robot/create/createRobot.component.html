@@ -1,0 +1,63 @@
+<app-robot></app-robot>
+
+
+
+  <body class="RobDroneGo">
+  <div class="container">
+    <h2 class="text-center">Create Robot </h2>
+    <br>
+    <form (ngSubmit)="createRobot()">
+      <mat-form-field class="full-width">
+        <mat-label>Robot nickName:</mat-label>
+        <input matInput [(ngModel)]="robot.nickName" name="nickName" required >
+        <input matInput placeholder="Max 30 characters">
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field class="full-width">
+        <mat-label>Robot code:</mat-label>
+        <input matInput [(ngModel)]="robot.robotCode" name="robotCode" required >
+        <input matInput placeholder="Max 250 characters">
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field class="full-width">
+        <mat-label>Robot serial number:</mat-label>
+        <input matInput [(ngModel)]="robot.serialNr" name="serialNr" required >
+        <input matInput placeholder="Max 50 characters">
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field class="full-width">
+        <mat-label>Robot description</mat-label>
+        <input matInput [(ngModel)]="robot.description" name="description" required >
+        <input matInput placeholder="Max 250 characters">
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field class="full-width">
+        <mat-label>Select a robot type</mat-label>
+        <mat-select [(ngModel)]="robot.robotType" name="robotType">
+          <mat-option *ngFor="let robotType of robotTypes" [value]="robotType.name" [matTooltip]= "getRobotTypeInfo(robotType)">
+            {{robotType.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <br>
+
+      <div>
+        <input type="submit" value="create">
+      </div>
+
+    </form>
+  </div>
+  </body>
+
+
+
