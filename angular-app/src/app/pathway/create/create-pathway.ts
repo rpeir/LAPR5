@@ -4,8 +4,8 @@ import { Location } from "@angular/common";
 import { BuildingService } from "../../building/building.service";
 import { Floor } from "../../floor/floor";
 import { Building } from "../../building/building";
-import { Pathway } from "./pathway";
-import { PathwayService } from "./pathway.service";
+import { Pathway } from "../pathway";
+import { PathwayService } from "../pathway.service";
 
 @Component({
   selector: "app-create",
@@ -24,9 +24,15 @@ export class CreatePathway implements OnInit {
 
 
   ngOnInit() {
-    this.buildingService.getBuildings().subscribe(data => {
-      this.buildings = data;
-    });
+    this.buildingService.getBuildings().subscribe({
+        next: (data) => {
+          this.buildings = data;
+        },
+        error: (error) => {
+          window.alert(JSON.stringify(error.error.error));
+        }
+      }
+    );
   }
 
   createPathway() {
@@ -51,7 +57,7 @@ export class CreatePathway implements OnInit {
           this.floorsSource = data;
         },
         error: (error) => {
-          window.alert(JSON.stringify(error.error));
+          window.alert(JSON.stringify(error.error.error));
         }
       }
     );
@@ -63,10 +69,9 @@ export class CreatePathway implements OnInit {
           this.floorsDestination = data;
         },
         error: (error) => {
-          window.alert(JSON.stringify(error.error));
+          window.alert(JSON.stringify(error.error.error));
         }
-      }
-    );
+      });
   }
 
   getFloorInfo(floor: Floor) {
