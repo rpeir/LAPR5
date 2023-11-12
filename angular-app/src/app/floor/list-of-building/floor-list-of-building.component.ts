@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { FloorService } from "../floor.service";
-import { Location } from "@angular/common";
 import { BuildingService } from "../../building/building.service";
 import { Floor } from "../floor";
 
@@ -14,7 +13,7 @@ export class FloorListOfBuildingComponent implements OnInit{
   buildings: any;
   floors: Floor[] | undefined;
 
-  constructor(private createFloorService: FloorService, private location: Location, private buildingService: BuildingService) {
+  constructor(private createFloorService: FloorService, private buildingService: BuildingService) {
   }
 
   listFloorsOfBuilding(building: string) {
