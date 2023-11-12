@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateComponent } from './create.component';
+import { CreatePathway } from './create-pathway';
 
 describe('CreateComponent', () => {
-  let component: CreateComponent;
-  let fixture: ComponentFixture<CreateComponent>;
+  let component: CreatePathway;
+  let fixture: ComponentFixture<CreatePathway>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateComponent]
+      declarations: [CreatePathway]
     });
-    fixture = TestBed.createComponent(CreateComponent);
+    fixture = TestBed.createComponent(CreatePathway);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

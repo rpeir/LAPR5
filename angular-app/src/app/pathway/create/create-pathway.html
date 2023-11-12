@@ -1,0 +1,62 @@
+<app-pathway></app-pathway>
+
+
+
+<body class="RobDroneGo">
+<div class="container">
+  <h2 class="text-center">Create Pathgway </h2>
+  <br>
+  <form (ngSubmit)="createPathway()">
+
+    <mat-form-field class="full-width">
+      <mat-label>Select a source building</mat-label>
+      <mat-select [(ngModel)]="pathway.buildingSource" name="buildingSource" (ngModelChange)="listFloorsOfBuildingSource($event)">
+        <mat-option *ngFor="let building of buildings" [value]="building.designation" >
+          {{building.designation}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Select a  building destination</mat-label>
+      <mat-select [(ngModel)]="pathway.buildingDestination" name="buildingSource" (ngModelChange)="listFloorsOfBuildingDestination($event)">
+        <mat-option *ngFor="let building of buildings" [value]="building.designation">
+          {{building.designation}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Select a source Floor</mat-label>
+      <mat-select [(ngModel)]="pathway.floorSource" name="floorSource">
+        <mat-option *ngFor="let floor of floorsSource" [value]="floor.floorNr" [matTooltip]= "getFloorInfo(floor)">
+          {{floor.floorNr}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Select a source Floor</mat-label>
+      <mat-select [(ngModel)]="pathway.floorDestination" name="floorDestination">
+        <mat-option *ngFor="let floor of floorsDestination" [value]="floor.floorNr" [matTooltip]= "getFloorInfo(floor)">
+          {{floor.floorNr}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Pathway description</mat-label>
+      <input matInput [(ngModel)]="pathway.description" name="description">
+      <input matInput placeholder="Max 250 characters">
+    </mat-form-field>
+
+    <div>
+      <input type="submit" value="create">
+    </div>
+
+  </form>
+</div>
+</body>
+
+
+

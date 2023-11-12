@@ -45,6 +45,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { CreateFloorComponent } from "./floor/create/create-floor.component";
 import { FloorListOfBuildingComponent } from "./floor/list-of-building/floor-list-of-building.component";
 import { MatCardModule } from "@angular/material/card";
+import { CreatePathway } from "./pathway/create/create-pathway";
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { MatCardModule } from "@angular/material/card";
     GetByOptimizationCriteriaComponent,
     CreateRobotComponent,
     CreateFloorComponent,
-    FloorListOfBuildingComponent
+    FloorListOfBuildingComponent,
+    CreatePathway
   ],
   imports: [
     BrowserModule,
