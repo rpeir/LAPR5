@@ -17,19 +17,27 @@ export class FloorListOfBuildingComponent implements OnInit{
   }
 
   listFloorsOfBuilding(building: string) {
-    this.createFloorService.getFloorsOfBuilding(building).subscribe(data => {
-      this.floors = data;
-    }, error => {
-      window.alert( JSON.stringify(error.error));
+    this.createFloorService.getFloorsOfBuilding(building).subscribe({
+      next: (data) => {
+        this.floors = data;
+      },
+      error: (error) => {
+        window.alert(JSON.stringify(error.error.error));
+      }
     });
 
   }
 
   ngOnInit() {
-    this.buildingService.getBuildings().subscribe(data => {
-      this.buildings = data;
-    });
+    this.buildingService.getBuildings().subscribe({
+        next: (data) => {
+          this.buildings = data;
+        },
+        error: (error) => {
+          window.alert(JSON.stringify(error.error.error));
+        }
+      }
+    );
   }
-
 
 }
