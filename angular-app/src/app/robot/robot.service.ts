@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { Robot } from "../robot";
+import { Robot } from "./robot";
 import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class CreateRobotService {
+export class RobotService {
 
   constructor(private httpClient: HttpClient) { }
 
