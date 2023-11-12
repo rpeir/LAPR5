@@ -17,10 +17,13 @@ export class ListMinMaxComponent {
   buildings: Building[] | any;
 
   getBuildingFloorMaxMin() {
-    this.createFloorService.getBuildingFloorMaxMin(this.max, this.min).subscribe(data => {
-      this.buildings = data;
-    }, error => {
-      window.alert( JSON.stringify(error.error));
+    this.createFloorService.getBuildingFloorMaxMin(this.max, this.min).subscribe({
+      next: (data) => {
+        this.buildings = data;
+      },
+      error: (error) => {
+        window.alert(JSON.stringify(error.error.error));
+      }
     });
   }
 }
