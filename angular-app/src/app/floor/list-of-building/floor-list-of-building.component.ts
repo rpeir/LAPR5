@@ -19,6 +19,8 @@ export class FloorListOfBuildingComponent implements OnInit{
   listFloorsOfBuilding(building: string) {
     this.createFloorService.getFloorsOfBuilding(building).subscribe(data => {
       this.floors = data;
+    }, error => {
+      window.alert( JSON.stringify(error.error));
     });
 
   }
