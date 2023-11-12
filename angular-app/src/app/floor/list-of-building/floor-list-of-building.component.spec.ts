@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListOfBuldingComponent } from './list-of-bulding.component';
+import { FloorListOfBuildingComponent } from './floor-list-of-building.component';
 
 describe('ListOfBuldingComponent', () => {
-  let component: ListOfBuldingComponent;
-  let fixture: ComponentFixture<ListOfBuldingComponent>;
+  let component: FloorListOfBuildingComponent;
+  let fixture: ComponentFixture<FloorListOfBuildingComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ListOfBuldingComponent]
+      declarations: [FloorListOfBuildingComponent]
     });
-    fixture = TestBed.createComponent(ListOfBuldingComponent);
+    fixture = TestBed.createComponent(FloorListOfBuildingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

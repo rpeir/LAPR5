@@ -19,8 +19,8 @@ export class FloorComponent {
     this.router.navigate(['floors/edit']);
   }
 
-  goToList() {
-    this.router.navigate(['floors/list']);
+  goToListFloorOfBuilidng() {
+    this.router.navigate(['floors/building']);
   }
 
   goToGestorDeCampus() {

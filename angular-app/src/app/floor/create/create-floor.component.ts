@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Floor } from "../floor";
 import { BuildingService } from "../../building/building.service";
-import { CreateFloorService } from "./create-floor.service";
+import { FloorService } from "../floor.service";
 import { Location } from "@angular/common";
 import { Building } from "../../building/building";
 
@@ -12,7 +12,7 @@ import { Building } from "../../building/building";
 })
 export class CreateFloorComponent implements OnInit{
 
-  constructor(private createFloorService: CreateFloorService, private location: Location, private buildingService: BuildingService) {
+  constructor(private createFloorService: FloorService, private location: Location, private buildingService: BuildingService) {
   }
 
   floor = new Floor();

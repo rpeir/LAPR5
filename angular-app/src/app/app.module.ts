@@ -25,7 +25,6 @@ import { CreateComponent } from './building/create/create.component';
 import { EditComponent } from './building/edit/edit.component';
 import { ListAllComponent } from './building/list-all/list-all.component';
 import { ListMinMaxComponent } from './building/list-min-max/list-min-max.component';
-import { ListOfBuldingComponent } from './floor/list-of-bulding/list-of-bulding.component';
 import { ListOfBuldingWithPathwayComponent } from './floor/list-of-bulding-with-pathway/list-of-bulding-with-pathway.component';
 import { UploadMapComponent } from './floor/upload-map/upload-map.component';
 import { ListBetweenBuildingsComponent } from './pathway/list-between-buildings/list-between-buildings.component';
@@ -44,6 +43,8 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { CreateFloorComponent } from "./floor/create/create-floor.component";
+import { FloorListOfBuildingComponent } from "./floor/list-of-building/floor-list-of-building.component";
+import { MatCardModule } from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -65,7 +66,7 @@ import { CreateFloorComponent } from "./floor/create/create-floor.component";
     EditComponent,
     ListAllComponent,
     ListMinMaxComponent,
-    ListOfBuldingComponent,
+    ListOfBuildingComponent,
     ListOfBuldingWithPathwayComponent,
     UploadMapComponent,
     ListBetweenBuildingsComponent,
@@ -78,7 +79,8 @@ import { CreateFloorComponent } from "./floor/create/create-floor.component";
     PathComponent,
     GetByOptimizationCriteriaComponent,
     CreateRobotComponent,
-    CreateFloorComponent
+    CreateFloorComponent,
+    FloorListOfBuildingComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +95,8 @@ import { CreateFloorComponent } from "./floor/create/create-floor.component";
     HttpClientModule,
     MatInputModule,
     MatSelectModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

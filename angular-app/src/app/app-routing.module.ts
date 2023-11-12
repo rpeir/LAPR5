@@ -18,6 +18,7 @@ import { ListAllComponent as BuildingListAllComponent } from './building/list-al
 import { ListMinMaxComponent as BuildingListMinMaxComponent } from './building/list-min-max/list-min-max.component';
 import { CreateRobotComponent } from "./robot/create/createRobot.component";
 import { CreateFloorComponent } from "./floor/create/create-floor.component";
+import { FloorListOfBuildingComponent } from "./floor/list-of-building/floor-list-of-building.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'elevators', component: ElevatorComponent },
   { path: 'floors', component: FloorComponent },
   { path: 'floors/create', component: CreateFloorComponent },
+  { path: 'floors/building', component: FloorListOfBuildingComponent },
   { path: 'pathways', component: PathwayComponent },
   { path: 'rooms', component: RoomComponent },
   { path: 'robots', component: RobotComponent },

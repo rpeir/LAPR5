@@ -1,0 +1,38 @@
+<app-floor></app-floor>
+
+<body class="RobDroneGo">
+<div class="container">
+  <h2 class="text-center">List Floor of a Building</h2>
+  <br>
+  <form>
+
+    <mat-form-field class="full-width">
+      <mat-label>Select a building</mat-label>
+      <mat-select [(ngModel)]="buildingDesignation" name="buildingDesignation" (ngModelChange)="listFloorsOfBuilding($event)">
+        <mat-option *ngFor="let building of buildings" [value]="building.designation" >
+          {{building.designation}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="floors">
+      <div *ngFor="let floor of floors">
+        <mat-card>
+          <mat-card-content>
+            Building: {{floor.building}};
+            <br>
+            description: {{floor.description}};
+            <br>
+            floorNr: {{floor.floorNr}};
+          </mat-card-content>
+        </mat-card>
+        <br>
+      </div>
+    </div>
+
+  </form>
+</div>
+</body>
+
+
+

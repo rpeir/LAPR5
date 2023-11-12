@@ -14,7 +14,7 @@ export class GestorDeFrotaComponent {
   }
 
   goToRobotTypes() {
-    this.router.navigate(['/robot-types']);
+    this.router.navigate(['/robotTypes']);
   }
 
   goToLogin() {
