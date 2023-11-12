@@ -1,1 +1,41 @@
-<p>list-min-max works!</p>
+<app-building></app-building>
+
+<body class="RobDroneGo">
+<div class="container">
+  <h2 class="text-center">List Floor of a Building</h2>
+  <br>
+  <form (ngSubmit)="getBuildingFloorMaxMin()">
+    <mat-form-field class="full-width">
+      <mat-label>Minimum:</mat-label>
+      <input matInput [(ngModel)]="min" name="min" required >
+      <input matInput placeholder="Max 30 characters">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Maximum</mat-label>
+      <input matInput [(ngModel)]="max" name="max"  >
+      <input matInput placeholder="Max 250 characters">
+    </mat-form-field>
+
+    <div>
+      <input type="submit" value="create">
+    </div>
+
+    <div *ngIf="buildings">
+      <div *ngFor="let building of buildings">
+        <mat-card>
+          <mat-card-content>
+            Building: {{building.building}};
+            <br>
+            description: {{building.description}};
+            <br>
+            floorNr: {{building.floorNr}};
+          </mat-card-content>
+        </mat-card>
+        <br>
+      </div>
+    </div>
+
+  </form>
+</div>
+</body>

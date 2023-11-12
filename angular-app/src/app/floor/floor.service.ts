@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Floor } from "./floor";
 import { HttpClient } from "@angular/common/http";
+import { Building } from "../building/building";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class FloorService {
   }
 
   getBuildingFloorMaxMin(max: number, min: number) {
-    return this.httpClient.get<Floor[]>(`${this.floorUrl}?max=${max}&min=${min}`);
+    return this.httpClient.get<Building[]>(`${this.floorUrl}/building/max/min?max=${max}&min=${min}`);
   }
 
 }
