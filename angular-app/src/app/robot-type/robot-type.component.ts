@@ -15,19 +15,19 @@ export class RobotTypeComponent {
 
    robotType: RobotType = new RobotType();
   createRobotType() {
-    this.robotTypeService.createRobotType(this.robotType).subscribe(data => {
-      window.alert("Robot type created successfully \n"
-                  + "Name: " + data.name + "\n"
-                  + "Task types: " + data.taskTypes + "\n"
-                  + "Robot type model: " + data.robotTypeModel + "\n"
-                  + "Brand: " + data.brand + "\n"
-                  + "Id: " + data.id + "\n"
-                  + "TasksTypes: " + data.taskTypes + "\n");
-
-      this.location.back();
-    }, error => {
-      window.alert("Error! Robot type not created" + "\n" + JSON.stringify(error.error));
-      this.location.back();
+    this.robotTypeService.createRobotType(this.robotType).subscribe({
+      next: (data) => {
+        window.alert("Robot type created successfully \n"
+          + "Name: " + data.name + "\n"
+          + "Task types: " + data.taskTypes + "\n"
+          + "Robot type model: " + data.robotTypeModel + "\n"
+          + "Brand: " + data.brand + "\n"
+          + "Id: " + data.id + "\n"
+          + "TasksTypes: " + data.taskTypes + "\n");
+      },
+      error: (error) => {
+        window.alert(JSON.stringify(error.error.error));
+      }
     });
   }
 
