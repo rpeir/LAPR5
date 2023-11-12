@@ -26,7 +26,7 @@ export class RobotTypeComponent {
 
       this.location.back();
     }, error => {
-      window.alert("Error! Robot type not created" + "\n" + error.error);
+      window.alert("Error! Robot type not created" + "\n" + JSON.stringify(error.error));
       this.location.back();
     });
   }
