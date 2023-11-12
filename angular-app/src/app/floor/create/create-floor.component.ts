@@ -26,7 +26,7 @@ export class CreateFloorComponent implements OnInit{
 
       this.location.back();
     }, error => {
-      window.alert("Error! Floor not created" + "\n" + error.error.body)
+      window.alert("Error! Floor not created" + "\n" + JSON.stringify(error.error))
       this.location.back();
     });
   }
