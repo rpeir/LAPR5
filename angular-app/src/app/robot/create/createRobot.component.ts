@@ -29,7 +29,7 @@ export class CreateRobotComponent implements OnInit{
 
       this.location.back();
     }, error => {
-      window.alert("Error! Robot not created" + "\n" + error.error.body);
+      window.alert("Error! Robot not created" + "\n" + JSON.stringify(error.error));
       this.location.back();
     });
   }
