@@ -1,0 +1,46 @@
+<body>
+<h1>Update Elevator</h1>
+<form>
+  <label for="designation">Designation:</label>
+  <input type="text" id="designation" name="designation" required>
+  <br>
+
+  <label for="buildingDesignation">Building Designation:</label>
+  <input type="text" id="buildingDesignation" name="buildingDesignation">
+  <br>
+
+  <label for="arrayInput">Floors Served:</label>
+  <input type="text" id="arrayInput" name="arrayInput">
+  <br>
+
+  <label for="brand">Brand:</label>
+  <input type="text" id="brand" name="brand">
+  <br>
+
+  <label for="model">Model:</label>
+  <input type="text" id="model" name="model">
+  <br>
+
+  <label for="serialNumber">Serial Number:</label>
+  <input type="text" id="serialNumber" name="serialNumber">
+  <br>
+
+  <label for="description">Description:</label>
+  <input type="text" id="description" name="description">
+  <br>
+  <input type="submit" value="Submit">
+</form>
+<script>
+  // Ensure number values are greater than 0
+  const numberInputs = document.querySelectorAll('input[type="number"]');
+  numberInputs.forEach(input => {
+    input.addEventListener('input', () => {
+      if (input.value <= 0) {
+        input.setCustomValidity('Please enter a value greater than 0.');
+      } else {
+        input.setCustomValidity('');
+      }
+    });
+  });
+</script>
+</body>
