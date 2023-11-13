@@ -16,4 +16,16 @@ export class LoginComponent {
   goToGestorDeFrota() {
     this.router.navigate(['/gestor-de-frota']);
   }
+
+  goToUtente() {
+    this.router.navigate(['/utente']);
+  }
+
+  goToAdministratorDeSistema() {
+    this.router.navigate(['/administrador-de-sistema']);
+  }
+
+  goToGestorDeTarefas() {
+    this.router.navigate(['/gestor-de-tarefas']);
+  }
 }
