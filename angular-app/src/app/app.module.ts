@@ -45,6 +45,8 @@ import { CreateFloorComponent } from "./floor/create/create-floor.component";
 import { FloorListOfBuildingComponent } from "./floor/list-of-building/floor-list-of-building.component";
 import { MatCardModule } from "@angular/material/card";
 import { CreatePathway } from "./pathway/create/create-pathway";
+import { ElevatorCreateComponent } from "./elevator/create/create.component";
+import { ElevatorUpdateComponent } from "./elevator/update/update.component";
 
 @NgModule({
   declarations: [
@@ -80,7 +82,9 @@ import { CreatePathway } from "./pathway/create/create-pathway";
     CreateRobotComponent,
     CreateFloorComponent,
     FloorListOfBuildingComponent,
-    CreatePathway
+    CreatePathway,
+    ElevatorCreateComponent,
+    ElevatorUpdateComponent,
   ],
   imports: [
     BrowserModule,
