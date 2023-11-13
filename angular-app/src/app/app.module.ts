@@ -32,7 +32,6 @@ import { ListOfBuildingComponent } from './elevator/list-of-building/list-of-bui
 import { ListBuildingsServedComponent } from './elevator/list-buildings-served/list-buildings-served.component';
 import { DisableComponent } from './robot/disable/disable.component';
 import { ListComponent } from './robot/list/list.component';
-import { ListByParameterComponent } from './robot/list-by-parameter/list-by-parameter.component';
 import { CampusComponent } from './campus/campus.component';
 import { PathComponent } from './path/path.component';
 import { GetByOptimizationCriteriaComponent } from './path/get-by-optimization-criteria/get-by-optimization-criteria.component';
@@ -75,7 +74,6 @@ import { CreatePathway } from "./pathway/create/create-pathway";
     ListBuildingsServedComponent,
     DisableComponent,
     ListComponent,
-    ListByParameterComponent,
     CampusComponent,
     PathComponent,
     GetByOptimizationCriteriaComponent,

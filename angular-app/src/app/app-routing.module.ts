@@ -20,6 +20,7 @@ import { CreateRobotComponent } from './robot/create/createRobot.component';
 import { CreateFloorComponent } from './floor/create/create-floor.component';
 import { FloorListOfBuildingComponent } from './floor/list-of-building/floor-list-of-building.component';
 import { CreatePathway } from './pathway/create/create-pathway';
+import { MapViewerComponent } from "./map-viewer/map-viewer.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -42,6 +43,7 @@ const routes: Routes = [
   { path: 'building/edit', component: BuildingEditComponent },
   { path: 'building/list-all', component: BuildingListAllComponent },
   { path: 'building/list-min-max', component: BuildingListMinMaxComponent },
+  { path: 'map-viewer', component: MapViewerComponent },
 ];
 
 @NgModule({
