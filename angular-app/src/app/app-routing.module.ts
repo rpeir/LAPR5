@@ -16,10 +16,11 @@ import { CreateComponent as BuildingCreateComponent } from './building/create/cr
 import { EditComponent as BuildingEditComponent } from './building/edit/edit.component';
 import { ListAllComponent as BuildingListAllComponent } from './building/list-all/list-all.component';
 import { ListMinMaxComponent as BuildingListMinMaxComponent } from './building/list-min-max/list-min-max.component';
-import { CreateRobotComponent } from "./robot/create/createRobot.component";
-import { CreateFloorComponent } from "./floor/create/create-floor.component";
-import { FloorListOfBuildingComponent } from "./floor/list-of-building/floor-list-of-building.component";
-import { CreatePathway } from "./pathway/create/create-pathway";
+import { CreateRobotComponent } from './robot/create/createRobot.component';
+import { CreateFloorComponent } from './floor/create/create-floor.component';
+import { FloorListOfBuildingComponent } from './floor/list-of-building/floor-list-of-building.component';
+import { CreatePathway } from './pathway/create/create-pathway';
+import { MapViewerComponent } from "./map-viewer/map-viewer.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -32,7 +33,7 @@ const routes: Routes = [
   { path: 'pathways/create', component: CreatePathway },
   { path: 'rooms', component: RoomComponent },
   { path: 'robots', component: RobotComponent },
-  { path: 'robots/create', component: CreateRobotComponent},
+  { path: 'robots/create', component: CreateRobotComponent },
   { path: 'robotTypes', component: RobotTypeComponent },
   { path: 'tasks', component: TaskComponent },
   { path: 'task-types', component: TaskTypeComponent },
@@ -42,6 +43,7 @@ const routes: Routes = [
   { path: 'building/edit', component: BuildingEditComponent },
   { path: 'building/list-all', component: BuildingListAllComponent },
   { path: 'building/list-min-max', component: BuildingListMinMaxComponent },
+  { path: 'map-viewer', component: MapViewerComponent },
 ];
 
 @NgModule({
