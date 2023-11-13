@@ -24,4 +24,8 @@ export class BuildingComponent {
   goToLogin() {
     this.router.navigate(['']).then(r => console.log(r));
   }
+
+  goToGestorDeCampus() {
+    this.router.navigate(['/gestor-de-campus']);
+  }
 }
