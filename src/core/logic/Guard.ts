@@ -89,4 +89,13 @@ export class Guard {
       return { succeeded: true };
     }
   }
+
+  public static isTrue(value : boolean, message: string, argumentName : string): IGuardResult {
+    if (value) return {succeeded: true};
+
+    return {
+      succeeded: false,
+      message: `${argumentName} is not ${message}`
+    }
+  }
 }
