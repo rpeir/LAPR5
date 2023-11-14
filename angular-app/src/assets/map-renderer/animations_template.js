@@ -2,6 +2,7 @@ import * as THREE from "three";
 
 export default class Animations {
     constructor(object, animations) {
+      /*
         this.states = ["Idle", "Walking", "Running", "Dance", "Death", "Sitting", "Standing"];
         this.emotes = ["Jump", "Yes", "No", "Wave", "Punch", "ThumbsUp"];
 
@@ -20,9 +21,11 @@ export default class Animations {
         }
         this.activeName = "Idle";
         this.actions[this.activeName].play();
+       */
     }
 
     fadeToAction(name, duration) {
+      /*
         if (this.activeName != name && !this.actionInProgress) {
             const previousName = this.activeName;
             this.activeName = name;
@@ -39,6 +42,8 @@ export default class Animations {
                 this.actionInProgress = true;
             }
         }
+
+       */
     }
 
     actionFinished() {

@@ -32,7 +32,6 @@ import { ListOfBuildingComponent } from './elevator/list-of-building/list-of-bui
 import { ListBuildingsServedComponent } from './elevator/list-buildings-served/list-buildings-served.component';
 import { DisableComponent } from './robot/disable/disable.component';
 import { ListComponent } from './robot/list/list.component';
-import { ListByParameterComponent } from './robot/list-by-parameter/list-by-parameter.component';
 import { CampusComponent } from './campus/campus.component';
 import { PathComponent } from './path/path.component';
 import { GetByOptimizationCriteriaComponent } from './path/get-by-optimization-criteria/get-by-optimization-criteria.component';
@@ -46,6 +45,8 @@ import { CreateFloorComponent } from "./floor/create/create-floor.component";
 import { FloorListOfBuildingComponent } from "./floor/list-of-building/floor-list-of-building.component";
 import { MatCardModule } from "@angular/material/card";
 import { CreatePathway } from "./pathway/create/create-pathway";
+import { ElevatorCreateComponent } from "./elevator/create/create.component";
+import { ElevatorUpdateComponent } from "./elevator/update/update.component";
 
 @NgModule({
   declarations: [
@@ -75,14 +76,15 @@ import { CreatePathway } from "./pathway/create/create-pathway";
     ListBuildingsServedComponent,
     DisableComponent,
     ListComponent,
-    ListByParameterComponent,
     CampusComponent,
     PathComponent,
     GetByOptimizationCriteriaComponent,
     CreateRobotComponent,
     CreateFloorComponent,
     FloorListOfBuildingComponent,
-    CreatePathway
+    CreatePathway,
+    ElevatorCreateComponent,
+    ElevatorUpdateComponent,
   ],
   imports: [
     BrowserModule,

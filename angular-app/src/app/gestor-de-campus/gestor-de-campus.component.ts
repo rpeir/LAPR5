@@ -33,4 +33,8 @@ export class GestorDeCampusComponent {
   goToLogin() {
     this.router.navigate([""]);
   }
+
+  goBack() {
+    this.router.navigate(["/"]);
+  }
 }

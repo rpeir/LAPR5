@@ -3,6 +3,7 @@ import { GUI } from "three/addons/libs/lil-gui.module.min.js";
 
 export default class UserInteraction {
     constructor(scene, renderer, lights, fog, object, animations) {
+      /*
 
         function colorCallback(object, color) {
             object.color.set(color);
@@ -105,5 +106,7 @@ export default class UserInteraction {
         else {
             this.gui.hide();
         }
+
+       */
     }
 }
