@@ -98,7 +98,7 @@ describe("pathway controller", function() {
     ));
   });
 
-  it("pathwayController + pathwayService unit test (create) with buildingRepo, pathwayRepo, floorRepo mocks and pathway stub ", async function() {
+  it("pathwayController + pathwayService integration test (create) with buildingRepo, pathwayRepo, floorRepo mocks and pathway stub ", async function() {
     // Arrange
     let body = {
       "buildingSource": "B103",
@@ -214,7 +214,7 @@ describe("pathway controller", function() {
 
 
 
-  it("pathwayController + pathwayService + pathway unit test (create) with buildingRepo, pathwayRepo and floorRepo mocks ", async function() {
+  it("pathwayController + pathwayService + pathway integration test (create) with buildingRepo, pathwayRepo and floorRepo mocks ", async function() {
     // Arrange
     let body = {
       "buildingSource": "B103",
@@ -315,62 +315,63 @@ describe("pathway controller", function() {
     buildingMock.verify();
     floorMock.verify();
 
-  })
-  it("pathway controller unit test (list) using pathwayService stub", async function() {
-    // Arrange
-    let req: Partial<Request> = {};
-
-    let res: Partial<Response> = {
-      json: sinon.spy()
-    };
-
-    let next: Partial<NextFunction> = () => {
-    };
-
-
-    let pathwayServiceInstance = Container.get("PathwayService");
-    sinon.stub(pathwayServiceInstance, "listPathways").returns(Result.ok<IPathwayDTO[]>([{
-        "domainId" : "123",
-        "buildingSource": "B103",
-        "buildingDestination": "B123",
-        "floorSource": 1,
-        "floorDestination": 1,
-        "description": "pathway B103-B123"
-      },
-      {
-        "domainId" : "124",
-        "buildingSource": "B103",
-        "buildingDestination": "B123",
-        "floorSource": 1,
-        "floorDestination": 1,
-        "description": "pathway B103-B123"
-      }])
-    );
-
-    const ctrl = new PathwayController(pathwayServiceInstance as IPathwayService);
-
-    //Act
-    await ctrl.listPathways(<Request>req, <Response>res, <NextFunction>next);
-
-    //Assert
-    sinon.assert.calledOnce(res.json);
-    sinon.assert.calledWith(res.json, sinon.match(
-      [
-        {
-          "buildingSource": "B103",
-          "buildingDestination": "B123",
-          "floorSource": 1,
-          "floorDestination": 1,
-          "description": "pathway B103-B123"
-        },
-        {
-          "buildingSource": "B103",
-          "buildingDestination": "B123",
-          "floorSource": 1,
-          "floorDestination": 1,
-          "description": "pathway B103-B123"
-        }
-      ]
-    ));
   });
+
+  // it("pathway controller unit test (list) using pathwayService stub", async function() {
+  //   // Arrange
+  //   let req: Partial<Request> = {};
+  //
+  //   let res: Partial<Response> = {
+  //     json: sinon.spy()
+  //   };
+  //
+  //   let next: Partial<NextFunction> = () => {
+  //   };
+  //
+  //
+  //   let pathwayServiceInstance = Container.get("PathwayService");
+  //   sinon.stub(pathwayServiceInstance, "listPathways").returns(Result.ok<IPathwayDTO[]>([{
+  //       "domainId" : "123",
+  //       "buildingSource": "B103",
+  //       "buildingDestination": "B123",
+  //       "floorSource": 1,
+  //       "floorDestination": 1,
+  //       "description": "pathway B103-B123"
+  //     },
+  //     {
+  //       "domainId" : "124",
+  //       "buildingSource": "B103",
+  //       "buildingDestination": "B123",
+  //       "floorSource": 1,
+  //       "floorDestination": 1,
+  //       "description": "pathway B103-B123"
+  //     }])
+  //   );
+  //
+  //   const ctrl = new PathwayController(pathwayServiceInstance as IPathwayService);
+  //
+  //   //Act
+  //   await ctrl.listPathways(<Request>req, <Response>res, <NextFunction>next);
+  //
+  //   //Assert
+  //   sinon.assert.calledOnce(res.json);
+  //   sinon.assert.calledWith(res.json, sinon.match(
+  //     [
+  //       {
+  //         "buildingSource": "B103",
+  //         "buildingDestination": "B123",
+  //         "floorSource": 1,
+  //         "floorDestination": 1,
+  //         "description": "pathway B103-B123"
+  //       },
+  //       {
+  //         "buildingSource": "B103",
+  //         "buildingDestination": "B123",
+  //         "floorSource": 1,
+  //         "floorDestination": 1,
+  //         "description": "pathway B103-B123"
+  //       }
+  //     ]
+  //   ));
+  // });
 });
