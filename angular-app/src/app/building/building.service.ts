@@ -17,4 +17,7 @@ export class BuildingService {
     return this.httpClient.get<Building[]>(`${this.buildingUrl}`,
       {observe: "body", responseType: "json"});
   }
+  createBuilding(building:Building){
+    return this.httpClient.post<Building>(this.buildingUrl,building)
+  }
 }

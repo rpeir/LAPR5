@@ -1,44 +1,43 @@
+
 <app-building-tool-bar></app-building-tool-bar>
-<body>
-<h1>Create Building</h1>
-<form>
-  <label for="code">Code:</label>
-  <input type="text" id="code" name="code" required>
+<body class="RobDroneGo">
+<div class="container">
+  <h2 class="text-center">Create Building</h2>
   <br>
+  <form (ngSubmit)="createBuilding()">
+    <mat-form-field class="full-width">
+      <mat-label>Select a code for the building</mat-label>
+      <input matInput [(ngModel)]="building.code" name="code" required>
+    </mat-form-field>
 
-  <label for="designation">Designation:</label>
-  <input type="text" id="designation" name="designation" required>
-  <br>
+    <mat-form-field class="full-width">
+      <mat-label>Select a designation for the building</mat-label>
+      <input matInput [(ngModel)]="building.designation" name="designation" required>
+    </mat-form-field>
 
-  <label for="description">Description:</label>
-  <input type="text" id="description" name="description" required>
-  <br>
+    <mat-form-field class="full-width">
+      <mat-label>Select a description for the building</mat-label>
+      <input matInput [(ngModel)]="building.description" name="description"required>
+    </mat-form-field>
 
-  <label for="length">Length:</label>
-  <input type="number" id="length" name="length" required min="1">
-  <br>
 
-  <label for="width">Width:</label>
-  <input type="number" id="width" name="width" required min="1">
-  <br>
+    <mat-form-field class="full-width">
+      <mat-label>Select a length</mat-label>
+      <input matInput type="number" [(ngModel)]="building.length" name="length" required min="1">
+    </mat-form-field>
 
-  <label for="height">Height:</label>
-  <input type="number" id="height" name="height" required min="1">
-  <br>
+    <mat-form-field class="full-width">
+      <mat-label>Select a width</mat-label>
+      <input matInput type="number" [(ngModel)]="building.width" name="width" required min="1">
+    </mat-form-field>
 
-  <input type="submit" value="Submit">
-</form>
-<script>
-  // Ensure number values are greater than 0
-  const numberInputs = document.querySelectorAll('input[type="number"]');
-  numberInputs.forEach(input => {
-    input.addEventListener('input', () => {
-      if (input.value <= 0) {
-        input.setCustomValidity('Please enter a value greater than 0.');
-      } else {
-        input.setCustomValidity('');
-      }
-    });
-  });
-</script>
+    <mat-form-field class="full-width">
+      <mat-label>Select a height</mat-label>
+      <input matInput type="number" [(ngModel)]="building.height" name="height" required min="1">
+    </mat-form-field>
+    <div>
+      <input type="submit" value="Create">
+    </div>
+  </form>
+</div>
 </body>

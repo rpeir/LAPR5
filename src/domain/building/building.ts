@@ -3,7 +3,7 @@ import { UniqueEntityID } from '../../core/domain/UniqueEntityID';
 import { Result } from '../../core/logic/Result';
 import { Guard } from '../../core/logic/Guard';
 import { BuildingCode } from './BuildingCode';
-import {Entity} from "../../core/domain/Entity";
+
 
 interface BuildingProps {
   code: BuildingCode;
@@ -65,8 +65,11 @@ export class Building extends AggregateRoot<BuildingProps> {
       { argument: props.width, argumentName: 'width' },
       { argument: props.height, argumentName: 'height' },
     ];
-
-    const guardResult = Guard.againstNullOrUndefinedBulk(guardedProps);
+    const lenghtSize=Guard.isTrue(props.length>=1,'Length must be greater than 1');
+    const widthSize=Guard.isTrue(props.width>=1,'Width must be greater than 1');
+    const heightSize=Guard.isTrue(props.height>=1,'Height must be greater than 1');
+    const guardNull = Guard.againstNullOrUndefinedBulk(guardedProps);
+    const guardResult=Guard.combine([lenghtSize,widthSize,heightSize,guardNull]);
 
     if (!guardResult.succeeded) {
       return Result.fail<Building>(guardResult.message);
