@@ -17,6 +17,7 @@ export class PathwayComponent {
   }
 
   goToEdit() {
+    this.router.navigate(['/pathways/edit']);
 
   }
 
@@ -26,5 +27,9 @@ export class PathwayComponent {
 
   goToGestorDeCampus() {
     this.router.navigate(['/gestor-de-campus']);
+  }
+
+  goToLogin() {
+    this.router.navigate(['']).then(r => console.log(r));
   }
 }
