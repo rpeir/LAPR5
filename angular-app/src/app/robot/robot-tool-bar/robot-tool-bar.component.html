@@ -1,0 +1,23 @@
+<mat-toolbar color="primary">
+  <button [matMenuTriggerFor]="robotsMenu" mat-icon-button class="example-icon" aria-label=" icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #robotsMenu="matMenu">
+    <button mat-menu-item (click)="goCreate()">
+      <span>Create</span>
+    </button>
+    <button mat-menu-item (click)="goToDisable()">
+      <span>Disable</span>
+    </button>
+    <button mat-menu-item (click)="goToList()">
+      <span>List</span>
+    </button>
+
+  </mat-menu>
+
+  <span>Robots</span>
+  <span class="spacer"></span>
+  <button mat-icon-button class="example-icon" aria-label=" icon-button with menu icon" (click)="goToGestorDeFrota()">
+    <mat-icon>home</mat-icon>
+  </button>
+</mat-toolbar>

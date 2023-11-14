@@ -25,6 +25,8 @@ import { ElevatorCreateComponent} from "./elevator/create/create.component";
 import { ElevatorUpdateComponent} from "./elevator/update/update.component";
 import { ElevatorReplaceComponent} from "./elevator/replace/replace.component";
 import { RoomCreateComponent} from "./room/create/create.component"
+import { DisableComponent } from "./robot/disable/disable.component";
+import { ListComponent as ListRobotComponent } from "./robot/list/list.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -38,6 +40,8 @@ const routes: Routes = [
   { path: 'rooms', component: RoomComponent },
   { path: 'robots', component: RobotComponent },
   { path: 'robots/create', component: CreateRobotComponent },
+  { path: 'robots/disable', component: DisableComponent },
+  { path: 'robots/list', component: ListRobotComponent },
   { path: 'robotTypes', component: RobotTypeComponent },
   { path: 'tasks', component: TaskComponent },
   { path: 'task-types', component: TaskTypeComponent },

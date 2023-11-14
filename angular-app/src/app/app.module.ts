@@ -53,6 +53,7 @@ import { BuildingToolBarComponent } from './building/building-tool-bar/building-
 import { ElevatorToolBarComponent } from './elevator/elevator-tool-bar/elevator-tool-bar.component';
 import { FloorToolBarComponent } from './floor/floor-tool-bar/floor-tool-bar.component';
 import { PathwayToolBarComponent } from './pathway/pathway-tool-bar/pathway-tool-bar.component';
+import { RobotToolBarComponent } from './robot/robot-tool-bar/robot-tool-bar.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { PathwayToolBarComponent } from './pathway/pathway-tool-bar/pathway-tool
     BuildingToolBarComponent,
     ElevatorToolBarComponent,
     FloorToolBarComponent,
-    PathwayToolBarComponent
+    PathwayToolBarComponent,
+    RobotToolBarComponent
   ],
   imports: [
     BrowserModule,
