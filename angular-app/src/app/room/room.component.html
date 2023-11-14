@@ -1,1 +1,27 @@
-<p>room works!</p>
+<mat-toolbar color="primary">
+  <button [matMenuTriggerFor]="roomsMenu" mat-icon-button class="example-icon" aria-label=" icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #roomsMenu="matMenu">
+    <button mat-menu-item (click)="goToCreateRoom()">
+      <span>Create Room</span>
+    </button>
+    <button mat-menu-item (click)="goToGestorDeCampus()">
+      <span>Back</span>
+    </button>
+  </mat-menu>
+
+  <span>Rooms</span>
+  <span class="spacer"></span>
+  <button mat-icon-button class="example-icon" aria-label=" icon-button with menu icon" (click)="goToLogin()">
+    <mat-icon>home</mat-icon>
+  </button>
+</mat-toolbar>
+<body class="Room">
+<div class="container">
+  <h1 class="text-center">Welcome to Rooms page</h1>
+  <img src="../../assets/room.gif" alt="Page Content GIF">
+</div>
+</body>
+
+
