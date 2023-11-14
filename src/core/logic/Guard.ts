@@ -90,12 +90,12 @@ export class Guard {
     }
   }
 
-  public static isTrue(value : boolean, message: string, argumentName : string): IGuardResult {
+  public static isTrue(value : boolean, message: string): IGuardResult {
     if (value) return {succeeded: true};
 
     return {
       succeeded: false,
-      message: `${argumentName} is not ${message}`
+      message: message
     }
   }
 }
