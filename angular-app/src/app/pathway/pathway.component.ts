@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-pathway',
@@ -7,29 +6,5 @@ import { Router } from "@angular/router";
   styleUrls: ['./pathway.component.css']
 })
 export class PathwayComponent {
-  constructor(private router: Router) {
 
-  }
-
-
-  goToListBetweenBuildings() {
-
-  }
-
-  goToEdit() {
-    this.router.navigate(['/pathways/edit']);
-
-  }
-
-  goCreate() {
-    this.router.navigate(['/pathways/create']);
-  }
-
-  goToGestorDeCampus() {
-    this.router.navigate(['/gestor-de-campus']);
-  }
-
-  goToLogin() {
-    this.router.navigate(['']).then(r => console.log(r));
-  }
 }
