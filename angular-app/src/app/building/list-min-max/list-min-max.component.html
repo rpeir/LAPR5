@@ -2,7 +2,7 @@
 
 <body class="RobDroneGo">
 <div class="container">
-  <h2 class="text-center">List Floor of a Building</h2>
+  <h2 class="text-center">List Buildings with min and max number of floors</h2>
   <br>
   <form (ngSubmit)="getBuildingFloorMaxMin()">
     <mat-form-field class="full-width">
@@ -18,18 +18,22 @@
     </mat-form-field>
 
     <div>
-      <input type="submit" value="create">
+      <input type="submit" value="submit">
     </div>
 
     <div *ngIf="buildings">
       <div *ngFor="let building of buildings">
         <mat-card>
           <mat-card-content>
-            Building: {{building.building}};
+            Building designation: {{building.designation}};
             <br>
-            description: {{building.description}};
+            Building description: {{building.description}};
             <br>
-            floorNr: {{building.floorNr}};
+            Building code: {{building.code}};
+            <br>
+            Building width: {{building.width}};
+            <br>
+            Building height: {{building.height}};
           </mat-card-content>
         </mat-card>
         <br>

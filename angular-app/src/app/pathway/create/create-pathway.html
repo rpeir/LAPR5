@@ -8,7 +8,7 @@
     <mat-form-field class="full-width">
       <mat-label>Select a source building</mat-label>
       <mat-select [(ngModel)]="pathway.buildingSource" name="buildingSource" (ngModelChange)="listFloorsOfBuildingSource($event)">
-        <mat-option *ngFor="let building of buildings" [value]="building.designation" >
+        <mat-option *ngFor="let building of buildings" [value]="building.designation" [matTooltip]= "getBuildingInfo(building)">
           {{building.designation}}
         </mat-option>
       </mat-select>
@@ -17,7 +17,7 @@
     <mat-form-field class="full-width">
       <mat-label>Select a  building destination</mat-label>
       <mat-select [(ngModel)]="pathway.buildingDestination" name="buildingSource" (ngModelChange)="listFloorsOfBuildingDestination($event)">
-        <mat-option *ngFor="let building of buildings" [value]="building.designation">
+        <mat-option *ngFor="let building of buildings" [value]="building.designation" [matTooltip]= "getBuildingInfo(building)">
           {{building.designation}}
         </mat-option>
       </mat-select>

@@ -15,7 +15,7 @@ export default class PathwayController implements IPathwayController {
       const pathwayOrError = (await this.pathwayService.createPathway(req.body as IPathwayDTO)) as Result<IPathwayDTO>;
 
       if (pathwayOrError.isFailure) {
-        return res.send(pathwayOrError).status(402);
+        return res.status(402).send(pathwayOrError);
       }
 
       const pathwayDTO = pathwayOrError.getValue();

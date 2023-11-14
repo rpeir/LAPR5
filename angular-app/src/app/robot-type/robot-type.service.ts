@@ -14,11 +14,13 @@ export class RobotTypeService {
   private robotTypeUrl = "http://localhost:4000/api/robotTypes";
 
   createRobotType(robotType: RobotType): Observable<RobotType> {
-    return this.httpClient.post<RobotType>(`${this.robotTypeUrl}`, robotType);
+    return this.httpClient.post<RobotType>(`${this.robotTypeUrl}`, robotType,
+      {headers: {"Content-Type": "application/json"}, observe: "body", responseType: "json"});
   }
 
   getRobotTypes(): Observable<RobotType[]> {
-    return this.httpClient.get<RobotType[]>(`${this.robotTypeUrl}`);
+    return this.httpClient.get<RobotType[]>(`${this.robotTypeUrl}`,
+      {observe: "body", responseType: "json"});
   }
 
 }

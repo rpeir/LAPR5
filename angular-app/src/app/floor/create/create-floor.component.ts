@@ -29,7 +29,7 @@ export class CreateFloorComponent implements OnInit {
         this.location.back();
       },
       error: (error) => {
-        window.alert(JSON.stringify(error.error.error));
+        window.alert(error.error.error);
       }
     });
   }
@@ -40,10 +40,13 @@ export class CreateFloorComponent implements OnInit {
           this.buildings = data;
         },
         error: (error) => {
-          window.alert(JSON.stringify(error.error.error));
+          window.alert(error.error.error);
         }
       }
     );
   }
 
+  getBuildingInfo(building: Building) {
+    return building.description;
+  }
 }

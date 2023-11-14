@@ -14,6 +14,7 @@ export class BuildingService {
 
 
   getBuildings() : Observable<Building[]> {
-    return this.httpClient.get<Building[]>(`${this.buildingUrl}`);
+    return this.httpClient.get<Building[]>(`${this.buildingUrl}`,
+      {observe: "body", responseType: "json"});
   }
 }

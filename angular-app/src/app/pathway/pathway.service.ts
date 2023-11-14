@@ -12,6 +12,7 @@ export class PathwayService {
   baseUrl = 'http://localhost:4000/api/pathways';
 
   createPathway(pathway: Pathway) {
-     return this.httpClient.post<Pathway>(this.baseUrl, pathway);
+     return this.httpClient.post<Pathway>(this.baseUrl, pathway,
+       {headers: {"Content-Type": "application/json"}});
   }
 }

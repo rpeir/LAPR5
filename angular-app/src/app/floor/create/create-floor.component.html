@@ -9,7 +9,7 @@
     <mat-form-field class="full-width">
       <mat-label>Select a building</mat-label>
       <mat-select [(ngModel)]="floor.building" name="buildingDesignation">
-        <mat-option *ngFor="let building of buildings" [value]="building.designation" >
+        <mat-option *ngFor="let building of buildings" [value]="building.designation" [matTooltip]= "getBuildingInfo(building)" >
           {{building.designation}}
         </mat-option>
       </mat-select>

@@ -69,12 +69,16 @@ export class CreatePathway implements OnInit {
           this.floorsDestination = data;
         },
         error: (error) => {
-          window.alert(JSON.stringify(error.error.error));
+          window.alert(error.error.error);
         }
       });
   }
 
   getFloorInfo(floor: Floor) {
     return floor.description;
+  }
+
+  getBuildingInfo(building: Building) {
+    return building.description;
   }
 }

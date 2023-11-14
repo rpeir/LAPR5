@@ -30,7 +30,7 @@ export class CreateRobotComponent implements OnInit {
         this.location.back();
       },
       error: (error) => {
-        window.alert(JSON.stringify(error.error.error));
+        window.alert(error.error.error);
       }
     });
   }
@@ -41,7 +41,7 @@ export class CreateRobotComponent implements OnInit {
         this.robotTypes = data;
       },
       error: (error) => {
-        window.alert(JSON.stringify(error.error.error));
+        window.alert(error.error.error);
       }
     });
   }
