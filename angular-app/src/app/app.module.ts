@@ -47,6 +47,8 @@ import { MatCardModule } from "@angular/material/card";
 import { CreatePathway } from "./pathway/create/create-pathway";
 import { ElevatorCreateComponent } from "./elevator/create/create.component";
 import { ElevatorUpdateComponent } from "./elevator/update/update.component";
+import { ElevatorReplaceComponent } from "./elevator/replace/replace.component";
+import {RoomCreateComponent} from "./room/create/create.component";
 
 @NgModule({
   declarations: [
@@ -85,6 +87,8 @@ import { ElevatorUpdateComponent } from "./elevator/update/update.component";
     CreatePathway,
     ElevatorCreateComponent,
     ElevatorUpdateComponent,
+    ElevatorReplaceComponent,
+    RoomCreateComponent
   ],
   imports: [
     BrowserModule,
