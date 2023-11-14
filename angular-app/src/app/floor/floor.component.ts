@@ -26,4 +26,8 @@ export class FloorComponent {
   goToGestorDeCampus() {
     this.router.navigate(['/gestor-de-campus']);
   }
+
+  goToLogin() {
+    this.router.navigate(['']).then(r => console.log(r));
+  }
 }
