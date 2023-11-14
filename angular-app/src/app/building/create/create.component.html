@@ -1,6 +1,6 @@
 <!--
-<p>create works!</p>
--->
+
+
 <body>
 <h1>Create Building</h1>
 <form>
@@ -44,3 +44,49 @@
   });
 </script>
 </body>
+-->
+<body class="RobDroneGo">
+<div class="container">
+  <h2 class="text-center">Create Building</h2>
+  <br>
+  <form (ngSubmit)="createBuilding()">
+    <mat-form-field class="full-width">
+      <mat-label>Select a code for the building</mat-label>
+      <input matInput [(ngModel)]="building.code" name="code" required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Select a designation for the building</mat-label>
+      <input matInput [(ngModel)]="building.designation" name="designation" required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Select a description for the building</mat-label>
+      <input matInput [(ngModel)]="building.description" name="description"required>
+    </mat-form-field>
+
+
+    <mat-form-field class="full-width">
+      <mat-label>Select a length</mat-label>
+      <input matInput type="number" [(ngModel)]="building.length" name="length" required min="1">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Select a width</mat-label>
+      <input matInput type="number" [(ngModel)]="building.width" name="width" required min="1">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Select a height</mat-label>
+      <input matInput type="number" [(ngModel)]="building.height" name="height" required min="1">
+    </mat-form-field>
+    <div>
+      <input type="submit" value="Create">
+    </div>
+  </form>
+</div>
+</body>
+
+
+
+

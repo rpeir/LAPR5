@@ -16,4 +16,7 @@ export class BuildingService {
   getBuildings() : Observable<Building[]> {
     return this.httpClient.get<Building[]>(`${this.buildingUrl}`);
   }
+  createBuilding(building:Building){
+    return this.httpClient.post<Building>(this.buildingUrl,building)
+  }
 }
