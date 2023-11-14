@@ -97,7 +97,7 @@ describe("robot controller", function() {
     }));
   });
 
-  /*it("robotController + robotService unit test (create) using robot, robotTypeRepo and robotRepo stubs ", async function() {
+  it("robotController + robotService unit test (create) using robot, robotTypeRepo and robotRepo stubs ", async function() {
     // Arrange
     let body = {
       "nickName": "Son",
@@ -184,7 +184,7 @@ describe("robot controller", function() {
     createStub.restore();
   });
 
-   */
+
 
   it("robotController + robotService + robot integration test (create) with robotTypeRepo and robotRepo stubs", async function() {
     // Arrange
@@ -253,6 +253,8 @@ describe("robot controller", function() {
       }
     ));
   });
+
+
   it("robotController unit test (list) using robotService stub", async function() {
     // Arrange
 
