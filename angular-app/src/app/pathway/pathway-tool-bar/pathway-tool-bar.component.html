@@ -1,0 +1,25 @@
+<mat-toolbar color="primary">
+  <button [matMenuTriggerFor]="PathwaysMenu" mat-icon-button class="example-icon" aria-label=" icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #PathwaysMenu="matMenu">
+    <button mat-menu-item (click)="goCreate()">
+      <span>Create Pathway</span>
+    </button>
+    <button mat-menu-item (click)="goToEdit()">
+      <span>Edit Pathway</span>
+    </button>
+    <button mat-menu-item (click)="goToListBetweenBuildings()">
+      <span>List Pathways between Buildings</span>
+    </button>
+    <button mat-menu-item (click)="goToGestorDeCampus()">
+      <span>Back</span>
+    </button>
+  </mat-menu>
+
+  <span>Pathways</span>
+  <span class="spacer"></span>
+  <button mat-icon-button class="example-icon" aria-label=" icon-button with menu icon" (click)="goToLogin()">
+    <mat-icon>home</mat-icon>
+  </button>
+</mat-toolbar>
