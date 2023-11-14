@@ -28,10 +28,10 @@ export default class FloorController implements IFloorController {
     try {
       const floorOrError = (await this.floorServiceInstance.createFloor(req.body as IFloorDTO)) as Result<IFloorDTO>;
       if (floorOrError.isFailure) {
-        return res.status(402).send(floorOrError);
+        return res.send(floorOrError).status(402);
       }
       const floorDTO = floorOrError.getValue();
-      return res.status(201).json(floorDTO);
+      return res.json(floorDTO).status(201);
     } catch (error) {
       return next(error);
     }
