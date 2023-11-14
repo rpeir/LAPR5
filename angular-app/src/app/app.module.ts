@@ -50,6 +50,7 @@ import { ElevatorUpdateComponent } from "./elevator/update/update.component";
 import { ElevatorReplaceComponent } from "./elevator/replace/replace.component";
 import {RoomCreateComponent} from "./room/create/create.component";
 import { BuildingToolBarComponent } from './building/building-tool-bar/building-tool-bar.component';
+import { ElevatorToolBarComponent } from './elevator/elevator-tool-bar/elevator-tool-bar.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { BuildingToolBarComponent } from './building/building-tool-bar/building-
     ElevatorUpdateComponent,
     ElevatorReplaceComponent,
     RoomCreateComponent,
-    BuildingToolBarComponent
+    BuildingToolBarComponent,
+    ElevatorToolBarComponent
   ],
   imports: [
     BrowserModule,

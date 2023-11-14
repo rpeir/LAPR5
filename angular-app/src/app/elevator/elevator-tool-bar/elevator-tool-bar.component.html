@@ -1,0 +1,28 @@
+<mat-toolbar color="primary">
+  <button [matMenuTriggerFor]="elevatorMenu" mat-icon-button class="example-icon" aria-label=" icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #elevatorMenu="matMenu">
+    <button mat-menu-item (click)="goToCreateElevator()">
+      <span>Create Elevator</span>
+    </button>
+    <button mat-menu-item (click)="goToUpdateElevator()">
+      <span>Update Elevator</span>
+    </button>
+    <button mat-menu-item (click)="goToReplaceElevator()">
+      <span>Replace Elevator</span>
+    </button>
+    <button mat-menu-item (click)="goToListAllElevators()">
+      <span>List all Elevators</span>
+    </button>
+    <button mat-menu-item (click)="goToGestorDeCampus()">
+      <span>Back</span>
+    </button>
+  </mat-menu>
+
+  <span>Elevators</span>
+  <span class="spacer"></span>
+  <button mat-icon-button class="example-icon" aria-label=" icon-button with menu icon" (click)="goToLogin()">
+    <mat-icon>home</mat-icon>
+  </button>
+</mat-toolbar>
