@@ -16,5 +16,8 @@ export class RobotService {
     return this.httpClient.post<Robot>(`${this.robotUrl}`, robot,
       {headers: {"Content-Type": "application/json"}, observe: "body", responseType: "json"});
   }
+  listAllRobots(): Observable<Robot[]> {
+    return this.httpClient.get<Robot[]>(`${this.robotUrl}`);
+  }
 
 }

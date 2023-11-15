@@ -1,2 +1,32 @@
 <app-robot-tool-bar></app-robot-tool-bar>
-<p>list works!</p>
+<div class="container">
+  <h2 class="text-center">List All Robots</h2>
+  <br>
+  <form (ngSubmit)="listRobots()">
+    <!-- List Robots -->
+    <div>
+      <button mat-raised-button color="accent" (click)="listRobots()">
+        List Robots
+      </button>
+      <div *ngIf="robots && robots.length > 0">
+        <div *ngFor="let robot of robots; let last = last">
+          <div class="robot-details">
+            <p><strong>Code:</strong> {{ robot.robotCode}}</p>
+            <p><strong>NickName:</strong> {{ robot.nickName}}</p>
+            <p><strong>Type:</strong> {{ robot.robotType }}</p>
+            <p><strong>State:</strong> {{ robot.state }}</p>
+            <p><strong>Serial Number:</strong> {{ robot.serialNr }}</p>
+            <p><strong>Description:</strong> {{ robot.description }}</p>
+          </div>
+          <!-- Add a horizontal rule except for the last robot -->
+          <hr *ngIf="!last">
+        </div>
+      </div>
+
+      <!-- Message for no robots -->
+      <div *ngIf="robots && robots.length === 0">
+        <p>No robots found.</p>
+      </div>
+    </div>
+  </form>
+</div>
