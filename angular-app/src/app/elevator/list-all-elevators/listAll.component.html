@@ -1,0 +1,43 @@
+<app-elevator-tool-bar></app-elevator-tool-bar>
+<div class="container">
+  <h2 class="text-center">List All Elevators</h2>
+  <br>
+  <form (ngSubmit)="listElevators()">
+    <!-- Select Building -->
+    <mat-form-field class="full-width">
+      <mat-label>Select a building</mat-label>
+      <mat-select [(ngModel)]="buildingDesignation" name="buildingDesignation">
+        <mat-option *ngFor="let building of buildings" [value]="building.designation" [matTooltip]="building.designation">
+          {{ building.designation }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- List Elevators -->
+    <div>
+      <button mat-raised-button color="accent" (click)="listElevators()" *ngIf="buildingDesignation">
+        List Elevators
+      </button>
+      <div *ngIf="elevators && elevators.length > 0">
+        <div *ngFor="let elevator of elevators; let last = last">
+          <div class="elevator-details">
+            <p><strong>DomainID:</strong> {{ elevator.id | json}}</p>
+            <p><strong>Designation:</strong> {{ elevator.designation }}</p>
+            <p><strong>Building Designation:</strong> {{ elevator.buildingDesignation }}</p>
+            <p><strong>Floors Served:</strong> {{elevator.floorsServed}}</p>
+            <p><strong>Brand:</strong> {{ elevator.brand }}</p>
+            <p><strong>Model:</strong> {{ elevator.modelE }}</p>
+            <p><strong>Serial Number:</strong> {{ elevator.serialNumber }}</p>
+            <p><strong>Description:</strong> {{ elevator.description }}</p>
+          </div>
+          <!-- Add a horizontal rule except for the last elevator -->
+          <hr *ngIf="!last">
+        </div>
+      </div>
+
+      <!-- Message for no elevators -->
+      <div *ngIf="elevators && elevators.length === 0">
+        <p>No elevators found for the selected building.</p>
+      </div>
+    </div>
+  </form>
+</div>

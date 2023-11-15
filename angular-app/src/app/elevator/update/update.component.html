@@ -1,47 +1,64 @@
 <app-elevator-tool-bar></app-elevator-tool-bar>
-<body>
-<h1>Update Elevator</h1>
-<form>
-  <label for="designation">Designation:</label>
-  <input type="text" id="designation" name="designation" required>
+<body class="RobDroneGo">
+<div class="container">
+  <h2 class="text-center">Update Elevator</h2>
   <br>
+  <form (ngSubmit)="updateElevator()">
+    <mat-form-field class="full-width">
+      <mat-label>Select the elevator (id)</mat-label>
+      <input matInput [(ngModel)]="elevator.id" name="id" required>
+    </mat-form-field>
 
-  <label for="buildingDesignation">Building Designation:</label>
-  <input type="text" id="buildingDesignation" name="buildingDesignation">
-  <br>
+    <mat-form-field class="full-width">
+      <mat-label>Select a designation for the elevator</mat-label>
+      <input matInput [(ngModel)]="elevator.designation" name="designation">
+    </mat-form-field>
 
-  <label for="arrayInput">Floors Served:</label>
-  <input type="text" id="arrayInput" name="arrayInput">
-  <br>
+    <mat-form-field class="full-width">
+      <mat-label>Select a building</mat-label>
+      <mat-select [(ngModel)]="elevator.buildingDesignation" name="buildingDesignation" (ngModelChange)="listFloorsOfBuildingDesignation($event)">
+        <mat-option *ngFor="let building of buildings" [value]="building.designation">
+          {{building.designation}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <label for="brand">Brand:</label>
-  <input type="text" id="brand" name="brand">
-  <br>
+    <mat-form-field class="full-width">
+      <mat-label>Select the floors served by the elevator</mat-label>
+      <mat-select [(ngModel)]="elevator.floorsServed" name="floorsServed" multiple>
+        <mat-option *ngFor="let floor of floorsServed" [value]="floor.floorNr" [matTooltip]="getFloorInfo(floor)">
+          {{floor.floorNr}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <label for="model">Model:</label>
-  <input type="text" id="model" name="model">
-  <br>
 
-  <label for="serialNumber">Serial Number:</label>
-  <input type="text" id="serialNumber" name="serialNumber">
-  <br>
+    <mat-form-field class="full-width">
+      <mat-label>Select a brand</mat-label>
+      <input matInput [(ngModel)]="elevator.brand" name="brand">
+    </mat-form-field>
 
-  <label for="description">Description:</label>
-  <input type="text" id="description" name="description">
-  <br>
-  <input type="submit" value="Submit">
-</form>
-<script>
-  // Ensure number values are greater than 0
-  const numberInputs = document.querySelectorAll('input[type="number"]');
-  numberInputs.forEach(input => {
-    input.addEventListener('input', () => {
-      if (input.value <= 0) {
-        input.setCustomValidity('Please enter a value greater than 0.');
-      } else {
-        input.setCustomValidity('');
-      }
-    });
-  });
-</script>
+    <mat-form-field class="full-width">
+      <mat-label>Select a model</mat-label>
+      <input matInput [(ngModel)]="elevator.modelE" name="modelE">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Select a serial number</mat-label>
+      <input matInput [(ngModel)]="elevator.serialNumber" name="serialNumber">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Elevator Description</mat-label>
+      <input matInput [(ngModel)]="elevator.description" name="description" placeholder="Max 250 characters">
+    </mat-form-field>
+
+    <div>
+      <input type="submit" value="Update">
+    </div>
+  </form>
+</div>
 </body>
+
+
+

@@ -102,7 +102,7 @@ export default class ElevatorService implements IElevatorService{
             if(elevatorOrError==null){
                 return Result.fail<IElevatorDTO>("Elevator not found");
             }
-            const elevator=elevatorOrError;
+            let elevator=elevatorOrError;
             elevatorDTO.designation=elevatorDTO.designation?elevatorDTO.designation:elevator.designation;
 
             elevatorDTO.buildingDesignation=elevatorDTO.buildingDesignation?elevatorDTO.buildingDesignation:elevator.buildingDesignation;
@@ -121,7 +121,7 @@ export default class ElevatorService implements IElevatorService{
             }
 
             try {
-                 await this.elevatorRepo.save(updatedElevator);
+                 elevator=await this.elevatorRepo.save(updatedElevator);
             } catch (error) {
                 return Result.fail<IElevatorDTO>(error);
             }

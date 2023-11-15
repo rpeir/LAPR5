@@ -13,6 +13,7 @@ export class ElevatorMap extends Mapper<Elevator>{
       floors = elevator.floorsServed;
     }
     return {
+        id: elevator.id.toString(),
         code: elevator.code.toString(),
         designation: elevator.designation,
         buildingDesignation: elevator.buildingDesignation,

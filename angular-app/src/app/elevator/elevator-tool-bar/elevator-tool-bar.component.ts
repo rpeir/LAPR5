@@ -18,7 +18,7 @@ export class ElevatorToolBarComponent {
     this.router.navigate(['/elevator/replace']).then(r => console.log(r));
   }
   goToListAllElevators() {
-    this.router.navigate(['/elevator/list-all']).then(r => console.log(r));
+    this.router.navigate(['/elevator/list-all-elevators']).then(r => console.log(r));
   }
   goToLogin() {
     this.router.navigate(['']).then(r => console.log(r));

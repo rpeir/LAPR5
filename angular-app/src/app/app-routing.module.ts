@@ -27,6 +27,7 @@ import { ElevatorReplaceComponent} from "./elevator/replace/replace.component";
 import { RoomCreateComponent} from "./room/create/create.component"
 import { DisableComponent } from "./robot/disable/disable.component";
 import { ListComponent as ListRobotComponent } from "./robot/list/list.component";
+import { ElevatorListAllComponent } from "./elevator/list-all-elevators/listAll.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -55,7 +56,8 @@ const routes: Routes = [
   { path: 'elevator/update',component:ElevatorUpdateComponent},
   { path: 'elevator/replace',component:ElevatorReplaceComponent},
   { path: 'map-viewer', component: MapViewerComponent },
-  { path: 'rooms/create',component: RoomCreateComponent}
+  { path: 'rooms/create',component: RoomCreateComponent},
+  { path: 'elevator/list-all-elevators',component: ElevatorListAllComponent}
 ];
 
 @NgModule({

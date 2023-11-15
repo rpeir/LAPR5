@@ -1,5 +1,5 @@
 export class Elevator{
-    domainId? :string;
+    id! :string;
     designation!: string;
     buildingDesignation!: string;
     floorsServed!: number[];
