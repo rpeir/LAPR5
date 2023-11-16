@@ -161,6 +161,7 @@ export default class ThumbRaiser {
     thirdPersonViewCameraParameters,
     topViewCameraParameters,
     miniMapCameraParameters,
+    selectedMap,
   ) {
     this.generalParameters = merge({}, generalData, generalParameters);
     this.mazeParameters = merge({}, mazeData, mazeParameters);
@@ -172,6 +173,7 @@ export default class ThumbRaiser {
     this.thirdPersonViewCameraParameters = merge({}, cameraData, thirdPersonViewCameraParameters);
     this.topViewCameraParameters = merge({}, cameraData, topViewCameraParameters);
     this.miniMapCameraParameters = merge({}, cameraData, miniMapCameraParameters);
+    this.selectedMap = merge({}, selectedMap);
 
     // Create a 2D scene (the viewports frames)
     this.scene2D = new THREE.Scene();
