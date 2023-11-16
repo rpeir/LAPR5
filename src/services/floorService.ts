@@ -227,9 +227,9 @@ export default class FloorService implements IFloorService {
 
   async validateSize(floor: Floor): Promise<boolean> {
     const buildingLength = floor.building.length;
-    const floorDepth = floor.floorMap.props.floor.size.depth;
+    const floorDepth = floor.floorMap.props.maze.size.depth;
     const buildingWidth = floor.building.width;
-    const floorWidth = floor.floorMap.props.floor.size.width;
+    const floorWidth = floor.floorMap.props.maze.size.width;
 
     if (floorDepth > buildingLength || floorWidth > buildingWidth) {
       return false;

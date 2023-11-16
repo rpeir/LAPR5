@@ -4,7 +4,7 @@ import { IFloorPersistence } from '../../dataschema/IFloorPersistence'; // Impor
 // Create a sub-schema for floorMap
 const floorMapSchema = new mongoose.Schema(
   {
-    floor: {
+    maze: {
       size: {
         width: Number,
         depth: Number,

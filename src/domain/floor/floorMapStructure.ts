@@ -3,7 +3,7 @@ import { Result } from '../../core/logic/Result';
 import { Guard } from '../../core/logic/Guard';
 
 interface FloorMapProps {
-  floor: {
+  maze: {
     size: {
       width: number;
       depth: number;
@@ -131,7 +131,7 @@ export class FloorMapStructure extends ValueObject<FloorMapProps> {
   }
   public static create(props: FloorMapProps): Result<FloorMapStructure> {
     const guardedProps = [
-      { argument: props.floor, argumentName: 'floor' },
+      { argument: props.maze, argumentName: 'maze' },
       { argument: props.ground, argumentName: 'ground' },
       { argument: props.wall, argumentName: 'wall' },
     ];

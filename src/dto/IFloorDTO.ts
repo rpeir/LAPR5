@@ -4,7 +4,7 @@ export interface IFloorDTO {
   description: string;
   floorNr: number;
   floorMap?: {
-    floor: {
+    maze: {
       size: {
         width: number;
         depth: number;

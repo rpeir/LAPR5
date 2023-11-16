@@ -1,6 +1,5 @@
 import { Mapper } from '../core/infra/Mapper';
 import { Floor } from '../domain/floor/floor';
-import { FloorMapStructure} from "../domain/floor/floorMapStructure";
 import { IFloorDTO } from '../dto/IFloorDTO';
 import { Container } from 'typedi';
 import BuildingRepo from '../repos/buildingRepo';

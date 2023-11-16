@@ -1,5 +1,5 @@
 export interface IFloorMapPersistence {
-  floor: {
+  maze: {
     size: {
       width: number;
       depth: number;

@@ -1,6 +1,5 @@
 import { Repo } from '../../core/infra/Repo';
 import { Floor } from '../../domain/floor/floor';
-import { Building } from '../../domain/building/building';
 import { Pathway } from '../../domain/pathway/pathway';
 
 export default interface IFloorRepo extends Repo<Floor> {
