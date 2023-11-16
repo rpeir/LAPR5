@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ElevatorCreateComponent} from "../create/create.component";
+import {ElevatorListAllComponent} from "./listAll.component";
 
-import { CreateComponent } from './listAll.component';
-
-describe('CreateComponent', () => {
-  let component: CreateComponent;
-  let fixture: ComponentFixture<CreateComponent>;
+describe('ElevatorListAll', () => {
+  let component: ElevatorListAllComponent;
+  let fixture: ComponentFixture<ElevatorListAllComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateComponent]
+      declarations: [ElevatorListAllComponent]
     });
-    fixture = TestBed.createComponent(CreateComponent);
+    fixture = TestBed.createComponent(ElevatorListAllComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should list', () => {
     expect(component).toBeTruthy();
   });
 });
