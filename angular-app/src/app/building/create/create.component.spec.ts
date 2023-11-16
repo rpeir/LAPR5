@@ -18,4 +18,14 @@ describe('CreateComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should call the createBuilding method when the form is submitted', () => {
+    spyOn(component, 'createBuilding');
+
+    const form = fixture.nativeElement.querySelector('form');
+    form.dispatchEvent(new Event('submit'));
+
+    fixture.detectChanges();
+
+    expect(component.createBuilding).toHaveBeenCalled();
+  });
 });
