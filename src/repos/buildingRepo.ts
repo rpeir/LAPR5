@@ -8,7 +8,7 @@ import { BuildingCode } from '../domain/building/BuildingCode';
 import { IBuildingPersistence } from '../dataschema/IBuildingPersistence';
 import { RobotTypeID } from '../domain/robotType/robotTypeID';
 import { BuildingId } from '../domain/building/buildingId';
-import { FloorMap } from '../mappers/FloorMap';
+import { FloorMapper } from '../mappers/FloorMapper';
 import {UniqueEntityID} from "../core/domain/UniqueEntityID";
 
 @Service()

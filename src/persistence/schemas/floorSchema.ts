@@ -122,7 +122,12 @@ const floorMapSchema = new mongoose.Schema(
       minFilter: Number,
       secondaryColor: String,
     },
-  },{ strict: true }
+    player: {
+      initialPosition: [Number],
+      initialDirection: Number,
+    },
+  },
+  { strict: true },
 );
 
 const Floor = new mongoose.Schema(

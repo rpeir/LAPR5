@@ -115,11 +115,15 @@ export interface IFloorMapPersistence {
     minFilter: number;
     secondaryColor: string;
   };
+  player: {
+    initialPosition: number[];
+    initialDirection: number;
+  };
 }
 export interface IFloorPersistence {
   domainId: string;
   building: string;
   description: string;
   floorNr: number;
-  floorMap?: IFloorMapPersistence; // reference to FloorMap
+  floorMap?: IFloorMapPersistence; // reference to FloorMapper
 }

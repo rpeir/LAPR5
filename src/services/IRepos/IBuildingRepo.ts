@@ -1,7 +1,7 @@
 import { Repo } from '../../core/infra/Repo';
 import { Building } from '../../domain/building/building';
 import { BuildingCode } from '../../domain/building/BuildingCode';
-import {FloorMap} from "../../mappers/FloorMap";
+import {FloorMapper} from "../../mappers/FloorMapper";
 
 export default interface IBuildingRepo extends Repo<Building> {
   save(building: Building): Promise<Building>;

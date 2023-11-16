@@ -13,7 +13,8 @@
 import * as THREE from 'three';
 import Stats from 'three/addons/libs/stats.module.js';
 import Orientation from './orientation.js';
-import { generalData, mazeData, playerData, lightsData, fogData, cameraData } from './default_data.js';
+//TODO Removed map data to allow for map importing
+import { generalData, playerData, mazeData, lightsData, fogData, cameraData } from './default_data.js';
 import { merge } from './merge.js';
 import Maze from './maze_template.js';
 import Player from './player_template.js';
@@ -161,7 +162,6 @@ export default class ThumbRaiser {
     thirdPersonViewCameraParameters,
     topViewCameraParameters,
     miniMapCameraParameters,
-    selectedMap,
   ) {
     this.generalParameters = merge({}, generalData, generalParameters);
     this.mazeParameters = merge({}, mazeData, mazeParameters);
@@ -173,7 +173,6 @@ export default class ThumbRaiser {
     this.thirdPersonViewCameraParameters = merge({}, cameraData, thirdPersonViewCameraParameters);
     this.topViewCameraParameters = merge({}, cameraData, topViewCameraParameters);
     this.miniMapCameraParameters = merge({}, cameraData, miniMapCameraParameters);
-    this.selectedMap = merge({}, selectedMap);
 
     // Create a 2D scene (the viewports frames)
     this.scene2D = new THREE.Scene();
@@ -339,7 +338,6 @@ export default class ThumbRaiser {
       }
       table.rows[i++].cells[0].innerHTML = this.player.keyCodes[key];
     }
-    table.rows[i].cells[0].innerHTML = this.maze.credits + '<br>' + this.player.credits;
   }
 
   displayPanel() {

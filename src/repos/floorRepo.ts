@@ -4,11 +4,10 @@ import IFloorRepo from '../services/IRepos/IFloorRepo';
 import { Model } from 'mongoose';
 import { Document } from 'mongodb';
 import { IFloorPersistence } from '../dataschema/IFloorPersistence';
-import { FloorMap } from '../mappers/FloorMap';
+import { FloorMapper } from '../mappers/FloorMapper';
 import { FloorId } from '../domain/floor/floorId';
 import { BuildingId } from '../domain/building/buildingId';
-import { Building } from '../domain/building/building';
-import {Pathway} from "../domain/pathway/pathway";
+import { Pathway } from '../domain/pathway/pathway';
 
 @Service()
 export default class FloorRepo implements IFloorRepo {
@@ -18,11 +17,10 @@ export default class FloorRepo implements IFloorRepo {
     const query = { building: buildingId, floorNr: floorNr };
     const floorRecord = await this.floorSchema.findOne(query);
     if (floorRecord != null) {
-      return FloorMap.toDomain(floorRecord);
+      return FloorMapper.toDomain(floorRecord);
     } else {
       return null;
     }
-
   }
 
   private createBaseQuery(): any {
@@ -46,7 +44,7 @@ export default class FloorRepo implements IFloorRepo {
     const query = { domainId: idX };
     const floorRecord = await this.floorSchema.findOne(query);
     if (floorRecord != null) {
-      return FloorMap.toDomain(floorRecord);
+      return FloorMapper.toDomain(floorRecord);
     } else {
       return null;
     }
@@ -58,9 +56,9 @@ export default class FloorRepo implements IFloorRepo {
 
     try {
       if (floorDocument === null) {
-        const rawFloor = FloorMap.toPersistence(floor);
+        const rawFloor = FloorMapper.toPersistence(floor);
         const floorCreated = await this.floorSchema.create(rawFloor);
-        return FloorMap.toDomain(floorCreated);
+        return FloorMapper.toDomain(floorCreated);
       } else {
         floorDocument.floorNr = floor.floorNr;
         floorDocument.description = floor.description;
@@ -75,7 +73,7 @@ export default class FloorRepo implements IFloorRepo {
     const query = { building: building, floorNr: number };
     const floorRecord = await this.floorSchema.findOne(query);
     if (floorRecord != null) {
-      return FloorMap.toDomain(floorRecord);
+      return FloorMapper.toDomain(floorRecord);
     } else {
       return null;
     }
@@ -88,7 +86,7 @@ export default class FloorRepo implements IFloorRepo {
     const floorRecords = await this.floorSchema.find(query);
 
     if (floorRecords.length !== 0) {
-      return await Promise.all(floorRecords.map(floorRecord => FloorMap.toDomain(floorRecord)));
+      return await Promise.all(floorRecords.map(floorRecord => FloorMapper.toDomain(floorRecord)));
     } else {
       return [];
     }
@@ -143,13 +141,13 @@ export default class FloorRepo implements IFloorRepo {
     await floorDocument;
     return floor;
   }
-  public async floorsInPathway(pathways:Pathway[]):Promise<Floor[]>{
-    let floors:Floor[] = [];
-    for(let pathway of pathways){
+  public async floorsInPathway(pathways: Pathway[]): Promise<Floor[]> {
+    const floors: Floor[] = [];
+    for (const pathway of pathways) {
       let floor = await this.findById(pathway.floorSource);
-      if(floor != null) floors.push(floor);
+      if (floor != null) floors.push(floor);
       floor = await this.findById(pathway.floorDestination);
-      if(floor != null) floors.push(floor);
+      if (floor != null) floors.push(floor);
     }
     return floors;
   }

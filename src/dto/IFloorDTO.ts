@@ -120,5 +120,9 @@ export interface IFloorDTO {
       minFilter: number;
       secondaryColor: string;
     };
+    player: {
+      initialPosition: [number, number];
+      initialDirection: number;
+    };
   };
 }

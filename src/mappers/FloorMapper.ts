@@ -1,16 +1,19 @@
 import { Mapper } from '../core/infra/Mapper';
 import { Floor } from '../domain/floor/floor';
+import { FloorMapStructure} from "../domain/floor/floorMapStructure";
 import { IFloorDTO } from '../dto/IFloorDTO';
 import { Container } from 'typedi';
 import BuildingRepo from '../repos/buildingRepo';
 import { UniqueEntityID } from '../core/domain/UniqueEntityID';
 
-export class FloorMap extends Mapper<Floor> {
+export class FloorMapper extends Mapper<Floor> {
   public static toDTO(floor: Floor) {
     return {
+      domainId: floor.id.toString(),
       building: floor.building.designation,
       description: floor.description,
       floorNr: floor.floorNr,
+      floorMap: floor.floorMap.props,
     } as IFloorDTO;
   }
 

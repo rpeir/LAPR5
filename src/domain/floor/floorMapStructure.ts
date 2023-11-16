@@ -119,6 +119,10 @@ interface FloorMapProps {
     minFilter: number;
     secondaryColor: string;
   };
+  player: {
+    initialPosition: [number, number];
+    initialDirection: number;
+  };
 }
 
 export class FloorMapStructure extends ValueObject<FloorMapProps> {

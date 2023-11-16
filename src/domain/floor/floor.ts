@@ -10,7 +10,7 @@ interface FloorProps {
   description: string;
   building: Building;
   floorNr: number;
-  floorMap?: FloorMapStructure; // Updated the type to FloorMap
+  floorMap?: FloorMapStructure; // Updated the type to FloorMapper
 }
 
 export class Floor extends AggregateRoot<FloorProps> {
@@ -31,7 +31,7 @@ export class Floor extends AggregateRoot<FloorProps> {
   }
 
   get floorMap(): FloorMapStructure | undefined {
-    // Updated the return type to FloorMap | undefined
+    // Updated the return type to FloorMapper | undefined
     return this.props.floorMap;
   }
 
@@ -44,7 +44,7 @@ export class Floor extends AggregateRoot<FloorProps> {
   }
 
   set floorMap(value: FloorMapStructure | undefined) {
-    // Updated the type to FloorMap | undefined
+    // Updated the type to FloorMapper | undefined
     this.props.floorMap = value;
   }
 
