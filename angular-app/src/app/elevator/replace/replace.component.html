@@ -1,64 +1,69 @@
-<app-elevator-tool-bar></app-elevator-tool-bar>
-<body class="RobDroneGo">
-<div class="container">
-  <h2 class="text-center">Replace Elevator</h2>
-  <br>
-  <form (ngSubmit)="replaceElevator()">
-    <mat-form-field class="full-width">
-      <mat-label>Select the elevator (id)</mat-label>
-      <input matInput [(ngModel)]="elevator.id" name="domainId" required>
-    </mat-form-field>
+<app-gestor-de-campus-toolbar></app-gestor-de-campus-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav class="options" mode="side" opened>
+    <app-elevator-tool-bar></app-elevator-tool-bar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <body class="RobDroneGo">
+    <div class="container">
+      <h2 class="text-center">Replace Elevator</h2>
+      <br>
+      <form (ngSubmit)="replaceElevator()">
+        <mat-form-field class="full-width">
+          <mat-label>Select the elevator (id)</mat-label>
+          <input matInput [(ngModel)]="elevator.id" name="domainId" required>
+        </mat-form-field>
 
-    <mat-form-field class="full-width">
-      <mat-label>Select a designation for the elevator</mat-label>
-      <input matInput [(ngModel)]="elevator.designation" name="designation" required>
-    </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Select a designation for the elevator</mat-label>
+          <input matInput [(ngModel)]="elevator.designation" name="designation" required>
+        </mat-form-field>
 
-    <mat-form-field class="full-width">
-      <mat-label>Select a building</mat-label>
-      <mat-select [(ngModel)]="elevator.buildingDesignation" name="buildingDesignation" (ngModelChange)="listFloorsOfBuildingDesignation($event)" required>
-        <mat-option *ngFor="let building of buildings" [value]="building.designation">
-          {{building.designation}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Select a building</mat-label>
+          <mat-select [(ngModel)]="elevator.buildingDesignation" name="buildingDesignation" (ngModelChange)="listFloorsOfBuildingDesignation($event)" required>
+            <mat-option *ngFor="let building of buildings" [value]="building.designation">
+              {{building.designation}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-    <mat-form-field class="full-width">
-      <mat-label>Select the floors served by the elevator</mat-label>
-      <mat-select [(ngModel)]="elevator.floorsServed" name="floorsServed" multiple required>
-        <mat-option *ngFor="let floor of floorsServed" [value]="floor.floorNr" [matTooltip]="getFloorInfo(floor)">
-          {{floor.floorNr}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Select the floors served by the elevator</mat-label>
+          <mat-select [(ngModel)]="elevator.floorsServed" name="floorsServed" multiple required>
+            <mat-option *ngFor="let floor of floorsServed" [value]="floor.floorNr" [matTooltip]="getFloorInfo(floor)">
+              {{floor.floorNr}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
 
-    <mat-form-field class="full-width">
-      <mat-label>Select a brand</mat-label>
-      <input matInput [(ngModel)]="elevator.brand" name="brand" required>
-    </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Select a brand</mat-label>
+          <input matInput [(ngModel)]="elevator.brand" name="brand" required>
+        </mat-form-field>
 
-    <mat-form-field class="full-width">
-      <mat-label>Select a model</mat-label>
-      <input matInput [(ngModel)]="elevator.modelE" name="modelE" required>
-    </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Select a model</mat-label>
+          <input matInput [(ngModel)]="elevator.modelE" name="modelE" required>
+        </mat-form-field>
 
-    <mat-form-field class="full-width">
-      <mat-label>Select a serial number</mat-label>
-      <input matInput [(ngModel)]="elevator.serialNumber" name="serialNumber" required>
-    </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Select a serial number</mat-label>
+          <input matInput [(ngModel)]="elevator.serialNumber" name="serialNumber" required>
+        </mat-form-field>
 
-    <mat-form-field class="full-width">
-      <mat-label>Elevator Description</mat-label>
-      <input matInput [(ngModel)]="elevator.description" name="description" placeholder="Max 250 characters" required>
-    </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Elevator Description</mat-label>
+          <input matInput [(ngModel)]="elevator.description" name="description" placeholder="Max 250 characters" required>
+        </mat-form-field>
 
-    <div>
-      <input type="submit" value="Replace">
+        <div>
+          <input type="submit" value="Replace">
+        </div>
+      </form>
     </div>
-  </form>
-</div>
-</body>
+    </body>
 
-
-
+  </mat-sidenav-content>
+</mat-sidenav-container>

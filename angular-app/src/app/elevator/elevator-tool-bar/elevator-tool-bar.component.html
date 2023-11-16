@@ -1,28 +1,18 @@
-<mat-toolbar color="primary">
-  <button [matMenuTriggerFor]="elevatorMenu" mat-icon-button class="example-icon" aria-label=" icon-button with menu icon">
-    <mat-icon>menu</mat-icon>
+<div class="options">
+  <div class="title">
+    <span>Elevators Menu</span>
+  </div>
+  <button id="create-elevator-option" mat-menu-item (click)="goToCreateElevator()">
+    <span>Create Elevator</span>
   </button>
-  <mat-menu #elevatorMenu="matMenu">
-    <button mat-menu-item (click)="goToCreateElevator()">
-      <span>Create Elevator</span>
-    </button>
-    <button mat-menu-item (click)="goToUpdateElevator()">
-      <span>Update Elevator</span>
-    </button>
-    <button mat-menu-item (click)="goToReplaceElevator()">
-      <span>Replace Elevator</span>
-    </button>
-    <button mat-menu-item (click)="goToListAllElevators()">
-      <span>List All Elevators</span>
-    </button>
-    <button mat-menu-item (click)="goToGestorDeCampus()">
-      <span>Back</span>
-    </button>
-  </mat-menu>
+  <button id="update-elevator-option" mat-menu-item (click)="goToUpdateElevator()">
+    <span>Update Elevator</span>
+  </button>
+  <button id="replace-elevator-option" mat-menu-item (click)="goToReplaceElevator()">
+    <span>Replace Elevator</span>
+  </button>
+  <button id="list-all-elevators-option" mat-menu-item (click)="goToListAllElevators()">
+    <span>List All Elevators</span>
+  </button>
+</div>
 
-  <span>Elevators</span>
-  <span class="spacer"></span>
-  <button mat-icon-button class="example-icon" aria-label=" icon-button with menu icon" (click)="goToLogin()">
-    <mat-icon>home</mat-icon>
-  </button>
-</mat-toolbar>

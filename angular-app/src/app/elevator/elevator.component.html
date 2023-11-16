@@ -1,7 +1,14 @@
-<app-elevator-tool-bar></app-elevator-tool-bar>
-<body class="Building">
-<div class="container">
-  <h1 class="text-center">Welcome to Elevator's page</h1>
-  <img src="../../assets/elevator.gif" alt="Page Content GIF">
-</div>
-</body>
+<app-gestor-de-campus-toolbar></app-gestor-de-campus-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav class="options" mode="side" opened>
+    <app-elevator-tool-bar></app-elevator-tool-bar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <body class="Building">
+  <div class="container">
+    <h1 class="text-center">Welcome to Elevator's page</h1>
+    <img src="../../assets/elevator.gif" alt="Page Content GIF">
+  </div>
+  </body>
+  </mat-sidenav-content>
+</mat-sidenav-container>
