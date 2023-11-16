@@ -8,6 +8,22 @@ import { Router } from "@angular/router";
 })
 export class FloorToolBarComponent {
   constructor(private router: Router) {
+    this.router.events.subscribe((event) => {
+      switch (this.router.url) {
+        case '/floors/create':
+          // @ts-ignore
+          document.getElementById('create-floor-option').style.fontWeight = 'bold';
+          break;
+        case '/floors/edit':
+          // @ts-ignore
+          document.getElementById('edit-floor-option').style.fontWeight = 'bold';
+          break;
+        case '/floors/building':
+          // @ts-ignore
+          document.getElementById('list-floors-building-option').style.fontWeight = 'bold';
+          break;
+      }
+    });
   }
 
   goCreate() {
@@ -22,11 +38,4 @@ export class FloorToolBarComponent {
     this.router.navigate(['floors/building']);
   }
 
-  goToGestorDeCampus() {
-    this.router.navigate(['/gestor-de-campus']);
-  }
-
-  goToLogin() {
-    this.router.navigate(['']).then(r => console.log(r));
-  }
 }

@@ -1,27 +1,14 @@
-<mat-toolbar color="primary">
-  <button [matMenuTriggerFor]="FloorsMenu" mat-icon-button class="example-icon" aria-label=" icon-button with menu icon">
-    <mat-icon>menu</mat-icon>
+<div class="options">
+  <div class="title">
+    <span>Floor Menu</span>
+  </div>
+  <button id="create-floor-option" mat-menu-item (click)="goCreate()">
+    <span>Create Floor</span>
   </button>
-  <mat-menu #FloorsMenu="matMenu">
-    <button mat-menu-item (click)="goCreate()">
-      <span>Create Floor</span>
-    </button>
-    <button mat-menu-item (click)="goToEdit()">
-      <span>Edit Floor</span>
-    </button>
-    <button mat-menu-item (click)="goToListFloorOfBuilidng()">
-      <span>List Floors of a building</span>
-    </button>
-    <button mat-menu-item (click)="goToGestorDeCampus()">
-      <span>Back</span>
-    </button>
-
-
-  </mat-menu>
-
-  <span>Floors</span>
-  <span class="spacer"></span>
-  <button mat-icon-button class="example-icon" aria-label=" icon-button with menu icon" (click)="goToLogin()">
-    <mat-icon>home</mat-icon>
+  <button id="edit-floor-option" mat-menu-item (click)="goToEdit()">
+    <span>Edit Floor</span>
   </button>
-</mat-toolbar>
+  <button id="list-floors-building-option" mat-menu-item (click)="goToListFloorOfBuilidng()">
+    <span>List Floors of a building</span>
+  </button>
+</div>

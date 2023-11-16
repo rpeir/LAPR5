@@ -1,37 +1,42 @@
-<app-floor-tool-bar></app-floor-tool-bar>
-<body class="RobDroneGo">
-<div class="container">
-  <h2 class="text-center">List Floor of a Building</h2>
-  <br>
-  <form>
+<app-gestor-de-campus-toolbar></app-gestor-de-campus-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav class="options" mode="side" opened>
+    <app-floor-tool-bar></app-floor-tool-bar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <!---Your content here-->
+    <body class="RobDroneGo">
+    <div class="container">
+      <h2 class="text-center">List Floor of a Building</h2>
+      <br>
+      <form>
 
-    <mat-form-field class="full-width">
-      <mat-label>Select a building</mat-label>
-      <mat-select [(ngModel)]="buildingDesignation" name="buildingDesignation" (ngModelChange)="listFloorsOfBuilding($event)">
-        <mat-option *ngFor="let building of buildings" [value]="building.designation" >
-          {{building.designation}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Select a building</mat-label>
+          <mat-select [(ngModel)]="buildingDesignation" name="buildingDesignation" (ngModelChange)="listFloorsOfBuilding($event)">
+            <mat-option *ngFor="let building of buildings" [value]="building.designation" >
+              {{building.designation}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-    <div *ngIf="floors">
-      <div *ngFor="let floor of floors">
-        <mat-card>
-          <mat-card-content>
-            Building: {{floor.building}};
+        <div *ngIf="floors">
+          <div *ngFor="let floor of floors">
+            <mat-card>
+              <mat-card-content>
+                Building: {{floor.building}};
+                <br>
+                description: {{floor.description}};
+                <br>
+                floorNr: {{floor.floorNr}};
+              </mat-card-content>
+            </mat-card>
             <br>
-            description: {{floor.description}};
-            <br>
-            floorNr: {{floor.floorNr}};
-          </mat-card-content>
-        </mat-card>
-        <br>
-      </div>
+          </div>
+        </div>
+
+      </form>
     </div>
-
-  </form>
-</div>
-</body>
-
-
-
+    </body>
+  </mat-sidenav-content>
+</mat-sidenav-container>
