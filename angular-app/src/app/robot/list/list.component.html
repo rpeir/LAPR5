@@ -1,6 +1,6 @@
 <app-robot-tool-bar></app-robot-tool-bar>
 <div class="container">
-  <h2 class="text-center">List All Robots</h2>
+  <h2 class="title">List All Robots</h2>
   <br>
   <form (ngSubmit)="listRobots()">
     <!-- List Robots -->
@@ -10,7 +10,7 @@
       </button>
       <div *ngIf="robots && robots.length > 0">
         <div *ngFor="let robot of robots; let last = last">
-          <div class="robot-details">
+          <div class="robot-details info">
             <p><strong>Code:</strong> {{ robot.robotCode}}</p>
             <p><strong>NickName:</strong> {{ robot.nickName}}</p>
             <p><strong>Type:</strong> {{ robot.robotType }}</p>

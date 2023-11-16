@@ -4,19 +4,38 @@ body {
   justify-content: center;
   background-color: #f2f2f2;
   font-family: Arial, sans-serif;
+  margin: 0;
+  height: 100vh;
 }
 
 .container {
-  width: 800px;
-  height: 800px;
+  width: auto;
   padding: 20px;
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align content to the left */
 }
 
 .text-center {
   text-align: center;
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+}
+
+.info {
+  width: 100%;
+  text-align: left;
+}
+
+.input-submit-container {
+  width: 100%;
+  margin-top: 10px; /* Add margin to separate button from above content */
 }
 
 input[type="submit"] {
@@ -35,4 +54,8 @@ input[type="submit"] {
 
 .tooltip-content {
   white-space: pre-line;
+}
+
+mat-sidenav-container {
+  height: 93%;
 }
