@@ -1,0 +1,32 @@
+<mat-toolbar color="primary">
+  <button [matMenuTriggerFor]="gestorDeCampusMenu" mat-icon-button class="example-icon" aria-label=" icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #gestorDeCampusMenu="matMenu">
+    <button mat-menu-item (click)="goToBuildings()">
+      <span>Buildings</span>
+    </button>
+    <button mat-menu-item (click)="goToElevators()">
+      <span>Elevators</span>
+    </button>
+    <button mat-menu-item (click)="goToFloors()">
+      <span>Floors</span>
+    </button>
+    <button mat-menu-item (click)="goToRooms()">
+      <span>Rooms</span>
+    </button>
+    <button mat-menu-item (click)="goToPathways()">
+      <span>Pathways</span>
+    </button>
+  </mat-menu>
+
+  <span>Welcome, {{userName}}!</span>
+  <div class="right-elems-container">
+    <button mat-icon-button class="home" aria-label=" icon-button with menu icon" (click)="goToHome()">
+      <mat-icon>home</mat-icon>
+    </button>
+    <button mat-icon-button class="exit" aria-label=" icon-button with menu icon" (click)="goToLogin()">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>

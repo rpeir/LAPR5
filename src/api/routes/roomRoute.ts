@@ -7,11 +7,11 @@ import middlewares from "../middlewares";
 
 const route = Router();
 export default (app: Router) => {
-  app.use("/room", route);
+  app.use("/rooms", route);
   const ctrl = Container.get(config.controllers.room.name) as IRoomController;
 
   route.post(
-    "/create",
+    "/",
     celebrate({
       body: Joi.object({
         name : Joi.string().required(),

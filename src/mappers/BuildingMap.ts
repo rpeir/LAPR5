@@ -2,6 +2,7 @@ import { Mapper } from '../core/infra/Mapper';
 import { Building } from '../domain/building/building';
 import { IBuildingDTO } from '../dto/IBuildingDTO';
 import { UniqueEntityID } from '../core/domain/UniqueEntityID';
+import { BuildingCode } from "../domain/building/BuildingCode";
 
 export class BuildingMap extends Mapper<Building> {
 
@@ -16,9 +17,10 @@ export class BuildingMap extends Mapper<Building> {
     } as IBuildingDTO;
   }
   public static async toDomain(raw: any): Promise<Building> {
+    const buildingCode = BuildingCode.create(raw.code);
     const buildingOrError = Building.create(
       {
-        code: raw.code,
+        code: buildingCode.getValue(),
         designation: raw.designation,
         description: raw.description,
         length: raw.length,

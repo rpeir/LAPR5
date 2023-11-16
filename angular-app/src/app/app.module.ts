@@ -47,15 +47,18 @@ import { MatCardModule } from "@angular/material/card";
 import { CreatePathway } from "./pathway/create/create-pathway";
 import { ElevatorCreateComponent } from "./elevator/create/create.component";
 import { ElevatorUpdateComponent } from "./elevator/update/update.component";
+import { GestorDeCampusToolbarComponent } from './gestor-de-campus-toolbar/gestor-de-campus-toolbar.component';
 import { ElevatorReplaceComponent } from "./elevator/replace/replace.component";
-import {RoomCreateComponent} from "./room/create/create.component";
+import { CreateComponent as RoomCreateComponent } from "./room/create/create.component";
 import { BuildingToolBarComponent } from './building/building-tool-bar/building-tool-bar.component';
 import { ElevatorToolBarComponent } from './elevator/elevator-tool-bar/elevator-tool-bar.component';
 import { FloorToolBarComponent } from './floor/floor-tool-bar/floor-tool-bar.component';
 import { PathwayToolBarComponent } from './pathway/pathway-tool-bar/pathway-tool-bar.component';
 import { RobotToolBarComponent } from './robot/robot-tool-bar/robot-tool-bar.component';
 import { ElevatorListAllComponent } from './elevator/list-all-elevators/listAll.component';
-
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatListModule } from "@angular/material/list";
+import { RoomSidenavComponent } from './room/room-sidenav/room-sidenav.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -93,6 +96,7 @@ import { ElevatorListAllComponent } from './elevator/list-all-elevators/listAll.
     CreatePathway,
     ElevatorCreateComponent,
     ElevatorUpdateComponent,
+    GestorDeCampusToolbarComponent,
     ElevatorReplaceComponent,
     RoomCreateComponent,
     BuildingToolBarComponent,
@@ -100,7 +104,8 @@ import { ElevatorListAllComponent } from './elevator/list-all-elevators/listAll.
     FloorToolBarComponent,
     PathwayToolBarComponent,
     RobotToolBarComponent,
-    ElevatorListAllComponent
+    ElevatorListAllComponent,
+    RoomSidenavComponent
   ],
   imports: [
     BrowserModule,
@@ -116,7 +121,9 @@ import { ElevatorListAllComponent } from './elevator/list-all-elevators/listAll.
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
-    MatCardModule
+    MatCardModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

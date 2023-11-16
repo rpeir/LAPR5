@@ -24,7 +24,7 @@ import { MapViewerComponent } from "./map-viewer/map-viewer.component";
 import { ElevatorCreateComponent} from "./elevator/create/create.component";
 import { ElevatorUpdateComponent} from "./elevator/update/update.component";
 import { ElevatorReplaceComponent} from "./elevator/replace/replace.component";
-import { RoomCreateComponent} from "./room/create/create.component"
+import { CreateComponent as RoomCreateComponent } from "./room/create/create.component"
 import { DisableComponent } from "./robot/disable/disable.component";
 import { ListComponent as ListRobotComponent } from "./robot/list/list.component";
 import { ElevatorListAllComponent } from "./elevator/list-all-elevators/listAll.component";
