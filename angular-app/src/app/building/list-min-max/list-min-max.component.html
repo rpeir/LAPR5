@@ -1,45 +1,52 @@
-<app-building-tool-bar></app-building-tool-bar>
+<app-gestor-de-campus-toolbar></app-gestor-de-campus-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav class="options" mode="side" opened>
+    <app-building-tool-bar></app-building-tool-bar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <body class="RobDroneGo">
+    <div class="container">
+      <h2 class="text-center">List Buildings with min and max number of floors</h2>
+      <br>
+      <form (ngSubmit)="getBuildingFloorMaxMin()">
+        <mat-form-field class="full-width">
+          <mat-label>Minimum:</mat-label>
+          <input matInput [(ngModel)]="min" name="min" required >
+          <input matInput placeholder="Max 30 characters">
+        </mat-form-field>
 
-<body class="RobDroneGo">
-<div class="container">
-  <h2 class="text-center">List Buildings with min and max number of floors</h2>
-  <br>
-  <form (ngSubmit)="getBuildingFloorMaxMin()">
-    <mat-form-field class="full-width">
-      <mat-label>Minimum:</mat-label>
-      <input matInput [(ngModel)]="min" name="min" required >
-      <input matInput placeholder="Max 30 characters">
-    </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Maximum</mat-label>
+          <input matInput [(ngModel)]="max" name="max"  >
+          <input matInput placeholder="Max 250 characters">
+        </mat-form-field>
 
-    <mat-form-field class="full-width">
-      <mat-label>Maximum</mat-label>
-      <input matInput [(ngModel)]="max" name="max"  >
-      <input matInput placeholder="Max 250 characters">
-    </mat-form-field>
+        <div>
+          <input type="submit" value="submit">
+        </div>
 
-    <div>
-      <input type="submit" value="submit">
+        <div *ngIf="buildings">
+          <div *ngFor="let building of buildings">
+            <mat-card>
+              <mat-card-content>
+                Building designation: {{building.designation}};
+                <br>
+                Building description: {{building.description}};
+                <br>
+                Building code: {{building.code}};
+                <br>
+                Building width: {{building.width}};
+                <br>
+                Building height: {{building.height}};
+              </mat-card-content>
+            </mat-card>
+            <br>
+          </div>
+        </div>
+
+      </form>
     </div>
+    </body>
 
-    <div *ngIf="buildings">
-      <div *ngFor="let building of buildings">
-        <mat-card>
-          <mat-card-content>
-            Building designation: {{building.designation}};
-            <br>
-            Building description: {{building.description}};
-            <br>
-            Building code: {{building.code}};
-            <br>
-            Building width: {{building.width}};
-            <br>
-            Building height: {{building.height}};
-          </mat-card-content>
-        </mat-card>
-        <br>
-      </div>
-    </div>
-
-  </form>
-</div>
-</body>
+  </mat-sidenav-content>
+</mat-sidenav-container>

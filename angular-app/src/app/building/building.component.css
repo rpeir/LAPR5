@@ -1,7 +1,7 @@
 .spacer {
   flex: 1 1 auto;
 }
-body {
+.container {
   text-align: center;
   display: flex;
   flex-direction: column;
