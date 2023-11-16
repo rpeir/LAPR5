@@ -17,3 +17,12 @@ h1 {
     font-family: Arial, sans-serif;
     margin-top: 10px; /* Adjusted margin for better spacing */
 }
+
+.options {
+  text-align: center;
+}
+
+.title {
+  padding: 10px;
+  background-color: lightgreen;
+}

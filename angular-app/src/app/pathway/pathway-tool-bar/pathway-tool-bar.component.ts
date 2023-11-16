@@ -8,7 +8,22 @@ import { Router } from "@angular/router";
 })
 export class PathwayToolBarComponent {
   constructor(private router: Router) {
-
+    this.router.events.subscribe((event) => {
+      switch (this.router.url) {
+        case '/pathways/list-between-buildings':
+          // @ts-ignore
+          document.getElementById('list-between-buildings-option').style.fontWeight = 'bold';
+          break;
+        case '/pathways/edit':
+          // @ts-ignore
+          document.getElementById('edit-pathway-option').style.fontWeight = 'bold';
+          break;
+        case '/pathways/create':
+          // @ts-ignore
+          document.getElementById('create-pathway-option').style.fontWeight = 'bold';
+          break;
+      }
+    });
   }
 
   goToListBetweenBuildings() {
@@ -22,11 +37,4 @@ export class PathwayToolBarComponent {
     this.router.navigate(['/pathways/create']);
   }
 
-  goToGestorDeCampus() {
-    this.router.navigate(['/gestor-de-campus']);
-  }
-
-  goToLogin() {
-    this.router.navigate(['']).then(r => console.log(r));
-  }
 }
