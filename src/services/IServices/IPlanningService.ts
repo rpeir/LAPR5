@@ -9,5 +9,6 @@ export default interface IPlanningService {
   getFloors(): Promise<Result<IPlanningFloorDTO[]>>;
   getElevators(): Promise<Result<IPlanningElevatorDTO[]>>;
   getPathways(): Promise<Result<IPlanningPathwayDTO[]>>;
-  getPath(floorSource: string, floorDestination: string): Promise<Result<IPathDTO>>;
+  getPathLessBuildings(floorSource: string, floorDestination: string): Promise<Result<IPathDTO>>;
+  getPathLessElevators(floorSource: string, floorDestination: string): Promise<Result<IPathDTO>>;
 }

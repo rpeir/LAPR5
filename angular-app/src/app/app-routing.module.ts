@@ -28,6 +28,7 @@ import { CreateComponent as RoomCreateComponent } from "./room/create/create.com
 import { DisableComponent } from "./robot/disable/disable.component";
 import { ListComponent as ListRobotComponent } from "./robot/list/list.component";
 import { ElevatorListAllComponent } from "./elevator/list-all-elevators/listAll.component";
+import { GestorDeTarefasComponent } from "./gestor-de-tarefas/gestor-de-tarefas.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -48,6 +49,7 @@ const routes: Routes = [
   { path: 'task-types', component: TaskTypeComponent },
   { path: 'gestor-de-frota', component: GestorDeFrotaComponent },
   { path: 'gestor-de-campus', component: GestorDeCampusComponent },
+  { path: 'gestor-de-tarefas', component: GestorDeTarefasComponent},
   { path: 'building/create', component: BuildingCreateComponent },
   { path: 'building/edit', component: BuildingEditComponent },
   { path: 'building/list-all', component: BuildingListAllComponent },

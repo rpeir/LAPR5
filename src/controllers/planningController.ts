@@ -54,13 +54,31 @@ export default class PlanningController implements IPlanningController {
     }
   }
 
-  public async getPath(req: Request, res: Response, next: NextFunction) {
+  public async getPathLessBuildings(req: Request, res: Response, next: NextFunction) {
     try {
       const sourceBuilding = req.query.sourceBuilding as string;
       const sourceFloor = req.query.sourceFloor as string;
       const destinationBuilding = req.query.destinationBuilding as string;
       const destinationFloor = req.query.destinationFloor as string;
-      const infoOrError = await this.planningService.getPath(sourceBuilding + "_" + sourceFloor, destinationBuilding + "_" + destinationFloor);
+      const infoOrError = await this.planningService.getPathLessBuildings(sourceBuilding + "_" + sourceFloor, destinationBuilding + "_" + destinationFloor);
+
+      if (infoOrError.isFailure) {
+        return res.status(402).json({ error: infoOrError.error }).send();
+      }
+      const infoDTO = infoOrError.getValue();
+      return res.json(infoDTO).status(200);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  public async getPathLessElevators(req: Request, res: Response, next: NextFunction) {
+    try {
+      const sourceBuilding = req.query.sourceBuilding as string;
+      const sourceFloor = req.query.sourceFloor as string;
+      const destinationBuilding = req.query.destinationBuilding as string;
+      const destinationFloor = req.query.destinationFloor as string;
+      const infoOrError = await this.planningService.getPathLessElevators(sourceBuilding + "_" + sourceFloor, destinationBuilding + "_" + destinationFloor);
 
       if (infoOrError.isFailure) {
         return res.status(402).json({ error: infoOrError.error }).send();

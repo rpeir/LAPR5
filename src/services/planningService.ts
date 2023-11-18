@@ -108,7 +108,7 @@ export default class PlanningService implements IPlanningService {
     return Result.ok<IPlanningPathwayDTO[]>(planningPathways);
   }
 
-  public async getPath(floorSource: string, floorDestination: string) {
+  public async getPathLessBuildings(floorSource: string, floorDestination: string) {
     const http = require("http");
     const options = {
       method: "GET",
@@ -147,4 +147,46 @@ export default class PlanningService implements IPlanningService {
       });
     });
   }
+
+  public async getPathLessElevators(floorSource: string, floorDestination: string) {
+    const http = require("http");
+    const options = {
+      method: "GET",
+      host: "localhost",
+      port: 5000,
+      path: "/path/lessElevators?floorSource=" + floorSource + "&floorDestination=" + floorDestination,
+    };
+
+    return new Promise<Result<IPathDTO>>((resolve) => {
+      let result;
+
+      const request = http.request(options, (res) => {
+        if (res.statusCode !== 200) {
+          result = Result.fail(`Did not get an OK from the server. Code: ${res.statusCode}`);
+          res.resume();
+          resolve(result);
+        }
+
+        let data = '';
+
+        res.on('data', (chunk) => {
+          data += chunk;
+        });
+
+        res.on('close', () => {
+          result = Result.ok(JSON.parse(data));
+          resolve(result);
+        });
+      });
+
+      request.end();
+
+      request.on('error', (err) => {
+        result = Result.fail(`Encountered an error trying to make a request: ${err.message}`);
+        resolve(result);
+      });
+    });
+  }
+
+
 }

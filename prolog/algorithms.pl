@@ -46,17 +46,17 @@ go_Through_floor(FloorAct,FloorDestination,[BuildingAct,BuildingNext|OtherBuildi
 % =============================================================================
 
 best_path_less_elevators(FloorSource,FloorDestination,BestPath):-
-            findall(PathwayElevatorPath,path_between_floors(FloorSource,FloorDestination,_,PathwayElevatorPath),ListPathwayElevatorPath),
+            findall([BuildingList, PathwayElevatorPath],path_between_floors(FloorSource,FloorDestination,BuildingList,PathwayElevatorPath),ListPathwayElevatorPath),
             less_elevators(ListPathwayElevatorPath,BestPath,_,_).
 
-less_elevators([PathwayElevatorPath],PathwayElevatorPath,NElev,NPathway):-count(PathwayElevatorPath,NElev,NPathway).
+less_elevators([[BuildingList, PathwayElevatorPath]],[BuildingList, PathwayElevatorPath],NElev,NPathway):-count(PathwayElevatorPath,NElev,NPathway).
 
-less_elevators([PathwayElevatorPath|OtherPathwayElevatorPath],PathwayElevatorPathR,NElevR,NPathwayR):-
-            less_elevators(OtherPathwayElevatorPath,PathwayElevatorPathM,NElev,NPathway),
+less_elevators([[BuildingList, PathwayElevatorPath]|OtherPathwayElevatorPath],[BuildingListR, PathwayElevatorPathR],NElevR,NPathwayR):-
+            less_elevators(OtherPathwayElevatorPath,[BuildingListM, PathwayElevatorPathM],NElev,NPathway),
             count(PathwayElevatorPath,NElev1,NPathway1),
             (((NElev1<NElev;(NElev1==NElev,NPathway1<NPathway)),!,
-            NElevR is NElev1, NPathwayR is NPathway1,PathwayElevatorPathR=PathwayElevatorPath);
-            (NElevR is NElev,NPathwayR is NPathway,PathwayElevatorPathR=PathwayElevatorPathM)).
+            NElevR is NElev1, NPathwayR is NPathway1,BuildingListR = BuildingList, PathwayElevatorPathR=PathwayElevatorPath);
+            (NElevR is NElev,NPathwayR is NPathway,BuildingListR = BuildingListM, PathwayElevatorPathR=PathwayElevatorPathM)).
 
 count([],0,0).
 count([elev(_,_)|L],NElev,NPathway):-count(L,NElevL,NPathway),NElev is NElevL + 1.

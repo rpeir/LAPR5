@@ -1,1 +1,91 @@
-<p>get-by-optimization-criteria works!</p>
+<body class="RobDroneGo">
+<div class="container">
+  <h2 class="text-center">Get optimized paths between floors.</h2>
+  <br>
+  <form (ngSubmit)="getPathBetweenFloors()">
+
+    <mat-form-field class="full-width">
+      <mat-label>Select a source building</mat-label>
+      <mat-select [(ngModel)]="buildingSource" name="buildingSource"
+                  (ngModelChange)="listFloorsOfBuildingSource($event)">
+        <mat-option *ngFor="let building of buildings" [value]="building.designation"
+                    [matTooltip]="getBuildingInfo(building)">
+          {{building.designation}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Select a building destination</mat-label>
+      <mat-select [(ngModel)]="buildingDestination" name="buildingSource"
+                  (ngModelChange)="listFloorsOfBuildingDestination($event)">
+        <mat-option *ngFor="let building of buildings" [value]="building.designation"
+                    [matTooltip]="getBuildingInfo(building)">
+          {{building.designation}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Select a source Floor</mat-label>
+      <mat-select [(ngModel)]="floorSource" name="floorSource">
+        <mat-option *ngFor="let floor of floorsSource" [value]="floor.floorNr" [matTooltip]="getFloorInfo(floor)">
+          {{floor.floorNr}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Select a source Floor</mat-label>
+      <mat-select [(ngModel)]="floorDestination" name="floorDestination">
+        <mat-option *ngFor="let floor of floorsDestination" [value]="floor.floorNr" [matTooltip]="getFloorInfo(floor)">
+          {{floor.floorNr}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Select an optimization criteria</mat-label>
+      <mat-select [(ngModel)]="selectedOptimizationCriteria" name="optimizationCriteria">
+        <mat-option *ngFor="let criteria of optimizationCriteria" [value]="criteria" >
+          {{criteria}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div>
+      <input type="submit" value="create">
+    </div>
+
+  </form>
+
+  <div *ngIf="path">
+    <h2 class="text-center">Buildings:</h2>
+    <div *ngFor="let building of path.buildings">
+      <mat-card>
+        <mat-card-content>
+          {{building}}:
+        </mat-card-content>
+      </mat-card>
+      <br>
+    </div>
+    <br>
+    <h2 class="text-center">Path</h2>
+      <div *ngFor="let obj of path.paths">
+        <mat-card>
+          <mat-card-content>
+            {{obj.element}}:
+            <br>
+            Floor Source : {{obj.floorSource}}
+            <br>
+            Floor Destination : {{obj.floorDestination}}
+            <br>
+          </mat-card-content>
+        </mat-card>
+        <br>
+      </div>
+  </div>
+
+
+  </div>
+</body>

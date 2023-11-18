@@ -59,6 +59,7 @@ import { ElevatorListAllComponent } from './elevator/list-all-elevators/listAll.
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { RoomSidenavComponent } from './room/room-sidenav/room-sidenav.component';
+import { GestorDeTarefasComponent } from './gestor-de-tarefas/gestor-de-tarefas.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -105,7 +106,8 @@ import { RoomSidenavComponent } from './room/room-sidenav/room-sidenav.component
     PathwayToolBarComponent,
     RobotToolBarComponent,
     ElevatorListAllComponent,
-    RoomSidenavComponent
+    RoomSidenavComponent,
+    GestorDeTarefasComponent,
   ],
   imports: [
     BrowserModule,
