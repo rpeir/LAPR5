@@ -12,5 +12,7 @@ export default (app: Router) => {
 
   route.get("/elevators",(req, res, next) => ctrl.getElevators(req,res, next));
 
-  route.get("/pathways",(req, res, next) => ctrl.getPatways(req,res, next));
+  route.get("/pathways",(req, res, next) => ctrl.getPathways(req,res, next));
+
+  route.get("/path/lessBuildings",(req, res, next) => ctrl.getPath(req,res, next));
 }

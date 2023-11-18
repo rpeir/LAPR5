@@ -1,6 +1,8 @@
 import { Inject, Service } from "typedi";
 import IPlanningService from "./IServices/IPlanningService";
 import { Result } from "../core/logic/Result";
+
+5;
 import config from "../../config";
 import IBuildingService from "./IServices/IBuildingService";
 import { PlanningFloor } from "../domain/planning/planningFloor";
@@ -15,6 +17,7 @@ import { PlanningElevatorMapper } from "../mappers/PlanningElevatorMapper";
 import { IPlanningElevatorDTO } from "../dto/IPlanningElevatorDTO";
 import { PlanningPathwayMapper } from "../mappers/PlanningPathwayMapper";
 import { IPlanningPathwayDTO } from "../dto/IPlanningPathwayDTO";
+import { IPathDTO } from "../dto/IPathDTO";
 
 @Service()
 export default class PlanningService implements IPlanningService {
@@ -35,10 +38,10 @@ export default class PlanningService implements IPlanningService {
     }
     let planningElevators = [];
     for (const elevator of elevators.getValue()) {
-      let floors = elevator.floorsServed.map(floor => elevator.buildingDesignation.toLowerCase() + "_" + floor);
+      let floors = elevator.floorsServed.map(floor => elevator.buildingDesignation + "_" + floor);
 
       const planningElevatorOrError = PlanningElevator.create({
-        building: elevator.buildingDesignation.toLowerCase(),
+        building: elevator.buildingDesignation,
         floors: floors
       });
 
@@ -64,10 +67,10 @@ export default class PlanningService implements IPlanningService {
       if (buildingFloors.isFailure) {
         floors = [];
       } else {
-        floors = buildingFloors.getValue().map(floor => floor.building.toLowerCase() + "_" + floor.floorNr);
+        floors = buildingFloors.getValue().map(floor => floor.building + "_" + floor.floorNr);
       }
       const planningFloorOrError = PlanningFloor.create({
-        building: building.designation.toLowerCase(),
+        building: building.designation,
         floors: floors
       });
 
@@ -90,10 +93,10 @@ export default class PlanningService implements IPlanningService {
     let planningPathways = [];
     for (const pathway of pathways.getValue()) {
       const pathwayOrError = PlanningPathway.create({
-        buildingSource: pathway.buildingSource.toLowerCase(),
-        buildingDestination: pathway.buildingDestination.toLowerCase(),
-        floorSource: pathway.buildingSource.toLowerCase() + "_" +  pathway.floorSource.toString(),
-        floorDestination: pathway.buildingDestination.toLowerCase() + "_" +  pathway.floorDestination.toString()
+        buildingSource: pathway.buildingSource,
+        buildingDestination: pathway.buildingDestination,
+        floorSource: pathway.buildingSource + "_" + pathway.floorSource.toString(),
+        floorDestination: pathway.buildingDestination + "_" + pathway.floorDestination.toString()
       });
 
       if (pathwayOrError.isFailure) {
@@ -105,4 +108,43 @@ export default class PlanningService implements IPlanningService {
     return Result.ok<IPlanningPathwayDTO[]>(planningPathways);
   }
 
+  public async getPath(floorSource: string, floorDestination: string) {
+    const http = require("http");
+    const options = {
+      method: "GET",
+      host: "localhost",
+      port: 5000,
+      path: "/path/lessBuildings?floorSource=" + floorSource + "&floorDestination=" + floorDestination,
+    };
+
+    return new Promise<Result<IPathDTO>>((resolve) => {
+      let result;
+
+      const request = http.request(options, (res) => {
+        if (res.statusCode !== 200) {
+          result = Result.fail(`Did not get an OK from the server. Code: ${res.statusCode}`);
+          res.resume();
+          resolve(result);
+        }
+
+        let data = '';
+
+        res.on('data', (chunk) => {
+          data += chunk;
+        });
+
+        res.on('close', () => {
+          result = Result.ok(JSON.parse(data));
+          resolve(result);
+        });
+      });
+
+      request.end();
+
+      request.on('error', (err) => {
+        result = Result.fail(`Encountered an error trying to make a request: ${err.message}`);
+        resolve(result);
+      });
+    });
+  }
 }

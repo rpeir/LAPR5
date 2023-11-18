@@ -7,6 +7,14 @@ import { UniqueEntityID } from '../core/domain/UniqueEntityID';
 
 export class FloorMapper extends Mapper<Floor> {
   public static toDTO(floor: Floor) {
+    if (floor.floorMap === undefined) {
+      return {
+        domainId: floor.id.toString(),
+        building: floor.building.designation,
+        description: floor.description,
+        floorNr: floor.floorNr,
+      } as IFloorDTO;
+    }
     return {
       domainId: floor.id.toString(),
       building: floor.building.designation,
