@@ -154,7 +154,7 @@ export default class FloorService implements IFloorService {
       pathways.map(pathway => {
         // if the building that we are trying to list is the source building of the pathway
         let originFloor, destinationFloor: Floor;
-        if (pathway.buildingSource.equals(building)) {
+        if (pathway.buildingSource.id.equals(building.id)) {
           originFloor = pathway.floorSource;
           destinationFloor = pathway.floorDestination;
         } else {
