@@ -22,6 +22,9 @@ export class FloorToolBarComponent {
           // @ts-ignore
           document.getElementById('list-floors-building-option').style.fontWeight = 'bold';
           break;
+        case '/floors/building-pathways':
+          // @ts-ignore
+          document.getElementById('list-floors-building-pathway-option').style.fontWeight = 'bold';
       }
     });
   }
@@ -38,4 +41,7 @@ export class FloorToolBarComponent {
     this.router.navigate(['floors/building']);
   }
 
+  goToListFloorsWithPathways() {
+    this.router.navigate(['floors/building-pathways'])
+  }
 }
