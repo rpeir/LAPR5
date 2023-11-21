@@ -1,5 +1,5 @@
 export class Floor {
-  domainId!: string;
+  domainId?: string;
   building!: string;
   description!: string;
   floorNr!: number;

@@ -62,6 +62,7 @@ import { RoomSidenavComponent } from './room/room-sidenav/room-sidenav.component
 import { GestorDeTarefasComponent } from './gestor-de-tarefas/gestor-de-tarefas.component';
 import { EditComponent as PathwayEditComponent } from "./pathway/edit/edit.component";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { EditFloorComponent} from "./floor/edit/edit-floor.component";
 
 @NgModule({
   declarations: [
@@ -112,7 +113,8 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
     RoomSidenavComponent,
     GestorDeTarefasComponent,
     ListOfBuldingWithPathwayComponent,
-    PathwayEditComponent
+    PathwayEditComponent,
+    EditFloorComponent
   ],
   imports: [
     BrowserModule,

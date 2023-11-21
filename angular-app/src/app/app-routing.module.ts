@@ -32,6 +32,7 @@ import { GestorDeTarefasComponent } from "./gestor-de-tarefas/gestor-de-tarefas.
 import { ListOfBuldingWithPathwayComponent } from "./floor/list-of-bulding-with-pathway/list-of-bulding-with-pathway.component";
 import { EditComponent as PathwayEditComponent } from "./pathway/edit/edit.component";
 import { ListBetweenBuildingsComponent } from "./pathway/list-between-buildings/list-between-buildings.component";
+import { EditFloorComponent } from "./floor/edit/edit-floor.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'floors/create', component: CreateFloorComponent },
   { path: 'floors/building', component: FloorListOfBuildingComponent },
   { path: 'floors/building-pathways', component: ListOfBuldingWithPathwayComponent },
+  { path: 'floors/edit', component: EditFloorComponent},
   { path: 'pathways', component: PathwayComponent },
   { path: 'pathways/create', component: CreatePathway },
   { path: 'pathways/edit', component: PathwayEditComponent },

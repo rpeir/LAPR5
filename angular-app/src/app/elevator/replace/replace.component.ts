@@ -39,14 +39,14 @@ export class ElevatorReplaceComponent implements OnInit{
   replaceElevator() {
     this.elevatorService.replaceElevator(this.elevator).subscribe({
       next: (data) => {
-        window.alert("Elevator updated successfully \n"
-            + "Designation: " + data.designation + "\n"
-            + "Building Designation: " + data.buildingDesignation + "\n"
-            + "Floors Served: " + data.floorsServed + "\n"
-            + "Brand: " + data.brand + "\n"
-            + "Model: " + data.modelE + "\n"
-            + "Serial Number: " + data.serialNumber + "\n"
-            + "Description: " + data.description + "\n");
+        window.alert("Elevator replaced successfully \n"
+          + "Designation: " + data.designation + "\n"
+          + "Building Designation: " + data.buildingDesignation + "\n"
+          + "Floors Served: " + data.floorsServed + "\n"
+          + "Brand: " + data.brand + "\n"
+          + "Model: " + data.modelE + "\n"
+          + "Serial Number: " + data.serialNumber + "\n"
+          + "Description: " + data.description + "\n");
       },
       error: (error) => {
         window.alert(JSON.stringify(error.error.error));

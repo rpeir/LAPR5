@@ -119,20 +119,19 @@ export default class FloorService implements IFloorService {
     try {
       let floor = await this.floorRepo.findById(floorDTO.domainId);
       if (floor === null) {
-        return await this.createFloor(floorDTO);
-      } else {
-        floor.floorNr = floorDTO.floorNr;
-        floor.description = floorDTO.description;
-
-        try {
-          floor = await this.floorRepo.save(floor);
-        } catch (err) {
-          return Result.fail<IFloorDTO>(err);
-        }
-
-        const floorDTOResult = FloorMapper.toDTO(floor) as IFloorDTO;
-        return Result.ok<IFloorDTO>(floorDTOResult);
+        return Result.fail<IFloorDTO>('Floor not found');
       }
+      floor.updateDescriptionAndFloorNr(floorDTO.description, floorDTO.floorNr);
+
+      try {
+        floor = await this.floorRepo.save(floor);
+      } catch (err) {
+        return Result.fail<IFloorDTO>(err);
+      }
+
+      const floorDTOResult = FloorMapper.toDTO(floor) as IFloorDTO;
+      return Result.ok<IFloorDTO>(floorDTOResult);
+
     } catch (e) {
       throw e;
     }

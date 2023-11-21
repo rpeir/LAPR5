@@ -20,9 +20,19 @@ const floorMapSchema = new mongoose.Schema(
           },
         },
       ],
-      exits: [[Number]],
+      exits: [
+        {
+          label: String,
+          location: [Number],
+        },
+      ],
       elevators: [[Number]],
-      exitLocation: [Number],
+      exitLocation: [
+        {
+          floorId: String,
+          location: [Number],
+        },
+      ],
     },
     ground: {
       size: {

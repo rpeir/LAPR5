@@ -14,7 +14,7 @@ import * as THREE from 'three';
 import Stats from 'three/addons/libs/stats.module.js';
 import Orientation from './orientation.js';
 //TODO Removed map data to allow for map importing
-import { generalData, playerData, mazeData, lightsData, fogData, cameraData } from './default_data.js';
+import { generalData, playerData, mazeData, lightsData, fogData, cameraData, elevatorData } from './default_data.js';
 import { merge } from './merge.js';
 import Maze from './maze_template.js';
 import Player from './player_template.js';
@@ -23,6 +23,7 @@ import Fog from './fog_template.js';
 import Camera from './camera_template.js';
 import Animations from './animations_template.js';
 import UserInterface from './user_interface_template.js';
+import Elevator from "./elevator_template";
 
 /*
  * generalParameters = {
@@ -834,7 +835,6 @@ export default class ThumbRaiser {
             if (this.collision(newPosition)) {
               this.animations.fadeToAction('animation.robot-runner.death', 0.2);
             } else {
-              // TODO review this
               this.animations.fadeToAction('animation.robot-runner.walk', 0.2);
               this.player.position = newPosition;
             }

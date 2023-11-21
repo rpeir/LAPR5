@@ -17,9 +17,15 @@ interface FloorMapProps {
         height: number;
       };
     }[];
-    exits: [number, number][];
+    exits: {
+      label: string;
+      location: number[];
+    }[];
     elevators: [number, number][];
-    exitLocation: [number, number];
+    exitLocation: {
+      floorId: string;
+      location: number[];
+    }[];
   };
   ground: {
     size: {
