@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from  'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 /*
@@ -10,7 +10,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
  *  initialDirection: Float,
  *  turningSpeed: Float,
  *  runningFactor: Float,
- *  keyCodes: { fixedView: String, firstPersonView: String, thirdPersonView: String, topView: String, viewMode: String, userInterface: String, miniMap: String, help: String, statistics: String, run: String, left: String, right: String, backward: String, forward: String, jump: String, yes: String, no: String, wave: String, punch: String, thumbsUp: String }
+ *  keyCodes: { fixedView: String, firstPersonView: String, thirdPersonView: String, topView: String, viewMode: String, userInterface: String, miniMap: String, help: String, statistics: String, run: String, left: String, right: String, backward: String, forward: String }
  * }
  */
 
@@ -70,12 +70,6 @@ export default class Player {
       right: false,
       backward: false,
       forward: false,
-      jump: false,
-      yes: false,
-      no: false,
-      wave: false,
-      punch: false,
-      thumbsUp: false,
     };
     this.loaded = false;
 

@@ -4,7 +4,6 @@ import { Result } from '../../core/logic/Result';
 import { Guard } from '../../core/logic/Guard';
 import { Building } from '../building/building';
 import { FloorMapStructure } from './floorMapStructure';
-import {Entity} from "../../core/domain/Entity";
 
 interface FloorProps {
   description: string;
@@ -76,9 +75,11 @@ export class Floor extends AggregateRoot<FloorProps> {
   }
 
   equals(object?: Floor): boolean {
-    return this.id.equals(object.id) &&
+    return (
+      this.id.equals(object.id) &&
       this.description == object.description &&
       this.floorNr == object.floorNr &&
-      this.building.equals(object.building);
+      this.building.equals(object.building)
+    );
   }
 }
