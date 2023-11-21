@@ -1,21 +1,2 @@
-<mat-toolbar color="primary">
-  <button [matMenuTriggerFor]="gestorDeFrotaMenu" mat-icon-button class="example-icon" aria-label=" icon-button with menu icon">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <mat-menu #gestorDeFrotaMenu="matMenu">
-    <button mat-menu-item (click)="goToRobots()">
-      <span>Robots</span>
-    </button>
-    <button mat-menu-item (click)="goToRobotTypes()">
-      <span>Robot types</span>
-    </button>
-
-  </mat-menu>
-
-  <span>Gestor de Frota</span>
-  <span class="spacer"></span>
-  <button mat-icon-button class="example-icon" aria-label=" icon-button with menu icon" (click)="goToLogin()">
-    <mat-icon>home</mat-icon>
-  </button>
-</mat-toolbar>
+<app-gestor-de-frota-toolbar></app-gestor-de-frota-toolbar>
 

@@ -60,7 +60,10 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { RoomSidenavComponent } from './room/room-sidenav/room-sidenav.component';
 import { GestorDeTarefasComponent } from './gestor-de-tarefas/gestor-de-tarefas.component';
+import { EditComponent as PathwayEditComponent } from "./pathway/edit/edit.component";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { EditFloorComponent} from "./floor/edit/edit-floor.component";
+import { GestorDeFrotaToolbarComponent } from './gestor-de-frota-toolbar/gestor-de-frota-toolbar.component';
 
 @NgModule({
   declarations: [
@@ -111,7 +114,9 @@ import { EditFloorComponent} from "./floor/edit/edit-floor.component";
     RoomSidenavComponent,
     GestorDeTarefasComponent,
     ListOfBuldingWithPathwayComponent,
-    EditFloorComponent
+    PathwayEditComponent,
+    EditFloorComponent,
+    GestorDeFrotaToolbarComponent
   ],
   imports: [
     BrowserModule,
@@ -129,7 +134,8 @@ import { EditFloorComponent} from "./floor/edit/edit-floor.component";
     MatTooltipModule,
     MatCardModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

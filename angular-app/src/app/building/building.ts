@@ -1,4 +1,5 @@
 export class Building {
+  domainId!: string;
   code!: string;
   designation!: string;
   description!: string;
