@@ -14,7 +14,7 @@ import { PathwayService } from "../pathway.service";
 })
 export class CreatePathway implements OnInit {
 
-  constructor(private floorService: FloorService, private location: Location, private buildingService: BuildingService, private pathwayService: PathwayService) {
+  constructor(private floorService: FloorService, private buildingService: BuildingService, private pathwayService: PathwayService) {
   }
 
   floorsSource: Floor[] | undefined;

@@ -8,7 +8,7 @@ import {Elevator} from "../elevator";
 import {of, throwError} from "rxjs";
 
 
-describe('CreateComponent', () => {
+describe('ElevatorReplaceComponent', () => {
   let component: ElevatorReplaceComponent;
   let elevatorservice: ElevatorService;
   let buildingservice: BuildingService;
