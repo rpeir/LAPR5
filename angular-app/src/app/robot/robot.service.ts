@@ -20,4 +20,13 @@ export class RobotService {
     return this.httpClient.get<Robot[]>(`${this.robotUrl}`);
   }
 
+  disableRobotByNickName(nickName: string) {
+    return this.httpClient.patch<Robot>(`${this.robotUrl}/disable-by-nick`, { nickName: nickName },
+      {headers: {"Content-Type": "application/json"}, observe: "body", responseType: "json"})
+  }
+
+  disableRobotByCode(robotCode: string) {
+    return this.httpClient.patch<Robot>(`${this.robotUrl}/disable-by-code`, { robotCode: robotCode },
+      {headers: {"Content-Type": "application/json"}, observe: "body", responseType: "json"})
+  }
 }

@@ -5,7 +5,42 @@
     <app-robot-tool-bar></app-robot-tool-bar>
   </mat-sidenav>
   <mat-sidenav-content>
-    <!-- Add Content Here -->
-    <p>disable works!</p>
+    <body class="RobDroneGo">
+    <div class="container">
+      <h2 class="text-center">Disable Robot </h2>
+      <br>
+      <form (ngSubmit)="disableRobot()">
+        <mat-form-field class="full-width">
+          <mat-label>Disable by</mat-label>
+          <mat-select [(ngModel)]="disableOption" name="disableOption">
+            <mat-option *ngFor="let option of options" [value]="option">
+              {{option | titlecase}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field class="full-width" *ngIf="disableOption == 'nickName'">
+          <mat-label>Robot nickName:</mat-label>
+          <input matInput [(ngModel)]="nickName" name="nickName" placeholder="Max 30 characters" required>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field class="full-width" *ngIf="disableOption == 'code'">
+          <mat-label>Robot code:</mat-label>
+          <input matInput [(ngModel)]="robotCode" name="nickName" placeholder="Max 250 characters" required>
+        </mat-form-field>
+
+        <br>
+
+        <div>
+          <input type="submit" value="disable" *ngIf="disableOption!=undefined">
+        </div>
+
+      </form>
+    </div>
+    </body>
   </mat-sidenav-content>
 </mat-sidenav-container>
