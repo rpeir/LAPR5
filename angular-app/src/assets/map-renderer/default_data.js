@@ -36,6 +36,11 @@ export const playerData = {
   },
 };
 
+export const elevatorData = {
+  url: './models/glb/Elevator/elevator.glb',
+  scale: new THREE.Vector3(1.0, 1.0, 1.0),
+};
+
 export const lightsData = {
   ambientLight: { color: 0xffffff, intensity: 1.0 },
   pointLight1: { color: 0xffffff, intensity: 1.0, distance: 0.0, position: new THREE.Vector3(0.0, 0.0, 0.0) },

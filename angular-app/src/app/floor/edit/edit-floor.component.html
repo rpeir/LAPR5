@@ -1,0 +1,51 @@
+<app-gestor-de-campus-toolbar></app-gestor-de-campus-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav class="options" mode="side" opened>
+    <app-floor-tool-bar></app-floor-tool-bar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <body class="RobDroneGo">
+    <div class="container">
+      <h2 class="text-center">Update Floor </h2>
+      <br>
+      <form (ngSubmit)="editFloor()">
+
+        <mat-form-field class="full-width">
+          <mat-label>Select a building</mat-label>
+          <mat-select [(ngModel)]="newFloor.building" name="building" (ngModelChange)="listFloorsOfBuilding($event)">
+            <mat-option *ngFor="let building of buildings" [value]="building.designation" [matTooltip]= "getBuildingInfo(building)">
+              {{building.designation}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Select a source Floor</mat-label>
+          <mat-select [(ngModel)]="newFloor.domainId"  name="floor">
+            <mat-option *ngFor="let floor of floors" [value]="floor.domainId" [matTooltip]= "getFloorInfo(floor)">
+              {{floor.floorNr}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Floor number:</mat-label>
+          <input matInput [(ngModel)]="newFloor.floorNr" name="floorNr" required >
+          <input matInput placeholder="Max 30 characters">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Floor description</mat-label>
+          <input matInput [(ngModel)]="newFloor.description" name="description"  >
+          <input matInput placeholder="Max 250 characters">
+        </mat-form-field>
+
+        <div>
+          <input type="submit" value="Edit">
+        </div>
+
+      </form>
+    </div>
+    </body>
+  </mat-sidenav-content>
+</mat-sidenav-container>

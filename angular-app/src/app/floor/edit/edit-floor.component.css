@@ -19,6 +19,20 @@ body {
   text-align: center;
 }
 
+input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
 .full-width {
   width: 100%;
+}
+
+.tooltip-content {
+  white-space: pre-line;
 }

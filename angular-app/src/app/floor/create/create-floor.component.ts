@@ -12,14 +12,14 @@ import { Building } from "../../building/building";
 })
 export class CreateFloorComponent implements OnInit {
 
-  constructor(private createFloorService: FloorService, private location: Location, private buildingService: BuildingService) {
+  constructor(private floorService: FloorService, private location: Location, private buildingService: BuildingService) {
   }
 
   floor = new Floor();
   buildings: Building[] | undefined;
 
   createFloor() {
-    this.createFloorService.createFloor(this.floor).subscribe({
+    this.floorService.createFloor(this.floor).subscribe({
       next: (data) => {
         window.alert("Floor created successfully \n"
           + "Floor number: " + data.floorNr + "\n"

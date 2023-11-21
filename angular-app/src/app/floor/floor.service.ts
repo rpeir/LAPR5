@@ -31,4 +31,14 @@ export class FloorService {
       {observe: "body", responseType: "json"});
   }
 
+  getFloorsOfBuildingWithPathways(building: string) {
+    return this.httpClient.get<Map<number,Floor[]>>(`${this.floorUrl}/with-pathways?buildingDesignation=${building}`,
+      {observe: "body", responseType: "json"});
+  }
+
+  editFloor(newFloor: Floor) {
+    return this.httpClient.put<Floor>(`${this.floorUrl}`, newFloor,
+      {headers: {"Content-Type": "application/json"}, observe: "body", responseType: "json"});
+
+  }
 }

@@ -29,6 +29,8 @@ import { DisableComponent } from "./robot/disable/disable.component";
 import { ListComponent as ListRobotComponent } from "./robot/list/list.component";
 import { ElevatorListAllComponent } from "./elevator/list-all-elevators/listAll.component";
 import { GestorDeTarefasComponent } from "./gestor-de-tarefas/gestor-de-tarefas.component";
+import { ListOfBuldingWithPathwayComponent } from "./floor/list-of-bulding-with-pathway/list-of-bulding-with-pathway.component";
+import { EditFloorComponent } from "./floor/edit/edit-floor.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -37,6 +39,8 @@ const routes: Routes = [
   { path: 'floors', component: FloorComponent },
   { path: 'floors/create', component: CreateFloorComponent },
   { path: 'floors/building', component: FloorListOfBuildingComponent },
+  { path: 'floors/building-pathways', component: ListOfBuldingWithPathwayComponent },
+  { path: 'floors/edit', component: EditFloorComponent},
   { path: 'pathways', component: PathwayComponent },
   { path: 'pathways/create', component: CreatePathway },
   { path: 'rooms', component: RoomComponent },

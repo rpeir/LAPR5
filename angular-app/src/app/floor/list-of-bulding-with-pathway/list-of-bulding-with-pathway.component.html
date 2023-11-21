@@ -5,6 +5,38 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <!---Your content here-->
-    <p>list-of-building-with-pathways works!</p>
+    <body class="RobDroneGo">
+    <div class="container">
+      <h2 class="text-center">List Floor of a Building with Pathways</h2>
+      <br>
+      <form>
+
+        <mat-form-field class="full-width">
+          <mat-label>Select a building</mat-label>
+          <mat-select [(ngModel)]="buildingDesignation" name="buildingDesignation" (ngModelChange)="listFloorsOfBuildingWithPathways($event)">
+            <mat-option *ngFor="let building of buildings" [value]="building.designation" >
+              {{building.designation}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="connections">
+          <div *ngFor="let connection of connections | keyvalue">
+            Origin Floor: {{connection.key}}
+            <mat-card *ngFor="let floor of connection.value">
+              <mat-card-content>
+               <div class="connected-floor">
+                 Building: {{floor.building}}
+                 Floor: {{floor.floorNr}}
+               </div>
+              </mat-card-content>
+            </mat-card>
+            <br>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    </body>
   </mat-sidenav-content>
 </mat-sidenav-container>

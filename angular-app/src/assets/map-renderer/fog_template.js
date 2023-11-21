@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import * as THREE from 'three';
 
 /*
  * parameters = {
@@ -10,15 +10,15 @@ import * as THREE from "three";
  */
 
 export default class Fog {
-    constructor(parameters) {
-        for (const [key, value] of Object.entries(parameters)) {
-            this[key] = value;
-        }
+  constructor(parameters) {
+    for (const [key, value] of Object.entries(parameters)) {
+      this[key] = value;
+    }
 
-        /* To-do #38 - Create the fog
+    /* To-do #38 - Create the fog
             - fog color: this.color
             - near: this.near (the minimum distance to start applying fog)
             - far: this.far (the maximum distance at which fog stops being calculated and applied)*/
-        this.object = new THREE.Fog(this.color, this.near, this.far);
-    }
+    this.object = new THREE.Fog(this.color, this.near, this.far);
+  }
 }
