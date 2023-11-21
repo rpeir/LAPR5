@@ -63,6 +63,7 @@ import { GestorDeTarefasComponent } from './gestor-de-tarefas/gestor-de-tarefas.
 import { EditComponent as PathwayEditComponent } from "./pathway/edit/edit.component";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { EditFloorComponent} from "./floor/edit/edit-floor.component";
+import { GestorDeFrotaToolbarComponent } from './gestor-de-frota-toolbar/gestor-de-frota-toolbar.component';
 
 @NgModule({
   declarations: [
@@ -114,7 +115,8 @@ import { EditFloorComponent} from "./floor/edit/edit-floor.component";
     GestorDeTarefasComponent,
     ListOfBuldingWithPathwayComponent,
     PathwayEditComponent,
-    EditFloorComponent
+    EditFloorComponent,
+    GestorDeFrotaToolbarComponent
   ],
   imports: [
     BrowserModule,

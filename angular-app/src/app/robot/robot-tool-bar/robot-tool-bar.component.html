@@ -1,23 +1,14 @@
-<mat-toolbar color="primary">
-  <button [matMenuTriggerFor]="robotsMenu" mat-icon-button class="example-icon" aria-label=" icon-button with menu icon">
-    <mat-icon>menu</mat-icon>
+<div class="options">
+  <div class="title">
+    <span>Robots Menu</span>
+  </div>
+  <button id="create-robot-option" mat-menu-item (click)="goCreate()">
+    <span>Create Robot</span>
   </button>
-  <mat-menu #robotsMenu="matMenu">
-    <button mat-menu-item (click)="goCreate()">
-      <span>Create Robot</span>
-    </button>
-    <button mat-menu-item (click)="goToDisable()">
-      <span>Disable Robot</span>
-    </button>
-    <button mat-menu-item (click)="goToList()">
-      <span>List All Robots</span>
-    </button>
-
-  </mat-menu>
-
-  <span>Robots</span>
-  <span class="spacer"></span>
-  <button mat-icon-button class="example-icon" aria-label=" icon-button with menu icon" (click)="goToGestorDeFrota()">
-    <mat-icon>home</mat-icon>
+  <button id="disable-robot-option" mat-menu-item (click)="goToDisable()">
+    <span>Disable Robot</span>
   </button>
-</mat-toolbar>
+  <button id="list-all-robots-option" mat-menu-item (click)="goToList()">
+    <span>List All Robots</span>
+  </button>
+</div>
