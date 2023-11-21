@@ -60,6 +60,7 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { RoomSidenavComponent } from './room/room-sidenav/room-sidenav.component';
 import { GestorDeTarefasComponent } from './gestor-de-tarefas/gestor-de-tarefas.component';
+import { EditFloorComponent} from "./floor/edit/edit-floor.component";
 
 @NgModule({
   declarations: [
@@ -109,7 +110,8 @@ import { GestorDeTarefasComponent } from './gestor-de-tarefas/gestor-de-tarefas.
     ElevatorListAllComponent,
     RoomSidenavComponent,
     GestorDeTarefasComponent,
-    ListOfBuldingWithPathwayComponent
+    ListOfBuldingWithPathwayComponent,
+    EditFloorComponent
   ],
   imports: [
     BrowserModule,

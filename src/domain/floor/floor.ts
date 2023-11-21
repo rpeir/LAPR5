@@ -82,4 +82,9 @@ export class Floor extends AggregateRoot<FloorProps> {
       this.building.equals(object.building)
     );
   }
+
+  updateDescriptionAndFloorNr(description: string, floorNr: number) {
+    this.description = description;
+    this.floorNr = floorNr;
+  }
 }
