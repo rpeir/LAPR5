@@ -25,6 +25,7 @@ describe('CreateComponent', () => {
   });
   it('should handle successful elevator creation', ()=> {
     const mockBuilding: Building = {
+      domainId:"1",
       code: '1',
       designation:"A",
       description:"Building A",
@@ -39,20 +40,20 @@ describe('CreateComponent', () => {
     component.createBuilding();
 
     // Assert
-    const expectedAlertMessage = new RegExp(
-      'Building created successfully\\s*' +
-      'Code: 1\\s*' +
-      'Designation: A\\s*' +
-      'Description: Building A\\s*' +
-      'Length: 10\\s*' +
-      'Width: 10\\s*' +
-      'Height: 10\\s*'
-    );
+    const expectedAlertMessage =
+      'Building created successfully\n' +
+      'Code:1\n' +
+      'Designation:A\n' +
+      'Description:Building A\n' +
+      'Length:10\n' +
+      'Width:10\n' +
+      'Height:10\n';
+
 
     const actualAlertMessage = (window.alert as jasmine.Spy).calls.mostRecent().args[0];
 
     expect(buildingservice.createBuilding).toHaveBeenCalledWith(component.building);
-    expect(actualAlertMessage).toMatch(expectedAlertMessage)
+    expect(actualAlertMessage).toMatch(expectedAlertMessage);
   });
   it('should handle elevator creation error', () => {
     // Arrange
