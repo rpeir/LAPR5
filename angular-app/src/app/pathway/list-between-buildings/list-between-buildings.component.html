@@ -4,7 +4,57 @@
     <app-pathway-tool-bar></app-pathway-tool-bar>
   </mat-sidenav>
   <mat-sidenav-content>
-    <!---Your content here-->
-    <p>list-between-buildings works!</p>
+    <body class="RobDroneGo">
+    <div class="container">
+      <h2 class="text-center">List Pathways between Buildings</h2>
+      <br>
+      <form (ngSubmit)="listPathways()">
+
+        <mat-form-field class="full-width">
+          <mat-label>Select a source building</mat-label>
+          <mat-select [(ngModel)]="buildingSource" name="buildingSource">
+            <mat-option *ngFor="let building of buildings" [value]="building" [matTooltip]= "getBuildingInfo(building)">
+              {{building.designation}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Select a  building destination</mat-label>
+          <mat-select [(ngModel)]="buildingDestination" name="buildingDestination">
+            <mat-option *ngFor="let building of buildings" [value]="building" [matTooltip]= "getBuildingInfo(building)">
+              {{building.designation}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="accent" type="submit">
+          List Pathways
+        </button>
+
+      </form>
+
+      <br>
+
+      <mat-spinner class="wait-pathways" *ngIf="waiting"></mat-spinner>
+
+      <div *ngIf="pathways">
+        <br>
+        <div *ngFor="let pathway of pathways">
+          <mat-card>
+            Pathway: {{pathway.description}}
+            <mat-card-content>
+              ID: {{pathway.domainId}}
+              <br>
+              Floor of building {{pathway.buildingSource}}: {{pathway.floorSource}}
+              <br>
+              Floor of building {{pathway.buildingDestination}}: {{pathway.floorDestination}}
+            </mat-card-content>
+          </mat-card>
+          <br>
+        </div>
+      </div>
+    </div>
+    </body>
   </mat-sidenav-content>
 </mat-sidenav-container>

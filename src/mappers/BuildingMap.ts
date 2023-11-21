@@ -8,6 +8,7 @@ export class BuildingMap extends Mapper<Building> {
 
   public static toDTO(building: Building): IBuildingDTO {
     return {
+      domainId: building.id.toString(),
       code: building.code.value,
       designation: building.designation,
       description: building.description,

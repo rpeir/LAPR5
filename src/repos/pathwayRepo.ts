@@ -61,10 +61,13 @@ export default class PathwayRepo implements IPathwayRepo {
   }
 
   public async findAllFromSourceToDestination(source:string, dest:string):Promise<Pathway[]>{
-    const query = {buildingSource:source,buildingDestination:dest};
-    const pathwayRecord = await this.pathwaySchema.find(query);
-    if (pathwayRecord != null) {
-      return Promise.all(pathwayRecord.map((pathway) => PathwayMap.toDomain(pathway)));
+    const query1 = {buildingSource:source,buildingDestination:dest};
+    const query2 = {buildingSource:dest,buildingDestination:source};
+    const pathwayRecord1 = await this.pathwaySchema.find(query1);
+    const pathwayRecord2 = await this.pathwaySchema.find(query2);
+    if (pathwayRecord1 != null && pathwayRecord2 != null) {
+      return Promise.all(pathwayRecord1.map((pathway) => PathwayMap.toDomain(pathway))
+          .concat(pathwayRecord2.map((pathway) => PathwayMap.toDomain(pathway))));
     } else {
       return null;
     }

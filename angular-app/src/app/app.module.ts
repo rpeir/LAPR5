@@ -60,6 +60,8 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { RoomSidenavComponent } from './room/room-sidenav/room-sidenav.component';
 import { GestorDeTarefasComponent } from './gestor-de-tarefas/gestor-de-tarefas.component';
+import { EditComponent as PathwayEditComponent } from "./pathway/edit/edit.component";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -109,7 +111,8 @@ import { GestorDeTarefasComponent } from './gestor-de-tarefas/gestor-de-tarefas.
     ElevatorListAllComponent,
     RoomSidenavComponent,
     GestorDeTarefasComponent,
-    ListOfBuldingWithPathwayComponent
+    ListOfBuldingWithPathwayComponent,
+    PathwayEditComponent
   ],
   imports: [
     BrowserModule,
@@ -127,7 +130,8 @@ import { GestorDeTarefasComponent } from './gestor-de-tarefas/gestor-de-tarefas.
     MatTooltipModule,
     MatCardModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
