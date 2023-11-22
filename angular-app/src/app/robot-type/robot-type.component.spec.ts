@@ -1,21 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { RobotTypeComponent } from './robot-type.component';
+import { TestBed } from '@angular/core/testing';
+import { RobotTypeComponent } from "./robot-type.component";
+import { RobotTypeService } from "./robot-type.service";
+import { Location } from '@angular/common';
 
 describe('RobotTypeComponent', () => {
   let component: RobotTypeComponent;
-  let fixture: ComponentFixture<RobotTypeComponent>;
+  let service: RobotTypeService;
+  let location: Location;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [RobotTypeComponent]
-    });
-    fixture = TestBed.createComponent(RobotTypeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+    })
+      .compileComponents();
+    service = TestBed.inject(RobotTypeService);
+    component = new RobotTypeComponent(service, location);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });

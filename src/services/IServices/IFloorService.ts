@@ -1,6 +1,7 @@
 import { IFloorDTO } from '../../dto/IFloorDTO';
 import { Result } from '../../core/logic/Result';
 import { IBuildingDTO } from '../../dto/IBuildingDTO';
+import { Floor } from "../../domain/floor/floor";
 
 export default interface IFloorService {
   createFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>>;
@@ -14,4 +15,5 @@ export default interface IFloorService {
   uploadFloorMap(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>>;
 
   listFloorsWithPathways(buildingDesignation: string): Promise<Result<Map<number, IFloorDTO[]>>>;
+  findByBuildingIdAndFloorNr(buildingId: string, floorNr: number): Promise<Result<IFloorDTO>>;
 }

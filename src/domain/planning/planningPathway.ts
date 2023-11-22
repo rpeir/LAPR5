@@ -4,6 +4,7 @@ import { Result } from "../../core/logic/Result";
 import { Guard } from "../../core/logic/Guard";
 import { Building } from "../building/building";
 import { Floor } from "../floor/floor";
+import { ValueObject } from "../../core/domain/ValueObject";
 
 interface PlanningPathwayProps {
   buildingSource: string,
@@ -12,12 +13,7 @@ interface PlanningPathwayProps {
   floorDestination: string
 }
 
-export class PlanningPathway extends AggregateRoot<PlanningPathwayProps> {
-  get id(): UniqueEntityID {
-    return this._id;
-  }
-
-
+export class PlanningPathway extends ValueObject<PlanningPathwayProps> {
   get buildingSource(): string {
     return this.props.buildingSource;
   }
@@ -34,8 +30,8 @@ export class PlanningPathway extends AggregateRoot<PlanningPathwayProps> {
     return this.props.floorDestination;
   }
 
-  private constructor(props: PlanningPathwayProps, id?: UniqueEntityID) {
-    super(props, id);
+  private constructor(props: PlanningPathwayProps) {
+    super(props);
   }
 
   public static create(props: PlanningPathwayProps, id?: UniqueEntityID): Result<PlanningPathway> {
@@ -54,7 +50,7 @@ export class PlanningPathway extends AggregateRoot<PlanningPathwayProps> {
     } else {
       const planningPathway = new PlanningPathway({
         ...props
-      }, id);
+      });
 
       return Result.ok<PlanningPathway>(planningPathway);
     }

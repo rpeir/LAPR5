@@ -1,14 +1,14 @@
-import { AggregateRoot } from "../../core/domain/AggregateRoot";
 import { UniqueEntityID } from "../../core/domain/UniqueEntityID";
 import { Guard } from "../../core/logic/Guard";
 import { Result } from "../../core/logic/Result";
+import { ValueObject } from "../../core/domain/ValueObject";
 
 interface PlanningElevatorProps {
   building: string,
   floors: string[]
 }
 
-export class PlanningElevator extends AggregateRoot<PlanningElevatorProps> {
+export class PlanningElevator extends ValueObject<PlanningElevatorProps> {
   get building(): string {
     return this.props.building;
   }
@@ -17,8 +17,8 @@ export class PlanningElevator extends AggregateRoot<PlanningElevatorProps> {
     return this.props.floors;
   }
 
-  constructor(props: PlanningElevatorProps, id: UniqueEntityID) {
-    super(props, id);
+  constructor(props: PlanningElevatorProps) {
+    super(props);
   }
 
 
@@ -32,9 +32,7 @@ export class PlanningElevator extends AggregateRoot<PlanningElevatorProps> {
 
     if (!guardResult.succeeded) {
       return Result.fail<PlanningElevator>(guardResult.message);
-    } else {
-      const planningFloor = new PlanningElevator({ ...props }, id);
     }
-    return Result.ok<PlanningElevator>(new PlanningElevator({ ...props }, id));
+    return Result.ok<PlanningElevator>(new PlanningElevator({ ...props }));
   }
 }

@@ -25,7 +25,7 @@ import { CreateComponent } from './building/create/create.component';
 import { EditComponent } from './building/edit/edit.component';
 import { ListAllComponent } from './building/list-all/list-all.component';
 import { ListMinMaxComponent } from './building/list-min-max/list-min-max.component';
-import { ListOfBuldingWithPathwayComponent } from './floor/list-of-bulding-with-pathway/list-of-bulding-with-pathway.component';
+import { ListOfBuildingWithPathwayComponent } from './floor/list-of-building-with-pathway/list-of-building-with-pathway.component';
 import { UploadMapComponent } from './floor/upload-map/upload-map.component';
 import { ListBetweenBuildingsComponent } from './pathway/list-between-buildings/list-between-buildings.component';
 import { ListOfBuildingComponent } from './elevator/list-of-building/list-of-building.component';
@@ -86,7 +86,7 @@ import { GestorDeFrotaToolbarComponent } from './gestor-de-frota-toolbar/gestor-
     ListAllComponent,
     ListMinMaxComponent,
     ListOfBuildingComponent,
-    ListOfBuldingWithPathwayComponent,
+    ListOfBuildingWithPathwayComponent,
     UploadMapComponent,
     ListBetweenBuildingsComponent,
     ListOfBuildingComponent,
@@ -113,7 +113,7 @@ import { GestorDeFrotaToolbarComponent } from './gestor-de-frota-toolbar/gestor-
     ElevatorListAllComponent,
     RoomSidenavComponent,
     GestorDeTarefasComponent,
-    ListOfBuldingWithPathwayComponent,
+    ListOfBuildingWithPathwayComponent,
     PathwayEditComponent,
     EditFloorComponent,
     GestorDeFrotaToolbarComponent

@@ -6,4 +6,8 @@ export default interface IPlanningController {
   getPathways(req: Request, res: Response, next: NextFunction);
   getPathLessBuildings(req: Request, res: Response, next: NextFunction);
   getPathLessElevators(req: Request, res: Response, next: NextFunction);
+  getFloorPlanningMatrix(req: Request, res: Response, next: NextFunction);
+  getPlanningElevatorLocation(req: Request, res: Response, next: NextFunction);
+  getPlanningPathwayLocation(req: Request, res: Response, next: NextFunction);
+  getPlanningRoomsLocation(req: Request, res: Response, next: NextFunction);
 }

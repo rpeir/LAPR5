@@ -6,4 +6,5 @@ export default interface IBuildingService {
   createBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>>;
   updateBuilding(body: IBuildingDTO): Promise<Result<IBuildingDTO>>;
   listAllBuilding(): Promise<Result<IBuildingDTO[]>>;
+  getBuildingByDesignation(buildingDesignation: string):Promise<Result<IBuildingDTO>> ;
 }

@@ -54,6 +54,21 @@ export default class PlanningController implements IPlanningController {
     }
   }
 
+  public async getFloorPlanningMatrix(req: Request, res: Response, next: NextFunction) {
+    try {
+      const floor = req.query.floor as string;
+      const infoOrError = await this.planningService.getFloorPlanningMatrix(floor);
+
+      if (infoOrError.isFailure) {
+        return res.status(402).json({ error: infoOrError.error }).send();
+      }
+      const infoDTO = infoOrError.getValue();
+      return res.json(infoDTO).status(200);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   public async getPathLessBuildings(req: Request, res: Response, next: NextFunction) {
     try {
       const sourceBuilding = req.query.sourceBuilding as string;
@@ -90,4 +105,50 @@ export default class PlanningController implements IPlanningController {
     }
 
   }
+
+  public async getPlanningElevatorLocation(req: Request, res: Response, next: NextFunction) {
+    try {
+      const floor = req.query.floor as string;
+      const infoOrError = await this.planningService.getPlanningElevatorLocation(floor);
+
+      if (infoOrError.isFailure) {
+        return res.status(402).json({ error: infoOrError.error }).send();
+      }
+      const infoDTO = infoOrError.getValue();
+      return res.json(infoDTO).status(200);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+public async getPlanningPathwayLocation(req: Request, res: Response, next: NextFunction) {
+    try {
+      const floor = req.query.floor as string;
+      const infoOrError = await this.planningService.getPlanningPathwayLocation(floor);
+
+      if (infoOrError.isFailure) {
+        return res.status(402).json({ error: infoOrError.error }).send();
+      }
+      const infoDTO = infoOrError.getValue();
+      return res.json(infoDTO).status(200);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  public async getPlanningRoomsLocation(req: Request, res: Response, next: NextFunction) {
+    try {
+      const floor = req.query.floor as string;
+      const infoOrError = await this.planningService.getPlanningRoomsLocation(floor);
+
+      if (infoOrError.isFailure) {
+        return res.status(402).json({ error: infoOrError.error }).send();
+      }
+      const infoDTO = infoOrError.getValue();
+      return res.json(infoDTO).status(200);
+    }catch (error) {
+      return next(error);
+    }
+  }
+
 }
