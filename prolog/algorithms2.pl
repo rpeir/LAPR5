@@ -25,56 +25,69 @@ createGraph(Line,Collum):-createCollum(Line,Collum),
 
 createCollum(-1,_):-!.
 createCollum(Line,Collum):-m(Line,Collum,0),!,
-          NextLine is Line + 1, PreviousLine is Line - 1, NextCollum is Collum + 1, PreviousCollum is Collum - 1,
           % pode ir para cima
-          (assertz(connectCell(cel(Line,Collum),cel(PreviousLine,Collum)));true),
+          create_up(Line,Collum),
           % verifica se pode ir para baixo
-          ((m(NextLine, Collum,1);m(NextLine, Collum,0)), assertz(connectCell(cel(Line,Collum),cel(NextLine,Collum)));true),
+          create_down(Line,Collum),
           % pode ir para a esquerda
-          (assertz(connectCell(cel(Line,Collum),cel(Line,PreviousCollum)));true),
+          create_left(Line,Collum),
           % verifica se pode ir para a direita
-          ((m(Line, NextCollum,2);m(Line, NextCollum,0)), assertz(connectCell(cel(Line,Collum),cel(Line,NextCollum)));true),
+          create_right(Line,Collum),
           Line1 is Line -1,
           createCollum(Line1,Collum).
 
 createCollum(Line,Collum):-m(Line,Collum,1),!,
-          NextLine is Line + 1, PreviousLine is Line - 1, NextCollum is Collum + 1,
           % pode ir para cima
-          (assertz(connectCell(cel(Line,Collum),cel(PreviousLine,Collum)));true),
+          create_up(Line,Collum),
           % verifica se pode ir para baixo
-          ((m(NextLine, Collum,1);m(NextLine, Collum,0)), assertz(connectCell(cel(Line,Collum),cel(NextLine,Collum)));true),
+          create_down(Line,Collum),
           % NAO pode ir para a esquerda, pq tem parede á esquerda
           % verifica se pode ir para a direita
-          ((m(Line, NextCollum,2);m(Line, NextCollum,0)), assertz(connectCell(cel(Line,Collum),cel(Line,NextCollum)));true),
+          create_right(Line,Collum),
           Line1 is Line -1,
           createCollum(Line1,Collum).
 
 createCollum(Line,Collum):-m(Line,Collum,2),!,
-          NextLine is Line + 1, NextCollum is Collum + 1, PreviousCollum is Collum - 1,
            % NAO pode ir para cima, pq tem parede em cima
            % verifica se pode ir para baixo
-           ((m(NextLine, Collum,1);m(NextLine, Collum,0)), assertz(connectCell(cel(Line,Collum),cel(NextLine,Collum)));true),
+           create_down(Line,Collum),
            % pode ir para a esquerda
-           (assertz(connectCell(cel(Line,Collum),cel(Line,PreviousCollum)));true),
+           create_left(Line,Collum),
            % verifica se pode ir para a direita
-           ((m(Line, NextCollum,2);m(Line, NextCollum,0)), assertz(connectCell(cel(Line,Collum),cel(Line,NextCollum)));true),
+           create_right(Line,Collum),
            Line1 is Line -1,
            createCollum(Line1,Collum).
 
 createCollum(Line,Collum):-m(Line,Collum,3),!,
-          NextLine is Line + 1, NextCollum is Collum + 1,
           % NAO pode ir para cima, pq tem parede em cima
           % verifica se pode ir para baixo
-          ((m(NextLine, Collum,1);m(NextLine, Collum,0)), assertz(connectCell(cel(Line,Collum),cel(NextLine,Collum)));true),
+          create_down(Line,Collum),
           % NAO pode ir para a esquerda, pq tem parede á esquerda
           % verifica se pode ir para a direita
-          ((m(Line, NextCollum,2);m(Line, NextCollum,0)), assertz(connectCell(cel(Line,Collum),cel(Line,NextCollum)));true),
+          create_right(Line,Collum),
           Line1 is Line -1,
           createCollum(Line1,Collum).
 
 
 createCollum(Line,Collum):-Line1 is Line -1,
           createCollum(Line1,Collum).
+
+
+% create connection to cell above, unconditionally
+create_up(Line, Collum):- PreviousLine is Line - 1,
+          (assertz(connectCell(cel(Line,Collum),cel(PreviousLine,Collum)));true).
+
+% create connection to cell below, if it is not a wall
+create_down(Line, Collum):- NextLine is Line + 1,
+          ((m(NextLine, Collum,1);m(NextLine, Collum,0)), assertz(connectCell(cel(Line,Collum),cel(NextLine,Collum)));true).
+
+% create connection to cell on the left, unconditionally
+create_left(Line, Collum):- PreviousCollum is Collum - 1,
+          (assertz(connectCell(cel(Line,Collum),cel(Line,PreviousCollum)));true).
+
+% create connection to cell on the right, if it is not a wall
+create_right(Line, Collum):- NextCollum is Collum + 1,
+          ((m(Line, NextCollum,2);m(Line, NextCollum,0)), assertz(connectCell(cel(Line,Collum),cel(Line,NextCollum)));true).
 
 
 :-dynamic bestSolution/2.
