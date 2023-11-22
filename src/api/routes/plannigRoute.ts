@@ -16,5 +16,13 @@ export default (app: Router) => {
 
   route.get("/path/lessBuildings",(req, res, next) => ctrl.getPathLessBuildings(req,res, next));
 
-  route.get("/path/lessElevators",(req, res, next) => ctrl.getPathLessElevators(req,res, next))
+  route.get("/path/lessElevators",(req, res, next) => ctrl.getPathLessElevators(req,res, next));
+
+  route.get("/floorPlanningMatrix",(req, res, next) => ctrl.getFloorPlanningMatrix(req,res, next));
+
+  route.get("/planningElevatorLocation",(req, res, next) => ctrl.getPlanningElevatorLocation(req,res, next));
+
+  route.get("/planningPathwayLocation",(req, res, next) => ctrl.getPlanningPathwayLocation(req,res, next));
+
+  route.get("/planningRoomsLocation",(req, res, next) => ctrl.getPlanningRoomsLocation(req,res, next));
 }

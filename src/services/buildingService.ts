@@ -1,16 +1,17 @@
-import { Inject, Service } from 'typedi';
-import { Result } from '../core/logic/Result';
-import config from '../../config';
-import IBuildingService from './IServices/IBuildingService';
-import IBuildingRepo from './IRepos/IBuildingRepo';
-import { IBuildingDTO } from '../dto/IBuildingDTO';
-import { Building } from '../domain/building/building';
-import { BuildingCode } from '../domain/building/BuildingCode';
-import { BuildingMap } from '../mappers/BuildingMap';
+import { Inject, Service } from "typedi";
+import { Result } from "../core/logic/Result";
+import config from "../../config";
+import IBuildingService from "./IServices/IBuildingService";
+import IBuildingRepo from "./IRepos/IBuildingRepo";
+import { IBuildingDTO } from "../dto/IBuildingDTO";
+import { Building } from "../domain/building/building";
+import { BuildingCode } from "../domain/building/BuildingCode";
+import { BuildingMap } from "../mappers/BuildingMap";
 
 @Service()
 export default class BuildingService implements IBuildingService {
-  constructor(@Inject(config.repos.building.name) private buildingRepo: IBuildingRepo) {}
+  constructor(@Inject(config.repos.building.name) private buildingRepo: IBuildingRepo) {
+  }
 
   public async createBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>> {
     try {
@@ -31,11 +32,11 @@ export default class BuildingService implements IBuildingService {
         description: buildingDescription,
         length: buildingLength,
         width: buildingWidth,
-        height: buildingHeight,
+        height: buildingHeight
       });
 
       if (buildingOrError.isFailure) {
-        return  Result.fail<IBuildingDTO>(buildingOrError.errorValue());
+        return Result.fail<IBuildingDTO>(buildingOrError.errorValue());
       }
       const buildingResult = buildingOrError.getValue();
       try {
@@ -50,12 +51,13 @@ export default class BuildingService implements IBuildingService {
       throw err;
     }
   }
+
   public async updateBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>> {
     try {
       const building = await this.buildingRepo.findByCode(buildingDTO.code);
       // Check if the building was found
       if (building === null) {
-        return Result.fail<IBuildingDTO>('Building not found');
+        return Result.fail<IBuildingDTO>("Building not found");
       }
       // Update the fields that have changed and are not null
       for (const key in buildingDTO) {
@@ -73,6 +75,7 @@ export default class BuildingService implements IBuildingService {
       throw err;
     }
   }
+
   public async listAllBuilding(): Promise<Result<IBuildingDTO[]>> {
     try {
       const buildings = await this.buildingRepo.findAll();
@@ -85,6 +88,19 @@ export default class BuildingService implements IBuildingService {
         }
       }
       return Result.ok<IBuildingDTO[]>(buildingsDTO);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async getBuildingByDesignation(buildingDesignation: string): Promise<Result<IBuildingDTO>> {
+    try {
+      const building = await this.buildingRepo.findByDesignation(buildingDesignation);
+      if (building === null) {
+        return Result.fail<IBuildingDTO>("Building " + buildingDesignation + "not found");
+      }
+      const buildingDTO = BuildingMap.toDTO(building) as IBuildingDTO;
+      return Result.ok<IBuildingDTO>(buildingDTO);
     } catch (error) {
       throw error;
     }

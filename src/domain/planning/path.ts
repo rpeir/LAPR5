@@ -1,7 +1,7 @@
-import { Entity } from "../../core/domain/Entity";
 import { UniqueEntityID } from "../../core/domain/UniqueEntityID";
 import { Result } from "../../core/logic/Result";
 import { Guard } from "../../core/logic/Guard";
+import { ValueObject } from "../../core/domain/ValueObject";
 
 interface PathBetweenFloors {
   element: string;
@@ -16,11 +16,7 @@ interface PathProps {
 }
 
 
-export class Path extends Entity<PathProps> {
-  get id(): UniqueEntityID {
-    return this._id;
-  }
-
+export class Path extends ValueObject<PathProps> {
   get buildings(): string[] {
     return this.props.buildings;
   }
@@ -29,8 +25,8 @@ export class Path extends Entity<PathProps> {
     return this.props.paths;
   }
 
-  private constructor(props: PathProps, id?: UniqueEntityID) {
-    super(props, id);
+  private constructor(props: PathProps) {
+    super(props);
   }
 
   public static create(props: PathProps, id?: UniqueEntityID): Result<Path> {
@@ -46,7 +42,7 @@ export class Path extends Entity<PathProps> {
 
     const path = new Path({
       ...props
-    }, id);
+    });
 
     return Result.ok<Path>(path);
   }

@@ -132,6 +132,147 @@ interface FloorMapProps {
 }
 
 export class FloorMapStructure extends ValueObject<FloorMapProps> {
+
+
+  get maze(): {
+    size: {
+      width: number;
+      depth: number;
+    };
+    map: number[][];
+    rooms: {
+      roomId: string;
+      position: number[];
+      size: {
+        width: number;
+        height: number;
+      };
+    }[];
+    exits: {
+      label: string;
+      location: number[];
+    }[];
+    elevators: [number, number][];
+    exitLocation: {
+      floorId: string;
+      location: number[];
+    }[];
+  } {
+    return this.props.maze;
+  }
+
+  get ground(): {
+    size: {
+      width: number;
+      height: number;
+      depth: number;
+    };
+    segments: {
+      width: number;
+      height: number;
+      depth: number;
+    };
+    primaryColor: string;
+    maps: {
+      color: {
+        url: string;
+      };
+      ao: {
+        url: string;
+        intensity: number;
+      };
+      displacement: {
+        url: string;
+        scale: number;
+        bias: number;
+      };
+      normal: {
+        url: string;
+        _type: number;
+        scale: {
+          x: number;
+          y: number;
+        };
+      };
+      bump: {
+        url: string;
+        scale: number;
+      };
+      roughness: {
+        url: string;
+        rough: number;
+      };
+    };
+    wrapS: number;
+    wrapT: number;
+    repeat: {
+      u: number;
+      v: number;
+    };
+    magFilter: number;
+    minFilter: number;
+    secondaryColor: string;
+  } {
+    return this.props.ground;
+  }
+
+  get wall(): {
+    segments: {
+      width: number;
+      height: number;
+    };
+    primaryColor: string;
+    maps: {
+      color: {
+        url: string;
+      };
+      ao: {
+        url: string;
+        intensity: number;
+      };
+      displacement: {
+        url: string;
+        scale: number;
+        bias: number;
+      };
+      normal: {
+        url: string;
+        _type: number;
+        scale: {
+          x: number;
+          y: number;
+        };
+      };
+      bump: {
+        url: string;
+        scale: number;
+      };
+      roughness: {
+        url: string;
+        rough: number;
+      };
+    };
+    wrapS: number;
+    wrapT: number;
+    repeat: {
+      u: number;
+      v: number;
+    };
+    magFilter: number;
+    minFilter: number;
+    secondaryColor: string;
+  } {
+    return this.props.wall;
+  }
+
+  get player(): {
+    initialPosition: [number, number];
+    initialDirection: number;
+  } {
+    return this.props.player;
+  }
+
+
   private constructor(props: FloorMapProps) {
     super(props);
   }
