@@ -4,11 +4,11 @@ import { BuildingService } from "../../building/building.service";
 import { Floor } from "../floor";
 
 @Component({
-  selector: 'app-list-of-bulding-with-pathway',
-  templateUrl: './list-of-bulding-with-pathway.component.html',
-  styleUrls: ['./list-of-bulding-with-pathway.component.css']
+  selector: 'app-list-of-building-with-pathway',
+  templateUrl: './list-of-building-with-pathway.component.html',
+  styleUrls: ['./list-of-building-with-pathway.component.css']
 })
-export class ListOfBuldingWithPathwayComponent implements OnInit {
+export class ListOfBuildingWithPathwayComponent implements OnInit {
   buildingDesignation: any;
   buildings: any;
   connections: Map<number, Floor[]> | undefined;
