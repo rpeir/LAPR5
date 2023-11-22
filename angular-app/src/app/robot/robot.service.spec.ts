@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { of, throwError } from "rxjs";
 import { RobotService } from "./robot.service";
 import { Robot } from "./robot";
@@ -7,6 +8,8 @@ import { Robot } from "./robot";
 describe('RobotService', () => {
   let service: RobotService;
   let httpClientSpy: HttpClient;
+  let httpTestingController: HttpTestingController;
+  let baseUrl = 'http://localhost:4000/api/robots';
 
   const DEFAULT_ROBOT : Robot = {
     nickName: 'TestRobot',
@@ -18,7 +21,7 @@ describe('RobotService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule]
+      imports: [HttpClientModule, HttpClientTestingModule],
     }).compileComponents();
     httpClientSpy = TestBed.inject(HttpClient);
     service = new RobotService(httpClientSpy);
@@ -86,4 +89,16 @@ describe('RobotService', () => {
       expect(robot.robotCode).toBe(robotCode);
     });
   });
+  it('should list all robots', () => {
+    const mockRobots: Robot[] = [
+      DEFAULT_ROBOT,
+      DEFAULT_ROBOT
+    ];
+
+    spyOn(httpClientSpy, 'get').and.returnValue(of(mockRobots));
+
+    service.listAllRobots().subscribe((robots) => {
+      expect(robots).toEqual(mockRobots);
+    });
+  })
 });
