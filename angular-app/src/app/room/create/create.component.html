@@ -32,8 +32,8 @@
 
         <mat-form-field class="full-width">
           <mat-label>Select a building</mat-label>
-          <mat-select [(ngModel)]="building" name="buildingDesignation" (ngModelChange)="listFloorsOfBuilding($event)" >
-            <mat-option *ngFor="let building of buildings" [value]="building" [matTooltip]="getBuildingInfo(building)">
+          <mat-select [(ngModel)]="room.building" name="buildingDesignation" >
+            <mat-option *ngFor="let building of buildings" [value]="building.code" [matTooltip]="getBuildingInfo(building)" (click)="listFloorsOfBuilding(building)">
               {{building.designation}}
             </mat-option>
           </mat-select>
