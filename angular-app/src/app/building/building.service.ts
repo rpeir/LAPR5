@@ -20,4 +20,7 @@ export class BuildingService {
   listAllBuilding(): Observable<Building[]> {
     return this.httpClient.get<Building[]>(`${this.buildingUrl}`);
   }
+  editBuilding(building: Building) {
+    return this.httpClient.patch<Building>(this.buildingUrl, building);
+  }
 }
