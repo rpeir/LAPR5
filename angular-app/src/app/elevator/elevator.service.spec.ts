@@ -1,19 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { BuildingService } from './building.service';
-import { Building } from './building';
+import { ElevatorService } from './elevator.service';
+import { Elevator } from './elevator';
 
 describe('ElevatorService', () => {
-  let service: BuildingService;
+  let service: ElevatorService;
   let httpTestingController: HttpTestingController;
-  let baseUrl = 'http://localhost:4000/api/buildings';
+  let baseUrl = 'http://localhost:4000/api/elevators';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [BuildingService],
+      providers: [ElevatorService],
     });
-    service = TestBed.inject(BuildingService);
+    service = TestBed.inject(ElevatorService);
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 
@@ -26,42 +26,44 @@ describe('ElevatorService', () => {
   });
 
   it('should create an elevator', () => {
-    const mockBuilding: Building= {
-      domainId: '1',
-      code: '1232',
-      designation: 'Building A',
-      description: 'Building description',
-      length: 10,
-      width: 10,
-      height: 10,
+    const mockElevator: Elevator = {
+      id: '1',
+      designation: 'Elevator 1',
+      buildingDesignation: 'Building A',
+      floorsServed: [1, 2, 3],
+      brand: 'Brand',
+      modelE: 'Model',
+      serialNumber: '12345',
+      description: 'Elevator description',
     };
 
     // Act
-    service.createBuilding(mockBuilding).subscribe((building) => {
+    service.createElevator(mockElevator).subscribe((elevator) => {
       // Assert
-      expect(building).toEqual(mockBuilding);
+      expect(elevator).toEqual(mockElevator);
     });
 
     // Assert
     const req = httpTestingController.expectOne(`${baseUrl}`);
     expect(req.request.method).toEqual('POST');
-    req.flush(mockBuilding);
+    req.flush(mockElevator);
   });
- /* it('should update an elevator', () => {
-    const mockElevator: Building = {
-      domainId: '1',
-      code: '1232',
-      designation: 'Building A',
-      description: 'Building description',
-      length: 10,
-      width: 10,
-      height: 10,
+  it('should update an elevator', () => {
+    const mockElevator: Elevator = {
+      id: '1',
+      designation: 'Elevator 1',
+      buildingDesignation: 'Building A',
+      floorsServed: [1, 2, 3],
+      brand: 'Brand',
+      modelE: 'Model',
+      serialNumber: '12345',
+      description: 'Elevator description',
     };
 
     // Act
-    service.updateBuilding(mockElevator).subscribe((building) => {
+    service.updateElevator(mockElevator).subscribe((elevator) => {
       // Assert
-      expect(building).toEqual(mockElevator);
+      expect(elevator).toEqual(mockElevator);
     });
 
     // Assert
@@ -92,28 +94,27 @@ describe('ElevatorService', () => {
     expect(req.request.method).toEqual('PUT');
     req.flush(mockElevator);
   })
-
-  */
   it('should list all elevators', () => {
-    const mockBuilding: Building[] = [{
-      domainId: '1',
-      code: '1232',
-      designation: 'Building A',
-      description: 'Building description',
-      length: 10,
-      width: 10,
-      height: 10,
+    const mockElevator: Elevator[] = [{
+      id: '1',
+      designation: 'Elevator 1',
+      buildingDesignation: 'Building A',
+      floorsServed: [1, 2, 3],
+      brand: 'Brand',
+      modelE: 'Model',
+      serialNumber: '12345',
+      description: 'Elevator description',
     }];
 
     // Act
-    service.getBuildings().subscribe((buildings) => {
+    service.listAllElevators('Building A').subscribe((elevator) => {
       // Assert
-      expect(buildings).toEqual(mockBuilding);
+      expect(elevator).toEqual(mockElevator);
     });
 
     // Assert
     const req = httpTestingController.expectOne(`${baseUrl}/?buildingDesignation=Building A`);
     expect(req.request.method).toEqual('GET');
-    req.flush(mockBuilding);
+    req.flush(mockElevator);
   })
 });
