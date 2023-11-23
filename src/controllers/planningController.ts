@@ -121,7 +121,7 @@ export default class PlanningController implements IPlanningController {
     }
   }
 
-public async getPlanningPathwayLocation(req: Request, res: Response, next: NextFunction) {
+  public async getPlanningPathwayLocation(req: Request, res: Response, next: NextFunction) {
     try {
       const floor = req.query.floor as string;
       const infoOrError = await this.planningService.getPlanningPathwayLocation(floor);
@@ -146,7 +146,51 @@ public async getPlanningPathwayLocation(req: Request, res: Response, next: NextF
       }
       const infoDTO = infoOrError.getValue();
       return res.json(infoDTO).status(200);
-    }catch (error) {
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  public async getPathLessBuildingsRoomToRoom(req: Request, res: Response, next: NextFunction) {
+    try {
+      const sourceBuilding = req.query.sourceBuilding as string;
+      const destinationBuilding = req.query.destinationBuilding as string;
+      const sourceFloor = req.query.sourceFloor as string;
+      const destinationFloor = req.query.destinationFloor as string;
+      const roomSource = req.query.roomSource as string;
+      const roomDestination = req.query.roomDestination as string;
+      console.log(sourceBuilding + "_" + sourceFloor);
+      console.log(destinationBuilding + "_" + destinationFloor);
+      console.log(roomSource);
+      console.log(roomDestination);
+      const infoOrError = await this.planningService.getPathLessBuildingsRoomToRoom(sourceBuilding + "_" + sourceFloor, destinationBuilding + "_" + destinationFloor, roomSource, roomDestination);
+
+      if (infoOrError.isFailure) {
+        return res.status(402).json({ error: infoOrError.error }).send();
+      }
+      const infoDTO = infoOrError.getValue();
+      return res.json(infoDTO).status(200);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  public async getPathLessElevatorsRoomToRoom(req: Request, res: Response, next: NextFunction) {
+    try {
+      const sourceBuilding = req.query.sourceBuilding as string;
+      const destinationBuilding = req.query.destinationBuilding as string;
+      const sourceFloor = req.query.sourceFloor as string;
+      const destinationFloor = req.query.destinationFloor as string;
+      const roomSource = req.query.roomSource as string;
+      const roomDestination = req.query.roomDestination as string;
+      const infoOrError = await this.planningService.getPathLessElevatorsRoomToRoom(sourceBuilding + "_" + sourceFloor, destinationBuilding + "_" + destinationFloor, roomSource, roomDestination);
+
+      if (infoOrError.isFailure) {
+        return res.status(402).json({ error: infoOrError.error }).send();
+      }
+      const infoDTO = infoOrError.getValue();
+      return res.json(infoDTO).status(200);
+    } catch (error) {
       return next(error);
     }
   }

@@ -25,4 +25,8 @@ export default (app: Router) => {
   route.get("/planningPathwayLocation",(req, res, next) => ctrl.getPlanningPathwayLocation(req,res, next));
 
   route.get("/planningRoomsLocation",(req, res, next) => ctrl.getPlanningRoomsLocation(req,res, next));
+
+  route.get("/path/lessBuildings/roomToRoom",(req, res, next) => ctrl.getPathLessBuildingsRoomToRoom(req,res, next));
+
+  route.get("/path/lessElevators/roomToRoom",(req, res, next) => ctrl.getPathLessElevatorsRoomToRoom(req,res, next));
 }

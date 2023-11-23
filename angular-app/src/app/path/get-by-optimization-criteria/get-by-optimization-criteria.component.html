@@ -28,7 +28,8 @@
 
     <mat-form-field class="full-width">
       <mat-label>Select a source Floor</mat-label>
-      <mat-select [(ngModel)]="floorSource" name="floorSource">
+      <mat-select [(ngModel)]="floorSource" name="floorSource"
+                  (ngModelChange)="listRoomsOfFloorSource()">
         <mat-option *ngFor="let floor of floorsSource" [value]="floor.floorNr" [matTooltip]="getFloorInfo(floor)">
           {{floor.floorNr}}
         </mat-option>
@@ -36,8 +37,9 @@
     </mat-form-field>
 
     <mat-form-field class="full-width">
-      <mat-label>Select a source Floor</mat-label>
-      <mat-select [(ngModel)]="floorDestination" name="floorDestination">
+      <mat-label>Select a destination Floor</mat-label>
+      <mat-select [(ngModel)]="floorDestination" name="floorDestination"
+                  (ngModelChange)="listRoomsOfFloorDestination()">
         <mat-option *ngFor="let floor of floorsDestination" [value]="floor.floorNr" [matTooltip]="getFloorInfo(floor)">
           {{floor.floorNr}}
         </mat-option>
@@ -53,8 +55,30 @@
       </mat-select>
     </mat-form-field>
 
+    <mat-checkbox  (change)="toggleRoomsOption()"> Travel Between Rooms. It might take a while. All floor maps should be up to date.</mat-checkbox>
+    <div *ngIf="roomToRoom">
+      <mat-form-field class="full-width">
+        <mat-label>Select a source room</mat-label>
+        <mat-select [(ngModel)]="roomSource" name="floorSource">
+          <mat-option *ngFor="let room of sourceRooms" [value]="room.name" [matTooltip]="getRoomInfo(room)">
+            {{room.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Select a destination room</mat-label>
+        <mat-select [(ngModel)]="roomDestination" name="floorSource">
+          <mat-option *ngFor="let room of destinationRooms" [value]="room.name" [matTooltip]="getRoomInfo(room)">
+            {{room.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+
     <div>
-      <input type="submit" value="create">
+      <input type="submit" value="Find Path">
     </div>
 
   </form>
@@ -84,6 +108,28 @@
         </mat-card>
         <br>
       </div>
+  </div>
+
+  <div *ngIf="path?.pathInside">
+    <h2 class="text-center">Path Inside</h2>
+    <div *ngFor="let cells of path?.pathInside">
+      <mat-card>
+        <mat-card-content class = "example-card">
+        <div *ngFor="let cell of cells">
+          <mat-card>
+            <mat-card-content>
+              Cell: <br><br>
+              Line : {{cell.line}} <br><br>
+              Column : {{cell.column}} <br><br>
+            </mat-card-content>
+          </mat-card>
+          <br>
+        </div>
+        </mat-card-content>
+        <br>
+      </mat-card>
+      <br>
+    </div>
   </div>
 
 

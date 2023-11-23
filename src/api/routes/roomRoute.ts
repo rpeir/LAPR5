@@ -24,6 +24,11 @@ export default (app: Router) => {
     (req,res,next) => ctrl.createRoom(req, res,next)
   );
 
+  route.get(
+    "/roomByBuildingAndFloor",
+    (req,res,next) => ctrl.getRoomsByBuildingsAndFloor(req, res,next)
+  );
+
   // Celebrate failure error handler middleware
   route.use(middlewares.validateBody);
 }

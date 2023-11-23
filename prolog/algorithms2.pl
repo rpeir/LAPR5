@@ -134,7 +134,7 @@ findPathFromRoomToPathway(Room, PathwayDestination, Path):-roomLocation(_,Room,R
 %=====================================================
 % FindPath from a pathway to a room
 %=====================================================
-findPathFromPathwayToRoom(PathwaySource, RoomDestination, Path):-roomLocation(_,RoomDestination,RoomLine,RoomColumn)\
+findPathFromPathwayToRoom(PathwaySource, RoomDestination, Path):-roomLocation(_,RoomDestination,RoomLine,RoomColumn),
           pathwayLocation(PathwaySource,_,PathwayLine,PathwayColumn),
           (better_dfs(cel(PathwayLine,PathwayColumn), cel(RoomLine,RoomColumn));true),
           bestSolution(Path,_),!.

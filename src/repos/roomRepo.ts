@@ -63,4 +63,14 @@ export default class RoomRepo implements IRoomRepo {
       throw err;
     }
   }
+
+  public async  findByBuildingAndFloor(code: string, floor: number) {
+    const query = { building: code, floor: floor };
+    const rooms = await this.roomSchema.find(query);
+    if (rooms != null) {
+      return rooms.map((room) => RoomMap.toDomain(room));
+    } else {
+      return null;
+    }
+  }
 }

@@ -19,4 +19,14 @@ export class PathService {
     return this.httpCliente.get<any>(`${this.pathUrl}/lessElevators?sourceBuilding=${buildingSource}&sourceFloor=${floorSource}&destinationBuilding=${buildingDestination}&destinationFloor=${floorDestination}`,
       {observe: "body", responseType: "json"});
   }
+
+  getPathRoomToRoomLessElevators(buildingSource: string | undefined, floorSource: string | undefined, buildingDestination: string | undefined, floorDestination: string | undefined, roomSource: string | undefined, roomDestination: string | undefined) {
+    return this.httpCliente.get<any>(`${this.pathUrl}/lessElevators/roomToroom?sourceBuilding=${buildingSource}&sourceFloor=${floorSource}&destinationBuilding=${buildingDestination}&destinationFloor=${floorDestination}&roomSource=${roomSource}&roomDestination=${roomDestination}`,
+      {observe: "body", responseType: "json"});
+  }
+
+  getPathRoomToRoomLessBuildings(buildingSource: string | undefined, floorSource: string | undefined, buildingDestination: string | undefined, floorDestination: string | undefined, roomSource: string | undefined, roomDestination: string | undefined) {
+    return this.httpCliente.get<any>(`${this.pathUrl}/lessBuildings/roomToroom?sourceBuilding=${buildingSource}&sourceFloor=${floorSource}&destinationBuilding=${buildingDestination}&destinationFloor=${floorDestination}&roomSource=${roomSource}&roomDestination=${roomDestination}`,
+      {observe: "body", responseType: "json"});
+  }
 }
