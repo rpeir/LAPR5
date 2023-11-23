@@ -7,7 +7,7 @@ describe('CreateComponent', () => {
         const elevatorData = {
             designation: 'test',
             buildingDesignation: 'A', // Replace this with the actual building designation you want to select
-            floorsServed: [1, 2], // Replace this with an array of floor numbers you want to select
+            floorsServed: ["1", "2"], // Replace this with an array of floor numbers you want to select
             brand: 'test',
             modelE: 'test',
             serialNumber: 'test',
@@ -44,10 +44,11 @@ describe('CreateComponent', () => {
       cy.get('[data-cy=description]').type(elevatorData.description).type('{enter}');
 
       cy.wait('@apiCheck').then((interception) =>{
-        assert.equal(interception.response.statusCode, 201);
+        assert.equal(JSON.stringify({...interception.response.body, id:undefined, code: undefined}), JSON.stringify(elevatorData));
+
       })
     });
-    it('should fail create elevator because buildingDesignation is the same', () => {
+    it('should fail create elevator because buildingDesignation and designation are the same', () => {
       const elevatorData = {
         designation: 'test',
         buildingDesignation: 'A', // Replace this with the actual building designation you want to select
@@ -88,6 +89,18 @@ describe('CreateComponent', () => {
 
       cy.wait('@apiCheck').then((interception) => {
         assert.equal(interception.response.statusCode, 402);
+      })
+      // Check if the elevator is created successfully
+      cy.intercept({
+        method: 'POST',
+        url: '**/api/elevators'
+      }).as('apiCheck')
+
+      cy.get('[data-cy=description]').type(elevatorData.description).type('{enter}');
+
+      cy.wait('@apiCheck').then((interception) =>{
+        assert.equal(JSON.stringify({"error":"Already exists elevator with {\"buildingDesignation\":\"A\",\"designation\":\"test\"}"}),JSON.stringify(interception.response.body));
+
       })
     });
 });
