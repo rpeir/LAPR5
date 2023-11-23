@@ -8,4 +8,6 @@ interface PathBetweenFloors {
 export interface IPathDTO {
   buildings: string[];
   paths: PathBetweenFloors[];
+  pathInside?: { line: string, column: string }[][];
 }
+

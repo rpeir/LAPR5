@@ -64,6 +64,8 @@ import { EditComponent as PathwayEditComponent } from './pathway/edit/edit.compo
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EditFloorComponent } from './floor/edit/edit-floor.component';
 import { GestorDeFrotaToolbarComponent } from './gestor-de-frota-toolbar/gestor-de-frota-toolbar.component';
+import { MatCheckboxModule } from "@angular/material/checkbox";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -134,7 +136,8 @@ import { GestorDeFrotaToolbarComponent } from './gestor-de-frota-toolbar/gestor-
     MatCardModule,
     MatSidenavModule,
     MatListModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

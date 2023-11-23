@@ -8,5 +8,6 @@ interface PathBetweenFloors {
 export class Path {
   buildings!: string[];
   paths!: PathBetweenFloors[];
+  pathInside?: { line: string, column: string }[][];
 }
 
