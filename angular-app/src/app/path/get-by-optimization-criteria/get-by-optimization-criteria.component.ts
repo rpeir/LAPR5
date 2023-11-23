@@ -7,6 +7,8 @@ import { Floor } from "../../floor/floor";
 import { Building } from "../../building/building";
 import { Path } from "../path";
 import { PathService } from "../path.service";
+import { RoomService } from "../../room/room.service";
+import { Room } from "../../room/room";
 
 @Component({
   selector: "app-get-by-optimization-criteria",
@@ -16,7 +18,7 @@ import { PathService } from "../path.service";
 export class GetByOptimizationCriteriaComponent {
 
 
-  constructor(private pathService: PathService,private floorService: FloorService, private location: Location, private buildingService: BuildingService, private pathwayService: PathwayService) {
+  constructor(private roomService: RoomService, private pathService: PathService, private floorService: FloorService, private location: Location, private buildingService: BuildingService, private pathwayService: PathwayService) {
   }
 
 
@@ -30,28 +32,55 @@ export class GetByOptimizationCriteriaComponent {
   optimizationCriteria = ["Less Buildings", "Less Elevator"];
   path: Path | undefined;
   selectedOptimizationCriteria: any;
+  roomToRoom = false;
+  roomSource: string | undefined;
+  roomDestination: string | undefined;
+  sourceRooms: Room[] | undefined;
+  destinationRooms: Room[] | undefined;
 
   getPathBetweenFloors() {
     if (this.selectedOptimizationCriteria == "Less Buildings") {
-      this.pathService.getPathBetweenFloorsLessBuildings(this.buildingSource, this.floorSource, this.buildingDestination, this.floorDestination).subscribe({
-        next: (data) => {
-          this.path = data;
-        },
-        error: (error) => {
-          window.alert(JSON.stringify(error.error.error));
-        }
-      });
-    }else {
-      this.pathService.getPathBetweenFloorsLessElevators(this.buildingSource, this.floorSource, this.buildingDestination, this.floorDestination).subscribe({
-        next: (data) => {
-          this.path = data;
-        },
-        error: (error) => {
-          window.alert(JSON.stringify(error.error.error));
-        }
-      });
+      if (this.roomToRoom) {
+        this.pathService.getPathRoomToRoomLessBuildings(this.buildingSource, this.floorSource, this.buildingDestination, this.floorDestination, this.roomSource, this.roomDestination).subscribe({
+          next: (data) => {
+            this.path = data;
+          },
+          error: (error) => {
+            window.alert(JSON.stringify(error.error.error));
+          }
+        });
+      } else {
+        this.pathService.getPathBetweenFloorsLessBuildings(this.buildingSource, this.floorSource, this.buildingDestination, this.floorDestination).subscribe({
+          next: (data) => {
+            this.path = data;
+          },
+          error: (error) => {
+            window.alert(JSON.stringify(error.error.error));
+          }
+        });
+      }
+    } else {
+      if (this.roomToRoom) {
+        this.pathService.getPathRoomToRoomLessElevators(this.buildingSource, this.floorSource, this.buildingDestination, this.floorDestination, this.roomSource, this.roomDestination).subscribe({
+          next: (data) => {
+            this.path = data;
+          },
+          error: (error) => {
+            window.alert(JSON.stringify(error.error.error));
+          }
+        });
+      } else {
+        this.pathService.getPathBetweenFloorsLessElevators(this.buildingSource, this.floorSource, this.buildingDestination, this.floorDestination).subscribe({
+          next: (data) => {
+            this.path = data;
+          },
+          error: (error) => {
+            window.alert(JSON.stringify(error.error.error));
+          }
+        });
       }
     }
+  }
 
   ngOnInit() {
     this.buildingService.getBuildings().subscribe({
@@ -96,4 +125,35 @@ export class GetByOptimizationCriteriaComponent {
   getBuildingInfo(building: Building) {
     return building.description;
   }
+
+  toggleRoomsOption() {
+    this.roomToRoom = !this.roomToRoom;
+  }
+
+  listRoomsOfFloorSource() {
+    this.roomService.getRooms(this.buildingSource, this.floorSource).subscribe({
+      next: (data) => {
+        this.sourceRooms = data;
+      },
+      error: (error) => {
+        window.alert(JSON.stringify(error.error.error));
+      }
+    });
+  }
+
+  listRoomsOfFloorDestination() {
+    this.roomService.getRooms(this.buildingDestination, this.floorDestination).subscribe({
+      next: (data) => {
+        this.destinationRooms = data;
+      },
+      error: (error) => {
+        window.alert(JSON.stringify(error.error.error));
+      }
+    });
+  }
+
+  getRoomInfo(room: Room) {
+    return "Description: " + room.description + " Category: " + room.category;
+  }
+
 }

@@ -132,21 +132,21 @@ export default class PlanningService implements IPlanningService {
 
       const request = http.request(options, (res) => {
         if (res.statusCode !== 200) {
-          result = Result.fail(`Did not get an OK from the server. Code: ${res.statusCode}`);
+          result = Result.fail(`Couldn't find the path.`);
           res.resume();
           resolve(result);
+        } else {
+          let data = "";
+
+          res.on("data", (chunk) => {
+            data += chunk;
+          });
+
+          res.on("close", () => {
+            result = Result.ok(JSON.parse(data));
+            resolve(result);
+          });
         }
-
-        let data = "";
-
-        res.on("data", (chunk) => {
-          data += chunk;
-        });
-
-        res.on("close", () => {
-          result = Result.ok(JSON.parse(data));
-          resolve(result);
-        });
       });
 
       request.end();
@@ -172,21 +172,21 @@ export default class PlanningService implements IPlanningService {
 
       const request = http.request(options, (res) => {
         if (res.statusCode !== 200) {
-          result = Result.fail(`Did not get an OK from the server. Code: ${res.statusCode}`);
+          result = Result.fail(`Couldn't find path.`);
           res.resume();
           resolve(result);
+        } else {
+          let data = "";
+
+          res.on("data", (chunk) => {
+            data += chunk;
+          });
+
+          res.on("close", () => {
+            result = Result.ok(JSON.parse(data));
+            resolve(result);
+          });
         }
-
-        let data = "";
-
-        res.on("data", (chunk) => {
-          data += chunk;
-        });
-
-        res.on("close", () => {
-          result = Result.ok(JSON.parse(data));
-          resolve(result);
-        });
       });
 
       request.end();
@@ -225,7 +225,11 @@ export default class PlanningService implements IPlanningService {
         matrix.push({ line: lines, column: column, value: value });
       }
     }
-    const planningMatrixOrError = PlanningMatrix.create({ maxLines: floor.floorMap.maze.map.length - 1, maxColumns: floor.floorMap.maze.map[0].length - 1, matrix: matrix });
+    const planningMatrixOrError = PlanningMatrix.create({
+      maxLines: floor.floorMap.maze.map.length - 1,
+      maxColumns: floor.floorMap.maze.map[0].length - 1,
+      matrix: matrix
+    });
     if (planningMatrixOrError.isFailure) {
       return Result.fail<IPlanningMatrixDTO>(planningMatrixOrError.error);
     }
@@ -318,5 +322,91 @@ export default class PlanningService implements IPlanningService {
       roomsLocations.push(PlanningRoomLocationMapper.toDTO(roomLocation.getValue()));
     }
     return Result.ok<IPlanningRoomLocationDTO[]>(roomsLocations);
+  }
+
+  public async getPathLessBuildingsRoomToRoom(floorSource: string, floorDestination: string, roomSource: string, roomDestination: string) {
+    const http = require("http");
+    const options = {
+      method: "GET",
+      host: "localhost",
+      port: 5000,
+      path: "/path/roomToRoomLessBuildings?floorSource=" + floorSource
+            + "&floorDestination=" + floorDestination
+            + "&roomSource=" + roomSource
+            +  "&roomDestination=" + roomDestination
+    };
+    return new Promise<Result<IPathDTO>>((resolve) => {
+      let result;
+
+      const request = http.request(options, (res) => {
+        if (res.statusCode !== 200) {
+          result = Result.fail(`Couldn't find the path.`);
+          res.resume();
+          resolve(result);
+        } else {
+          let data = "";
+
+          res.on("data", (chunk) => {
+            data += chunk;
+          });
+
+          res.on("close", () => {
+            result = Result.ok(JSON.parse(data));
+            resolve(result);
+          });
+        }
+      });
+
+      request.end();
+
+      request.on("error", (err) => {
+        result = Result.fail(`Encountered an error trying to make a request: ${err.message}`);
+        resolve(result);
+      });
+    });
+  }
+
+  public async getPathLessElevatorsRoomToRoom(floorSource: string, floorDestination: string, roomSource: string, roomDestination: string) {
+    const http = require("http");
+    const options = {
+      method: "GET",
+      host: "localhost",
+      port: 5000,
+      path: "/path/roomToRoomLessElevators?floorSource=" + floorSource
+        + "&floorDestination=" + floorDestination
+        + "&roomSource=" + roomSource
+        +  "&roomDestination=" + roomDestination
+    };
+
+    console.log(options.path);
+    return new Promise<Result<IPathDTO>>((resolve) => {
+      let result;
+
+      const request = http.request(options, (res) => {
+        if (res.statusCode !== 200) {
+          result = Result.fail(`Couldn't find the path.`);
+          res.resume();
+          resolve(result);
+        } else {
+          let data = "";
+
+          res.on("data", (chunk) => {
+            data += chunk;
+          });
+
+          res.on("close", () => {
+            result = Result.ok(JSON.parse(data));
+            resolve(result);
+          });
+        }
+      });
+
+      request.end();
+
+      request.on("error", (err) => {
+        result = Result.fail(`Encountered an error trying to make a request: ${err.message}`);
+        resolve(result);
+      });
+    });
   }
 }
