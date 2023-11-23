@@ -4,7 +4,32 @@
     <app-building-tool-bar></app-building-tool-bar>
   </mat-sidenav>
   <mat-sidenav-content>
-    <!--Your content here-->
-    <p>list-all works!</p>
+    <body class="RobDroneGo">
+    <div class="container">
+      <h2 class="text-center">List all Buildings</h2>
+      <br>
+      <form (ngSubmit)="getBuildings()">
+        <div *ngIf="buildings">
+          <div *ngFor="let building of buildings">
+            <mat-card>
+              <mat-card-content>
+                Building designation: {{building.designation}};
+                <br>
+                Building description: {{building.description}};
+                <br>
+                Building code: {{building.code}};
+                <br>
+                Building width: {{building.width}};
+                <br>
+                Building height: {{building.height}};
+              </mat-card-content>
+            </mat-card>
+            <br>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    </body>
   </mat-sidenav-content>
 </mat-sidenav-container>

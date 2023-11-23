@@ -1,21 +1,29 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component } from '@angular/core';
+import { FloorService } from "../../floor/floor.service";
+import { Location } from "@angular/common";
+import { Building } from "../building";
 
-import { ListAllComponent } from './list-all.component';
+@Component({
+  selector: 'app-list-min-max',
+  templateUrl: './list-min-max.component.html',
+  styleUrls: ['./list-min-max.component.css']
+})
+export class ListMinMaxComponent {
+  constructor(private createFloorService: FloorService, private location: Location) {
+  }
 
-describe('ListAllComponent', () => {
-  let component: ListAllComponent;
-  let fixture: ComponentFixture<ListAllComponent>;
+  min: any;
+  max: any ;
+  buildings: Building[] | any;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [ListAllComponent]
+  getBuildingFloorMaxMin() {
+    this.createFloorService.getBuildingFloorMaxMin(this.max, this.min).subscribe({
+      next: (data) => {
+        this.buildings = data;
+      },
+      error: (error) => {
+        window.alert(JSON.stringify(error.error.error));
+      }
     });
-    fixture = TestBed.createComponent(ListAllComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  }
+}

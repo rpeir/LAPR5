@@ -13,10 +13,9 @@ import { RoomService } from "../room.service";
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit {
-  constructor(private router: Router, private buildingService : BuildingService, private floorService : FloorService, private roomService : RoomService) {}
+  constructor(private buildingService : BuildingService, private floorService : FloorService, private roomService : RoomService) {}
 
   buildings : Building[] | undefined;
-  building : Building | undefined;
   room : Room = new Room();
   categories = Object.values(RoomCategory);
   floors : Floor[] = [];
@@ -34,6 +33,7 @@ export class CreateComponent implements OnInit {
   }
 
   listFloorsOfBuilding(building: Building) {
+    console.log(building);
     this.floorService.getFloorsOfBuilding(building.designation).subscribe({
       next: (data) => {
         this.floors = data;
@@ -74,12 +74,10 @@ export class CreateComponent implements OnInit {
       return;
     }
 
-    if (this.building == undefined) {
+    if (this.room.building == undefined) {
       window.alert("Room building is required");
       return;
     }
-
-    this.room.building = this.building.code;
 
     this.roomService.createRoom(this.room).subscribe({
       next: (data) => {
