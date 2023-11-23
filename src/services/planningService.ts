@@ -16,9 +16,8 @@ import { IPlanningElevatorDTO } from "../dto/IPlanningElevatorDTO";
 import { PlanningPathwayMapper } from "../mappers/PlanningPathwayMapper";
 import { IPlanningPathwayDTO } from "../dto/IPlanningPathwayDTO";
 import { IPathDTO } from "../dto/IPathDTO";
-import { PlanningMatrixCell } from "../domain/planning/planningMatrixCell";
-import { IPlanningMatrixCellDTO } from "../dto/IPlanningMatrixCellDTO";
-import { PlanningMatrixCellMapper } from "../mappers/PlanningMatrixCellMapper";
+import { PlanningMatrix } from "../domain/planning/planningMatrix";
+import { PlanningMatrixMapper } from "../mappers/PlanningMatrixMapper";
 import { PlanningElevatorLocation } from "../domain/planning/planningElevatorLocation";
 import { IPlanningElevatorLocationMapper } from "../mappers/IPlanningElevatorLocationMapper";
 import { PlanningPathwayLocation } from "../domain/planning/planningPathwayLocation";
@@ -28,6 +27,7 @@ import { IPlanningRoomLocationDTO } from "../dto/IPlanningRoomLocationDTO";
 import { PlanningRoomLocationMapper } from "../mappers/PlanningRoomLocationMapper";
 import { PlanningRoomLocation } from "../domain/planning/planningRoomLocation";
 import { IPlanningElevatorLocationDTO } from "../dto/IPlanningElevatorLocationDTO";
+import { IPlanningMatrixDTO } from "../dto/IPlanningMatrixDTO";
 
 @Service()
 export default class PlanningService implements IPlanningService {
@@ -203,30 +203,33 @@ export default class PlanningService implements IPlanningService {
     const buildingOrError = await this.buildingService.getBuildingByDesignation(split[0]);
 
     if (buildingOrError.isFailure) {
-      return Result.fail<IPlanningMatrixCellDTO[]>(buildingOrError.error);
+      return Result.fail<IPlanningMatrixDTO>(buildingOrError.error);
     }
 
     const floorOrError = await this.floorService.findByBuildingIdAndFloorNr(buildingOrError.getValue().domainId, parseInt(split[1]));
     if (floorOrError.isFailure) {
-      return Result.fail<IPlanningMatrixCellDTO[]>(floorOrError.error);
+      return Result.fail<IPlanningMatrixDTO>(floorOrError.error);
     }
 
     const floor = floorOrError.getValue();
 
-    let matrix = [];
-    for (let lines = 0; lines < floor.floorMap.maze.map.length -1; lines++) {
-      for (let column = 0; column < floor.floorMap.maze.map[0].length -1; column++) {
-        let value = floor.floorMap.maze.map[lines][column];
-        let matrixCell;
-           matrixCell = PlanningMatrixCell.create({  line: lines, column: column, value: value });
+    let matrix: {
+      line: number,
+      column: number,
+      value: number
+    }[] = [];
 
-        if (matrixCell.isFailure) {
-          return Result.fail<IPlanningMatrixCellDTO[]>(matrixCell.error);
-        }
-        matrix.push(PlanningMatrixCellMapper.toDTO(matrixCell.getValue()));
+    for (let lines = 0; lines < floor.floorMap.maze.map.length - 1; lines++) {
+      for (let column = 0; column < floor.floorMap.maze.map[0].length - 1; column++) {
+        let value = floor.floorMap.maze.map[lines][column];
+        matrix.push({ line: lines, column: column, value: value });
       }
     }
-    return Result.ok<IPlanningMatrixCellDTO[]>(matrix);
+    const planningMatrixOrError = PlanningMatrix.create({ maxLines: floor.floorMap.maze.map.length - 1, maxColumns: floor.floorMap.maze.map[0].length - 1, matrix: matrix });
+    if (planningMatrixOrError.isFailure) {
+      return Result.fail<IPlanningMatrixDTO>(planningMatrixOrError.error);
+    }
+    return Result.ok<IPlanningMatrixDTO>(PlanningMatrixMapper.toDTO(planningMatrixOrError.getValue()));
   }
 
   public async getPlanningElevatorLocation(floorSource: string) {

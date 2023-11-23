@@ -46,8 +46,14 @@ go_Through_floor(FloorAct,FloorDestination,[BuildingAct,BuildingNext|OtherBuildi
 % =============================================================================
 
 best_path_less_elevators(FloorSource,FloorDestination,BestPath):-
+            getFloors(),
+            getElevators(),
+            getPathways(),
             findall([BuildingList, PathwayElevatorPath],path_between_floors(FloorSource,FloorDestination,BuildingList,PathwayElevatorPath),ListPathwayElevatorPath),
-            less_elevators(ListPathwayElevatorPath,BestPath,_,_).
+            less_elevators(ListPathwayElevatorPath,BestPath,_,_),
+            retractall(floor(_, _)),
+            retractall(elevator(_, _)),
+            retractall(pathway(_, _, _, _)).
 
 less_elevators([[BuildingList, PathwayElevatorPath]],[BuildingList, PathwayElevatorPath],NElev,NPathway):-count(PathwayElevatorPath,NElev,NPathway).
 
@@ -67,8 +73,14 @@ count([pathW(_,_)|L],NElev,NPathway):-count(L,NElev,NPathwayL),NPathway is NPath
 % Find path between floors using pathways and elevators (less buildings)
 % =============================================================================
 best_path_less_Buildings(FloorSource,FloorDestination,BestPath):-
+            getFloors(),
+            getElevators(),
+            getPathways(),
             findall([BuildingList, PathwayElevatorPath],path_between_floors(FloorSource,FloorDestination,BuildingList,PathwayElevatorPath),ListBuilidingAndPathwayElevatorPath),
-            less_buildings(ListBuilidingAndPathwayElevatorPath,BestPath,_,_,_).
+            less_buildings(ListBuilidingAndPathwayElevatorPath,BestPath,_,_,_),
+            retractall(floor(_, _)),
+            retractall(elevator(_, _)),
+            retractall(pathway(_, _, _, _)).
 
 less_buildings([[BuildingList, PathwayElevatorPath]],[BuildingList, PathwayElevatorPath],NBuildings, NElev,NPathway):-
             countBuildings(BuildingList,NBuildings),
