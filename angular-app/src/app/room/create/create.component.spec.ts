@@ -9,7 +9,7 @@ import { FloorService } from "../../floor/floor.service";
 import { Building } from "../../building/building";
 
 
-describe('CreateComponent', () => {
+describe('RoomCreateComponent', () => {
   let component: CreateComponent;
   let roomService: RoomService;
   let buildingService: BuildingService;

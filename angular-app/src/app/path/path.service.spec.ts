@@ -1,12 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
 import { PathService } from './path.service';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe('PathService', () => {
   let service: PathService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [PathService],
+      imports: [HttpClientTestingModule]
+    });
     service = TestBed.inject(PathService);
   });
 

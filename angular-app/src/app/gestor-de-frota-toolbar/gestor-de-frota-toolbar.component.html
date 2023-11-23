@@ -3,10 +3,10 @@
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #gestorDeFrotaMenu="matMenu">
-    <button mat-menu-item (click)="goToRobots()">
+    <button id="robots-option" mat-menu-item (click)="goToRobots()">
       <span>Robots</span>
     </button>
-    <button mat-menu-item (click)="goToRobotTypes()">
+    <button id="robot-types-option" mat-menu-item (click)="goToRobotTypes()">
       <span>Robot types</span>
     </button>
   </mat-menu>

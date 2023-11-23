@@ -3,19 +3,19 @@
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #gestorDeCampusMenu="matMenu">
-    <button mat-menu-item (click)="goToBuildings()">
+    <button id="buildings-option" mat-menu-item (click)="goToBuildings()">
       <span>Buildings</span>
     </button>
-    <button mat-menu-item (click)="goToElevators()">
+    <button id="elevators-option" mat-menu-item (click)="goToElevators()">
       <span>Elevators</span>
     </button>
-    <button mat-menu-item (click)="goToFloors()">
+    <button id="floors-option" mat-menu-item (click)="goToFloors()">
       <span>Floors</span>
     </button>
-    <button mat-menu-item (click)="goToRooms()">
+    <button id="rooms-option" mat-menu-item (click)="goToRooms()">
       <span>Rooms</span>
     </button>
-    <button mat-menu-item (click)="goToPathways()">
+    <button id="pathways-option" mat-menu-item (click)="goToPathways()">
       <span>Pathways</span>
     </button>
   </mat-menu>

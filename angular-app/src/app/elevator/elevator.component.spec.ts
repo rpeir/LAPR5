@@ -4,15 +4,12 @@ import { ElevatorComponent } from './elevator.component';
 
 describe('ElevatorComponent', () => {
   let component: ElevatorComponent;
-  let fixture: ComponentFixture<ElevatorComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ElevatorComponent]
     });
-    fixture = TestBed.createComponent(ElevatorComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new ElevatorComponent();
   });
 
   it('should create', () => {
