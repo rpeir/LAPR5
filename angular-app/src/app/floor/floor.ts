@@ -3,4 +3,5 @@ export class Floor {
   building!: string;
   description!: string;
   floorNr!: number;
+  floorMap!: string;
 }

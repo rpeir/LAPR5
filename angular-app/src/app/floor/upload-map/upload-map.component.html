@@ -1,10 +1,39 @@
 <app-gestor-de-campus-toolbar></app-gestor-de-campus-toolbar>
 <mat-sidenav-container>
   <mat-sidenav class="options" mode="side" opened>
-    <app-elevator-tool-bar></app-elevator-tool-bar>
+    <app-floor-tool-bar></app-floor-tool-bar>
   </mat-sidenav>
   <mat-sidenav-content>
-    <!---Your content here-->
-    <p>upload-map works!</p>
+    <body class="RobDroneGo">
+    <div class="container">
+      <h2 class="text-center">Upload Floor Map</h2>
+      <br>
+      <form (ngSubmit)="uploadFile()">
+
+        <mat-form-field class="full-width">
+          <mat-label>Select the building (code)</mat-label>
+          <mat-select [(ngModel)]="building.domainId" name="domainId" required (selectionChange)="onBuildingIdChange($event)">
+            <mat-option *ngFor="let b of buildings" [value]="b.domainId">{{ b.code }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Select the floor (number)</mat-label>
+          <mat-select [(ngModel)]="floor.floorNr" name="floorNr" required (selectionChange)="onFloorNrChange($event)">
+            <mat-option *ngFor="let f of floors" [value]="f.floorNr">{{ f.floorNr }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="center-container">
+          <div class="file-section">
+            <input type="file" (change)="onFileSelected($event)" accept=".json" name="floorMap" class="full-width-input" />
+            <span *ngIf="selectedFile" class="file-name">{{ selectedFile.name }}</span>
+          </div>
+          <button mat-raised-button color="primary" type="submit" [disabled]="fileForm.invalid" class="full-width-button">Upload</button>
+        </div>
+
+      </form>
+    </div>
+    </body>
   </mat-sidenav-content>
 </mat-sidenav-container>

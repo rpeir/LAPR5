@@ -18,22 +18,22 @@
 
         <mat-form-field class="full-width">
           <mat-label *ngIf="building?.designation">New Designation</mat-label>
-          <input matInput [(ngModel)]="building.designation" name="designation">
+          <input matInput name="designation" [value]="building.designation">
         </mat-form-field>
 
         <mat-form-field class="full-width">
           <mat-label *ngIf="building?.description">New Description</mat-label>
-          <input matInput [(ngModel)]="building.description" name="description">
+          <input matInput name="description" [value]="building.description">
         </mat-form-field>
 
         <mat-form-field class="full-width">
           <mat-label *ngIf="building?.length">New Length</mat-label>
-          <input matInput [(ngModel)]="building.length" name="length">
+          <input matInput name="length" [value]="building.length">
         </mat-form-field>
 
         <mat-form-field class="full-width">
           <mat-label *ngIf="building?.width">New Width</mat-label>
-          <input matInput [(ngModel)]="building.width" name="width">
+          <input matInput name="width" [value]="building.width">
         </mat-form-field>
 
         <mat-form-field class="full-width">

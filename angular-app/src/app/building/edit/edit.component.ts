@@ -15,7 +15,7 @@ export class EditComponent implements OnInit {
   building: Building = new Building();
   editForm: FormGroup;
 
-  constructor(private buildingService: BuildingService, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private buildingService: BuildingService, private fb: FormBuilder) {
     this.editForm = this.fb.group({
       code: [''],
       designation: [''],
@@ -25,36 +25,6 @@ export class EditComponent implements OnInit {
       height: [''],
     });
   }
-
-  onBuildingCodeChange(event: MatSelectChange) {
-    const selectedCode = event.value;
-    // Find the building with the selected code
-    const selectedBuilding = this.buildings.find(b => b.code === selectedCode);
-    // Check if selectedBuilding is not undefined
-    if (selectedBuilding) {
-      if (this.editForm.dirty) {
-        this.editForm.reset();
-      }
-      // Set the form values
-      this.editForm.patchValue({
-        code: selectedBuilding.code,
-        designation: selectedBuilding.designation,
-        description: selectedBuilding.description,
-        length: selectedBuilding.length,
-        width: selectedBuilding.width,
-        height: selectedBuilding.height,
-      });
-      // Set the building
-      this.building = selectedBuilding;
-      // Mark the form as dirty
-      this.editForm.markAsDirty();
-      // Trigger change detection
-      this.cdr.detectChanges();
-    } else {
-      console.warn(`Building with code ${selectedCode} not found.`);
-    }
-  }
-
   ngOnInit() {
     this.buildingService.listAllBuilding().subscribe({
       next: data => {
@@ -65,15 +35,30 @@ export class EditComponent implements OnInit {
       },
     });
   }
+  onBuildingCodeChange(event: MatSelectChange) {
+    const selectedCode = event.value;
+    console.log(this.buildings);
+    // Find the building with the selected code
+    const selectedBuilding = this.buildings.find((b) => b.code === selectedCode);
+    // Check if selectedBuilding is not undefined
+    if (selectedBuilding) {
+      this.editForm.reset(this.building);
+      this.building = { ...selectedBuilding };
+      this.editForm.patchValue({
+        code: this.building.code,
+        designation: this.building.designation,
+        description: this.building.description,
+        length: this.building.length,
+        width: this.building.width,
+        height: this.building.height,
+      });
+    } else {
+      console.warn(`Building with code ${selectedCode} not found.`);
+    }
+  }
 
   updateBuilding() {
-    const buildingUpdated = new Building();
-    buildingUpdated.code = this.building.code;
-    buildingUpdated.designation = this.building.designation;
-    buildingUpdated.description = this.building.description;
-    buildingUpdated.length = this.building.length;
-    buildingUpdated.width = this.building.width;
-    buildingUpdated.height = this.building.height;
+    const buildingUpdated = this.editForm.value;
     this.buildingService.editBuilding(buildingUpdated).subscribe({
       next: data => {
         window.alert(

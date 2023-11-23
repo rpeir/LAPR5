@@ -42,6 +42,10 @@ export class FloorToolBarComponent {
   }
 
   goToListFloorsWithPathways() {
-    this.router.navigate(['floors/building-pathways'])
+    this.router.navigate(['floors/building-pathways']);
+  }
+
+  goToUploadMap() {
+    this.router.navigate(['floors/upload-map']);
   }
 }

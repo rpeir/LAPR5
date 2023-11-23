@@ -13,13 +13,13 @@ import { TaskComponent } from './task/task.component';
 import { TaskTypeComponent } from './task-type/task-type.component';
 import { FloorComponent } from './floor/floor.component';
 import { LoginComponent } from './login/login.component';
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatButtonModule } from "@angular/material/button";
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 import { GestorDeFrotaComponent } from './gestor-de-frota/gestor-de-frota.component';
 import { GestorDeCampusComponent } from './gestor-de-campus/gestor-de-campus.component';
-import { MatIconModule } from "@angular/material/icon";
-import { MatMenuModule } from "@angular/material/menu";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MapViewerComponent } from './map-viewer/map-viewer.component';
 import { CreateComponent } from './building/create/create.component';
 import { EditComponent } from './building/edit/edit.component';
@@ -35,36 +35,35 @@ import { ListComponent } from './robot/list/list.component';
 import { CampusComponent } from './campus/campus.component';
 import { PathComponent } from './path/path.component';
 import { GetByOptimizationCriteriaComponent } from './path/get-by-optimization-criteria/get-by-optimization-criteria.component';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
-import { CreateRobotComponent} from "./robot/create/createRobot.component";
-import { MatInputModule } from "@angular/material/input";
-import { MatSelectModule } from "@angular/material/select";
-import { MatTooltipModule } from "@angular/material/tooltip";
-import { CreateFloorComponent } from "./floor/create/create-floor.component";
-import { FloorListOfBuildingComponent } from "./floor/list-of-building/floor-list-of-building.component";
-import { MatCardModule } from "@angular/material/card";
-import { CreatePathway } from "./pathway/create/create-pathway";
-import { ElevatorCreateComponent } from "./elevator/create/create.component";
-import { ElevatorUpdateComponent } from "./elevator/update/update.component";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CreateRobotComponent } from './robot/create/createRobot.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { CreateFloorComponent } from './floor/create/create-floor.component';
+import { FloorListOfBuildingComponent } from './floor/list-of-building/floor-list-of-building.component';
+import { MatCardModule } from '@angular/material/card';
+import { CreatePathway } from './pathway/create/create-pathway';
+import { ElevatorCreateComponent } from './elevator/create/create.component';
+import { ElevatorUpdateComponent } from './elevator/update/update.component';
 import { GestorDeCampusToolbarComponent } from './gestor-de-campus-toolbar/gestor-de-campus-toolbar.component';
-import { ElevatorReplaceComponent } from "./elevator/replace/replace.component";
-import { CreateComponent as RoomCreateComponent } from "./room/create/create.component";
+import { ElevatorReplaceComponent } from './elevator/replace/replace.component';
+import { CreateComponent as RoomCreateComponent } from './room/create/create.component';
 import { BuildingToolBarComponent } from './building/building-tool-bar/building-tool-bar.component';
 import { ElevatorToolBarComponent } from './elevator/elevator-tool-bar/elevator-tool-bar.component';
 import { FloorToolBarComponent } from './floor/floor-tool-bar/floor-tool-bar.component';
 import { PathwayToolBarComponent } from './pathway/pathway-tool-bar/pathway-tool-bar.component';
 import { RobotToolBarComponent } from './robot/robot-tool-bar/robot-tool-bar.component';
 import { ElevatorListAllComponent } from './elevator/list-all-elevators/listAll.component';
-import { MatSidenavModule } from "@angular/material/sidenav";
-import { MatListModule } from "@angular/material/list";
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 import { RoomSidenavComponent } from './room/room-sidenav/room-sidenav.component';
 import { GestorDeTarefasComponent } from './gestor-de-tarefas/gestor-de-tarefas.component';
-import { EditComponent as PathwayEditComponent } from "./pathway/edit/edit.component";
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { EditFloorComponent} from "./floor/edit/edit-floor.component";
+import { EditComponent as PathwayEditComponent } from './pathway/edit/edit.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { EditFloorComponent } from './floor/edit/edit-floor.component';
 import { GestorDeFrotaToolbarComponent } from './gestor-de-frota-toolbar/gestor-de-frota-toolbar.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -140,4 +139,4 @@ import { GestorDeFrotaToolbarComponent } from './gestor-de-frota-toolbar/gestor-
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

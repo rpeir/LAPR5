@@ -20,19 +20,20 @@ import { CreateRobotComponent } from './robot/create/createRobot.component';
 import { CreateFloorComponent } from './floor/create/create-floor.component';
 import { FloorListOfBuildingComponent } from './floor/list-of-building/floor-list-of-building.component';
 import { CreatePathway } from './pathway/create/create-pathway';
-import { MapViewerComponent } from "./map-viewer/map-viewer.component";
-import { ElevatorCreateComponent} from "./elevator/create/create.component";
-import { ElevatorUpdateComponent} from "./elevator/update/update.component";
-import { ElevatorReplaceComponent} from "./elevator/replace/replace.component";
-import { CreateComponent as RoomCreateComponent } from "./room/create/create.component"
-import { DisableComponent } from "./robot/disable/disable.component";
-import { ListComponent as ListRobotComponent } from "./robot/list/list.component";
-import { ElevatorListAllComponent } from "./elevator/list-all-elevators/listAll.component";
-import { GestorDeTarefasComponent } from "./gestor-de-tarefas/gestor-de-tarefas.component";
-import { ListOfBuildingWithPathwayComponent } from "./floor/list-of-building-with-pathway/list-of-building-with-pathway.component";
-import { EditComponent as PathwayEditComponent } from "./pathway/edit/edit.component";
-import { ListBetweenBuildingsComponent } from "./pathway/list-between-buildings/list-between-buildings.component";
-import { EditFloorComponent } from "./floor/edit/edit-floor.component";
+import { MapViewerComponent } from './map-viewer/map-viewer.component';
+import { ElevatorCreateComponent } from './elevator/create/create.component';
+import { ElevatorUpdateComponent } from './elevator/update/update.component';
+import { ElevatorReplaceComponent } from './elevator/replace/replace.component';
+import { CreateComponent as RoomCreateComponent } from './room/create/create.component';
+import { DisableComponent } from './robot/disable/disable.component';
+import { ListComponent as ListRobotComponent } from './robot/list/list.component';
+import { ElevatorListAllComponent } from './elevator/list-all-elevators/listAll.component';
+import { GestorDeTarefasComponent } from './gestor-de-tarefas/gestor-de-tarefas.component';
+import { ListOfBuildingWithPathwayComponent } from './floor/list-of-building-with-pathway/list-of-building-with-pathway.component';
+import { EditComponent as PathwayEditComponent } from './pathway/edit/edit.component';
+import { ListBetweenBuildingsComponent } from './pathway/list-between-buildings/list-between-buildings.component';
+import { EditFloorComponent } from './floor/edit/edit-floor.component';
+import { UploadMapComponent } from './floor/upload-map/upload-map.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -42,7 +43,7 @@ const routes: Routes = [
   { path: 'floors/create', component: CreateFloorComponent },
   { path: 'floors/building', component: FloorListOfBuildingComponent },
   { path: 'floors/building-pathways', component: ListOfBuildingWithPathwayComponent },
-  { path: 'floors/edit', component: EditFloorComponent},
+  { path: 'floors/edit', component: EditFloorComponent },
   { path: 'pathways', component: PathwayComponent },
   { path: 'pathways/create', component: CreatePathway },
   { path: 'pathways/edit', component: PathwayEditComponent },
@@ -57,17 +58,18 @@ const routes: Routes = [
   { path: 'task-types', component: TaskTypeComponent },
   { path: 'gestor-de-frota', component: GestorDeFrotaComponent },
   { path: 'gestor-de-campus', component: GestorDeCampusComponent },
-  { path: 'gestor-de-tarefas', component: GestorDeTarefasComponent},
+  { path: 'gestor-de-tarefas', component: GestorDeTarefasComponent },
   { path: 'building/create', component: BuildingCreateComponent },
   { path: 'building/edit', component: BuildingEditComponent },
   { path: 'building/list-all', component: BuildingListAllComponent },
   { path: 'building/list-min-max', component: BuildingListMinMaxComponent },
-  { path: 'elevator/create',component:ElevatorCreateComponent},
-  { path: 'elevator/update',component:ElevatorUpdateComponent},
-  { path: 'elevator/replace',component:ElevatorReplaceComponent},
+  { path: 'elevator/create', component: ElevatorCreateComponent },
+  { path: 'elevator/update', component: ElevatorUpdateComponent },
+  { path: 'elevator/replace', component: ElevatorReplaceComponent },
   { path: 'map-viewer', component: MapViewerComponent },
-  { path: 'rooms/create',component: RoomCreateComponent},
-  { path: 'elevator/list-all-elevators',component: ElevatorListAllComponent}
+  { path: 'rooms/create', component: RoomCreateComponent },
+  { path: 'elevator/list-all-elevators', component: ElevatorListAllComponent },
+  { path: 'floors/upload-map', component: UploadMapComponent },
 ];
 
 @NgModule({
