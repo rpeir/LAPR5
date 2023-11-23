@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { RobotTypeComponent } from "./robot-type.component";
 import { RobotTypeService } from "./robot-type.service";
 import { Location } from '@angular/common';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe('RobotTypeComponent', () => {
   let component: RobotTypeComponent;
@@ -10,6 +11,7 @@ describe('RobotTypeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule]
     })
       .compileComponents();
     service = TestBed.inject(RobotTypeService);

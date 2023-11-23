@@ -3,10 +3,10 @@ import { IPlanningFloorDTO } from "../../dto/IPlanningFloorDTO";
 import { IPlanningElevatorDTO } from "../../dto/IPlanningElevatorDTO";
 import { IPlanningPathwayDTO } from "../../dto/IPlanningPathwayDTO";
 import { IPathDTO } from "../../dto/IPathDTO";
-import { IPlanningMatrixCellDTO } from "../../dto/IPlanningMatrixCellDTO";
 import { IPlanningRoomLocationDTO } from "../../dto/IPlanningRoomLocationDTO";
 import { IPlanningElevatorLocationDTO } from "../../dto/IPlanningElevatorLocationDTO";
 import { IPlanningPathwayLocationDTO } from "../../dto/IPlanningPathwayLocationDTO";
+import { IPlanningMatrixDTO } from "../../dto/IPlanningMatrixDTO";
 
 export default interface IPlanningService {
   getFloors(): Promise<Result<IPlanningFloorDTO[]>>;
@@ -14,7 +14,7 @@ export default interface IPlanningService {
   getPathways(): Promise<Result<IPlanningPathwayDTO[]>>;
   getPathLessBuildings(floorSource: string, floorDestination: string): Promise<Result<IPathDTO>>;
   getPathLessElevators(floorSource: string, floorDestination: string): Promise<Result<IPathDTO>>;
-  getFloorPlanningMatrix(floor: string):  Promise<Result<IPlanningMatrixCellDTO[]>> ;
+  getFloorPlanningMatrix(floor: string):  Promise<Result<IPlanningMatrixDTO>> ;
   getPlanningPathwayLocation(floorSource: string): Promise<Result<IPlanningPathwayLocationDTO[]>>;
   getPlanningElevatorLocation(floorSource: string): Promise<Result<IPlanningElevatorLocationDTO[]>>;
   getPlanningRoomsLocation(floorSource: string) : Promise<Result<IPlanningRoomLocationDTO[]>>;

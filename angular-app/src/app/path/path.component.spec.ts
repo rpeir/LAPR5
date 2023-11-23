@@ -4,15 +4,12 @@ import { PathComponent } from './path.component';
 
 describe('PathComponent', () => {
   let component: PathComponent;
-  let fixture: ComponentFixture<PathComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [PathComponent]
     });
-    fixture = TestBed.createComponent(PathComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new PathComponent();
   });
 
   it('should create', () => {

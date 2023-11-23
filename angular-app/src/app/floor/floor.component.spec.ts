@@ -4,15 +4,12 @@ import { FloorComponent } from './floor.component';
 
 describe('FloorComponent', () => {
   let component: FloorComponent;
-  let fixture: ComponentFixture<FloorComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [FloorComponent]
     });
-    fixture = TestBed.createComponent(FloorComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new FloorComponent();
   });
 
   it('should create', () => {
