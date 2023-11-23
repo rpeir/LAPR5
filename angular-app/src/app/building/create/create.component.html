@@ -9,38 +9,38 @@
         <h2 class="text-center">Create Building</h2>
         <br>
         <form (ngSubmit)="createBuilding()">
-          <mat-form-field class="full-width">
+          <mat-form-field data-cy="code" class="full-width">
             <mat-label>Select a code for the building</mat-label>
             <input matInput [(ngModel)]="building.code" name="code" required>
           </mat-form-field>
 
-          <mat-form-field class="full-width">
+          <mat-form-field data-cy="designation" class="full-width">
             <mat-label>Select a designation for the building</mat-label>
             <input matInput [(ngModel)]="building.designation" name="designation" required>
           </mat-form-field>
 
-          <mat-form-field class="full-width">
+          <mat-form-field data-cy="description" class="full-width">
             <mat-label>Select a description for the building</mat-label>
             <input matInput [(ngModel)]="building.description" name="description"required>
           </mat-form-field>
 
 
-          <mat-form-field class="full-width">
+          <mat-form-field data-cy="length" class="full-width">
             <mat-label>Select a length</mat-label>
             <input matInput type="number" [(ngModel)]="building.length" name="length" required min="1">
           </mat-form-field>
 
-          <mat-form-field class="full-width">
+          <mat-form-field data-cy="width" class="full-width">
             <mat-label>Select a width</mat-label>
             <input matInput type="number" [(ngModel)]="building.width" name="width" required min="1">
           </mat-form-field>
 
-          <mat-form-field class="full-width">
+          <mat-form-field data-cy="height" class="full-width">
             <mat-label>Select a height</mat-label>
             <input matInput type="number" [(ngModel)]="building.height" name="height" required min="1">
           </mat-form-field>
           <div>
-            <input type="submit" value="Create">
+            <input type="submit" data-cy="create-button" value="Create">
           </div>
         </form>
       </div>
