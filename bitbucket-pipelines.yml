@@ -23,5 +23,5 @@ pipelines:
             deployment: production
             script:
             - echo "Deploying to VM"
-            - cat deployPlaneamento.sh | ssh pipelineuser@vsgate-ssh.dei.isep.ipp.pt:11141
+            - cat deployPlaneamento.sh | ssh pipelineuser@vsgate-ssh.dei.isep.ipp.pt -p 11141
             - echo "Deployment step finished
