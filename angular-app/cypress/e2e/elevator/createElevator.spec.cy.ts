@@ -1,6 +1,6 @@
-describe('CreateComponent', () => {
+describe('CreateElevatorComponent', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:4200/elevator/create'); // Assuming '/create' is the route for your CreateComponent
+        cy.visit('elevator/create'); // Assuming '/create' is the route for your CreateComponent
     });
 
     it('should create a new elevator', () => {
@@ -21,6 +21,8 @@ describe('CreateComponent', () => {
 
         // Select the building designation from the dropdown
         cy.get(`mat-option[id="${elevatorData.buildingDesignation}"]`).click();
+
+        cy.wait(1000);
 
         // Click to open the floors served dropdown
         cy.get('[data-cy=floorsServed]').click();
@@ -65,6 +67,8 @@ describe('CreateComponent', () => {
 
       // Select the building designation from the dropdown
       cy.get(`mat-option[id="${elevatorData.buildingDesignation}"]`).click();
+
+      cy.wait(1000);
 
       // Click to open the floors served dropdown
       cy.get('[data-cy=floorsServed]').click();
@@ -118,6 +122,8 @@ describe('CreateComponent', () => {
 
       // Select the building designation from the dropdown
       cy.get(`mat-option[id="${elevatorData.buildingDesignation}"]`).click();
+
+      cy.wait(1000);
 
       // Click to open the floors served dropdown
       cy.get('[data-cy=floorsServed]').click();

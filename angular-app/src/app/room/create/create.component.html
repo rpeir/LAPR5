@@ -33,7 +33,7 @@
         <mat-form-field class="full-width">
           <mat-label>Select a building</mat-label>
           <mat-select [(ngModel)]="room.building" name="buildingDesignation" >
-            <mat-option *ngFor="let building of buildings" [value]="building.code" [matTooltip]="getBuildingInfo(building)" (click)="listFloorsOfBuilding(building)">
+            <mat-option id="{{building.designation}}" *ngFor="let building of buildings" [value]="building.code" [matTooltip]="getBuildingInfo(building)" (click)="listFloorsOfBuilding(building)">
               {{building.designation}}
             </mat-option>
           </mat-select>
@@ -42,7 +42,7 @@
         <mat-form-field class="full-width">
           <mat-label>Select a floor</mat-label>
           <mat-select [(ngModel)]="room.floor" name="floor">
-            <mat-option *ngFor="let floor of floors" [value]="floor.floorNr" [matTooltip]= "getFloorInfo(floor)" >
+            <mat-option id="{{floor.floorNr}}" *ngFor="let floor of floors" [value]="floor.floorNr" [matTooltip]= "getFloorInfo(floor)" >
               {{floor.floorNr}}
             </mat-option>
           </mat-select>

@@ -3,6 +3,7 @@ import { Container } from 'typedi';
 import config from '../../../config';
 import IRobotController from '../../controllers/IControllers/IRobotController';
 import { celebrate, Joi } from 'celebrate';
+import middlewares from "../middlewares";
 
 const route = Router();
 export default (app: Router) => {
@@ -45,4 +46,5 @@ export default (app: Router) => {
     "",
     (req, res, next) => ctrl.consultAllRobots(req, res, next),
   );
+  route.use(middlewares.validateBody);
 };
