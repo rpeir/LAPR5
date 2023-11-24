@@ -1,4 +1,4 @@
-import {Pathway} from "../../src/app/pathway/pathway";
+import {Pathway} from "../../../src/app/pathway/pathway";
 
 describe('Create Pathway Component', () => {
   beforeEach(() => {
