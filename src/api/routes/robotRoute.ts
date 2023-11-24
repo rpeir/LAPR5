@@ -46,4 +46,5 @@ export default (app: Router) => {
     "",
     (req, res, next) => ctrl.consultAllRobots(req, res, next),
   );
+  route.use(middlewares.validateBody);
 };
