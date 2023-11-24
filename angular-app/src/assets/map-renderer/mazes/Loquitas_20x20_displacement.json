@@ -32,19 +32,19 @@
         "primaryColor": "0xffffff",
         "maps": {
             "color": {
-                "url": "./textures/ground_0029_2k_6zfZ8Q/ground_0029_color_2k.jpg"
+                "url": "./assets/map-renderer/textures/ground_0029_2k_6zfZ8Q/ground_0029_color_2k.jpg"
             },
             "ao": {
-                "url": "./textures/ground_0029_2k_6zfZ8Q/ground_0029_ao_2k.jpg",
+                "url": "./assets/map-renderer/textures/ground_0029_2k_6zfZ8Q/ground_0029_ao_2k.jpg",
                 "intensity": 1.0
             },
             "displacement": {
-                "url": "./textures/ground_0029_2k_6zfZ8Q/ground_0029_height_2k.png",
+                "url": "./assets/map-renderer/textures/ground_0029_2k_6zfZ8Q/ground_0029_height_2k.png",
                 "scale": 0.125,
                 "bias": -0.065
             },
             "normal": {
-                "url": "./textures/ground_0029_2k_6zfZ8Q/ground_0029_normal_opengl_2k.png",
+                "url": "./assets/map-renderer/textures/ground_0029_2k_6zfZ8Q/ground_0029_normal_opengl_2k.png",
                 "type": 0,
                 "scale": { "x": 1.0, "y": 1.0 }
             },
@@ -53,7 +53,7 @@
                 "scale": 1.0
             },
             "roughness": {
-                "url": "./textures/ground_0029_2k_6zfZ8Q/ground_0029_roughness_2k.jpg",
+                "url": "./assets/map-renderer/textures/ground_0029_2k_6zfZ8Q/ground_0029_roughness_2k.jpg",
                 "rough": 1.0
             }
         },
@@ -69,19 +69,19 @@
         "primaryColor": "0xffffff",
         "maps": {
             "color": {
-                "url": "./textures/concrete_0020_2k_BnKy6k/concrete_0020_color_2k.jpg"
+                "url": "./assets/map-renderer/textures/concrete_0020_2k_BnKy6k/concrete_0020_color_2k.jpg"
             },
             "ao": {
-                "url": "./textures/concrete_0020_2k_BnKy6k/concrete_0020_ao_2k.jpg",
+                "url": "./assets/map-renderer/textures/concrete_0020_2k_BnKy6k/concrete_0020_ao_2k.jpg",
                 "intensity": 1.0
             },
             "displacement": {
-                "url": "./textures/concrete_0020_2k_BnKy6k/concrete_0020_height_2k.png",
+                "url": "./assets/map-renderer/textures/concrete_0020_2k_BnKy6k/concrete_0020_height_2k.png",
                 "scale": 0.5,
                 "bias": -0.35
             },
             "normal": {
-                "url": "./textures/concrete_0020_2k_BnKy6k/concrete_0020_normal_opengl_2k.png",
+                "url": "./assets/map-renderer/textures/concrete_0020_2k_BnKy6k/concrete_0020_normal_opengl_2k.png",
                 "type": 0,
                 "scale": { "x": 0.5, "y": 0.5 }
                 },
@@ -90,7 +90,7 @@
                 "scale": 1.0
             },
             "roughness": {
-                "url": "./textures/concrete_0020_2k_BnKy6k/concrete_0020_roughness_2k.jpg",
+                "url": "./assets/map-renderer/textures/concrete_0020_2k_BnKy6k/concrete_0020_roughness_2k.jpg",
                 "rough": 1.0
             }
         },

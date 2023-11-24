@@ -38,7 +38,7 @@ export const cubeTextureData = {
 }
 
 export const mazeData = {
-    url: "./mazes/Loquitas_10x10.json",
+    url: "./assets/map-renderer/mazes/Loquitas_10x10.json",
     designCredits: "Maze designed by Cecília Fernandes and Nikita.",
     texturesCredits: "Maze textures downloaded from <a href='https://www.texturecan.com/' target='_blank' rel='noopener'>TextureCan</a>.",
     scale: new THREE.Vector3(1.0, 1.0, 1.0),
@@ -46,7 +46,7 @@ export const mazeData = {
 }
 
 export const playerData = {
-    url: "./models/gltf/RobotExpressive/robot.glb",
+    url: "./assets/map-renderer/models/gltf/RobotExpressive/robot.glb",
     credits: "Model and related code snippets created by <a href='https://www.patreon.com/quaternius' target='_blank' rel='noopener'>Tomás Laulhé</a>. CC0 1.0. Modified by <a href='https://donmccurdy.com/' target='_blank' rel='noopener'>Don McCurdy</a>.",
     scale: new THREE.Vector3(0.1, 0.1, 0.1),
     helpersColor: new THREE.Color(0xffffff),

@@ -1030,11 +1030,11 @@ export default class ThumbRaiser {
                 const targetIncrement = new THREE.Vector3(
                   ((mouseIncrement.x / this.miniMapCamera.viewport.width) *
                     (this.miniMapCamera.orthographic.left - this.miniMapCamera.orthographic.right)) /
-                    this.miniMapCamera.orthographic.zoom,
+                  this.miniMapCamera.orthographic.zoom,
                   0.0,
                   ((mouseIncrement.y / this.miniMapCamera.viewport.height) *
                     (this.miniMapCamera.orthographic.top - this.miniMapCamera.orthographic.bottom)) /
-                    this.miniMapCamera.orthographic.zoom,
+                  this.miniMapCamera.orthographic.zoom,
                 );
                 this.miniMapCamera.updateTarget(targetIncrement);
               }
@@ -1110,7 +1110,7 @@ export default class ThumbRaiser {
         this.setViewportVisibility(
           [this.fixedViewCamera, this.firstPersonViewCamera, this.thirdPersonViewCamera, this.topViewCamera][
             this.view.options.selectedIndex
-          ],
+            ],
         );
         break;
       case 'projection':
