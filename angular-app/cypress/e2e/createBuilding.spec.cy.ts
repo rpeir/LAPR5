@@ -1,6 +1,6 @@
 // cypress/integration/create.spec.ts
 
-describe('CreateComponent', () => {
+describe('CreateBuildingComponent', () => {
   beforeEach(() => {
     cy.visit('http://localhost:4200/building/create'); // Assuming '/create' is the route for your CreateComponent
   });

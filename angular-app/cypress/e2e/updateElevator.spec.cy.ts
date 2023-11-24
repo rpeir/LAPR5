@@ -1,6 +1,6 @@
 describe('Update elevator spec', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4200/elevator/update'); // Assuming '/create' is the route for your CreateComponent
+    cy.visit('elevator/update'); // Assuming '/create' is the route for your CreateComponent
   });
   it('should update a new elevator', () => {
     const elevatorData = {

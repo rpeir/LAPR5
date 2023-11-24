@@ -1,6 +1,6 @@
-describe('CreateComponent', () => {
+describe('CreateElevatorComponent', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:4200/elevator/create'); // Assuming '/create' is the route for your CreateComponent
+        cy.visit('elevator/create'); // Assuming '/create' is the route for your CreateComponent
     });
 
     it('should create a new elevator', () => {
