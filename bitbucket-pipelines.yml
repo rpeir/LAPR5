@@ -19,9 +19,9 @@ pipelines:
             caches:
               - node
         - step:
-            name: Deploy to VM
+            name: Deploy Modulo Planeamento to VM
             deployment: production
             script:
-            - echo "Deploying to VM"
+            - echo "Deploying Modulo Planeamento to VM"
             - cat deployPlaneamento.sh | ssh pipelineuser@vsgate-ssh.dei.isep.ipp.pt -p 11141
             - echo "Deployment step finished
