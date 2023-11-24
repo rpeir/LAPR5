@@ -105,9 +105,9 @@ describe("pathway  service", function() {
     ));
 
     let buildingRepoInstance = Container.get("BuildingRepo");
-    const buildingMock = sandbox.mock(buildingRepoInstance, "findByDesignation");
-    buildingMock.expects("findByDesignation").once().returns(new Promise(resolve => resolve(buildingSource)))
-      .twice().returns(new Promise(resolve => resolve(buildingDestination)));
+    const buildingMock = sandbox.stub(buildingRepoInstance, "findByDesignation");
+    buildingMock.onCall(0).returns(new Promise(resolve => resolve(buildingSource)))
+      .onCall(1).returns(new Promise(resolve => resolve(buildingDestination)));
 
     let pathwayRepoInstance = Container.get("PathwayRepo");
     sinon.stub(pathwayRepoInstance, "existsPathwayBetweenFloors").returns(new Promise(resolve => resolve(false)));
@@ -124,27 +124,24 @@ describe("pathway  service", function() {
 
 
     let floorRepoInstance = Container.get("FloorRepo");
-    const floorMock = sandbox.mock(floorRepoInstance, "findByBuildingIdAndFloorNr");
-    floorMock.expects("findByBuildingIdAndFloorNr").once().returns(new Promise(resolve => resolve(floorSource)))
-      .twice().returns(new Promise(resolve => resolve(floorDestination)));
+    const floorMock = sandbox.stub(floorRepoInstance, "findByBuildingIdAndFloorNr");
+    floorMock.onCall(0).returns(new Promise(resolve => resolve(floorSource)))
+      .onCall(1).returns(new Promise(resolve => resolve(floorDestination)));
 
 
-    const pathwayService = new PathwayService(buildingRepoInstance as IBuildingRepo, floorRepoInstance as IFloorRepo, floorRepoInstance as IPathwayRepo);
+    const pathwayService = new PathwayService(buildingRepoInstance as IBuildingRepo, floorRepoInstance as IFloorRepo, pathwayRepoInstance as IPathwayRepo);
 
     await pathwayService.createPathway(pathwayDTO as IPathwayDTO).then((result) => {
       expect(result.isFailure).to.equal(false);
       expect(result.getValue()).to.deep.equal({
-        "buildingSource": buildingSource,
-        "buildingDestination": buildingDestination,
-        "floorSource": floorSource,
-        "floorDestination": floorDestination,
+        "domainId": "129",
+        "buildingSource": buildingSource.designation,
+        "buildingDestination": buildingDestination.designation,
+        "floorSource": floorSource.floorNr,
+        "floorDestination": floorDestination.floorNr,
         "description": pathwayDTO.description
       });
     });
-    buildingMock.verify();
-    floorMock.verify();
-
-    createStub.restore();
 
   });
 
@@ -195,9 +192,9 @@ describe("pathway  service", function() {
     /////
 
     let buildingRepoInstance = Container.get("BuildingRepo");
-    const buildingMock = sandbox.mock(buildingRepoInstance, "findByDesignation");
-    buildingMock.expects("findByDesignation").once().returns(new Promise(resolve => resolve(buildingSource)))
-      .twice().returns(new Promise(resolve => resolve(buildingDestination)));
+    const buildingMock = sandbox.stub(buildingRepoInstance, "findByDesignation");
+    buildingMock.onCall(0).returns(new Promise(resolve => resolve(buildingSource)))
+      .onCall(1).returns(new Promise(resolve => resolve(buildingDestination)));
 
     let pathwayRepoInstance = Container.get("PathwayRepo");
     sinon.stub(pathwayRepoInstance, "existsPathwayBetweenFloors").returns(new Promise(resolve => resolve(false)));
@@ -214,25 +211,24 @@ describe("pathway  service", function() {
 
 
     let floorRepoInstance = Container.get("FloorRepo");
-    const floorMock = sandbox.mock(floorRepoInstance, "findByBuildingIdAndFloorNr");
-    floorMock.expects("findByBuildingIdAndFloorNr").once().returns(new Promise(resolve => resolve(floorSource)))
-      .twice().returns(new Promise(resolve => resolve(floorDestination)));
+    const floorMock = sandbox.stub(floorRepoInstance, "findByBuildingIdAndFloorNr");
+    floorMock.onCall(0).returns(new Promise(resolve => resolve(floorSource)))
+      .onCall(1).returns(new Promise(resolve => resolve(floorDestination)));
 
 
-    const pathwayService = new PathwayService(buildingRepoInstance as IBuildingRepo, floorRepoInstance as IFloorRepo, floorRepoInstance as IPathwayRepo);
+    const pathwayService = new PathwayService(buildingRepoInstance as IBuildingRepo, floorRepoInstance as IFloorRepo, pathwayRepoInstance as IPathwayRepo);
 
     await pathwayService.createPathway(pathwayDTO as IPathwayDTO).then((result) => {
       expect(result.isFailure).to.equal(false);
       expect(result.getValue()).to.deep.equal({
-        "buildingSource": buildingSource,
-        "buildingDestination": buildingDestination,
-        "floorSource": floorSource,
-        "floorDestination": floorDestination,
+        "domainId": "129",
+        "buildingSource": buildingSource.designation,
+        "buildingDestination": buildingDestination.designation,
+        "floorSource": floorSource.floorNr,
+        "floorDestination": floorDestination.floorNr,
         "description": pathwayDTO.description
       });
     });
-    buildingMock.verify();
-    floorMock.verify();
 
   })
 

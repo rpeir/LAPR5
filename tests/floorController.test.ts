@@ -62,7 +62,8 @@ describe("floor controller", function() {
     req.body = body;
 
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
 
     let next: Partial<NextFunction> = () => {
@@ -72,7 +73,7 @@ describe("floor controller", function() {
     sinon.stub(floorServiceInstance, "createFloor").returns(Result.ok<IFloorDTO>(
       {
         "domainId": "12345",
-        "floorNr": req.body.floor,
+        "floorNr": req.body.floorNr,
         "building": req.body.building,
         "description": req.body.description
       }
@@ -84,12 +85,12 @@ describe("floor controller", function() {
     await ctrl.createFloor(<Request>req, <Response>res, <NextFunction>next);
 
     //Assert
-    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.status, 201);
     sinon.assert.calledWith(res.json, sinon.match({
-        "domainId": "12345",
-        "floorNr": req.body.floor,
-        "building": req.body.building,
-        "description": req.body.description
+        domainId: "12345",
+        floorNr: req.body.floorNr,
+        building: req.body.building,
+        description: req.body.description
       })
     );
 
@@ -102,11 +103,13 @@ describe("floor controller", function() {
       "building": "desgi2",
       "description": "salas"
     };
-    let req: Partial<Request> = {};
-    req.body = body;
+    let req: Partial<Request> = {
+      body: body
+    };
 
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
 
     let next: Partial<NextFunction> = () => {
@@ -126,6 +129,7 @@ describe("floor controller", function() {
 
     let createStub = sinon.stub(Floor,"create").returns(Result.ok({
       "domainId": "123",
+      id: new UniqueEntityID("123"),
       "floorNr": req.body.floorNr,
 
       "building": Building.create({
@@ -141,7 +145,7 @@ describe("floor controller", function() {
     }));
 
     let floorRepoInstance = Container.get("FloorRepo");
-    sinon.stub(floorRepoInstance, "save").returns(new Promise<BuildingId>((resolve, reject) => {
+    sinon.stub(floorRepoInstance, "save").returns(new Promise<Floor>((resolve, reject) => {
       resolve(Floor.create({
         "floorNr": req.body.floorNr,
 
@@ -165,8 +169,9 @@ describe("floor controller", function() {
     await ctrl.createFloor(<Request>req, <Response>res, <NextFunction>next);
 
     //Assert
-    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.status, 201);
     sinon.assert.calledWith(res.json, sinon.match({
+        "domainId": "123",
         "floorNr": req.body.floorNr,
         "building": req.body.building,
         "description": req.body.description
@@ -186,7 +191,8 @@ describe("floor controller", function() {
     req.body = body;
 
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
 
     let next: Partial<NextFunction> = () => {
@@ -205,7 +211,7 @@ describe("floor controller", function() {
     }));
 
     let floorRepoInstance = Container.get("FloorRepo");
-    sinon.stub(floorRepoInstance, "save").returns(new Promise<BuildingId>((resolve, reject) => {
+    sinon.stub(floorRepoInstance, "save").returns(new Promise<Floor>((resolve, reject) => {
       resolve(Floor.create({
         "floorNr": req.body.floorNr,
 
@@ -229,11 +235,12 @@ describe("floor controller", function() {
     await ctrl.createFloor(<Request>req, <Response>res, <NextFunction>next);
 
     //Assert
-    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.status, 201);
     sinon.assert.calledWith(res.json, sinon.match({
-        "floorNr": req.body.floorNr,
+        "domainId": "123",
         "building": req.body.building,
-        "description": req.body.description
+        "description": req.body.description,
+        "floorNr": req.body.floorNr
       })
     );
 

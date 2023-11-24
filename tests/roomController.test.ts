@@ -77,7 +77,8 @@ describe('room controller', () => {
     req.body = defaultBody;
 
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
     let next: Partial<NextFunction> = () => {};
 
@@ -130,7 +131,7 @@ describe('room controller', () => {
 
     let res: Partial<Response> = {
       json: sinon.spy(),
-      status: sinon.spy()
+      status: sinon.stub().returnsThis()
     };
     let next: Partial<NextFunction> = () => {};
 
@@ -174,7 +175,7 @@ describe('room controller', () => {
 
     let res: Partial<Response> = {
       json: sinon.spy(),
-      status: sinon.spy()
+      status: sinon.stub().returnsThis()
     };
 
     let next: Partial<NextFunction> = () => {};
@@ -257,7 +258,8 @@ describe('room controller', () => {
         req.body = defaultBody;
 
         let res: Partial<Response> = {
-          json: sinon.spy()
+          json: sinon.spy(),
+          status: sinon.stub().returnsThis()
         };
 
         let next: Partial<NextFunction> = () => {};
@@ -266,6 +268,7 @@ describe('room controller', () => {
 
         await ctrl.createRoom(<Request>req, <Response>res, <NextFunction>next);
 
+        sinon.assert.calledWith(res.status, 201);
         // check if the json is well formed
         sinon.assert.calledWith(res.json, sinon.match({
           name : "Test Room",

@@ -51,7 +51,8 @@ describe("robotType controller", function() {
     req.body = body;
 
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
     let next: Partial<NextFunction> = () => {
     };
@@ -96,7 +97,8 @@ describe("robotType controller", function() {
     req.body = body;
 
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
 
     let next: Partial<NextFunction> = () => {
@@ -155,7 +157,8 @@ describe("robotType controller", function() {
     req.body = body;
 
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
 
     let next: Partial<NextFunction> = () => {
