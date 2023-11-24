@@ -3,6 +3,7 @@ import { Container } from "typedi";
 import config from "../../../config";
 import IFloorController from "../../controllers/IControllers/IFloorController";
 import { celebrate, Joi } from "celebrate";
+import middlewares from "../middlewares";
 
 const route = Router();
 
@@ -78,4 +79,6 @@ export default (app: Router) => {
     })
     , (req, res, next) => ctrl.listFloorsWithPathways(req, res, next)
   )
+  route.use(middlewares.validateBody);
 }
+

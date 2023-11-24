@@ -8,37 +8,37 @@
     <div class="container">
       <h2 class="text-center">Update Building</h2>
       <br>
-      <form (ngSubmit)="updateBuilding()">
+      <form [formGroup]="editForm" (ngSubmit)="updateBuilding()">
         <mat-form-field class="full-width">
           <mat-label>Select the building (code)</mat-label>
-          <mat-select [(ngModel)]="building.code" name="code" required (selectionChange)="onBuildingCodeChange($event)">
+          <mat-select formControlName="code" name="code" required (selectionChange)="onBuildingCodeChange($event)">
             <mat-option *ngFor="let b of buildings" [value]="b.code">{{ b.code }}</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field class="full-width">
           <mat-label *ngIf="building?.designation">New Designation</mat-label>
-          <input matInput name="designation" [value]="building.designation">
+          <input matInput formControlName="designation" name="designation" [value]="building.designation">
         </mat-form-field>
 
         <mat-form-field class="full-width">
           <mat-label *ngIf="building?.description">New Description</mat-label>
-          <input matInput name="description" [value]="building.description">
+          <input matInput formControlName="description" name="description" [value]="building.description">
         </mat-form-field>
 
         <mat-form-field class="full-width">
           <mat-label *ngIf="building?.length">New Length</mat-label>
-          <input matInput name="length" [value]="building.length">
+          <input matInput formControlName="length" name="length" [value]="building.length">
         </mat-form-field>
 
         <mat-form-field class="full-width">
           <mat-label *ngIf="building?.width">New Width</mat-label>
-          <input matInput name="width" [value]="building.width">
+          <input matInput formControlName="width" name="width" [value]="building.width">
         </mat-form-field>
 
         <mat-form-field class="full-width">
           <mat-label *ngIf="building?.height">New Height</mat-label>
-          <input matInput [(ngModel)]="building.height" name="height">
+          <input matInput formControlName="height" name="height" [value]="building.height" >
         </mat-form-field>
 
         <div>

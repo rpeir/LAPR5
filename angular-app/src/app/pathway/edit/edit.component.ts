@@ -5,6 +5,7 @@ import { PathwayService } from "../pathway.service";
 import { Floor } from "../../floor/floor";
 import { Building } from "../../building/building";
 import { Pathway } from "../pathway";
+import { floor } from "lodash";
 
 @Component({
   selector: 'app-edit',
@@ -60,6 +61,7 @@ export class EditComponent implements OnInit {
   }
 
   listFloorsOfBuildingSource(building: any) {
+    if (building == undefined) { return }
     this.floorService.getFloorsOfBuilding(building).subscribe(
       {
         next: (data) => {

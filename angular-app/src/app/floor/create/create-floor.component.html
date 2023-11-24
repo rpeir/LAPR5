@@ -10,29 +10,29 @@
       <br>
       <form (ngSubmit)="createFloor()">
 
-        <mat-form-field class="full-width">
+        <mat-form-field data-cy="buildingDesignation" class="full-width">
           <mat-label>Select a building</mat-label>
           <mat-select [(ngModel)]="floor.building" name="buildingDesignation">
-            <mat-option *ngFor="let building of buildings" [value]="building.designation" [matTooltip]= "getBuildingInfo(building)" >
+            <mat-option id="{{building.designation}}" *ngFor="let building of buildings" [value]="building.designation" [matTooltip]= "getBuildingInfo(building)" >
               {{building.designation}}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="full-width">
+        <mat-form-field data-cy="floorNr" class="full-width">
           <mat-label>Floor number:</mat-label>
           <input matInput [(ngModel)]="floor.floorNr" name="floorNr" required >
           <input matInput placeholder="Max 30 characters">
         </mat-form-field>
 
-        <mat-form-field class="full-width">
+        <mat-form-field data-cy="description" class="full-width">
           <mat-label>Floor description</mat-label>
           <input matInput [(ngModel)]="floor.description" name="description"  >
           <input matInput placeholder="Max 250 characters">
         </mat-form-field>
 
         <div>
-          <input type="submit" value="create">
+          <input type="submit" data-cy="input" value="create">
         </div>
 
       </form>

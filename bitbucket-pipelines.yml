@@ -1,9 +1,5 @@
-#  Template NodeJS build
-
-#  This template allows you to validate your NodeJS code.
-#  The workflow allows running tests and code linting on the default branch.
-
 image: node:16
+
 
 pipelines:
   default:
@@ -22,3 +18,14 @@ pipelines:
               - npx eslint .
             caches:
               - node
+        - step:
+            name: Deploy Modulo Planeamento to VM
+            deployment: production
+            script:
+            - echo "Declaring pipeline variables"
+            - sudopass=$sudopass
+            - echo "export sudopass=$sudopass" >> set_env.sh
+            - source set_env.sh
+            - echo "Deploying Modulo Planeamento to VM"
+            - cat deployPlaneamento.sh | ssh pipelineuser@vsgate-ssh.dei.isep.ipp.pt -p 11141
+            - echo "Deployment step finished

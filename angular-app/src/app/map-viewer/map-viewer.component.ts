@@ -1,13 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+// @ts-ignore
+import start from './map-viewer.js';
 
 @Component({
   selector: 'app-map-viewer',
-  template: `
-    <button (click)="redirectToExternalPage()">Redirect</button>
-  `,
+  templateUrl: './map-viewer.component.html',
+  styleUrls: ['./map-viewer.component.css']
 })
-export class MapViewerComponent {
-  redirectToExternalPage() {
-    window.location.href = 'http://127.0.0.1:5500/angular-app/src/assets/map-renderer/Thumb_Raiser.html';
+export class MapViewerComponent implements OnInit {
+
+  ngOnInit(): void {
+    start();
   }
+
+
 }
