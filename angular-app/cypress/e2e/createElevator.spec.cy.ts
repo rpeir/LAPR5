@@ -22,6 +22,8 @@ describe('CreateComponent', () => {
         // Select the building designation from the dropdown
         cy.get(`mat-option[id="${elevatorData.buildingDesignation}"]`).click();
 
+        cy.wait(1000);
+
         // Click to open the floors served dropdown
         cy.get('[data-cy=floorsServed]').click();
         // Select the floors served from the dropdown
@@ -65,6 +67,8 @@ describe('CreateComponent', () => {
 
       // Select the building designation from the dropdown
       cy.get(`mat-option[id="${elevatorData.buildingDesignation}"]`).click();
+
+      cy.wait(1000);
 
       // Click to open the floors served dropdown
       cy.get('[data-cy=floorsServed]').click();
@@ -118,6 +122,8 @@ describe('CreateComponent', () => {
 
       // Select the building designation from the dropdown
       cy.get(`mat-option[id="${elevatorData.buildingDesignation}"]`).click();
+
+      cy.wait(1000);
 
       // Click to open the floors served dropdown
       cy.get('[data-cy=floorsServed]').click();
