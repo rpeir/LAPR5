@@ -22,6 +22,9 @@ pipelines:
             name: Deploy Modulo Planeamento to VM
             deployment: production
             script:
+            - echo "Declaring pipeline variables"
+            - echo "export sudopass=$sudopass" >> set_env.sh
+            - source set_env.sh
             - echo "Deploying Modulo Planeamento to VM"
             - cat deployPlaneamento.sh | ssh pipelineuser@vsgate-ssh.dei.isep.ipp.pt -p 11141
             - echo "Deployment step finished
