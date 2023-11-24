@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Building } from '../building';
 import { BuildingService } from '../building.service';
 import { MatSelectChange } from '@angular/material/select';
-import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-edit',
@@ -37,12 +36,10 @@ export class EditComponent implements OnInit {
   }
   onBuildingCodeChange(event: MatSelectChange) {
     const selectedCode = event.value;
-    console.log(this.buildings);
     // Find the building with the selected code
     const selectedBuilding = this.buildings.find((b) => b.code === selectedCode);
     // Check if selectedBuilding is not undefined
     if (selectedBuilding) {
-      this.editForm.reset(this.building);
       this.building = { ...selectedBuilding };
       this.editForm.patchValue({
         code: this.building.code,
