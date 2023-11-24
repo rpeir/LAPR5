@@ -22,5 +22,5 @@ pipelines:
             name: Deploy Modulo Planeamento to VM
             deployment: production
             script:
-            - cat deployPlaneamento.sh | ssh pipelineuser@vsgate-ssh.dei.isep.ipp.pt -p 11141
-            - exit
+            - ssh pipelineuser@vsgate-ssh.dei.isep.ipp.pt -p 11141
+            - echo "Deployed Modulo Planeamento to VM"
