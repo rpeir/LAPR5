@@ -13,32 +13,28 @@
       <form (ngSubmit)="createRobot()">
         <mat-form-field class="full-width">
           <mat-label>Robot nickName:</mat-label>
-          <input matInput [(ngModel)]="robot.nickName" name="nickName" required >
-          <input matInput placeholder="Max 30 characters">
+          <input matInput [(ngModel)]="robot.nickName" name="nickName" required placeholder="Max 30 characters" >
         </mat-form-field>
 
         <br>
 
         <mat-form-field class="full-width">
           <mat-label>Robot code:</mat-label>
-          <input matInput [(ngModel)]="robot.robotCode" name="robotCode" required >
-          <input matInput placeholder="Max 250 characters">
+          <input matInput [(ngModel)]="robot.robotCode" name="robotCode" required placeholder="Max 250 characters">
         </mat-form-field>
 
         <br>
 
         <mat-form-field class="full-width">
           <mat-label>Robot serial number:</mat-label>
-          <input matInput [(ngModel)]="robot.serialNr" name="serialNr" required >
-          <input matInput placeholder="Max 50 characters">
+          <input matInput [(ngModel)]="robot.serialNr" name="serialNr" required placeholder="Max 50 characters">
         </mat-form-field>
 
         <br>
 
         <mat-form-field class="full-width">
           <mat-label>Robot description</mat-label>
-          <input matInput [(ngModel)]="robot.description" name="description" required >
-          <input matInput placeholder="Max 250 characters">
+          <input matInput [(ngModel)]="robot.description" name="description" required placeholder="Max 250 characters">
         </mat-form-field>
 
         <br>
