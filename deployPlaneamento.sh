@@ -18,4 +18,3 @@ cd src/ || (echo "Error entering modulo_planeamento/src" && exit 1)
 swipl server.pl || (echo "Error starting server" && exit 1)
 
 echo "Deploy script finished execution successfully"
-exit 0
