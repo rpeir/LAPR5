@@ -35,7 +35,7 @@
       <label>Select task type:</label>
       <div class="input-group" *ngFor="let taskType of taskTypes">
         <label>
-          <input type="checkbox" [checked]="isSelected(taskType)" (change)="toggleSelection(taskType)">
+          <input id="{{taskType}}" type="checkbox" [checked]="isSelected(taskType)" (change)="toggleSelection(taskType)">
           {{ taskType }}
         </label>
       </div>
