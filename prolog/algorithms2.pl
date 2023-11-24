@@ -128,7 +128,8 @@ dfs2(Actual, Destination, LA, Path):-connectCell(Actual, Next),
 
 findPathFromRoomToPathway(Room, PathwayDestination, Path):-roomLocation(_,Room,RoomLine,RoomColumn),
           pathwayLocation(_,PathwayDestination,PathwayLine,PathwayColumn),
-          (better_dfs(cel(RoomLine,RoomColumn), cel(PathwayLine,PathwayColumn));true),
+          %(better_dfs(cel(RoomLine,RoomColumn), cel(PathwayLine,PathwayColumn));true),
+          (better_aStar(cel(RoomLine,RoomColumn), cel(PathwayLine,PathwayColumn));true),
           bestSolution(Path,_),!.
 
 %=====================================================
@@ -136,7 +137,8 @@ findPathFromRoomToPathway(Room, PathwayDestination, Path):-roomLocation(_,Room,R
 %=====================================================
 findPathFromPathwayToRoom(PathwaySource, RoomDestination, Path):-roomLocation(_,RoomDestination,RoomLine,RoomColumn),
           pathwayLocation(PathwaySource,_,PathwayLine,PathwayColumn),
-          (better_dfs(cel(PathwayLine,PathwayColumn), cel(RoomLine,RoomColumn));true),
+          %(better_dfs(cel(PathwayLine,PathwayColumn), cel(RoomLine,RoomColumn));true),
+          (better_aStar(cel(PathwayLine,PathwayColumn), cel(RoomLine,RoomColumn));true),
           bestSolution(Path,_),!.
 
 %=====================================================
@@ -144,7 +146,8 @@ findPathFromPathwayToRoom(PathwaySource, RoomDestination, Path):-roomLocation(_,
 %=====================================================
 findPathFromRoomToElevator(Room, Elevator, Path):-roomLocation(_,Room,RoomLine,RoomColumn),
           elevatorLocation(Elevator,ElevatorLine,ElevatorColumn),
-          (better_dfs(cel(RoomLine,RoomColumn), cel(ElevatorLine,ElevatorColumn));true),
+          %(better_dfs(cel(RoomLine,RoomColumn), cel(ElevatorLine,ElevatorColumn));true),
+          (better_aStar(cel(RoomLine,RoomColumn), cel(ElevatorLine,ElevatorColumn));true),
           bestSolution(Path,_),!.
 
 %=====================================================
@@ -152,7 +155,8 @@ findPathFromRoomToElevator(Room, Elevator, Path):-roomLocation(_,Room,RoomLine,R
 %=====================================================
 findPathFromElevatorToRoom(Elevator, Room, Path):-roomLocation(_,Room,RoomLine,RoomColumn),
           elevatorLocation(Elevator,ElevatorLine,ElevatorColumn),
-          (better_dfs(cel(ElevatorLine,ElevatorColumn), cel(RoomLine,RoomColumn));true),
+          %(better_dfs(cel(ElevatorLine,ElevatorColumn), cel(RoomLine,RoomColumn));true),
+          (better_aStar(cel(ElevatorLine,ElevatorColumn), cel(RoomLine,RoomColumn));true),
           bestSolution(Path,_),!.
 
 %=====================================================
@@ -160,7 +164,8 @@ findPathFromElevatorToRoom(Elevator, Room, Path):-roomLocation(_,Room,RoomLine,R
 %=====================================================
 findPathFromElevatorToPathway(Elevator, Pathway, Path):-pathwayLocation(_,Pathway,PathwayLine,PathwayColumn),
           elevatorLocation(Elevator,ElevatorLine,ElevatorColumn),
-          (better_dfs(cel(ElevatorLine,ElevatorColumn), cel(PathwayLine,PathwayColumn));true),
+          %(better_dfs(cel(ElevatorLine,ElevatorColumn), cel(PathwayLine,PathwayColumn));true),
+          (better_aStar(cel(ElevatorLine,ElevatorColumn), cel(PathwayLine,PathwayColumn));true),
           bestSolution(Path,_),!.
 
 %=====================================================
@@ -168,7 +173,8 @@ findPathFromElevatorToPathway(Elevator, Pathway, Path):-pathwayLocation(_,Pathwa
 %=====================================================
 findPathFromPathwayToElevator(PathwaySource, Elevator, Path):-pathwayLocation(PathwaySource,_,PathwayLine,PathwayColumn),
           elevatorLocation(Elevator,ElevatorLine,ElevatorColumn),
-          (better_dfs(cel(PathwayLine,PathwayColumn), cel(ElevatorLine,ElevatorColumn));true),
+          %(better_dfs(cel(PathwayLine,PathwayColumn), cel(ElevatorLine,ElevatorColumn));true),
+          (better_aStar(cel(PathwayLine,PathwayColumn), cel(ElevatorLine,ElevatorColumn));true),
           bestSolution(Path,_),!.
 
 %=====================================================
@@ -176,7 +182,8 @@ findPathFromPathwayToElevator(PathwaySource, Elevator, Path):-pathwayLocation(Pa
 %=====================================================
 findPathFromPathwayToPathway(Pathway1, Pathway2, Path):-pathwayLocation(Pathway1,_,PathwayLine1,PathwayColumn1),
           pathwayLocation(_,Pathway2,PathwayLine2,PathwayColumn2),
-          (better_dfs(cel(PathwayLine1,PathwayColumn1), cel(PathwayLine2,PathwayColumn2));true),
+          %(better_dfs(cel(PathwayLine1,PathwayColumn1), cel(PathwayLine2,PathwayColumn2));true),
+          (better_aStar(cel(PathwayLine1,PathwayColumn1), cel(PathwayLine2,PathwayColumn2));true),
           bestSolution(Path,_),!.
 
 
@@ -267,3 +274,37 @@ retractElevatorInfo():-
             retractall(connectCell(_,_)),
             retractall(roomLocation(_,_,_,_)),
             retractall(elevatorLocation(_,_,_)).
+
+
+%=====================================================
+%A star
+%=====================================================
+better_aStar(Origin, Destination):-
+          assertz(bestSolution(_,10000)),
+          aStar(Origin, Destination, Path, _),!,
+          atualizeBestSolution(Path),
+          %allow backtrack
+          fail.
+
+
+aStar(Origin, Destination, Path, Cost):-
+            aStar2(Destination, [(_,0,[Origin])], Path, Cost).
+
+aStar2(Destination, [(_,Cost,[Destination|Temp])|_], Path, Cost):-
+             reverse([Destination|Temp], Path).
+
+aStar2(Destination, [(_,ActualCost,ActualList)|Rest], Path, Cost):-
+            ActualList = [Actual|_],
+            findall((EstimatedCost,NextCost, [Next|ActualList]),
+                    (Destination \== Actual, connectCell(Actual, Next), \+member(Next, ActualList),
+                    NextCost is ActualCost + 1, estimate(Next, Destination, EstimatedNext),
+                    EstimatedCost is NextCost + EstimatedNext), News),
+            append(Rest, News, Everything),
+            sort(Everything, SortedList),
+            aStar2(Destination, SortedList, Path, Cost).
+
+estimate(cel(Line1,Column1), cel(Line2,Column2), Cost):-
+            Cost is sqrt((Line1 - Line2)^2 + (Column1 - Column2)^2).
+
+%=====================================================
+getSolutionFromAstar([Result|_],Result).
