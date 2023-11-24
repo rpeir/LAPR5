@@ -55,46 +55,49 @@ describe('EditPathwayComponent', () => {
 
     cy.get('[name="description"]').type(DEFAULT_PATHWAY.description);
 
-    // Check if the building is not updated
-    cy.on('window:alert', (message) => {
-      expect(message).to.equal(
-        'Pathway ID is required'
-      );
-    });
+    const stub = cy.stub()
+    cy.on ('window:alert', stub)
+    cy.get('input[value=Edit]').click()
+      .then(() => {
+        expect(stub.getCall(0)).to.be.calledWith('Pathway ID is required')
+      })
 
   });
 
   it('should fail to update a pathway if not given any field to edit', () => {
 
-      cy.get('[name="id"]').type(DEFAULT_PATHWAY.domainId);
+    cy.get('[name="id"]').type(DEFAULT_PATHWAY.domainId);
 
-      // Check if the building is not updated
-      cy.on('window:alert', (message) => {
-        expect(message).to.equal(
-          'Please select at least one field to edit'
-        );
-      });
+    cy.get('input[value=Edit]').click();
+
+    // Check if the building is not updated
+    cy.on('window:alert', (message) => {
+      assert.equal(message, 'At least one field must be filled');
+    });
   });
 
   it('should fail to update a pathway if does not exist', () => {
 
-      // Fill in the form fields
-      cy.get('[name="id"]').type("fail");
-      cy.get('[name="buildingSource"]').click().get(`mat-option[id="${DEFAULT_PATHWAY.buildingSource}"]`).click();
-      cy.get('[name="buildingDestination"]').click().get(`mat-option[id="${DEFAULT_PATHWAY.buildingDestination}"]`).click()
+    // Fill in the form fields
+    cy.get('[name="id"]').type("fail");
+    cy.get('[name="buildingSource"]').click().get(`mat-option[id="${DEFAULT_PATHWAY.buildingSource}"]`).click();
+    cy.get('[name="buildingDestination"]').click().get(`mat-option[id="${DEFAULT_PATHWAY.buildingDestination}"]`).click()
 
-      cy.wait(1000)
-      cy.get('[name="floorSource"]').click().get(`mat-option[id=${DEFAULT_PATHWAY.floorSource}]`).click();
-      cy.get('[name="floorDestination"]').click().get(`mat-option[id=${DEFAULT_PATHWAY.floorDestination}]`).click();
+    cy.wait(1000)
+    cy.get('[name="floorSource"]').click().get(`mat-option[id=${DEFAULT_PATHWAY.floorSource}]`).click();
+    cy.get('[name="floorDestination"]').click().get(`mat-option[id=${DEFAULT_PATHWAY.floorDestination}]`).click();
 
-      cy.get('[name="description"]').type(DEFAULT_PATHWAY.description);
+    cy.get('[name="description"]').type(DEFAULT_PATHWAY.description);
 
-      // Check if the building is not updated
-      cy.on('window:alert', (message) => {
-        expect(message).to.equal(
-          'Pathway does not exist'
-        );
-      });
+    cy.get('input[value=Edit]').click();
+
+    // Check if the building is not updated
+    const stub = cy.stub()
+    cy.on ('window:alert', stub)
+    cy.get('input[value=Edit]').click()
+      .then(() => {
+        expect(stub.getCall(0)).to.be.calledWith('"Pathway not found"')
+      })
   });
 
 });
