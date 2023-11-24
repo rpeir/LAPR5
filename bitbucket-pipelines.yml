@@ -5,7 +5,7 @@ pipelines:
   default:
   - step:
       name: Deploy to VM
-      deployment: Modulo Planeamento
+      deployment: production
       script:
       - echo "Deploying to VM"
       - cat deployPlaneamento.sh | ssh pipelineuser@vs1141.dei.isep.ipp.pt
