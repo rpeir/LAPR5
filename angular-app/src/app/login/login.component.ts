@@ -28,4 +28,8 @@ export class LoginComponent {
   goToGestorDeTarefas() {
     this.router.navigate(['/gestor-de-tarefas']);
   }
+
+  goToMapViewer() {
+    this.router.navigate(['/map-viewer']);
+  }
 }
