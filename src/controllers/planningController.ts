@@ -159,10 +159,6 @@ export default class PlanningController implements IPlanningController {
       const destinationFloor = req.query.destinationFloor as string;
       const roomSource = req.query.roomSource as string;
       const roomDestination = req.query.roomDestination as string;
-      console.log(sourceBuilding + "_" + sourceFloor);
-      console.log(destinationBuilding + "_" + destinationFloor);
-      console.log(roomSource);
-      console.log(roomDestination);
       const infoOrError = await this.planningService.getPathLessBuildingsRoomToRoom(sourceBuilding + "_" + sourceFloor, destinationBuilding + "_" + destinationFloor, roomSource, roomDestination);
 
       if (infoOrError.isFailure) {
