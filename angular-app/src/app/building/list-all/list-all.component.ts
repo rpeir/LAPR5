@@ -9,7 +9,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./list-all.component.css'],
 })
 export class ListAllComponent {
-  constructor(private createBuildingService: BuildingService, private location: Location) {}
+  constructor(private createBuildingService: BuildingService) {}
 
   buildings: Building[] | any;
 

@@ -2,7 +2,7 @@
 
 describe('CreateBuildingComponent', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4200/building/create'); // Assuming '/create' is the route for your CreateComponent
+    cy.visit('http://localhost:4200/building/create');
   });
 
   const randomCode = generateRandomString(5); // You can adjust the length as needed
