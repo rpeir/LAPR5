@@ -77,7 +77,8 @@ beforeEach(function() {
     let req: Partial<Request> = {};
     req.body = body;
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
     let next: Partial<NextFunction> = () => {
     };

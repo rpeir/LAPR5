@@ -63,7 +63,8 @@ describe("pathway controller", function() {
     req.body = body;
 
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
 
     let next: Partial<NextFunction> = () => {
@@ -112,7 +113,8 @@ describe("pathway controller", function() {
     req.body = body;
 
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
 
     let next: Partial<NextFunction> = () => {
@@ -196,9 +198,10 @@ describe("pathway controller", function() {
     await ctrl.createPathway(<Request>req, <Response>res, <NextFunction>next);
 
     //Assert
-    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.status, 201);
     sinon.assert.calledWith(res.json, sinon.match(
       {
+        "domainId" : "129",
         "buildingSource": req.body.buildingSource,
         "buildingDestination": req.body.buildingDestination,
         "floorSource": req.body.floorSource,
@@ -228,7 +231,8 @@ describe("pathway controller", function() {
     req.body = body;
 
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
 
     let next: Partial<NextFunction> = () => {
@@ -290,9 +294,9 @@ describe("pathway controller", function() {
 
 
     let floorRepoInstance = Container.get("FloorRepo");
-    const floorMock = sandbox.mock(floorRepoInstance, "findByBuildingIdAndFloorNr");
-    floorMock.expects("findByBuildingIdAndFloorNr").once().returns(new Promise(resolve => resolve(floorSource)))
-      .twice().returns(new Promise(resolve => resolve(floorDestination)));
+    const floorMock = sandbox.stub(floorRepoInstance, "findByBuildingIdAndFloorNr");
+    floorMock.onCall(0).returns(new Promise(resolve => resolve(floorSource)))
+      .onCall(1).returns(new Promise(resolve => resolve(floorDestination)));
 
     let pathwayServiceInstance = Container.get("PathwayService");
 
@@ -302,9 +306,10 @@ describe("pathway controller", function() {
     await ctrl.createPathway(<Request>req, <Response>res, <NextFunction>next);
 
     //Assert
-    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.status, 201);
     sinon.assert.calledWith(res.json, sinon.match(
       {
+        "domainId" : "129",
         "buildingSource": req.body.buildingSource,
         "buildingDestination": req.body.buildingDestination,
         "floorSource": req.body.floorSource,
@@ -313,7 +318,6 @@ describe("pathway controller", function() {
       }
     ));
     buildingMock.verify();
-    floorMock.verify();
 
   });
 

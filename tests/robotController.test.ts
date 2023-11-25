@@ -63,7 +63,8 @@ describe("robot controller", function() {
     req.body = body;
 
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
     let next: Partial<NextFunction> = () => {
 
@@ -110,7 +111,8 @@ describe("robot controller", function() {
     req.body = body;
 
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
     let next: Partial<NextFunction> = () => {
 
@@ -199,7 +201,8 @@ describe("robot controller", function() {
     req.body = body;
 
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
     let next: Partial<NextFunction> = () => {
 
@@ -269,7 +272,8 @@ describe("robot controller", function() {
     req.body = body;
 
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
     let next: Partial<NextFunction> = () => {
 
@@ -283,10 +287,10 @@ describe("robot controller", function() {
       "robotType": "123",
       "state": "true"
     }]));
+
     const ctrl = new RobotController(robotServiceInstance as IRobotService);
-    await ctrl.createRobot(<Request>req, <Response>res, <NextFunction>next);
     await ctrl.consultAllRobots(<Request>req, <Response>res, <NextFunction>next);
-    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.status, 200);
     sinon.assert.calledWith(res.json, sinon.match([{
       "nickName": req.body.nickName,
       "robotCode": req.body.robotCode,
