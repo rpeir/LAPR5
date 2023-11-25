@@ -434,6 +434,7 @@ export default class ThumbRaiser {
     this.maze = new Maze(this.mazeParameters);
 
     // Create the player
+    //TODO get player parameters from json instead of hardcoding from default_data.js?
     this.player = new Player(this.playerParameters);
 
     // Create the lights
@@ -1075,7 +1076,7 @@ export default class ThumbRaiser {
       // A viewport is being pointed
       if (event.shiftKey) {
         // The shift key is being pressed
-        if (this.mouse.camera !== this.firstPersonViewCamera && this.mouse.camera != this.miniMapCamera) {
+        if (this.mouse.camera !== this.firstPersonViewCamera && this.mouse.camera !== this.miniMapCamera) {
           // Dollying is not allowed in first-person view or in mini-map
           this.setCursor(event.deltaY < 0 ? 'dolly-in' : 'dolly-out'); // Change the cursor to "dolly-in" or "dolly-out"
           this.mouse.camera.updateDistance(0.005 * event.deltaY); // Dollying
@@ -1087,7 +1088,7 @@ export default class ThumbRaiser {
         this.setCursor(event.deltaY < 0 ? 'zoom-in' : 'zoom-out'); // Change the cursor to "zoom-in" or "zoom-out"
         this.mouse.camera.updateZoom(-0.001 * event.deltaY); // Zooming
       }
-      if (this.mouse.camera != this.miniMapCamera) {
+      if (this.mouse.camera !== this.miniMapCamera) {
         this.view.options.selectedIndex = [
           this.fixedViewCamera,
           this.firstPersonViewCamera,
@@ -1236,14 +1237,14 @@ export default class ThumbRaiser {
         types.forEach(type => {
           type.forEach(clip => {
             let position = clip.position.split(' ');
-            if (position.length == 4 && position[0] == 'scene') {
+            if (position.length === 4 && position[0] === 'scene') {
               // Positional audio object (scene specific position in cartesian coordinates)
               position = position.slice(1).map(Number);
               if (!Number.isNaN(position[0]) && !Number.isNaN(position[1]) && !Number.isNaN(position[2])) {
                 this.scene.add(clip.source);
                 clip.source.position.set(position[0], position[1], position[2]);
               }
-            } else if (position.length == 3 && position[0] == 'maze') {
+            } else if (position.length === 3 && position[0] === 'maze') {
               // Positional audio object (maze specific position in cell coordinates)
               position = position.slice(1).map(Number);
               if (!Number.isNaN(position[0]) && !Number.isNaN(position[1])) {
@@ -1251,11 +1252,11 @@ export default class ThumbRaiser {
                 position = this.maze.cellToCartesian(position);
                 clip.source.position.set(position.x, position.y, position.z);
               }
-            } else if (clip.position == 'exit') {
+            } else if (clip.position === 'exit') {
               // Positional audio object (maze exit location)
               this.scene.add(clip.source);
               clip.source.position.set(this.maze.exitLocation.x, this.maze.exitLocation.y, this.maze.exitLocation.z);
-            } else if (clip.position == 'initial') {
+            } else if (clip.position === 'initial') {
               // Positional audio object (player initial position)
               this.scene.add(clip.source);
               clip.source.position.set(
@@ -1263,10 +1264,10 @@ export default class ThumbRaiser {
                 this.maze.initialPosition.y,
                 this.maze.initialPosition.z,
               );
-            } else if (clip.position == 'player') {
+            } else if (clip.position === 'player') {
               // Positional audio object (player current position)
               this.player.add(clip.source);
-            } else if (clip.position == 'spotlight') {
+            } else if (clip.position === 'spotlight') {
               // Positional audio object (spotlight current position)
               this.spotLight.add(clip.source);
             }
