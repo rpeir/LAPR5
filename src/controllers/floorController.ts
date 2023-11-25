@@ -32,7 +32,7 @@ export default class FloorController implements IFloorController {
         return res.status(402).send(floorOrError);
       }
       const floorDTO = floorOrError.getValue();
-      return res.json(floorDTO).status(201);
+      return res.status(201).json(floorDTO);
     } catch (error) {
       return next(error);
     }

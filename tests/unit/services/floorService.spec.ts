@@ -71,7 +71,7 @@ describe("floor service", function() {
     let createStub = sinon.stub(Floor, "create").returns(Result.ok({
       "domainId": "123",
       "floorNr": floorDTO.floorNr,
-
+      id: new UniqueEntityID("123"),
       "building": Building.create({
         code: BuildingCode.create("CODE3").getValue(),
         designation: floorDTO.building,
@@ -85,7 +85,7 @@ describe("floor service", function() {
     }));
 
     let floorRepoInstance = Container.get("FloorRepo");
-    sinon.stub(floorRepoInstance, "save").returns(new Promise<BuildingId>((resolve, reject) => {
+    sinon.stub(floorRepoInstance, "save").returns(new Promise<Floor>((resolve, reject) => {
       resolve(Floor.create({
         "floorNr": floorDTO.floorNr,
 
@@ -109,6 +109,7 @@ describe("floor service", function() {
     await floorService.createFloor(floorDTO as IFloorDTO).then((result) => {
       expect(result.isFailure).to.equal(false);
       expect(result.getValue()).to.deep.equal({
+        "domainId": "123",
         "floorNr": floorDTO.floorNr,
         "building": floorDTO.building,
         "description": floorDTO.description
@@ -166,6 +167,7 @@ describe("floor service", function() {
     await floorService.createFloor(floorDTO as IFloorDTO).then((result) => {
       expect(result.isFailure).to.equal(false);
       expect(result.getValue()).to.deep.equal({
+        "domainId": "123",
         "floorNr": floorDTO.floorNr,
         "building": floorDTO.building,
         "description": floorDTO.description

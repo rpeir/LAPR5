@@ -1,7 +1,16 @@
 :- use_module(library(http/http_server)).
 :- use_module(library(http/json)).
+:- use_module(library(http/http_unix_daemon)).
+:- consult("algorithms2.pl").
+:- consult("algorithms.pl").
+:- consult("client.pl").
 
-runServer:- http_server(http_dispatch,[port(5000)]).
+:- initialization(run, main).
+
+run:- http_daemon([port(5000)]).
+
+main:- http_server(http_dispatch).
+
 
 :-http_handler(root(path/lessBuildings), handleLessBuildings, []).
 

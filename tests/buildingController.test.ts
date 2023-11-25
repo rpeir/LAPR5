@@ -44,8 +44,10 @@ describe("building controller", function() {
     req.body = body;
 
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
+
     let next: Partial<NextFunction> = () => {
 
     };
@@ -53,6 +55,7 @@ describe("building controller", function() {
 
     let buildingServiceInstance = Container.get("BuildingService");
     sinon.stub(buildingServiceInstance, "createBuilding").returns(Result.ok<IBuildingDTO>({
+      "domainId": req.body.id,
       "code": req.body.code,
       "designation": req.body.designation,
       "description": req.body.description,
@@ -63,7 +66,7 @@ describe("building controller", function() {
     const ctrl = new BuildingController((buildingServiceInstance as IBuildingService));
     await ctrl.createBuilding(<Request>req, <Response>res, <NextFunction>next);
 
-    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledOnce(res.status);
     sinon.assert.calledWith(res.json, sinon.match({
       "code": req.body.code,
       "designation": req.body.designation,
@@ -88,7 +91,8 @@ describe("building controller", function() {
     req.body = body;
 
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
     let next: Partial<NextFunction> = () => {
 

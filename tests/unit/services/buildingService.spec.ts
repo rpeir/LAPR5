@@ -26,6 +26,7 @@ describe('building service', () => {
         Container.set("BuildingRepo", buildingRepoInstance);
 
         defaultBuildingDTO = {
+            domainId: "1",
             code : "A",
             designation : "Test A",
             description : "Edificio Teste A",
