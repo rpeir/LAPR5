@@ -907,45 +907,45 @@ export default class ThumbRaiser {
       } else if (event.code === this.player.keyCodes.miniMap && state) {
         // Display / hide mini-map
         this.miniMapCamera.checkBox.checked = !this.miniMapCamera.checkBox.checked;
-      } else if (event.code == this.player.keyCodes.statistics && state) {
+      } else if (event.code === this.player.keyCodes.statistics && state) {
         // Display / hide statistics
         this.setStatisticsVisibility(!this.statistics.checkBox.checked);
-      } else if (event.code == this.player.keyCodes.userInterface && state) {
+      } else if (event.code === this.player.keyCodes.userInterface && state) {
         // Display / hide user interface
         this.setUserInterfaceVisibility(!this.userInterface.checkBox.checked);
-      } else if (event.code == this.player.keyCodes.help && state) {
+      } else if (event.code === this.player.keyCodes.help && state) {
         // Display / hide help
         this.setHelpVisibility(!this.help.checkBox.checked);
-      } else if (event.code == this.player.keyCodes.boundingVolumes && state) {
+      } else if (event.code === this.player.keyCodes.boundingVolumes && state) {
         // Display / hide bounding volumes
         this.collisionDetectionParameters.boundingVolumes.visible = !this.collisionDetectionParameters.boundingVolumes
           .visible;
         this.setBoundingVolumesVisibility(this.collisionDetectionParameters.boundingVolumes.visible);
-      } else if (event.code == this.player.keyCodes.ambientLight && state) {
+      } else if (event.code === this.player.keyCodes.ambientLight && state) {
         // Turn on / off ambient light
         this.ambientLight.visible = !this.ambientLight.visible;
-      } else if (event.code == this.player.keyCodes.directionalLight && state) {
+      } else if (event.code === this.player.keyCodes.directionalLight && state) {
         // Turn on / off directional light
         this.directionalLight.visible = !this.directionalLight.visible;
-      } else if (event.code == this.player.keyCodes.spotLight && state) {
+      } else if (event.code === this.player.keyCodes.spotLight && state) {
         // Turn on / off the spotlight
         this.spotLight.visible = !this.spotLight.visible;
-      } else if (event.code == this.player.keyCodes.flashLight && state) {
+      } else if (event.code === this.player.keyCodes.flashLight && state) {
         // Turn on / off flashlight
         this.flashLight.visible = !this.flashLight.visible;
-      } else if (event.code == this.player.keyCodes.shadows && state) {
+      } else if (event.code === this.player.keyCodes.shadows && state) {
         // Turn on / off shadows
         this.shadowsParameters.enabled = !this.shadowsParameters.enabled;
-      } else if (event.code == this.player.keyCodes.fog && state) {
+      } else if (event.code === this.player.keyCodes.fog && state) {
         // Turn on / off fog
         this.fog.enabled = !this.fog.enabled;
-      } else if (event.code == this.player.keyCodes.left) {
+      } else if (event.code === this.player.keyCodes.left) {
         this.player.keyStates.left = state;
-      } else if (event.code == this.player.keyCodes.right) {
+      } else if (event.code === this.player.keyCodes.right) {
         this.player.keyStates.right = state;
-      } else if (event.code == this.player.keyCodes.backward) {
+      } else if (event.code === this.player.keyCodes.backward) {
         this.player.keyStates.backward = state;
-      } else if (event.code == this.player.keyCodes.forward) {
+      } else if (event.code === this.player.keyCodes.forward) {
         this.player.keyStates.forward = state;
       }
       this.player.shiftKey = event.shiftKey;
@@ -953,26 +953,26 @@ export default class ThumbRaiser {
   }
 
   mouseDown(event) {
-    if (event.target.id == 'canvas') {
+    if (event.target.id === 'canvas') {
       event.preventDefault();
-      if (event.buttons == 1 || event.buttons == 2) {
+      if (event.buttons === 1 || event.buttons === 2) {
         // Primary or secondary button down
         // Store initial mouse position in window coordinates (mouse coordinate system: origin in the top-left corner; window coordinate system: origin in the bottom-left corner)
         this.mouse.initialPosition = new THREE.Vector2(event.clientX, window.innerHeight - event.clientY - 1);
-        if (this.mouse.camera != 'none') {
+        if (this.mouse.camera !== 'none') {
           // A viewport is being pointed
           this.mouse.actionInProgress = true;
-          if (event.buttons == 1) {
+          if (event.buttons === 1) {
             // Primary button down
             this.mouse.camera.previousViewport = this.mouse.camera.viewport.clone();
-            if (this.mouse.frame == 'none') {
+            if (this.mouse.frame === 'none') {
               // No frame is being pointed; so, it is not a resizing event. It must be a dragging event
               this.setCursor('dragging'); // Change the cursor from "grab" to "grabbing"
             }
             // Otherwise it is a resizing event, but no action is needed here; so, no else {} here
           } else {
             // Secondary button down
-            if (this.mouse.camera != this.miniMapCamera) {
+            if (this.mouse.camera !== this.miniMapCamera) {
               // Start orbiting around a target
               this.setCursor('orbit'); // Change the cursor to "orbit"
             } else {
@@ -980,7 +980,7 @@ export default class ThumbRaiser {
               this.setCursor('pan'); // Change the cursor to "all-scroll"
             }
           }
-          if (this.mouse.camera != this.miniMapCamera) {
+          if (this.mouse.camera !== this.miniMapCamera) {
             this.view.options.selectedIndex = [
               this.fixedViewCamera,
               this.firstPersonViewCamera,
@@ -996,23 +996,23 @@ export default class ThumbRaiser {
   }
 
   mouseMove(event) {
-    if (event.target.id == 'canvas') {
+    if (event.target.id === 'canvas') {
       document.activeElement.blur();
-      if (event.buttons == 0 || event.buttons == 1 || event.buttons == 2) {
+      if (event.buttons === 0 || event.buttons === 1 || event.buttons === 2) {
         // Store current mouse position in window coordinates (mouse coordinate system: origin in the top-left corner; window coordinate system: origin in the bottom-left corner)
         this.mouse.currentPosition = new THREE.Vector2(event.clientX, window.innerHeight - event.clientY - 1);
-        if (event.buttons == 0) {
+        if (event.buttons === 0) {
           // No button down
           this.getPointedViewport(this.mouse);
         } else if (this.mouse.actionInProgress) {
           // Primary or secondary button down and action in progress
-          if (this.mouse.camera != 'none') {
+          if (this.mouse.camera !== 'none') {
             // Mouse action in progress
             // Compute mouse movement and update mouse position
             const mouseIncrement = this.mouse.currentPosition.clone().sub(this.mouse.previousPosition);
-            if (event.buttons == 1) {
+            if (event.buttons === 1) {
               // Primary button down
-              if (this.mouse.frame == 'none') {
+              if (this.mouse.frame === 'none') {
                 // Dragging the viewport
                 this.mouse.camera.dragViewport(this.mouse);
               } else {
@@ -1021,7 +1021,7 @@ export default class ThumbRaiser {
               }
             } else {
               // Secondary button down
-              if (this.mouse.camera != this.miniMapCamera) {
+              if (this.mouse.camera !== this.miniMapCamera) {
                 // Orbiting around a target
                 this.mouse.camera.updateOrientation(mouseIncrement.multiply(new THREE.Vector2(-0.5, 0.5)));
                 this.updateViewsPanel();
@@ -1030,11 +1030,11 @@ export default class ThumbRaiser {
                 const targetIncrement = new THREE.Vector3(
                   ((mouseIncrement.x / this.miniMapCamera.viewport.width) *
                     (this.miniMapCamera.orthographic.left - this.miniMapCamera.orthographic.right)) /
-                  this.miniMapCamera.orthographic.zoom,
+                    this.miniMapCamera.orthographic.zoom,
                   0.0,
                   ((mouseIncrement.y / this.miniMapCamera.viewport.height) *
                     (this.miniMapCamera.orthographic.top - this.miniMapCamera.orthographic.bottom)) /
-                  this.miniMapCamera.orthographic.zoom,
+                    this.miniMapCamera.orthographic.zoom,
                 );
                 this.miniMapCamera.updateTarget(targetIncrement);
               }
@@ -1049,14 +1049,14 @@ export default class ThumbRaiser {
   }
 
   mouseUp(event) {
-    if (event.button == 0 || event.button == 2) {
+    if (event.button === 0 || event.button === 2) {
       // Primary or secondary button up (do not confuse event.button with event.buttons: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button and https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/buttons)
       this.mouse.actionInProgress = false;
       // Check if a mini-map viewport resizing event is finished; if so, make sure that the viewport's width and height are the same
       if (
-        event.button == 0 && // Primary button up
-        this.mouse.camera == this.miniMapCamera && // Mini-map viewport
-        this.mouse.frame != 'none'
+        event.button === 0 && // Primary button up
+        this.mouse.camera === this.miniMapCamera && // Mini-map viewport
+        this.mouse.frame !== 'none'
       ) {
         // The frame was being pointed; so, it was a resizing event
         this.miniMapCamera.adjustViewport(); // Make sure that the viewport's width and height are the same
@@ -1071,11 +1071,11 @@ export default class ThumbRaiser {
   mouseWheel(event) {
     // Prevent the mouse wheel from scrolling the document's content
     event.preventDefault();
-    if (this.mouse.camera != 'none') {
+    if (this.mouse.camera !== 'none') {
       // A viewport is being pointed
       if (event.shiftKey) {
         // The shift key is being pressed
-        if (this.mouse.camera != this.firstPersonViewCamera && this.mouse.camera != this.miniMapCamera) {
+        if (this.mouse.camera !== this.firstPersonViewCamera && this.mouse.camera != this.miniMapCamera) {
           // Dollying is not allowed in first-person view or in mini-map
           this.setCursor(event.deltaY < 0 ? 'dolly-in' : 'dolly-out'); // Change the cursor to "dolly-in" or "dolly-out"
           this.mouse.camera.updateDistance(0.005 * event.deltaY); // Dollying
@@ -1110,7 +1110,7 @@ export default class ThumbRaiser {
         this.setViewportVisibility(
           [this.fixedViewCamera, this.firstPersonViewCamera, this.thirdPersonViewCamera, this.topViewCamera][
             this.view.options.selectedIndex
-            ],
+          ],
         );
         break;
       case 'projection':
@@ -1328,7 +1328,7 @@ export default class ThumbRaiser {
         // Register the event handler to be called on mouse wheel
         this.renderer.domElement.addEventListener('wheel', event => this.mouseWheel(event));
 
-        // Register the event handler to be called on context menu
+        // Register the event handler to be called on the context menu
         document.addEventListener('contextmenu', event => this.contextMenu(event));
 
         // Register the event handler to be called on select, input number, or input checkbox change
@@ -1411,7 +1411,7 @@ export default class ThumbRaiser {
             this.maze.collision(
               this.collisionDetectionParameters.method,
               position,
-              this.collisionDetectionParameters.method != 'obb-aabb' ? this.player.radius : this.player.halfSize,
+              this.collisionDetectionParameters.method !== 'obb-aabb' ? this.player.radius : this.player.halfSize,
               directionRad - this.player.defaultDirection,
             )
           ) {
@@ -1431,7 +1431,7 @@ export default class ThumbRaiser {
               }
               this.animations.fadeToAction(
                 'animation.robot-runner.idle',
-                this.animations.activeName != 'animation.robot-runner.death' ? 0.2 : 0.6,
+                this.animations.activeName !== 'animation.robot-runner.death' ? 0.2 : 0.6,
               );
             }
           }
@@ -1492,9 +1492,9 @@ export default class ThumbRaiser {
         if (this.fog.enabled) {
           this.fog.density = camera.fogDensity;
         }
-        this.player.visible = camera != this.firstPersonViewCamera;
+        this.player.visible = camera !== this.firstPersonViewCamera;
         this.renderer.setViewport(camera.viewport.x, camera.viewport.y, camera.viewport.width, camera.viewport.height);
-        if (this.cubeTexture.name == 'None' || this.fog.enabled) {
+        if (this.cubeTexture.name === 'None' || this.fog.enabled) {
           this.background.children[0].material.color.set(this.fog.enabled ? this.fog.color : camera.backgroundColor);
           this.renderer.render(this.background, this.camera2D); // Render the background
         }
