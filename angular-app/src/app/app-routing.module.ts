@@ -66,10 +66,11 @@ const routes: Routes = [
   { path: 'elevator/create', component: ElevatorCreateComponent },
   { path: 'elevator/update', component: ElevatorUpdateComponent },
   { path: 'elevator/replace', component: ElevatorReplaceComponent },
-  { path: 'map-viewer', component: MapViewerComponent },
+  //{ path: 'map-viewer', component: MapViewerComponent },
   { path: 'rooms/create', component: RoomCreateComponent },
   { path: 'elevator/list-all-elevators', component: ElevatorListAllComponent },
   { path: 'floors/upload-map', component: UploadMapComponent },
+  { path: 'map-viewer', loadChildren: () => import('./lazyLoadTest/Modules/map-viewer-lazy/map-viewer-lazy.module').then(m => m.MapViewerLazyModule) },
 ];
 
 @NgModule({

@@ -81,7 +81,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
     LoginComponent,
     GestorDeFrotaComponent,
     GestorDeCampusComponent,
-    MapViewerComponent,
+    //MapViewerComponent,
     CreateComponent,
     EditComponent,
     ListAllComponent,
