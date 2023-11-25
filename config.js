@@ -177,6 +177,13 @@ export default {
     planning: {
       name: 'PlanningService',
       path: '../services/planningService',
-    }
+    },
   },
+
+  connections:{
+    planningConnection: {
+      name: 'PlanningConnection',
+      path: '../connections/planningConnection',
+    }
+  }
 };

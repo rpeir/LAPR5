@@ -184,6 +184,11 @@ export default async ({ expressApp }) => {
     path: config.services.planning.path
   }
 
+  const planningConnection = {
+    name: config.connections.planningConnection.name,
+    path: config.connections.planningConnection.path
+  }
+
   await dependencyInjectorLoader({
     mongoConnection,
     schemas: [
@@ -232,7 +237,9 @@ export default async ({ expressApp }) => {
       elevatorService,
       roomService,
       planningService
-    ]
+    ],
+
+    connections: [planningConnection]
   });
   Logger.info("✌️ Schemas, Controllers, Repositories, Services, etc. loaded");
 

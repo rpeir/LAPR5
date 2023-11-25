@@ -28,6 +28,7 @@ import { PlanningRoomLocationMapper } from "../mappers/PlanningRoomLocationMappe
 import { PlanningRoomLocation } from "../domain/planning/planningRoomLocation";
 import { IPlanningElevatorLocationDTO } from "../dto/IPlanningElevatorLocationDTO";
 import { IPlanningMatrixDTO } from "../dto/IPlanningMatrixDTO";
+import IPlanningConnection from "../connections/IConnections/IPlanningConnection";
 
 @Service()
 export default class PlanningService implements IPlanningService {
@@ -36,7 +37,8 @@ export default class PlanningService implements IPlanningService {
     @Inject(config.services.building.name) private buildingService: IBuildingService,
     @Inject(config.services.floor.name) private floorService: IFloorService,
     @Inject(config.services.elevator.name) private elevatorService: IElevatorService,
-    @Inject(config.services.pathway.name) private pathwayService: IPathwayService
+    @Inject(config.services.pathway.name) private pathwayService: IPathwayService,
+    @Inject(config.connections.planningConnection.name) private planningConnection: IPlanningConnection
   ) {
   }
 
@@ -119,83 +121,11 @@ export default class PlanningService implements IPlanningService {
   }
 
   public async getPathLessBuildings(floorSource: string, floorDestination: string) {
-    const http = require("http");
-    const options = {
-      method: "GET",
-      host: "localhost",
-      port: 5000,
-      path: "/path/lessBuildings?floorSource=" + floorSource + "&floorDestination=" + floorDestination
-    };
-
-    return new Promise<Result<IPathDTO>>((resolve) => {
-      let result;
-
-      const request = http.request(options, (res) => {
-        if (res.statusCode !== 200) {
-          result = Result.fail(`Couldn't find the path.`);
-          res.resume();
-          resolve(result);
-        } else {
-          let data = "";
-
-          res.on("data", (chunk) => {
-            data += chunk;
-          });
-
-          res.on("close", () => {
-            result = Result.ok(JSON.parse(data));
-            resolve(result);
-          });
-        }
-      });
-
-      request.end();
-
-      request.on("error", (err) => {
-        result = Result.fail(`Encountered an error trying to make a request: ${err.message}`);
-        resolve(result);
-      });
-    });
+    return this.planningConnection.getPathLessBuildings(floorSource, floorDestination);
   }
 
   public async getPathLessElevators(floorSource: string, floorDestination: string) {
-    const http = require("http");
-    const options = {
-      method: "GET",
-      host: "localhost",
-      port: 5000,
-      path: "/path/lessElevators?floorSource=" + floorSource + "&floorDestination=" + floorDestination
-    };
-
-    return new Promise<Result<IPathDTO>>((resolve) => {
-      let result;
-
-      const request = http.request(options, (res) => {
-        if (res.statusCode !== 200) {
-          result = Result.fail(`Couldn't find path.`);
-          res.resume();
-          resolve(result);
-        } else {
-          let data = "";
-
-          res.on("data", (chunk) => {
-            data += chunk;
-          });
-
-          res.on("close", () => {
-            result = Result.ok(JSON.parse(data));
-            resolve(result);
-          });
-        }
-      });
-
-      request.end();
-
-      request.on("error", (err) => {
-        result = Result.fail(`Encountered an error trying to make a request: ${err.message}`);
-        resolve(result);
-      });
-    });
+    return this.planningConnection.getPathLessElevators(floorSource, floorDestination);
   }
 
   public async getFloorPlanningMatrix(floorSource: string) {
@@ -325,88 +255,10 @@ export default class PlanningService implements IPlanningService {
   }
 
   public async getPathLessBuildingsRoomToRoom(floorSource: string, floorDestination: string, roomSource: string, roomDestination: string) {
-    const http = require("http");
-    const options = {
-      method: "GET",
-      host: "localhost",
-      port: 5000,
-      path: "/path/roomToRoomLessBuildings?floorSource=" + floorSource
-            + "&floorDestination=" + floorDestination
-            + "&roomSource=" + roomSource
-            +  "&roomDestination=" + roomDestination
-    };
-    return new Promise<Result<IPathDTO>>((resolve) => {
-      let result;
-
-      const request = http.request(options, (res) => {
-        if (res.statusCode !== 200) {
-          result = Result.fail(`Couldn't find the path.`);
-          res.resume();
-          resolve(result);
-        } else {
-          let data = "";
-
-          res.on("data", (chunk) => {
-            data += chunk;
-          });
-
-          res.on("close", () => {
-            result = Result.ok(JSON.parse(data));
-            resolve(result);
-          });
-        }
-      });
-
-      request.end();
-
-      request.on("error", (err) => {
-        result = Result.fail(`Encountered an error trying to make a request: ${err.message}`);
-        resolve(result);
-      });
-    });
+    return this.planningConnection.getPathLessBuildingsRoomToRoom(floorSource, floorDestination, roomSource, roomDestination);
   }
 
   public async getPathLessElevatorsRoomToRoom(floorSource: string, floorDestination: string, roomSource: string, roomDestination: string) {
-    const http = require("http");
-    const options = {
-      method: "GET",
-      host: "localhost",
-      port: 5000,
-      path: "/path/roomToRoomLessElevators?floorSource=" + floorSource
-        + "&floorDestination=" + floorDestination
-        + "&roomSource=" + roomSource
-        +  "&roomDestination=" + roomDestination
-    };
-
-    console.log(options.path);
-    return new Promise<Result<IPathDTO>>((resolve) => {
-      let result;
-
-      const request = http.request(options, (res) => {
-        if (res.statusCode !== 200) {
-          result = Result.fail(`Couldn't find the path.`);
-          res.resume();
-          resolve(result);
-        } else {
-          let data = "";
-
-          res.on("data", (chunk) => {
-            data += chunk;
-          });
-
-          res.on("close", () => {
-            result = Result.ok(JSON.parse(data));
-            resolve(result);
-          });
-        }
-      });
-
-      request.end();
-
-      request.on("error", (err) => {
-        result = Result.fail(`Encountered an error trying to make a request: ${err.message}`);
-        resolve(result);
-      });
-    });
+    return this.planningConnection.getPathLessElevatorsRoomToRoom(floorSource, floorDestination, roomSource, roomDestination);
   }
 }
