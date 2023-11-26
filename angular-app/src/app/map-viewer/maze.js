@@ -78,9 +78,7 @@ export default class Maze extends THREE.Group {
     this.size = floorMap.maze.size;
     this.halfSize = { width: this.size.width / 2.0, depth: this.size.depth / 2.0 };
     this.map = floorMap.maze.map;
-    console.log("I'M INSIDE THE MAZE CLASS", this.map);
     this.exitLocation = this.cellToCartesian(floorMap.maze.exitLocation);
-    console.log('EXIT LOCATION', this.exitLocation);
   }
   // Create the ground
   setGround(floorMap) {
@@ -196,8 +194,6 @@ export default class Maze extends THREE.Group {
     this.setInitialPlayerPosition(floorMap);
     console.log('NEW MAP', this.map);
   }
-
-  //TODO - add a function to set new loader
 
   // Convert cell [row, column] coordinates to cartesian (x, y, z) coordinates
   cellToCartesian(position) {

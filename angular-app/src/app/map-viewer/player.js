@@ -59,7 +59,6 @@ export default class Player extends THREE.Group {
             // Compute the body position and scale in world space
             this.body.worldPosition = new THREE.Vector3();
             //this.body.getWorldPosition(this.body.worldPosition);
-            console.log(this.body.getWorldPosition(this.body.worldPosition));
             this.body.worldScale = new THREE.Vector3();
             this.body.getWorldScale(this.body.worldScale);
 
