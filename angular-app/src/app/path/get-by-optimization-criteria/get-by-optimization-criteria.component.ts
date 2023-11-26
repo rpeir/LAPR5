@@ -37,25 +37,31 @@ export class GetByOptimizationCriteriaComponent {
   roomDestination: string | undefined;
   sourceRooms: Room[] | undefined;
   destinationRooms: Room[] | undefined;
+  waiting: boolean = false
 
   getPathBetweenFloors() {
+    this.waiting = true;
     if (this.selectedOptimizationCriteria == "Less Buildings") {
       if (this.roomToRoom) {
         this.pathService.getPathRoomToRoomLessBuildings(this.buildingSource, this.floorSource, this.buildingDestination, this.floorDestination, this.roomSource, this.roomDestination).subscribe({
           next: (data) => {
             this.path = data;
+            this.waiting = false;
           },
           error: (error) => {
             window.alert(JSON.stringify(error.error.error));
+            this.waiting = false;
           }
         });
       } else {
         this.pathService.getPathBetweenFloorsLessBuildings(this.buildingSource, this.floorSource, this.buildingDestination, this.floorDestination).subscribe({
           next: (data) => {
             this.path = data;
+            this.waiting = false;
           },
           error: (error) => {
             window.alert(JSON.stringify(error.error.error));
+            this.waiting = false;
           }
         });
       }
@@ -64,18 +70,22 @@ export class GetByOptimizationCriteriaComponent {
         this.pathService.getPathRoomToRoomLessElevators(this.buildingSource, this.floorSource, this.buildingDestination, this.floorDestination, this.roomSource, this.roomDestination).subscribe({
           next: (data) => {
             this.path = data;
+            this.waiting = false;
           },
           error: (error) => {
             window.alert(JSON.stringify(error.error.error));
+            this.waiting = false;
           }
         });
       } else {
         this.pathService.getPathBetweenFloorsLessElevators(this.buildingSource, this.floorSource, this.buildingDestination, this.floorDestination).subscribe({
           next: (data) => {
             this.path = data;
+            this.waiting = false;
           },
           error: (error) => {
             window.alert(JSON.stringify(error.error.error));
+            this.waiting = false;
           }
         });
       }

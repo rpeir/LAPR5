@@ -84,6 +84,9 @@
 
   </form>
 
+  <mat-spinner class="wait-pathways" *ngIf="waiting"></mat-spinner>
+
+
   <div *ngIf="path">
     <h2 class="text-center">Buildings:</h2>
     <div *ngFor="let building of path.buildings">
