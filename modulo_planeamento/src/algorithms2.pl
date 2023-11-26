@@ -307,7 +307,8 @@ aStar(Origin, Destination, Path, Cost):-
             aStar2(Destination, [(_,0,[Origin])], Path, Cost).
 
 aStar2(Destination, [(_,Cost,[Destination|Temp])|_], Path, Cost):-
-             reverse([Destination|Temp], Path)
+             reverse([Destination|Temp], Path).
+
 aStar2(Destination, [(_,ActualCost,ActualList)|Rest], Path, Cost):-
             ActualList = [Actual|_],
             findall((EstimatedCost,NextCost, [Next|ActualList]),
