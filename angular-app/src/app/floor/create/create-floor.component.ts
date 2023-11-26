@@ -12,7 +12,7 @@ import { Building } from "../../building/building";
 })
 export class CreateFloorComponent implements OnInit {
 
-  constructor(private floorService: FloorService, private location: Location, private buildingService: BuildingService) {
+  constructor(private floorService: FloorService, private buildingService: BuildingService) {
   }
 
   floor = new Floor();
@@ -26,7 +26,6 @@ export class CreateFloorComponent implements OnInit {
           + "Building: " + data.building + "\n"
           + "Description: " + data.description + "\n");
 
-        this.location.back();
       },
       error: (error) => {
         window.alert(error.error.error);
