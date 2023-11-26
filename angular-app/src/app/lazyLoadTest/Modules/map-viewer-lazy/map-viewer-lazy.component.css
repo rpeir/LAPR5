@@ -19,6 +19,19 @@ body {
     color: white;
 }
 
+#views-panel > div {
+  position: relative;
+  left: 35%;
+}
+
+#views-panel > div:nth-child(1) label {
+  margin-right: 1%;
+}
+
+#views-panel > div:nth-child(2) label {
+  margin-right: 3.5%;
+}
+
 #mouse-help-panel {
     display: none;
     position: absolute;
