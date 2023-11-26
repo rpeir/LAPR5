@@ -112,7 +112,7 @@ export default function start() {
   }
   function fetchFloorsOfBuilding(buildingDesignation) {
     // Replace the URL with the endpoint that provides the list of floors for the selected building
-    fetch(environment.apiURL`/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`)
+    fetch(environment.apiURL+`/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`)
       .then(response => response.json())
       .then(floors => {
         const floorMapSelector = document.getElementById('mapSelector');

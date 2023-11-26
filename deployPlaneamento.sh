@@ -15,7 +15,7 @@ fuser -n tcp 5000 -k  && echo "Killed running instance" || echo "No instance run
 cd src/ || (echo "Error entering modulo_planeamento/src" && exit 1)
 
 # Inicia modulo
-swipl server.pl || (echo "Error starting server" && exit 1)
+swipl server.pl ../env/prod.pl || (echo "Error starting server" && exit 1)
 
 echo "Deploy script finished execution successfully"
 

@@ -1,9 +1,9 @@
 export const environment = {
   production: true,
-  apiURL: 'http://localhost:4000',
-  apiHost: 'localhost',
+  apiURL: 'http://vs827.dei.isep.ipp.pt:4000',
+  apiHost: 'vs827.dei.isep.ipp.pt',
   apiPort: 4000,
-  planningURL: 'http://localhost:5000',
-  planningHost: 'localhost',
+  planningURL: 'http://vs1141.dei.isep.ipp.pt:5000',
+  planningHost: 'vs1141.dei.isep.ipp.pt',
   planningPort: 5000
 };
