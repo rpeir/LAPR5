@@ -11,13 +11,13 @@ describe('CreateRoomComponent', () => {
   it('should create a new room', () => {
     // Generate random values for name
     const DEFAULT_ROOM: Room = {
-      name : randomName,
+      name : 'Room1 A1',
       description : 'Room Test',
       category : 'Classroom',
       floor : 1,
-      building : 'C'
+      building : 'A'
     }
-    const BUILDING_CODE = '10';
+    const BUILDING_CODE = '1';
 
     // Fill in the form fields
     cy.get('[name="name"]').type(DEFAULT_ROOM.name);
@@ -52,13 +52,13 @@ describe('CreateRoomComponent', () => {
   it('should fail to create a new room because the name is the same', () => {
     // Generate random values for name
     const DEFAULT_ROOM: Room = {
-      name : randomName,
+      name : 'Room1 A1',
       description : 'Room Test',
       category : 'Classroom',
       floor : 1,
-      building : 'C'
+      building : 'A'
     }
-    const BUILDING_CODE = '10';
+    const BUILDING_CODE = '1';
 
     // Fill in the form fields
     cy.get('[name="name"]').type(DEFAULT_ROOM.name);

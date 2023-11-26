@@ -1,12 +1,12 @@
 describe('EditBuildingComponent', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4200/building/edit');
+    cy.visit('/building/edit');
   });
   it('should edit a building', () => {
     const buildingData = {
-      code: "Qnpaj",
-      designation: 'testEdit',
-      description: 'test',
+      code: "1",
+      designation: 'A',
+      description: 'Edited building',
       length: 10,
       width: 8,
       height: 5,

@@ -6,8 +6,14 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "e2e": "cypress run"
+    "test": "ng test --configuration test",
+    "e2e": "cypress run",
+    "start-test": "ng serve --configuration test",
+    "start-prod": "ng serve --configuration production",
+    "start-dev": "ng serve --configuration development",
+    "test-test": "ng test --configuration test",
+    "test-prod": "ng test --configuration production",
+    "test-dev": "ng test --configuration development"
   },
   "private": true,
   "dependencies": {

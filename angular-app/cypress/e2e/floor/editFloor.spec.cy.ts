@@ -10,7 +10,6 @@ describe('edit floor spec', () => {
       description: "desc floor",
       floorNr: 1
     };
-    let newFloorNumber = 10;
 
     cy.get('[data-cy=designation]').click();
     cy.get(`mat-option[id="${floorData.building}"]`).click();
@@ -18,7 +17,7 @@ describe('edit floor spec', () => {
     cy.get('[data-cy=sourceFloor]').click();
     cy.get(`mat-option[id="${floorData.floorNr}"]`).click();
 
-    cy.get('[data-cy=newFloorNumber]').type(String(newFloorNumber));
+    cy.get('[data-cy=newFloorNumber]').type(String(floorData.floorNr));
     cy.get('[data-cy=description]').type(floorData.description);
     cy.intercept({
       method: 'PUT',

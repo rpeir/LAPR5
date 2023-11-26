@@ -2,11 +2,12 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { PathwayService } from './pathway.service';
 import { Pathway } from './pathway';
+import { environment } from "../../environments/environment";
 
 describe('ElevatorService', () => {
   let service: PathwayService;
   let httpTestingController: HttpTestingController;
-  let baseUrl = 'http://localhost:4000/api/pathways';
+  let baseUrl = environment.apiURL+'/api/pathways';
 
   beforeEach(() => {
     TestBed.configureTestingModule({

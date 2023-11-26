@@ -4,8 +4,8 @@ describe('Create Robot spec', () => {
   });
   it('should create a new robot', () => {
       const robotData = {
-        robotCode: '1',
-        nickName: 'test',
+        robotCode: 'TEST-code',
+        nickName: 'TEST-nick',
         robotType: 'RobotTypeA',
         serialNr:'12345',
         description: 'test robot',
@@ -168,8 +168,8 @@ describe('Create Robot spec', () => {
   });
   it('should fail if it exists a robot with the same robotCode', () => {
     const robotData = {
-      robotCode: '1',
-      nickName: 'test',
+      robotCode: 'TEST-code',
+      nickName: 'newNick',
       robotType: 'RobotTypeA',
       serialNr:'12345',
       description: 'test robot',
@@ -191,7 +191,7 @@ describe('Create Robot spec', () => {
     cy.wait('@apiCheck').then((interception) =>{
       assert.equal(interception.response.statusCode, 402);
       assert.equal(JSON.stringify(interception.response.body),
-        '"E11000 duplicate key error collection: db.robots index: robotCode_1 dup key: { robotCode: \\"1\\" }"')
+        '"E11000 duplicate key error collection: test.robots index: robotCode_1 dup key: { robotCode: \\"TEST-code\\" }"')
       })
     })
 });
