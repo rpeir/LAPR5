@@ -635,10 +635,10 @@ export default class ThumbRaiser {
         cursor = 'ns-resize';
         break;
       case 'dolly-in':
-        cursor = "url('./cursors/dolly-in_16.png') 8 8, n-resize"; // Custom cursor plus a mandatory fallback cursor in case the icon fails to load
+        cursor = "url('./assets/map-viewer/cursors/dolly-in_16.png') 8 8, n-resize"; // Custom cursor plus a mandatory fallback cursor in case the icon fails to load
         break;
       case 'dolly-out':
-        cursor = "url('./cursors/dolly-out_16.png') 8 8, s-resize"; // Custom cursor plus a mandatory fallback cursor in case the icon fails to load
+        cursor = "url('./assets/map-viewer/cursors/dolly-out_16.png') 8 8, s-resize"; // Custom cursor plus a mandatory fallback cursor in case the icon fails to load
         break;
       case 'zoom-in':
         cursor = 'zoom-in';
@@ -647,7 +647,7 @@ export default class ThumbRaiser {
         cursor = 'zoom-out';
         break;
       case 'orbit':
-        cursor = "url('./cursors/orbit_32.png') 16 16, crosshair"; // Custom cursor plus a mandatory fallback cursor in case the icon fails to load
+        cursor = "url('./assets/map-viewer/cursors/orbit_32.png') 16 16, crosshair"; // Custom cursor plus a mandatory fallback cursor in case the icon fails to load
         break;
       case 'pan':
         cursor = 'all-scroll';
