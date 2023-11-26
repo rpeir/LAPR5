@@ -100,6 +100,14 @@ create_right(Line, Column):- NextColumn is Column + 1,
 %=====================================================
 
 :-dynamic bestSolution/2.
+% to use in complexity analysis
+better_dfs1(Origin, Destination, Cost, Path):-
+get_time(Ti),
+(better_dfs(Origin,Destination);true),
+retract(bestSolution(Path,Cost)),
+get_time(Tf),
+T is Tf-Ti,
+write('Solution: '), write(T), nl.
 
 better_dfs(Origin, Destination):-
           assertz(bestSolution(_,10000)),
@@ -279,6 +287,14 @@ retractElevatorInfo():-
 %=====================================================
 %A star
 %=====================================================
+better_aStar1(Origin, Destination, Cost, Path):-
+get_time(Ti),
+(better_aStar(Origin,Destination);true),
+retract(bestSolution(Path,Cost)),
+get_time(Tf),
+T is Tf-Ti,
+write('Solution: '), write(T), nl.
+
 better_aStar(Origin, Destination):-
           assertz(bestSolution(_,10000)),
           aStar(Origin, Destination, Path, _),!,
@@ -291,8 +307,7 @@ aStar(Origin, Destination, Path, Cost):-
             aStar2(Destination, [(_,0,[Origin])], Path, Cost).
 
 aStar2(Destination, [(_,Cost,[Destination|Temp])|_], Path, Cost):-
-             reverse([Destination|Temp], Path).
-
+             reverse([Destination|Temp], Path)
 aStar2(Destination, [(_,ActualCost,ActualList)|Rest], Path, Cost):-
             ActualList = [Actual|_],
             findall((EstimatedCost,NextCost, [Next|ActualList]),
@@ -306,5 +321,3 @@ aStar2(Destination, [(_,ActualCost,ActualList)|Rest], Path, Cost):-
 estimate(cel(Line1,Column1), cel(Line2,Column2), Cost):-
             Cost is sqrt((Line1 - Line2)^2 + (Column1 - Column2)^2).
 
-%=====================================================
-getSolutionFromAstar([Result|_],Result).
