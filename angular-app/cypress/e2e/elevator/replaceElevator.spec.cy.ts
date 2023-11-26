@@ -6,8 +6,8 @@ describe('Replace Elevator spec', () => {
     const elevatorData = {
       id: "1",
       designation: 'testReplace',
-      buildingDesignation: 'A',
-      floorsServed: [1, 2, 3],
+      buildingDesignation: 'C',
+      floorsServed: [2],
       brand: 'test',
       modelE: 'test',
       serialNumber: 'test',
@@ -47,9 +47,8 @@ describe('Replace Elevator spec', () => {
   });
   it('should fail replace elevator because id is empty', () => {
     const elevatorData = {
-      id: "1",
       designation: 'test2',
-      buildingDesignation: 'A', // Replace this with the actual building designation you want to select
+      buildingDesignation: 'C', // Replace this with the actual building designation you want to select
       floorsServed: [1, 2], // Replace this with an array of floor numbers you want to select
       brand: 'test',
       modelE: 'test',

@@ -15,9 +15,9 @@ describe('CreateRoomComponent', () => {
       description : 'Room Test',
       category : 'Classroom',
       floor : 1,
-      building : 'A'
+      building : 'C'
     }
-    const BUILDING_CODE = '1';
+    const BUILDING_CODE = '10';
 
     // Fill in the form fields
     cy.get('[name="name"]').type(DEFAULT_ROOM.name);
@@ -56,9 +56,9 @@ describe('CreateRoomComponent', () => {
       description : 'Room Test',
       category : 'Classroom',
       floor : 1,
-      building : 'A'
+      building : 'C'
     }
-    const BUILDING_CODE = '1';
+    const BUILDING_CODE = '10';
 
     // Fill in the form fields
     cy.get('[name="name"]').type(DEFAULT_ROOM.name);

@@ -4,7 +4,7 @@ describe('EditBuildingComponent', () => {
   });
   it('should edit a building', () => {
     const buildingData = {
-      code: "1",
+      code: "Qnpaj",
       designation: 'testEdit',
       description: 'test',
       length: 10,
