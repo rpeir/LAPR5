@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Room } from "./room";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Room } from "./room";
 export class RoomService {
   constructor(private httpClient: HttpClient) { }
 
-  baseUrl = 'http://localhost:4000/api/rooms';
+  baseUrl = environment.apiURL + '/api/rooms';
 
   createRoom(room: Room) {
     return this.httpClient.post<Room>(this.baseUrl, room,

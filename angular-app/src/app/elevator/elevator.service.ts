@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Elevator} from "./elevator";
 import {HttpClient} from "@angular/common/http";
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +10,7 @@ export class ElevatorService {
 
         constructor(private httpClient: HttpClient) { }
 
-        private baseUrl = 'http://localhost:4000/api/elevators';
+        private baseUrl = environment.apiURL + '/api/elevators';
 
         createElevator(elevator: Elevator) {
             return this.httpClient.post<Elevator>(`${this.baseUrl}`, elevator);

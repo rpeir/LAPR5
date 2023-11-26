@@ -18,7 +18,9 @@
 
 getFloors():-
     % Open an HTTP connection and read the JSON response
-    http_open('http://localhost:4000/api/planning/floors', ResultJSON, []),
+    url(BaseURL),
+    format(atom(URL), BaseURL, ['/api/planning/floors']),
+    http_open(URL, ResultJSON, []),
     % Parse the JSON response into a Prolog term
     json_read_dict(ResultJSON, ResultValue, []),
     % Close the HTTP connection
@@ -45,7 +47,9 @@ process_Floor_json_data([BuildingObj | RestData]) :-
 
 getElevators():-
     % Open an HTTP connection and read the JSON response
-    http_open('http://localhost:4000/api/planning/elevators', ResultJSON, []),
+    url(BaseURL),
+    format(atom(URL), BaseURL, ['/api/planning/elevators']),
+    http_open(URL, ResultJSON, []),
     % Parse the JSON response into a Prolog term
     json_read_dict(ResultJSON, ResultValue, []),
     % Close the HTTP connection
@@ -73,7 +77,9 @@ process_Elevator_json_data([ElevatorObj | RestData]) :-
 
 getPathways():-
     % Open an HTTP connection and read the JSON response
-    http_open('http://localhost:4000/api/planning/pathways', ResultJSON, []),
+    url(BaseURL),
+    format(atom(URL), BaseURL, ['/api/planning/pathways']),
+    http_open(URL, ResultJSON, []),
     % Parse the JSON response into a Prolog term
     json_read_dict(ResultJSON, ResultValue, []),
     % Close the HTTP connection
@@ -101,7 +107,9 @@ process_Pathway_json_data([PathwayObj | RestData]) :-
 
 getFloorMatrix(Floor,MaxLines, MaxColumns):-
     % Construct the URL with the floor as a query parameter
-    format(atom(URL), 'http://localhost:4000/api/planning/floorPlanningMatrix?floor=~w', [Floor]),
+    url(BaseURL),
+    format(atom(PreURL), BaseURL, ['/api/planning/floorPlanningMatrix?floor=~w']),
+    format(atom(URL), PreURL, [Floor]),
     % Open an HTTP connection and read the JSON response
     http_open(URL, ResultJSON, []),
     % Parse the JSON response into a Prolog term
@@ -136,7 +144,9 @@ process_matrix_json_data(ResultValue, MaxLines, MaxColumns):-
 % =================================================
 getElevatorLocation(Floor):-
     % Construct the URL with the floor as a query parameter
-    format(atom(URL), 'http://localhost:4000/api/planning/planningElevatorLocation?floor=~w', [Floor]),
+    url(BaseURL),
+    format(atom(PreURL), BaseURL, ['/api/planning/planningElevatorLocation?floor=~w']),
+    format(atom(URL), PreURL, [Floor]),
     % Open an HTTP connection and read the JSON response
     http_open(URL, ResultJSON, []),
     % Parse the JSON response into a Prolog term
@@ -165,7 +175,9 @@ process_elevatorLocation_json_data([ElevatorLocationObj | RestData]) :-
 
 getPathwaysLocations(Floor):-
     % Construct the URL with the floor as a query parameter
-    format(atom(URL), 'http://localhost:4000/api/planning/planningPathwayLocation?floor=~w', [Floor]),
+    url(BaseURL),
+    format(atom(PreURL), BaseURL, ['/api/planning/planningPathwayLocation?floor=~w']),
+    format(atom(URL), PreURL, [Floor]),
     % Open an HTTP connection and read the JSON response
     http_open(URL, ResultJSON, []),
     % Parse the JSON response into a Prolog term
@@ -194,7 +206,9 @@ process_pathwayLocation_json_data([PathwayLocationObj | RestData]) :-
 
 getRoomsLocations(Floor):-
     % Construct the URL with the floor as a query parameter
-    format(atom(URL), 'http://localhost:4000/api/planning/planningRoomsLocation?floor=~w', [Floor]),
+    url(BaseURL),
+    format(atom(PreURL), BaseURL, ['/api/planning/planningRoomsLocation?floor=~w']),
+    format(atom(URL), PreURL, [Floor]),
     % Open an HTTP connection and read the JSON response
     http_open(URL, ResultJSON, []),
     % Parse the JSON response into a Prolog term

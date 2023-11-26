@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Robot } from "./robot";
 import { Observable } from "rxjs";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class RobotService {
 
   constructor(private httpClient: HttpClient) { }
 
-  private robotUrl = "http://localhost:4000/api/robots";
+  private robotUrl = environment.apiURL + "/api/robots";
 
   createRobot(robot: Robot): Observable<Robot> {
     return this.httpClient.post<Robot>(`${this.robotUrl}`, robot,

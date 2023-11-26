@@ -2,11 +2,12 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { FloorService } from './floor.service';
 import { Floor } from './floor';
+import { environment } from "../../environments/environment";
 
 describe('FloorService', () => {
   let service: FloorService;
   let httpTestingController: HttpTestingController;
-  let baseUrl = 'http://localhost:4000/api/floors';
+  let baseUrl = environment.apiURL+'/api/floors';
 
   beforeEach(() => {
     TestBed.configureTestingModule({

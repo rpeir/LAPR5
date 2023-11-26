@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Floor } from './floor';
 import { HttpClient } from '@angular/common/http';
 import { Building } from '../building/building';
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { Building } from '../building/building';
 export class FloorService {
   constructor(private httpClient: HttpClient) {}
 
-  private floorUrl = 'http://localhost:4000/api/floors';
+  private floorUrl = environment.apiURL + '/api/floors';
   createFloor(floor: Floor) {
     return this.httpClient.post<Floor>(`${this.floorUrl}`, floor, {
       headers: { 'Content-Type': 'application/json' },

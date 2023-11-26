@@ -4,12 +4,13 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { of, throwError } from "rxjs";
 import { RobotService } from "./robot.service";
 import { Robot } from "./robot";
+import { environment } from "../../environments/environment";
 
 describe('RobotService', () => {
   let service: RobotService;
   let httpClientSpy: HttpClient;
   let httpTestingController: HttpTestingController;
-  let baseUrl = 'http://localhost:4000/api/robots';
+  let baseUrl = environment.apiURL+'/api/robots';
 
   const DEFAULT_ROBOT : Robot = {
     nickName: 'TestRobot',

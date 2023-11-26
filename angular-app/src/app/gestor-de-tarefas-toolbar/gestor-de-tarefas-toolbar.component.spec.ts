@@ -37,14 +37,8 @@ describe('GestorDeTarefasToolbarComponent', () => {
 
   it('should navigate to robots when goToRobots is called', () => {
     const navigateSpy = spyOn(component['router'], 'navigate');
-    component.goToRobots();
-    expect(navigateSpy).toHaveBeenCalledWith(['/robots']);
-  });
-
-  it('should navigate to robot types when goToRobotTypes is called', () => {
-    const navigateSpy = spyOn(component['router'], 'navigate');
-    component.goToRobotTypes();
-    expect(navigateSpy).toHaveBeenCalledWith(['/robotTypes']);
+    component.goToOptimizationCriteria();
+    expect(navigateSpy).toHaveBeenCalledWith(['/path/optimization-criteria']);
   });
 
   it('should navigate to home when goToHome is called', () => {

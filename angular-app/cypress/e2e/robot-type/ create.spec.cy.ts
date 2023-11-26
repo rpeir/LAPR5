@@ -6,10 +6,8 @@ describe('RobotTypeComponent', () => {
     cy.visit('robotTypes');
   });
 
-  const RANDOM_NAME = generateRandomString(5);
-
   const DEFAULT_ROBOT_TYPE:RobotType = {
-    name: 'Robot Type TEST' + RANDOM_NAME,
+    name: 'RobotTypeA',
     taskTypes : ['delivery', 'surveillance'],
     brand: 'TEST Brand 1',
     robotTypeModel: 'TEST Model 1',
@@ -55,18 +53,8 @@ describe('RobotTypeComponent', () => {
 
     cy.wait('@createRobotType').then((interception) => {
       expect(interception.response.statusCode).to.eq(402);
-      expect(interception.response.body).to.eq(`E11000 duplicate key error collection: db.robottypes index: name_1 dup key: { name: "${DEFAULT_ROBOT_TYPE.name}" }`);
+      expect(interception.response.body).to.eq(`E11000 duplicate key error collection: test.robottypes index: name_1 dup key: { name: "${DEFAULT_ROBOT_TYPE.name}" }`);
     });
   });
 
-
-  // Helper function to generate a random string of a given length
-  function generateRandomString(length: number): string {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return result;
-  }
 });

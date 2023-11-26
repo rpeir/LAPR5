@@ -2,6 +2,7 @@ import * as THREE from "three";
 import Orientation from "./orientation.js";
 import ThumbRaiser from "./thumb_raiser.js";
 import "lodash";
+import { environment } from "../../../../environments/environment";
 
 let thumbRaiser;
 
@@ -31,7 +32,7 @@ export default function start() {
 
   function fetchBuildings() {
     // Replace the URL with the endpoint that provides the list of buildings
-    fetch('http://localhost:4000/api/buildings')
+    fetch(environment.apiURL+'/api/buildings')
       .then(response => response.json())
       .then(buildings => {
         const buildingSelector = document.getElementById('buildingSelector');
@@ -55,7 +56,7 @@ export default function start() {
   }
   function fetchFloorsOfBuilding(buildingDesignation) {
     // Replace the URL with the endpoint that provides the list of floors for the selected building
-    fetch(`http://localhost:4000/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`)
+    fetch(environment.apiURL+`/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`)
       .then(response => response.json())
       .then(floors => {
         const floorMapSelector = document.getElementById('mapSelector');
