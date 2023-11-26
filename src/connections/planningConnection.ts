@@ -2,7 +2,7 @@ import IPlanningConnection from "./IConnections/IPlanningConnection";
 import { Service } from "typedi";
 import { Result } from "../core/logic/Result";
 import { IPathDTO } from "../dto/IPathDTO";
-
+import config from "../../config";
 
 @Service()
 export default class PlanningConnection implements IPlanningConnection {
@@ -10,8 +10,8 @@ export default class PlanningConnection implements IPlanningConnection {
     const http = require("http");
     const options = {
       method: "GET",
-      host: "localhost",
-      port: 5000,
+      host: config.planningHost,
+      port: config.planningPort,
       path: "/path/lessBuildings?floorSource=" + floorSource + "&floorDestination=" + floorDestination
     };
 
@@ -50,8 +50,8 @@ export default class PlanningConnection implements IPlanningConnection {
     const http = require("http");
     const options = {
       method: "GET",
-      host: "localhost",
-      port: 5000,
+      host: config.planningHost,
+      port: config.planningPort,
       path: "/path/lessElevators?floorSource=" + floorSource + "&floorDestination=" + floorDestination
     };
 
@@ -90,8 +90,8 @@ export default class PlanningConnection implements IPlanningConnection {
     const http = require("http");
     const options = {
       method: "GET",
-      host: "localhost",
-      port: 5000,
+      host: config.planningHost,
+      port: config.planningPort,
       path: "/path/roomToRoomLessBuildings?floorSource=" + floorSource
         + "&floorDestination=" + floorDestination
         + "&roomSource=" + roomSource
@@ -132,8 +132,8 @@ export default class PlanningConnection implements IPlanningConnection {
     const http = require("http");
     const options = {
       method: "GET",
-      host: "localhost",
-      port: 5000,
+      host: config.planningHost,
+      port: config.planningPort,
       path: "/path/roomToRoomLessElevators?floorSource=" + floorSource
         + "&floorDestination=" + floorDestination
         + "&roomSource=" + roomSource

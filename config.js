@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
 
 // Set the NODE_ENV to 'development' by default
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+process.env.NODE_ENV = process.env.NODE_ENV || 'deployment';
 
-const envFound = dotenv.config();
+const envFound = dotenv.config({path: `.env.${process.env.NODE_ENV}`});
 if (!envFound) {
   // This error should crash whole process
 
@@ -32,6 +32,16 @@ export default {
   logs: {
     level: process.env.LOG_LEVEL || 'info',
   },
+
+  /**
+   * Port of planning server
+   */
+  planningPort: parseInt(process.env.PLANNING_PORT, 10) || 5000,
+
+  /**
+   * Host of planning server
+   */
+  planningHost: process.env.PLANNING_HOST || 'localhost',
 
   /**
    * API configs
