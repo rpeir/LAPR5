@@ -1230,7 +1230,7 @@ export default class ThumbRaiser {
     // Set the final action
     //this.animations.fadeToAction("Dance", 0.2);
     // Stop the introduction clip and play dance and end clips
-    this.audio.stop(this.audio.introductionClips);
+    //this.audio.stop(this.audio.introductionClips);
     this.audio.play(this.audio.danceClips, false);
     this.audio.play(this.audio.endClips, false);
   }
@@ -1241,8 +1241,8 @@ export default class ThumbRaiser {
         // If all resources have been loaded
         // Add positional audio sources to objects
         const types = [
-          this.audio.introductionClips,
-          this.audio.idleClips,
+          //this.audio.introductionClips,
+          //this.audio.idleClips,
           this.audio.jumpClips,
           this.audio.deathClips,
           this.audio.danceClips,
@@ -1369,7 +1369,7 @@ export default class ThumbRaiser {
         this.clock = new THREE.Clock();
 
         // Play an introduction clip
-        this.audio.play(this.audio.introductionClips, false);
+        //this.audio.play(this.audio.introductionClips, false);
 
         // Start the game
         this.gameRunning = true;
@@ -1442,7 +1442,7 @@ export default class ThumbRaiser {
             } else {
               if (this.animations.idleTimeOut()) {
                 this.animations.resetIdleTime();
-                this.audio.play(this.audio.idleClips, false);
+                //this.audio.play(this.audio.idleClips, false);
               }
               this.animations.fadeToAction(
                 'animation.robot-runner.idle',
