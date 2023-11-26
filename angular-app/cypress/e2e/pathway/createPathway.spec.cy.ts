@@ -5,16 +5,18 @@ describe('Create Pathway Component', () => {
     cy.visit("pathways/create");
   });
   const DEFAULT_PATHWAY: Pathway = {
-    buildingSource: "A",
-    buildingDestination: "teste",
-    floorSource: 1,
-    floorDestination: 1,
+    buildingSource: "C",
+    buildingDestination: "B",
+    floorSource: 2,
+    floorDestination: 10,
     description: 'Pathway description',
   }
   it('should create a pathway with all parameters', () => {
     // Fill in the form fields
-    cy.get('[name="buildingSource"]').click().get(`mat-option[id="${DEFAULT_PATHWAY.buildingSource}"]`).click();
-    cy.get('[name="buildingDestination"]').click().get(`mat-option[id="${DEFAULT_PATHWAY.buildingDestination}"]`).click()
+    cy.get('[name="buildingSource"]').click()
+    cy.get(`mat-option[id="${DEFAULT_PATHWAY.buildingSource}"]`).click();
+    cy.get('[name="buildingDestination"]').click()
+      cy.get(`mat-option[id="${DEFAULT_PATHWAY.buildingDestination}"]`).click()
     cy.wait(1000)
     cy.get('[name="floorSource"]').click().get(`mat-option[id=${DEFAULT_PATHWAY.floorSource}]`).click();
     cy.get('[name="floorDestination"]').click().get(`mat-option[id=${DEFAULT_PATHWAY.floorDestination}]`).click();
@@ -27,7 +29,7 @@ describe('Create Pathway Component', () => {
     cy.get('input[value=create]').click();
 
     cy.wait('@apiCheck').then((interception) =>{
-      assert.equal(interception.response.statusCode, 200);
+      assert.equal(interception.response.statusCode, 201);
       assert.equal(JSON.stringify({...interception.response.body,domainId: undefined}), JSON.stringify({
 
         ...DEFAULT_PATHWAY,
@@ -53,7 +55,6 @@ describe('Create Pathway Component', () => {
         "error":"Bad Request","message":"\"buildingSource\" is required"
       }))
     })
-
     // Check if the building is not updated
     cy.on('window.alert', (message) => {
       expect(message).to.equal(
