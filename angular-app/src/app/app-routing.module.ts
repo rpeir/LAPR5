@@ -34,6 +34,9 @@ import { EditComponent as PathwayEditComponent } from './pathway/edit/edit.compo
 import { ListBetweenBuildingsComponent } from './pathway/list-between-buildings/list-between-buildings.component';
 import { EditFloorComponent } from './floor/edit/edit-floor.component';
 import { UploadMapComponent } from './floor/upload-map/upload-map.component';
+import {
+  GetByOptimizationCriteriaComponent
+} from "./path/get-by-optimization-criteria/get-by-optimization-criteria.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -66,11 +69,12 @@ const routes: Routes = [
   { path: 'elevator/create', component: ElevatorCreateComponent },
   { path: 'elevator/update', component: ElevatorUpdateComponent },
   { path: 'elevator/replace', component: ElevatorReplaceComponent },
-  //{ path: 'map-viewer', component: MapViewerComponent },
+  { path: 'map-viewer', component: MapViewerComponent },
   { path: 'rooms/create', component: RoomCreateComponent },
   { path: 'elevator/list-all-elevators', component: ElevatorListAllComponent },
   { path: 'floors/upload-map', component: UploadMapComponent },
-  { path: 'map-viewer', loadChildren: () => import('./lazyLoadTest/Modules/map-viewer-lazy/map-viewer-lazy.module').then(m => m.MapViewerLazyModule) },
+  //{ path: 'map-viewer', loadChildren: () => import('./lazyLoadTest/Modules/map-viewer-lazy/map-viewer-lazy.module').then(m => m.MapViewerLazyModule) },
+  { path: 'path/optimization-criteria', component: GetByOptimizationCriteriaComponent}
 ];
 
 @NgModule({

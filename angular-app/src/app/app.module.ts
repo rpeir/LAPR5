@@ -65,6 +65,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EditFloorComponent } from './floor/edit/edit-floor.component';
 import { GestorDeFrotaToolbarComponent } from './gestor-de-frota-toolbar/gestor-de-frota-toolbar.component';
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { GestorDeTarefasToolbarComponent } from './gestor-de-tarefas-toolbar/gestor-de-tarefas-toolbar.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
     LoginComponent,
     GestorDeFrotaComponent,
     GestorDeCampusComponent,
-    //MapViewerComponent,
+    MapViewerComponent,
     CreateComponent,
     EditComponent,
     ListAllComponent,
@@ -117,7 +118,8 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
     ListOfBuildingWithPathwayComponent,
     PathwayEditComponent,
     EditFloorComponent,
-    GestorDeFrotaToolbarComponent
+    GestorDeFrotaToolbarComponent,
+    GestorDeTarefasToolbarComponent
   ],
   imports: [
     BrowserModule,
