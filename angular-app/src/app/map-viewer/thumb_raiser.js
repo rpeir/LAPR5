@@ -536,6 +536,20 @@ export default class ThumbRaiser {
     this.buildCreditsPanel();
   }
 
+  // TODO alter the maze (e.g. change the floor map) after the game has started --> took onload event dedicated function to an isolated function to be able to reuse it - loadMap
+  changeMaze(floorMap) {
+    //this.maze.setNewMaze(floorMap);
+    this.scene.remove(this.maze);
+    this.mazeParameters = {
+      mazeDescription: floorMap,
+      helpersColor: new THREE.Color(0xff0077),
+    };
+    this.maze = new Maze(this.mazeParameters);
+    this.maze.loadMap(floorMap);
+    this.player.position.copy(this.maze.cellToCartesian(floorMap.player.initialPosition));
+    this.scene.add(this.maze);
+  }
+
   buildHelpPanels() {
     // Mouse help panel is static; so, it doesn't need to be built
 
