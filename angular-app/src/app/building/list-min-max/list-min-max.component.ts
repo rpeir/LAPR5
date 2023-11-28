@@ -9,14 +9,14 @@ import { Building } from '../building';
   styleUrls: ['./list-min-max.component.css'],
 })
 export class ListMinMaxComponent {
-  constructor(private createFloorService: FloorService, private location: Location) {}
+  constructor(private floorService: FloorService, private location: Location) {}
 
   min: any;
   max: any;
   buildings: Building[] | any;
 
   getBuildingFloorMaxMin() {
-    this.createFloorService.getBuildingFloorMaxMin(this.max, this.min).subscribe({
+    this.floorService.getBuildingFloorMaxMin(this.max, this.min).subscribe({
       next: data => {
         this.buildings = data;
       },

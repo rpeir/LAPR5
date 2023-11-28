@@ -1,14 +1,14 @@
-import {response} from "express";
+import { response } from 'express';
 
 describe('edit floor spec', () => {
   beforeEach(() => {
     cy.visit('floors/edit');
   });
-  it('should edit a floor',()=> {
+  it('should edit a floor', () => {
     const floorData = {
-      building: "B",
-      description: "desc floor",
-      floorNr: 1
+      building: 'B',
+      description: 'desc floor',
+      floorNr: 1,
     };
 
     cy.get('[data-cy=designation]').click();
@@ -21,11 +21,11 @@ describe('edit floor spec', () => {
     cy.get('[data-cy=description]').type(floorData.description);
     cy.intercept({
       method: 'PUT',
-      url: '**/api/floors'
-    }).as('apiCheck')
+      url: '**/api/floors',
+    }).as('apiCheck');
     cy.get('[data-cy=editFloor]').click();
 
-    cy.wait('@apiCheck').then((interception) => {
+    cy.wait('@apiCheck').then(interception => {
       assert.equal(interception.response.statusCode, 200);
     });
   });

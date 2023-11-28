@@ -45,7 +45,6 @@ export default function start() {
   async function changeMap() {
     const mapSelector = document.getElementById('mapSelector');
     const selectedMap = mapSelector.value;
-    console.log(floorsOfBuilding);
     try {
       if (!floorsOfBuilding || floorsOfBuilding.length === 0) {
         //console.error('No floors available for the selected building.');
@@ -55,11 +54,7 @@ export default function start() {
       const fetchedMap = await fetchAndSetMap(selectedMap);
       // Call initialize only if the map is successfully fetched
       if (fetchedMap) {
-        //TODO: change maze map before initializing, check if changeMaze works
         thumbRaiser.changeMaze(fetchedMap);
-        //TODO: check if initialize and animate are needed here and wether map change works -> not needed
-        //initialize();
-        //animate();
       } else {
         console.error('Error fetching map.');
       }
@@ -403,7 +398,6 @@ export default function start() {
       }, // Mini-map view camera parameters
     );
   }
-  //TODO : check if the function calls are in the right place
   function animate() {
     requestAnimationFrame(animate);
     // Update the game
