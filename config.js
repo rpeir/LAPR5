@@ -41,7 +41,7 @@ export default {
   /**
    * Host of planning server
    */
-  planningHost: process.env.PLANNING_HOST || 'http://vs1141.dei.isep.ipp.pt:5000',
+  planningHost: process.env.PLANNING_HOST || 'vs1141.dei.isep.ipp.pt',
 
   /**
    * API configs
