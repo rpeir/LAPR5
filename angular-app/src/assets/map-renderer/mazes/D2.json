@@ -1,0 +1,480 @@
+{
+  "maze": {
+    "size": {
+      "width": 12,
+      "depth": 20
+    },
+    "map": [
+      [
+        3,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        2,
+        2,
+        2,
+        1,
+        0,
+        3,
+        2,
+        2,
+        2,
+        2,
+        2,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        3,
+        2,
+        2,
+        2,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        3,
+        2,
+        2,
+        2,
+        1,
+        0,
+        2,
+        2,
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        3,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        0
+      ]
+    ],
+    "rooms": [
+      {
+        "roomId": "D201",
+        "position": [
+          4.5,
+          4
+        ],
+        "size": {
+          "width": 4,
+          "height": 4
+        }
+      },
+      {
+        "roomId": "D202",
+        "position": [
+          10,
+          7.3
+        ],
+        "size": {
+          "width": 6,
+          "height": 10
+        }
+      },
+      {
+        "roomId": "D203",
+        "position": [
+          10,
+          4
+        ],
+        "size": {
+          "width": 4,
+          "height": 6
+        }
+      },
+      {
+        "roomId": "D204",
+        "position": [
+          14.5,
+          8.5
+        ],
+        "size": {
+          "width": 4,
+          "height": 4
+        }
+      },
+      {
+        "roomId": "D205",
+        "position": [
+          14.5,
+          3.5
+        ],
+        "size": {
+          "width": 4,
+          "height": 8
+        }
+      },
+      {
+        "roomId": "D206",
+        "position": [
+          17,
+          6,
+          2
+        ],
+        "size": {
+          "width": 4,
+          "height": 8
+        }
+      }
+    ],
+    "elevators": [
+      1,
+      1
+    ]
+  },
+
+    "ground": {
+      "size": { "width": 12.0, "height": 0.0625, "depth": 20.0 },
+      "segments": { "width": 12, "height": 1, "depth": 20 },
+      "primaryColor": "0xffffff",
+      "maps": {
+        "color": {
+          "url": "./assets/map-renderer/textures/ground_0003_2k_372HqZ/ground_0003_color_2k.jpg"
+        },
+        "ao": {
+          "url": "./assets/map-renderer//textures/ground_0003_2k_372HqZ/ground_0003_ao_2k.jpg",
+          "intensity": 1.0
+        },
+        "displacement": {
+          "url": "./assets/map-renderer/textures/ground_0003_2k_372HqZ/ground_0003_height_2k.png",
+          "scale": 1.0,
+          "bias": -0.53
+        },
+        "normal": {
+          "url": "./assets/map-renderer/textures/ground_0003_2k_372HqZ/ground_0003_normal_opengl_2k.png",
+          "type": 0,
+          "scale": { "x": 2.0, "y": 2.0 }
+        },
+        "bump": {
+          "url": "",
+          "scale": 1.0
+        },
+        "roughness": {
+          "url": "./assets/map-renderer/textures/ground_0003_2k_372HqZ/ground_0003_roughness_2k.jpg",
+          "rough": 1.0
+        }
+      },
+      "wrapS": 1,
+      "wrapT": 1,
+      "repeat": { "u": 4.0, "v": 4.0 },
+      "magFilter": 1,
+      "minFilter": 5,
+      "secondaryColor": "0x858585"
+    },
+    "wall": {
+      "segments": { "width": 16, "height": 16 },
+      "primaryColor": "0xffffff",
+      "maps": {
+        "color": {
+          "url": "./assets/map-renderer/textures/concrete_0007_2k_xtGY5J/concrete_0007_color_2k.jpg"
+        },
+        "ao": {
+          "url": "./assets/map-renderer/textures/concrete_0007_2k_xtGY5J/concrete_0007_ao_2k.jpg",
+          "intensity": 1.0
+        },
+        "displacement": {
+          "url": "./map-renderer/assets/textures/concrete_0007_2k_xtGY5J/concrete_0007_height_2k.png",
+          "scale": 0.5,
+          "bias": -0.25
+        },
+        "normal": {
+          "url": "./assets/map-renderer/textures/concrete_0007_2k_xtGY5J/concrete_0007_normal_opengl_2k.png",
+          "type": 0,
+          "scale": { "x": 2.0, "y": 2.0 }
+        },
+        "bump": {
+          "url": "",
+          "scale": 1.0
+        },
+        "roughness": {
+          "url": "./assets/map-renderer/textures/concrete_0007_2k_xtGY5J/concrete_0007_roughness_2k.jpg",
+          "rough": 1.0
+        }
+      },
+      "wrapS": 1,
+      "wrapT": 0,
+      "repeat": { "u": 2.0, "v": 1.0 },
+      "magFilter": 1,
+      "minFilter": 5,
+      "secondaryColor": "0x6b554b"
+    },
+    "player": {
+      "initialPosition": [0.0, 6.0],
+      "initialDirection": 90.0
+    }
+  }
+}
+
