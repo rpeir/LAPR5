@@ -66,7 +66,10 @@ import { EditFloorComponent } from './floor/edit/edit-floor.component';
 import { GestorDeFrotaToolbarComponent } from './gestor-de-frota-toolbar/gestor-de-frota-toolbar.component';
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { GestorDeTarefasToolbarComponent } from './gestor-de-tarefas-toolbar/gestor-de-tarefas-toolbar.component';
-
+import { AdministradorDeSistemaComponent} from './administrador-de-sistema/administrador-de-sistema.component';
+import {
+  AdministradorDeSistemaToolbarComponent
+} from "./administrador-de-sistema-toolbar/administrador-de-sistema-toolbar.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -119,7 +122,8 @@ import { GestorDeTarefasToolbarComponent } from './gestor-de-tarefas-toolbar/ges
     PathwayEditComponent,
     EditFloorComponent,
     GestorDeFrotaToolbarComponent,
-    GestorDeTarefasToolbarComponent
+    GestorDeTarefasToolbarComponent,
+    AdministradorDeSistemaComponent,AdministradorDeSistemaToolbarComponent
   ],
   imports: [
     BrowserModule,

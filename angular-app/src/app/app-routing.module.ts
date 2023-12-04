@@ -37,7 +37,7 @@ import { UploadMapComponent } from './floor/upload-map/upload-map.component';
 import {
   GetByOptimizationCriteriaComponent
 } from "./path/get-by-optimization-criteria/get-by-optimization-criteria.component";
-
+import { AdministradorDeSistemaComponent } from './administrador-de-sistema/administrador-de-sistema.component';
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'buildings', component: BuildingComponent },
@@ -74,7 +74,8 @@ const routes: Routes = [
   { path: 'elevator/list-all-elevators', component: ElevatorListAllComponent },
   { path: 'floors/upload-map', component: UploadMapComponent },
   //{ path: 'map-viewer', loadChildren: () => import('./lazyLoadTest/Modules/map-viewer-lazy/map-viewer-lazy.module').then(m => m.MapViewerLazyModule) },
-  { path: 'path/optimization-criteria', component: GetByOptimizationCriteriaComponent}
+  { path: 'path/optimization-criteria', component: GetByOptimizationCriteriaComponent},
+  { path: 'administrador-de-sistema', component: AdministradorDeSistemaComponent}
 ];
 
 @NgModule({
