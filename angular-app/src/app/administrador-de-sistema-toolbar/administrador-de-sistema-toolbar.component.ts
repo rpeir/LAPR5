@@ -21,4 +21,8 @@ export class AdministradorDeSistemaToolbarComponent {
   goToCreateUserOption() {
     this.router.navigate(["/administrador-de-sistema/create-user"]);
   }
+
+  goToCreateManagerOption() {
+    this.router.navigate(["/administrador-de-sistema/create-manager"]);
+  }
 }

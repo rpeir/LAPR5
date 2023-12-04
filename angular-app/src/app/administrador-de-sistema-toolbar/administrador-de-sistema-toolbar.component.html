@@ -3,9 +3,15 @@
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #administradorSistemaMenu="matMenu">
-    <button id="create-user-option" mat-menu-item (click)="goToCreateUserOption()">
-      <span>Create User</span>
+    <button id="create-manager-option" mat-menu-item (click)="goToCreateManagerOption()">
+      <span>Create Manager</span>
     </button>
+
+    <button id="create-user-option" mat-menu-item (click)="goToCreateUserOption()">
+      <span>Register User</span>
+    </button>
+
+
   </mat-menu>
 
   <span>Welcome, {{userName}}!</span>
