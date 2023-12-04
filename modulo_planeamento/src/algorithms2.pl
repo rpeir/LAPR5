@@ -206,9 +206,7 @@ startPath(Source,Destination,[pathW(FloorSource, FloorDestination)|OtherPath],Re
             continuePathFromPathway(FloorDestination,Destination,OtherPath,[TempPath], Result).
 
 startPath(Source,Destination,[elev(FloorSource, FloorDestination)|OtherPath],Result):-
-            getFloorMatrix(FloorSource),
-            getElevatorLocation(FloorSource),
-            getRoomsLocations(FloorSource),
+            prepareElevatorInfo(FloorSource),
             findPathFromRoomToElevator(Source,FloorDestination,TempPath),
             retractElevatorInfo(),
             continuePathFromElevator(FloorDestination,Destination,OtherPath,[TempPath], Result).
