@@ -23,6 +23,6 @@ export class GestorDeFrotaToolbarComponent {
   }
 
   goToHome() {
-    this.router.navigate(["/gestor-de-frota"]);
+    this.router.navigate(["/fleet-manager"]);
   }
 }

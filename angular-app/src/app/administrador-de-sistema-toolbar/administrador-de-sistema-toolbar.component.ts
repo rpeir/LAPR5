@@ -15,14 +15,17 @@ export class AdministradorDeSistemaToolbarComponent {
   }
 
   goToHome() {
-    this.router.navigate(["/administrador-de-sistema"]);
+    this.router.navigate(["/system-administrator"]);
   }
 
   goToCreateUserOption() {
-    this.router.navigate(["/administrador-de-sistema/create-user"]);
+    this.router.navigate(["/system-administrator/create-user"]);
   }
 
   goToCreateManagerOption() {
-    this.router.navigate(["/administrador-de-sistema/create-manager"]);
+    this.router.navigate(["/system-administrator/create-manager"]);
+  }
+  goToRegisterUserOption() {
+    this.router.navigate(["/system-administrator/register-user"]);
   }
 }

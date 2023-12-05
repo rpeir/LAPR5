@@ -10,23 +10,23 @@ export class LoginComponent {
   constructor(private router: Router) {}
 
   goToGestorDeCampus() {
-    this.router.navigate(['/gestor-de-campus']);
+    this.router.navigate(['/campus-manager']);
   }
 
   goToGestorDeFrota() {
-    this.router.navigate(['/gestor-de-frota']);
+    this.router.navigate(['/fleet-manager']);
   }
 
   goToUtente() {
-    this.router.navigate(['/utente']);
+    this.router.navigate(['/user']);
   }
 
   goToAdministratorDeSistema() {
-    this.router.navigate(['/administrador-de-sistema']);
+    this.router.navigate(['/system-administrator']);
   }
 
   goToGestorDeTarefas() {
-    this.router.navigate(['/gestor-de-tarefas']);
+    this.router.navigate(['/task-manager']);
   }
 
   goToMapViewer() {

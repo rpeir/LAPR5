@@ -20,7 +20,12 @@ export class FloorMapper extends Mapper<Floor> {
       building: floor.building.designation,
       description: floor.description,
       floorNr: floor.floorNr,
-      floorMap: {maze: floor.floorMap.maze, ground: floor.floorMap.ground, player: floor.floorMap.player, wall: floor.floorMap.wall},
+      floorMap: {
+        maze: floor.floorMap.maze,
+        ground: floor.floorMap.ground,
+        player: floor.floorMap.player,
+        wall: floor.floorMap.wall,
+      },
     } as IFloorDTO;
   }
 
