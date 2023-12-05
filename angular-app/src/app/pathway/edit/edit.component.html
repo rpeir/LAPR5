@@ -13,52 +13,54 @@
       <form (ngSubmit)="editPathway()">
 
         <mat-form-field class="full-width">
-          <mat-label>Pathway ID</mat-label>
-          <input matInput [(ngModel)]="pathway.domainId" name="id" required>
+          <mat-label>Select a Pathway</mat-label>
+          <mat-select [(ngModel)]="pathway" name="select-pathway" (ngModelChange)="onPathwayChange($event)" required>
+            <mat-option id="{{pathway.description}}" *ngFor="let pathway of pathways" [value]="pathway" [matTooltip]= "getPathwayInfo(pathway)">
+              {{pathway.description}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
 
 
-        <mat-form-field class="full-width">
+        <mat-form-field class="full-width" *ngIf="pathway">
           <mat-label>Select a source building</mat-label>
-          <mat-select [(ngModel)]="pathway.buildingSource" name="buildingSource" (ngModelChange)="listFloorsOfBuildingSource($event)">
-            <mat-option [value]="">Cancel</mat-option>
+          <mat-select [(ngModel)]="pathway.buildingSource" name="buildingSource" (ngModelChange)="listFloorsOfBuildingSource($event)" required>
             <mat-option id="{{building.designation}}" *ngFor="let building of buildings" [value]="building.designation" [matTooltip]= "getBuildingInfo(building)">
               {{building.designation}}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="full-width">
+        <mat-form-field class="full-width" *ngIf="pathway">
           <mat-label>Select a building destination</mat-label>
-          <mat-select [(ngModel)]="pathway.buildingDestination" name="buildingDestination" (ngModelChange)="listFloorsOfBuildingDestination($event)">
-            <mat-option>Cancel</mat-option>
+          <mat-select [(ngModel)]="pathway.buildingDestination" name="buildingDestination" (ngModelChange)="listFloorsOfBuildingDestination($event)" required>
             <mat-option id="{{building.designation}}" *ngFor="let building of buildings" [value]="building.designation" [matTooltip]= "getBuildingInfo(building)">
               {{building.designation}}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="full-width">
+        <mat-form-field class="full-width" *ngIf="pathway">
           <mat-label>Select a source Floor</mat-label>
-          <mat-select [(ngModel)]="pathway.floorSource" name="floorSource">
+          <mat-select [(ngModel)]="pathway.floorSource" name="floorSource" required>
             <mat-option id="{{floor.floorNr}}" *ngFor="let floor of floorsSource" [value]="floor.floorNr" [matTooltip]= "getFloorInfo(floor)">
               {{floor.floorNr}}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="full-width">
+        <mat-form-field class="full-width" *ngIf="pathway">
           <mat-label>Select a source Floor</mat-label>
-          <mat-select [(ngModel)]="pathway.floorDestination" name="floorDestination">
+          <mat-select [(ngModel)]="pathway.floorDestination" name="floorDestination" required>
             <mat-option id="{{floor.floorNr}}" *ngFor="let floor of floorsDestination" [value]="floor.floorNr" [matTooltip]= "getFloorInfo(floor)">
               {{floor.floorNr}}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="full-width">
+        <mat-form-field class="full-width" *ngIf="pathway">
           <mat-label>Pathway description</mat-label>
-          <input matInput [(ngModel)]="pathway.description" name="description" placeholder="Max 250 characters">
+          <input matInput [(ngModel)]="pathway.description" name="description" placeholder="Max 250 characters" required>
         </mat-form-field>
 
         <div>
