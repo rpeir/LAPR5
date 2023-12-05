@@ -163,7 +163,7 @@ process_elevatorLocation_json_data([ElevatorLocationObj | RestData]) :-
     get_dict(column, ElevatorLocationObj, Column),
     get_dict(line, ElevatorLocationObj, Line),
     % Create elevatorLocation fact with the extracted data
-    E = elevatorLocation(Floor, Column, Line),
+    E = elevatorLocation(Floor, Line, Column),
         assert(E),
     % Recursively process the rest of the JSON data
     process_elevatorLocation_json_data(RestData).

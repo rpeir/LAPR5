@@ -102,12 +102,12 @@ create_right(Line, Column):- NextColumn is Column + 1,
 :-dynamic bestSolution/2.
 % to use in complexity analysis
 better_dfs1(Origin, Destination, Cost, Path):-
-get_time(Ti),
+%get_time(Ti),
 (better_dfs(Origin,Destination);true),
-retract(bestSolution(Path,Cost)),
-get_time(Tf),
-T is Tf-Ti,
-write('Solution: '), write(T), nl.
+retract(bestSolution(Path,Cost)).
+%get_time(Tf),
+%T is Tf-Ti,
+%write('Solution: '), write(T), nl.
 
 better_dfs(Origin, Destination):-
           assertz(bestSolution(_,10000)),
@@ -207,7 +207,7 @@ startPath(Source,Destination,[pathW(FloorSource, FloorDestination)|OtherPath],Re
 
 startPath(Source,Destination,[elev(FloorSource, FloorDestination)|OtherPath],Result):-
             prepareElevatorInfo(FloorSource),
-            findPathFromRoomToElevator(Source,FloorDestination,TempPath),
+            findPathFromRoomToElevator(Source,FloorSource,TempPath),
             retractElevatorInfo(),
             continuePathFromElevator(FloorDestination,Destination,OtherPath,[TempPath], Result).
 
@@ -219,8 +219,10 @@ continuePathFromElevator(FloorSource,Destination,[],TempResult, Result):-
 
 continuePathFromElevator(FloorSource,Destination,[pathW(FloorSource, FloorDestination)|OtherPath],TempResult, Result):-
             prepareElevatorInfo(FloorSource),
+            getPathwaysLocations(FloorSource),
             findPathFromElevatorToPathway(FloorSource,FloorDestination,TempPath),
             retractElevatorInfo(),
+            retractall(pathwayLocation(_,_,_,_)),
             continuePathFromPathway(FloorDestination,Destination,OtherPath,[TempPath|TempResult], Result).
 
 continuePathFromElevator(FloorSource,Destination,[elev(FloorSource, FloorDestination)|OtherPath],TempResult, Result):-
@@ -243,8 +245,10 @@ continuePathFromPathway(FloorSource,Destination,[pathW(FloorSource, FloorDestina
 
 continuePathFromPathway(FloorSource,Destination,[elev(FloorSource, FloorDestination)|OtherPath],TempResult, Result):-
             preparePathwayInfo(FloorSource),
+            getRoomsLocations(FloorSource),
             findPathFromPathwayToElevator(FloorSource,FloorDestination,TempPath),
             retractPathwayInfo(),
+            retractall(elevatorLocation(_,_,_)),
             continuePathFromElevator(FloorDestination,Destination,OtherPath,[TempPath|TempResult], Result).
 
 
