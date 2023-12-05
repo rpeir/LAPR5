@@ -48,7 +48,6 @@ import { CreatePathway } from './pathway/create/create-pathway';
 import { ElevatorCreateComponent } from './elevator/create/create.component';
 import { ElevatorUpdateComponent } from './elevator/update/update.component';
 import { GestorDeCampusToolbarComponent } from './gestor-de-campus-toolbar/gestor-de-campus-toolbar.component';
-import { ElevatorReplaceComponent } from './elevator/replace/replace.component';
 import { CreateComponent as RoomCreateComponent } from './room/create/create.component';
 import { BuildingToolBarComponent } from './building/building-tool-bar/building-tool-bar.component';
 import { ElevatorToolBarComponent } from './elevator/elevator-tool-bar/elevator-tool-bar.component';
@@ -108,7 +107,6 @@ import {
     ElevatorCreateComponent,
     ElevatorUpdateComponent,
     GestorDeCampusToolbarComponent,
-    ElevatorReplaceComponent,
     RoomCreateComponent,
     BuildingToolBarComponent,
     ElevatorToolBarComponent,
