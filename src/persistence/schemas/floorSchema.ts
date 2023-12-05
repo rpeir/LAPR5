@@ -26,7 +26,7 @@ const floorMapSchema = new mongoose.Schema(
           location: [Number],
         },
       ],
-      elevators: [[Number]],
+      elevators: [Number],
       exitLocation: [
         {
           floorId: String,

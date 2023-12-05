@@ -21,7 +21,7 @@ interface FloorMapProps {
       label: string;
       location: number[];
     }[];
-    elevators: [number, number][];
+    elevators: [number, number];
     exitLocation: {
       floorId: string;
       location: number[];
@@ -132,8 +132,6 @@ interface FloorMapProps {
 }
 
 export class FloorMapStructure extends ValueObject<FloorMapProps> {
-
-
   get maze(): {
     size: {
       width: number;
@@ -152,7 +150,7 @@ export class FloorMapStructure extends ValueObject<FloorMapProps> {
       label: string;
       location: number[];
     }[];
-    elevators: [number, number][];
+    elevators: [number, number];
     exitLocation: {
       floorId: string;
       location: number[];
@@ -271,7 +269,6 @@ export class FloorMapStructure extends ValueObject<FloorMapProps> {
   } {
     return this.props.player;
   }
-
 
   private constructor(props: FloorMapProps) {
     super(props);
