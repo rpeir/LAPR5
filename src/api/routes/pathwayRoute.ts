@@ -24,6 +24,11 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.createPathway(req, res, next)
   );
+
+  route.get('',
+    (req, res, next) => ctrl.findAll(req, res, next)
+  );
+
   route.get('',
     celebrate({
       query: {
@@ -33,6 +38,7 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.listPathways(req, res, next)
   );
+
 
   route.put('',
     celebrate({

@@ -5,4 +5,5 @@ export default interface IPathwayController {
   listPathways(req: Request, res: Response, next: NextFunction);
   replacePathway(req: Request, res: Response, next: NextFunction);
   updatePathway(req: Request, res: Response, next: NextFunction);
+  findAll(req: Request, res: Response, next: NextFunction);
 }
