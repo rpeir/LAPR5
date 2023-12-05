@@ -39,6 +39,6 @@ export class GestorDeCampusToolbarComponent {
   }
 
   goToHome() {
-    this.router.navigate(["/gestor-de-campus"]);
+    this.router.navigate(["/campus-manager"]);
   }
 }

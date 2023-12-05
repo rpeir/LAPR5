@@ -70,6 +70,7 @@ import { AdministradorDeSistemaComponent} from './administrador-de-sistema/admin
 import {
   AdministradorDeSistemaToolbarComponent
 } from "./administrador-de-sistema-toolbar/administrador-de-sistema-toolbar.component";
+import { CreateManagerComponent } from "./user/create-manager/create-manager.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -123,7 +124,8 @@ import {
     EditFloorComponent,
     GestorDeFrotaToolbarComponent,
     GestorDeTarefasToolbarComponent,
-    AdministradorDeSistemaComponent,AdministradorDeSistemaToolbarComponent
+    AdministradorDeSistemaComponent,AdministradorDeSistemaToolbarComponent,
+    CreateManagerComponent
   ],
   imports: [
     BrowserModule,
