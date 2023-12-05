@@ -19,6 +19,6 @@ export class GestorDeTarefasToolbarComponent {
   }
 
   goToHome() {
-    this.router.navigate(["/gestor-de-tarefas"]);
+    this.router.navigate(["/task-manager"]);
   }
 }

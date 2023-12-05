@@ -37,6 +37,11 @@ import {
   GetByOptimizationCriteriaComponent
 } from "./path/get-by-optimization-criteria/get-by-optimization-criteria.component";
 import { AdministradorDeSistemaComponent } from './administrador-de-sistema/administrador-de-sistema.component';
+import {CreateManagerComponent} from "./user/create-manager/create-manager.component";
+
+
+
+
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'buildings', component: BuildingComponent },
@@ -58,9 +63,9 @@ const routes: Routes = [
   { path: 'robotTypes', component: RobotTypeComponent },
   { path: 'tasks', component: TaskComponent },
   { path: 'task-types', component: TaskTypeComponent },
-  { path: 'gestor-de-frota', component: GestorDeFrotaComponent },
-  { path: 'gestor-de-campus', component: GestorDeCampusComponent },
-  { path: 'gestor-de-tarefas', component: GestorDeTarefasComponent },
+  { path: 'fleet-manager', component: GestorDeFrotaComponent },
+  { path: 'campus-manager', component: GestorDeCampusComponent },
+  { path: 'task-manager', component: GestorDeTarefasComponent },
   { path: 'building/create', component: BuildingCreateComponent },
   { path: 'building/edit', component: BuildingEditComponent },
   { path: 'building/list-all', component: BuildingListAllComponent },
@@ -73,7 +78,8 @@ const routes: Routes = [
   { path: 'floors/upload-map', component: UploadMapComponent },
   //{ path: 'map-viewer', loadChildren: () => import('./lazyLoadTest/Modules/map-viewer-lazy/map-viewer-lazy.module').then(m => m.MapViewerLazyModule) },
   { path: 'path/optimization-criteria', component: GetByOptimizationCriteriaComponent},
-  { path: 'administrador-de-sistema', component: AdministradorDeSistemaComponent}
+  { path: 'system-administrator', component: AdministradorDeSistemaComponent},
+  {path: 'system-administrator/create-manager', component: CreateManagerComponent}
 ];
 
 @NgModule({

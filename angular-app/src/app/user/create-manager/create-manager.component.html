@@ -1,0 +1,46 @@
+<app-administrador-de-sistema-toolbar></app-administrador-de-sistema-toolbar>
+<mat-sidenav-container>
+
+    <mat-sidenav-content>
+        <body>
+        <div class="container">
+            <h2 class="text-center"> Create Manager </h2>
+            <br>
+            <form    (ngSubmit)="createManager()">
+                <mat-form-field  data-cy="firstName" class="full-width">
+                    <mat-label>Insert the manager's first name</mat-label>
+                    <input matInput [(ngModel)]="user.firstName" name="firstName" required>
+                </mat-form-field>
+
+                <mat-form-field  data-cy="lastName" class="full-width">
+                    <mat-label>Insert the manager's last name</mat-label>
+                    <input matInput [(ngModel)]="user.lastName" name="lastName" required>
+                </mat-form-field>
+
+                <mat-form-field  data-cy="email" class="full-width">
+                    <mat-label>Insert the manager's e-mail</mat-label>
+                    <input matInput [(ngModel)]="user.email" name="email" required>
+                </mat-form-field>
+
+                <mat-form-field  data-cy="password" class="full-width">
+                    <mat-label>Insert the manager's password</mat-label>
+                    <input matInput [(ngModel)]="user.password" name="password" required>
+                </mat-form-field>
+
+                <mat-form-field data-cy="role" class="full-width">
+                <mat-label>Select a role</mat-label>
+                <mat-select [(ngModel)]="user.role" name="role"  required>
+                    <mat-option id="{{role.name}}" *ngFor="let role of roles" [value]="role.id">
+                        {{role.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+                <div>
+                    <input type="submit" value="create">
+                </div>
+            </form>
+        </div>
+        </body>
+    </mat-sidenav-content>
+</mat-sidenav-container>

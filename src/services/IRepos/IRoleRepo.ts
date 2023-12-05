@@ -9,4 +9,5 @@ export default interface IRoleRepo extends Repo<Role> {
   //findByIds (rolesIds: RoleId[]): Promise<Role[]>;
   //saveCollection (roles: Role[]): Promise<Role[]>;
   //removeByRoleIds (roles: RoleId[]): Promise<any>
+  findAll(): Promise<Role[]>;
 }

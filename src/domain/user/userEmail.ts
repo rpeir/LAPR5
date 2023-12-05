@@ -20,8 +20,12 @@ export class UserEmail extends ValueObject<UserEmailProps> {
     const guardResult = Guard.againstNullOrUndefined(email, 'email');
     if (!guardResult.succeeded) {
       return Result.fail<UserEmail>(guardResult.message);
+    }
+    const isValidEmail = email.endsWith("@isep.ipp.pt");
+    if(isValidEmail) {
+      return Result.ok<UserEmail>(new UserEmail({value: email}))
     } else {
-      return Result.ok<UserEmail>(new UserEmail({ value: email }))
+      return Result.fail<UserEmail>("Invalid email");
     }
   }
 }
