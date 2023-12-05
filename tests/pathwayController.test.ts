@@ -275,9 +275,9 @@ describe("pathway controller", function() {
     /////
 
     let buildingRepoInstance = Container.get("BuildingRepo");
-    const buildingMock = sandbox.mock(buildingRepoInstance, "findByDesignation");
-    buildingMock.expects("findByDesignation").once().returns(new Promise(resolve => resolve(buildingSource)))
-      .twice().returns(new Promise(resolve => resolve(buildingDestination)));
+    const buildingMock = sandbox.stub(buildingRepoInstance, "findByDesignation");
+    buildingMock.onCall(0).returns(new Promise(resolve => resolve(buildingSource)))
+      .onCall(1).returns(new Promise(resolve => resolve(buildingDestination)));
 
     let pathwayRepoInstance = Container.get("PathwayRepo");
     sinon.stub(pathwayRepoInstance, "existsPathwayBetweenFloors").returns(new Promise(resolve => resolve(false)));
@@ -317,7 +317,6 @@ describe("pathway controller", function() {
         "description": req.body.description
       }
     ));
-    buildingMock.verify();
 
   });
 

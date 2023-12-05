@@ -79,4 +79,25 @@ export default class PathwayController implements IPathwayController {
       throw error;
     }
   }
+
+  public async findAll(req: Request, res: Response, next: NextFunction) {
+    if (req.query.buildingSource || req.query.buildingDestination) {
+      next(); return ;
+    }
+    try {
+      const pathwayOrError = (await this.pathwayService.findAll()) as Result<Array<IPathwayDTO>>;
+
+      if (pathwayOrError.isFailure) {
+        return res
+          .status(402)
+          .json({ error: pathwayOrError.error })
+          .send();
+      }
+
+      const pathwayDTO = pathwayOrError.getValue();
+      return res.status(200).json(pathwayDTO);
+    } catch (error) {
+      throw error;
+    }
+  }
 }

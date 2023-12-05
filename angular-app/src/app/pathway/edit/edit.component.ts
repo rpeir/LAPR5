@@ -16,10 +16,11 @@ export class EditComponent implements OnInit {
   constructor(private floorService: FloorService, private buildingService: BuildingService, private pathwayService: PathwayService) {
   }
 
+  pathways: Pathway[] | undefined;
   floorsSource: Floor[] | undefined;
   floorsDestination: Floor[] | undefined;
   buildings: Building[] | undefined;
-  pathway = new Pathway();
+  pathway : Pathway | undefined;
 
 
   ngOnInit() {
@@ -32,15 +33,25 @@ export class EditComponent implements OnInit {
         }
       }
     );
+    this.pathwayService.findAll().subscribe(
+      {
+        next: (data) => {
+          this.pathways = data;
+        },
+        error: (error) => {
+          window.alert(JSON.stringify(error.error.error));
+        }
+      }
+    )
   }
 
   editPathway() {
-    if (this.pathway.domainId == undefined) {window.alert("Pathway ID is required"); return;}
+    if (this.pathway == undefined) {window.alert("Please select a pathway"); return;}
 
-    if (this.pathway.buildingSource == undefined && this.pathway.floorSource == undefined &&
-      this.pathway.buildingDestination == undefined && this.pathway.floorDestination == undefined
-      && this.pathway.description == undefined) {
-      window.alert("Please select at least one field to edit");
+    if (this.pathway.buildingSource == undefined || this.pathway.floorSource == undefined ||
+      this.pathway.buildingDestination == undefined || this.pathway.floorDestination == undefined
+      || this.pathway.description == undefined || this.pathway.description == "") {
+      window.alert("Please fill all the fields");
       return;
     }
 
@@ -61,6 +72,7 @@ export class EditComponent implements OnInit {
 
   listFloorsOfBuildingSource(building: any) {
     if (building == undefined) { return }
+    this.floorsSource = [];
     this.floorService.getFloorsOfBuilding(building).subscribe(
       {
         next: (data) => {
@@ -75,6 +87,7 @@ export class EditComponent implements OnInit {
 
   listFloorsOfBuildingDestination(building: any) {
     if (building == undefined) { return }
+    this.floorsDestination = [];
     this.floorService.getFloorsOfBuilding(building).subscribe({
       next: (data) => {
         this.floorsDestination = data;
@@ -94,4 +107,16 @@ export class EditComponent implements OnInit {
   }
 
 
+  onPathwayChange($event: Pathway) {
+    this.pathway = $event;
+    this.listFloorsOfBuildingSource($event.buildingSource);
+    this.listFloorsOfBuildingDestination($event.buildingDestination);
+  }
+
+  getPathwayInfo(pathway: Pathway) {
+    return 'Source: ' + pathway.buildingSource + '\n'+
+      ' - ' + pathway.floorSource + '\n' +
+      ' | Destination: ' + pathway.buildingDestination + '\n' +
+      ' - ' + pathway.floorDestination + '\n';
+  }
 }

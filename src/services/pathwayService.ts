@@ -86,6 +86,7 @@ export default class PathwayService implements IPathwayService {
 
   public async replacePathway(pathwayDTO: IPathwayDTO): Promise<Result<IPathwayDTO>> {
     try {
+
       let buildingSource;
       const buildingSourceOrError = await this.getBuildingByDesignation(pathwayDTO.buildingSource);
       if (buildingSourceOrError.isFailure) {
@@ -118,28 +119,41 @@ export default class PathwayService implements IPathwayService {
         floorDestination = floorDestinationOrError.getValue();
       }
 
-      const pathwayOrError = Pathway.create({
-        buildingSource: buildingSource,
-        buildingDestination: buildingDestination,
-        floorSource: floorSource,
-        floorDestination: floorDestination,
-        description: pathwayDTO.description
-      }, new UniqueEntityID(pathwayDTO.domainId));
+      let pathway = await this.pathwayRepo.findById(pathwayDTO.domainId);
 
-      if (pathwayOrError.isFailure) {
-        return Result.fail<IPathwayDTO>(pathwayOrError.errorValue());
-      }
-      let pathwayResult = pathwayOrError.getValue();
-      try {
-        pathwayResult = await this.pathwayRepo.save(pathwayResult);
-      } catch (err) {
-        return Result.fail<IPathwayDTO>(err);
+      if (!pathway) {
+        const pathwayOrError = Pathway.create({
+          buildingSource: buildingSource,
+          buildingDestination: buildingDestination,
+          floorSource: floorSource,
+          floorDestination: floorDestination,
+          description: pathwayDTO.description
+        }, new UniqueEntityID(pathwayDTO.domainId));
+
+        if (pathwayOrError.isFailure) {
+          return Result.fail<IPathwayDTO>(pathwayOrError.errorValue());
+        }
+        pathway = pathwayOrError.getValue();
+      } else {
+        const pathwayOrError = pathway.update({
+          buildingSource: buildingSource,
+          buildingDestination: buildingDestination,
+          floorSource: floorSource,
+          floorDestination: floorDestination,
+          description: pathwayDTO.description
+        });
+
+        if (pathwayOrError.isFailure) {
+          return Result.fail<IPathwayDTO>(pathwayOrError.errorValue());
+        }
+        pathway = pathwayOrError.getValue();
       }
 
+      const pathwayResult = await this.pathwayRepo.save(pathway);
       const pathwayDTOResult = PathwayMap.toDTO(pathwayResult) as IPathwayDTO;
       return Result.ok<IPathwayDTO>(pathwayDTOResult);
     } catch (err) {
-      throw err;
+      Result.fail<IPathwayDTO>(err);
     }
   }
 
@@ -153,8 +167,6 @@ export default class PathwayService implements IPathwayService {
         const buildingSourceOrError = await this.getBuildingByDesignation(pathwayDTO.buildingSource);
         if (buildingSourceOrError.isFailure) return Result.fail<IPathwayDTO>(buildingSourceOrError.error);
         buildingSource = buildingSourceOrError.getValue();
-      } else {
-        buildingSource = pathway.buildingSource;
       }
 
       let buildingDestination : Building;
@@ -162,8 +174,6 @@ export default class PathwayService implements IPathwayService {
         const buildingDestinationOrError = await this.getBuildingByDesignation(pathwayDTO.buildingDestination);
         if (buildingDestinationOrError.isFailure) return Result.fail<IPathwayDTO>(buildingDestinationOrError.error);
         buildingDestination = buildingDestinationOrError.getValue();
-      } else {
-        buildingDestination = pathway.buildingDestination;
       }
 
       let floorSource : Floor;
@@ -171,8 +181,6 @@ export default class PathwayService implements IPathwayService {
         const floorSourceOrError = await this.getFloorByBuildingIdAndFloorNr(buildingSource, pathwayDTO.floorSource?pathwayDTO.floorSource:pathway.floorSource.floorNr);
         if (floorSourceOrError.isFailure) return Result.fail<IPathwayDTO>(floorSourceOrError.error);
         floorSource = floorSourceOrError.getValue();
-      } else {
-        floorSource = pathway.floorSource;
       }
 
       let floorDestination : Floor;
@@ -180,17 +188,15 @@ export default class PathwayService implements IPathwayService {
         const floorDestinationOrError = await this.getFloorByBuildingIdAndFloorNr(buildingDestination, pathwayDTO.floorDestination?pathwayDTO.floorDestination:pathway.floorDestination.floorNr);
         if (floorDestinationOrError.isFailure) return Result.fail<IPathwayDTO>(floorDestinationOrError.error);
         floorDestination = floorDestinationOrError.getValue();
-      } else {
-        floorDestination = pathway.floorDestination;
       }
 
-      const pathwayOrError = Pathway.create({
+      const pathwayOrError = pathway.update({
         buildingSource: buildingSource,
         buildingDestination: buildingDestination,
         floorSource: floorSource,
         floorDestination: floorDestination,
-        description: pathwayDTO.description?pathwayDTO.description:pathway.description
-      }, new UniqueEntityID(pathwayDTO.domainId));
+        description: pathwayDTO.description
+      });
 
       if (pathwayOrError.isFailure) {
         return Result.fail<IPathwayDTO>(pathwayOrError.errorValue());

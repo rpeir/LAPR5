@@ -28,4 +28,8 @@ export class PathwayService {
   listPathwaysBetweenBuildings(buildingSource: string, buildingDestination: string) {
     return this.httpClient.get<Pathway[]>(this.baseUrl + `?buildingSource=${buildingSource}&buildingDestination=${buildingDestination}`);
   }
+
+  findAll() {
+    return this.httpClient.get<Pathway[]>(this.baseUrl);
+  }
 }

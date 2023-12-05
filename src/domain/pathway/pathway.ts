@@ -47,7 +47,41 @@ export class Pathway extends AggregateRoot<PathwayProps> {
   }
 
   public static create(props: PathwayProps, id?: UniqueEntityID): Result<Pathway> {
+    const guardResult = this.validate(props);
+    if (guardResult.isFailure) {
+      return Result.fail<Pathway>(guardResult.error);
+    } else {
+      const user = new Pathway({
+        ...props
+      }, id);
 
+      return Result.ok<Pathway>(user);
+    }
+  }
+
+  public update(props: PathwayProps) : Result<Pathway> {
+    let combinedProps : PathwayProps = {...this.props };
+
+    for (let prop in props) {
+      if (props[prop] != null || props[prop] != undefined) {
+        combinedProps[prop] = props[prop];
+      }
+    }
+
+    const guardResult = Pathway.validate(combinedProps);
+    if (guardResult.isFailure) {
+      return Result.fail<Pathway>(guardResult.error);
+    } else {
+      this.props.description = combinedProps.description;
+      this.props.buildingSource = combinedProps.buildingSource;
+      this.props.buildingDestination = combinedProps.buildingDestination;
+      this.props.floorSource = combinedProps.floorSource;
+      this.props.floorDestination = combinedProps.floorDestination;
+      return Result.ok<Pathway>(this);
+    }
+  }
+
+  private static validate(props: PathwayProps): Result<void> {
     const guardedProps = [
       { argument: props.description, argumentName: "description" },
       { argument: props.buildingSource, argumentName: "buildingSource" },
@@ -56,18 +90,21 @@ export class Pathway extends AggregateRoot<PathwayProps> {
       { argument: props.floorDestination, argumentName: "floorDestination" }
     ];
 
-    const guardResult = Guard.againstNullOrUndefinedBulk(guardedProps);
+    const guardNull = Guard.againstNullOrUndefinedBulk(guardedProps);
 
-    if (!guardResult.succeeded) {
-      return Result.fail<Pathway>(guardResult.message);
-    } else if (props.floorDestination.equals(props.floorSource)) {
-      return Result.fail<Pathway>("Source and destination floors are the same");
+    const guardFloors = Guard.isTrue(!props.floorDestination.equals(props.floorSource), "Source and destination floors are the same");
+    const guardBuildings = Guard.isTrue(!props.buildingDestination.id.equals(props.buildingSource.id), "Source and destination buildings are the same");
+    const guardFloorsBuildings = Guard.isTrue(props.floorDestination.building.id.equals(props.buildingDestination.id), "Destination Floor's building and this building are not the same");
+    const guardFloorsBuildings2 = Guard.isTrue(props.floorSource.building.id.equals(props.buildingSource.id), "Source Floor's building and this building are not the same");
+
+    const guardResult = Guard.combine([guardFloors,guardBuildings,guardFloorsBuildings,guardFloorsBuildings2]);
+
+    if (!guardNull.succeeded) {
+      return Result.fail<void>(guardNull.message);
+    } else if (!guardResult.succeeded) {
+      return Result.fail<void>(guardResult.message);
     } else {
-      const user = new Pathway({
-        ...props
-      }, id);
-
-      return Result.ok<Pathway>(user);
+      return Result.ok<void>();
     }
   }
 }

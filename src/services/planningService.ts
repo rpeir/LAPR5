@@ -186,8 +186,8 @@ export default class PlanningService implements IPlanningService {
     console.log(elevator);
     const elevatorLocation = PlanningElevatorLocation.create({
       floor: floorSource,
-      line: elevator[0],
-      column: elevator[1]
+      line: elevator[0][0],
+      column: elevator[0][1]
     });
     if (elevatorLocation.isFailure) {
       return Result.fail<IPlanningElevatorLocationDTO[]>(elevatorLocation.error);
