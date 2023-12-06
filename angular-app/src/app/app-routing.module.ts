@@ -23,7 +23,6 @@ import { CreatePathway } from './pathway/create/create-pathway';
 import { MapViewerComponent } from './map-viewer/map-viewer.component';
 import { ElevatorCreateComponent } from './elevator/create/create.component';
 import { ElevatorUpdateComponent } from './elevator/update/update.component';
-import { ElevatorReplaceComponent } from './elevator/replace/replace.component';
 import { CreateComponent as RoomCreateComponent } from './room/create/create.component';
 import { DisableComponent } from './robot/disable/disable.component';
 import { ListComponent as ListRobotComponent } from './robot/list/list.component';
@@ -73,7 +72,6 @@ const routes: Routes = [
   { path: 'building/list-min-max', component: BuildingListMinMaxComponent },
   { path: 'elevator/create', component: ElevatorCreateComponent },
   { path: 'elevator/update', component: ElevatorUpdateComponent },
-  { path: 'elevator/replace', component: ElevatorReplaceComponent },
   { path: 'map-viewer', component: MapViewerComponent },
   { path: 'rooms/create', component: RoomCreateComponent },
   { path: 'elevator/list-all-elevators', component: ElevatorListAllComponent },

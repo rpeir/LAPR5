@@ -5,6 +5,7 @@ import { Elevator } from '../elevator';
 import { BuildingService } from '../../building/building.service';
 import { ElevatorService } from '../elevator.service';
 import { FloorService } from '../../floor/floor.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-create',
@@ -17,15 +18,12 @@ export class ElevatorUpdateComponent implements OnInit {
     private elevatorService: ElevatorService,
     private floorService: FloorService,
   ) {}
+
   buildings: Building[] | undefined;
-  designation: string | undefined;
-  buildingDesignation: string | undefined;
+  building: Building | undefined;
+  elevators: Elevator[] | undefined;
   floorsServed: Floor[] | undefined;
-  brand: string | undefined;
-  modelE: string | undefined;
-  serialNumber: string | undefined;
-  description: string | undefined;
-  elevator = new Elevator();
+  elevator : Elevator | undefined;
 
   ngOnInit() {
     this.buildingService.getBuildings().subscribe({
@@ -47,10 +45,20 @@ export class ElevatorUpdateComponent implements OnInit {
       },
     });
   }
+
+  listFloorsOfBuilding() {
+    this.listFloorsOfBuildingDesignation(this.building?.designation);
+  }
+
   getFloorInfo(floor: Floor) {
     return floor.description;
   }
   updateElevator() {
+    if (this.elevator == undefined) {
+      window.alert('Please select an elevator');
+      return;
+    }
+    this.elevator.code = undefined;
     this.elevatorService.updateElevator(this.elevator).subscribe({
       next: data => {
         window.alert(
@@ -77,10 +85,25 @@ export class ElevatorUpdateComponent implements OnInit {
             data.description +
             '\n',
         );
+        window.location.reload();
       },
       error: error => {
         window.alert(JSON.stringify(error.error.error));
       },
     });
   }
+
+  getBuildingElevators(b: Building) {
+    this.elevators = [];
+    this.elevator = undefined;
+    this.elevatorService.listAllElevators(b.designation).subscribe({
+      next: data => {
+        this.elevators = data;
+      },
+      error: error => {
+        window.alert(JSON.stringify(error.error.error));
+      },
+    });
+  }
+
 }

@@ -9,17 +9,30 @@
       <h2 class="text-center">Update Elevator</h2>
       <br>
       <form (ngSubmit)="updateElevator()">
-        <mat-form-field data-cy="id" class="full-width">
-          <mat-label>Select the elevator (id)</mat-label>
-          <input matInput [(ngModel)]="elevator.id" name="id" required>
+        <mat-form-field data-cy="buildingSelect" class="full-width">
+          <mat-label>Select a building</mat-label>
+          <mat-select [(ngModel)]="building" name="elevatorBuilding" (ngModelChange)="getBuildingElevators($event)">
+            <mat-option id="{{building.designation}}" *ngFor="let building of buildings" [value]="building" [matTooltip]="building.designation">
+              {{ building.designation }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
 
-        <mat-form-field data-cy="designation" class="full-width">
+        <mat-form-field data-cy="id" class="full-width">
+          <mat-label>Select the elevator to edit</mat-label>
+          <mat-select [(ngModel)]="elevator" name="elevator" (ngModelChange)="listFloorsOfBuilding()">
+            <mat-option id="{{elevator.designation}}" *ngFor="let elevator of elevators" [value]="elevator" [matTooltip]="elevator.designation">
+              {{ elevator.designation }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field data-cy="designation" class="full-width" *ngIf="elevator">
           <mat-label>Select a designation for the elevator</mat-label>
           <input matInput [(ngModel)]="elevator.designation" name="designation">
         </mat-form-field>
 
-        <mat-form-field data-cy="buildingDesignation" class="full-width">
+        <mat-form-field data-cy="buildingDesignation" class="full-width" *ngIf="elevator">
           <mat-label>Select a building</mat-label>
           <mat-select [(ngModel)]="elevator.buildingDesignation" name="buildingDesignation" (ngModelChange)="listFloorsOfBuildingDesignation($event)">
             <mat-option id="{{building.designation}}" *ngFor="let building of buildings" [value]="building.designation">
@@ -28,7 +41,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field data-cy="floorsServed" class="full-width">
+        <mat-form-field data-cy="floorsServed" class="full-width" *ngIf="elevator">
           <mat-label>Select the floors served by the elevator</mat-label>
           <mat-select [(ngModel)]="elevator.floorsServed" name="floorsServed" multiple>
             <mat-option id="{{floor.floorNr}}" *ngFor="let floor of floorsServed" [value]="floor.floorNr" [matTooltip]="getFloorInfo(floor)">
@@ -38,28 +51,28 @@
         </mat-form-field>
 
 
-        <mat-form-field data-cy="brand" class="full-width">
+        <mat-form-field data-cy="brand" class="full-width" *ngIf="elevator">
           <mat-label>Select a brand</mat-label>
           <input matInput [(ngModel)]="elevator.brand" name="brand">
         </mat-form-field>
 
-        <mat-form-field data-cy="modelE" class="full-width">
+        <mat-form-field data-cy="modelE" class="full-width" *ngIf="elevator">
           <mat-label>Select a model</mat-label>
           <input matInput [(ngModel)]="elevator.modelE" name="modelE">
         </mat-form-field>
 
-        <mat-form-field data-cy="serialNumber" class="full-width">
+        <mat-form-field data-cy="serialNumber" class="full-width" *ngIf="elevator">
           <mat-label>Select a serial number</mat-label>
           <input matInput [(ngModel)]="elevator.serialNumber" name="serialNumber">
         </mat-form-field>
 
-        <mat-form-field  data-cy="description" class="full-width">
+        <mat-form-field  data-cy="description" class="full-width" *ngIf="elevator">
           <mat-label>Elevator Description</mat-label>
           <input matInput [(ngModel)]="elevator.description" name="description" placeholder="Max 250 characters">
         </mat-form-field>
 
         <div>
-          <input type="submit" data-cy="create-button" value="Update">
+          <input type="submit" data-cy="create-button" value="Update" *ngIf="elevator">
         </div>
       </form>
     </div>

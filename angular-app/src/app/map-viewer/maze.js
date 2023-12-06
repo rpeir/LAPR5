@@ -1,12 +1,10 @@
 import * as THREE from 'three';
 import * as BufferGeometryUtils from 'three/addons/utils/BufferGeometryUtils.js';
-import {OBB} from 'three/addons/math/OBB.js';
-import {merge} from './merge.js';
+import { OBB } from 'three/addons/math/OBB.js';
+import { merge } from './merge.js';
 import Ground from './ground.js';
 import Wall from './wall.js';
-import Door from './door';
-import {forEach} from "lodash";
-import Elevator from "./elevator";
+import Elevator from './elevator';
 
 /*
  * parameters = {
@@ -114,6 +112,35 @@ export default class Maze extends THREE.Group {
     });
     this.add(ground);
   }
+  setDoors(floorMap) {
+    this.door = new Wall({
+      groundHeight: floorMap.ground.size.height,
+      segments: new THREE.Vector2(floorMap.wall.segments.width, floorMap.wall.segments.height),
+      materialParameters: {
+        color: new THREE.Color(parseInt('0x4E3524', 16)),
+        mapUrl: './assets/map-renderer/textures/door/Wood_023_basecolor.jpg',
+        aoMapUrl: './assets/map-renderer/textures/door/Wood_023_ambientOcclusion.jpg',
+        aoMapIntensity: floorMap.wall.maps.ao.intensity,
+        displacementMapUrl: '',
+        displacementScale: floorMap.wall.maps.displacement.scale,
+        displacementBias: floorMap.wall.maps.displacement.bias,
+        normalMapUrl: './assets/map-renderer/textures/door/Wood_023_normal.jpg',
+        normalMapType: normalMapTypes[floorMap.wall.maps.normal._type],
+        normalScale: new THREE.Vector2(floorMap.wall.maps.normal.scale.x, floorMap.wall.maps.normal.scale.y),
+        bumpMapUrl: floorMap.wall.maps.bump.url,
+        bumpScale: floorMap.wall.maps.bump.scale,
+        roughnessMapUrl: './assets/map-renderer/textures/door/Wood_023_roughness.jpg',
+        roughness: floorMap.wall.maps.roughness.rough,
+        wrapS: wrappingModes[floorMap.wall.wrapS],
+        wrapT: wrappingModes[floorMap.wall.wrapT],
+        repeat: new THREE.Vector2(floorMap.wall.repeat.u, floorMap.wall.repeat.v),
+        magFilter: magnificationFilters[floorMap.wall.magFilter],
+        minFilter: minificationFilters[floorMap.wall.minFilter],
+      },
+      secondaryColor: new THREE.Color(0x5c4033),
+    });
+    console.log(this.door.materials);
+  }
 
   // Create a wall
   setWall(floorMap) {
@@ -144,23 +171,6 @@ export default class Maze extends THREE.Group {
       secondaryColor: new THREE.Color(parseInt(floorMap.wall.secondaryColor, 16)),
     });
   }
-  // Create a door
-  setDoors(floorMap) {
-    if (!floorMap.maze.exits) {
-      return;
-    }
-
-    for (const doorConfig of floorMap.maze.exits) {
-      const door = new Door({
-        modelUrl: './assets/map-renderer/models/gltf/Door/Door.glb',
-        //position: new THREE.Vector3(1, 0, 0),
-        position: this.cellToCartesian(doorConfig.location),
-        rotation: new THREE.Euler(0, 0, 0),
-        scale: new THREE.Vector3(0.5, 0.5, 0.5),
-      });
-      this.add(door);
-    }
-  }
 
   setElevators(floorMap) {
     if (!floorMap.maze.elevators) {
@@ -184,15 +194,6 @@ export default class Maze extends THREE.Group {
     this.initialPosition = this.cellToCartesian(floorMap.player.initialPosition);
     this.initialDirection = floorMap.player.initialDirection;
     console.log('initial position', this.initialPosition);
-  }
-
-  //TODO - add a function to set a new maze using floorMap
-  setNewMaze(floorMap) {
-    this.setSizeMapExit(floorMap);
-    this.setGround(floorMap);
-    this.setWall(floorMap);
-    this.setInitialPlayerPosition(floorMap);
-    console.log('NEW MAP', this.map);
   }
 
   // Convert cell [row, column] coordinates to cartesian (x, y, z) coordinates
@@ -404,8 +405,11 @@ export default class Maze extends THREE.Group {
     // Build the maze
     let geometry;
     let geometries = [];
+    let door_geometries = [];
     geometries[0] = [];
     geometries[1] = [];
+    door_geometries[0] = [];
+    door_geometries[1] = [];
     this.aabb = [];
     for (let i = 0; i <= this.size.depth; i++) {
       // In order to represent the southmost walls, the map depth is one row greater than the actual maze depth
@@ -429,9 +433,7 @@ export default class Maze extends THREE.Group {
               new THREE.Matrix4().makeTranslation(j - this.halfSize.width + 0.5, 0.25, i - this.halfSize.depth),
             );
             geometry.computeBoundingBox();
-            geometry.boundingBox.applyMatrix4(
-              new THREE.Matrix4().makeScale(this.scale.x, this.scale.y, this.scale.z),
-            );
+            geometry.boundingBox.applyMatrix4(new THREE.Matrix4().makeScale(this.scale.x, this.scale.y, this.scale.z));
             geometries[k].push(geometry);
             this.aabb[i][j][0].union(geometry.boundingBox);
           }
@@ -446,19 +448,54 @@ export default class Maze extends THREE.Group {
               new THREE.Matrix4().makeTranslation(j - this.halfSize.width, 0.25, i - this.halfSize.depth + 0.5),
             );
             geometry.computeBoundingBox();
-            geometry.boundingBox.applyMatrix4(
-              new THREE.Matrix4().makeScale(this.scale.x, this.scale.y, this.scale.z),
-            );
+            geometry.boundingBox.applyMatrix4(new THREE.Matrix4().makeScale(this.scale.x, this.scale.y, this.scale.z));
             geometries[k].push(geometry);
             this.aabb[i][j][1].union(geometry.boundingBox);
           }
           this.helper.add(new THREE.Box3Helper(this.aabb[i][j][1], this.helpersColor));
         }
+        // doors west
+        if (this.map[i][j] === 4) {
+          this.aabb[i][j][1] = new THREE.Box3();
+          for (let k = 0; k < 2; k++) {
+            geometry = this.door.geometries[k].clone();
+            geometry.applyMatrix4(new THREE.Matrix4().makeRotationY(Math.PI / 2.0));
+            geometry.applyMatrix4(
+              new THREE.Matrix4().makeTranslation(j - this.halfSize.width, 0.25, i - this.halfSize.depth + 0.5),
+            );
+            geometry.computeBoundingBox();
+            geometry.boundingBox.applyMatrix4(new THREE.Matrix4().makeScale(this.scale.x, this.scale.y, this.scale.z));
+            door_geometries[k].push(geometry);
+            this.aabb[i][j][1].union(geometry.boundingBox);
+          }
+          this.helper.add(new THREE.Box3Helper(this.aabb[i][j][1], this.helpersColor));
+        }
+        // doors north
+        if (this.map[i][j] === 5) {
+          this.aabb[i][j][0] = new THREE.Box3();
+          for (let k = 0; k < 2; k++) {
+            geometry = this.door.geometries[k].clone();
+            geometry.applyMatrix4(
+              new THREE.Matrix4().makeTranslation(j - this.halfSize.width + 0.5, 0.25, i - this.halfSize.depth),
+            );
+            geometry.computeBoundingBox();
+            geometry.boundingBox.applyMatrix4(new THREE.Matrix4().makeScale(this.scale.x, this.scale.y, this.scale.z));
+            door_geometries[k].push(geometry);
+            this.aabb[i][j][0].union(geometry.boundingBox);
+          }
+          this.helper.add(new THREE.Box3Helper(this.aabb[i][j][0], this.helpersColor));
+        }
       }
     }
+    // TODO CHECK IF CELL CAN BE 4 OR 5
 
-    let mergedGeometry, mesh;
+    let mergedGeometry, mesh, door_mesh, mergedDoorGeometry;
     for (let i = 0; i < 2; i++) {
+      mergedDoorGeometry = BufferGeometryUtils.mergeGeometries(door_geometries[i], false);
+      door_mesh = new THREE.Mesh(mergedDoorGeometry, this.door.materials[i]);
+      door_mesh.castShadow = true;
+      door_mesh.receiveShadow = true;
+      this.add(door_mesh);
       mergedGeometry = BufferGeometryUtils.mergeGeometries(geometries[i], false);
       mesh = new THREE.Mesh(mergedGeometry, this.wall.materials[i]);
       mesh.castShadow = true;

@@ -1243,7 +1243,7 @@ export default class ThumbRaiser {
         const types = [
           //this.audio.introductionClips,
           //this.audio.idleClips,
-          this.audio.jumpClips,
+          //this.audio.jumpClips,
           this.audio.deathClips,
           this.audio.danceClips,
           this.audio.endClips,

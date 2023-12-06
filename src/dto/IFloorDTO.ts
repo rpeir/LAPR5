@@ -22,7 +22,7 @@ export interface IFloorDTO {
         label: string;
         location: number[];
       }[];
-      elevators: number[];
+      elevators: [number, number];
       exitLocation: {
         floorId: string;
         location: number[];
