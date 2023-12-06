@@ -47,6 +47,7 @@ export class CreateManagerComponent implements OnInit {
       this.roleService.listRoles().subscribe({
         next: (data) => {
             this.roles = data;
+          this.roles = data.filter(role => role.name !== 'user');
         },
         error: (error) => {
           window.alert(JSON.stringify(error.error.error));

@@ -6,11 +6,11 @@ describe('Update elevator spec', () => {
     const elevatorData = {
       designation: 'UpdateElevTest',
       buildingDesignation: 'B', // Replace this with the actual building designation you want to select
-      floorsServed: [1], // Replace this with an array of floor numbers you want to select
-      brand: 'test',
-      modelE: 'test',
-      serialNumber: 'test',
-      description: 'test',
+      floorsServed: ["1"],
+      brand: 'novotest',
+      modelE: 'novotest',
+      serialNumber: 'novotest',
+      description: 'novotest',
     };
 
     const OLD_DESIGNATION = 'ElevTest';
@@ -20,7 +20,7 @@ describe('Update elevator spec', () => {
 
     cy.get('[data-cy=designation]').clear().type(elevatorData.designation);
     // Click to open the building designation dropdown
-    cy.get('[data-cy=buildingDesignation]').get(`mat-option[id="${elevatorData.buildingDesignation}"]`).click();
+    cy.get('[data-cy=buildingDesignation]').click().get(`mat-option[id="${elevatorData.buildingDesignation}"]`).click();
     cy.wait(1000);
     // Click to open the floors served dropdown
     cy.get('[data-cy=floorsServed]').click();
@@ -37,13 +37,16 @@ describe('Update elevator spec', () => {
       method: 'PATCH',
       url: '**/api/elevators'
     }).as('apiCheck')
-    cy.get('[data-cy=description]').type(elevatorData.description).type('{enter}');
+    cy.get('[data-cy=description]').clear().type(elevatorData.description).type('{enter}');
 
     cy.wait('@apiCheck').then((interception) => {
       assert.equal(JSON.stringify({
         ...interception.response.body,
         code: undefined,
-      }), JSON.stringify(elevatorData));
+        id: undefined,
+      }), JSON.stringify({
+        ...elevatorData,
+      }));
     })
   });
 
