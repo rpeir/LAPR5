@@ -21,9 +21,9 @@ describe('EditPathwayComponent', () => {
     cy.wait(1000)
     cy.get('[name="select-pathway"]').click().get('mat-option').contains(OLD_DESCRIPTION).click();
 
-    cy.get('[name="buildingSource"]').click().get(`mat-option[id="${DEFAULT_PATHWAY.buildingSource}"]`).click()
+    cy.get('[name="buildingSource"]').click().get(`mat-option[data-cy="buildingSource"][id="${DEFAULT_PATHWAY.buildingSource}"]`).click()
     cy.get('[name="floorSource"]').click().get(`mat-option[id=${DEFAULT_PATHWAY.floorSource}]`).click();
-    cy.get('[name="buildingDestination"]').click().get(`mat-option[id="${DEFAULT_PATHWAY.buildingDestination}"]`).click()
+    cy.get('[name="buildingDestination"]').click().get(`mat-option[data-cy="buildingDestination"][id="${DEFAULT_PATHWAY.buildingDestination}"]`).click()
     cy.get('[name="floorDestination"]').click().get(`mat-option[id=${DEFAULT_PATHWAY.floorDestination}]`).click();
 
     cy.get('[name="description"]').clear().type(DEFAULT_PATHWAY.description);

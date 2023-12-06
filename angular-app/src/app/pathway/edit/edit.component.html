@@ -25,7 +25,7 @@
         <mat-form-field class="full-width" *ngIf="pathway">
           <mat-label>Select a source building</mat-label>
           <mat-select [(ngModel)]="pathway.buildingSource" name="buildingSource" (ngModelChange)="listFloorsOfBuildingSource($event)" required>
-            <mat-option id="{{building.designation}}" *ngFor="let building of buildings" [value]="building.designation" [matTooltip]= "getBuildingInfo(building)">
+            <mat-option data-cy="buildingSource" id="{{building.designation}}" *ngFor="let building of buildings" [value]="building.designation" [matTooltip]= "getBuildingInfo(building)">
               {{building.designation}}
             </mat-option>
           </mat-select>
@@ -34,7 +34,7 @@
         <mat-form-field class="full-width" *ngIf="pathway">
           <mat-label>Select a building destination</mat-label>
           <mat-select [(ngModel)]="pathway.buildingDestination" name="buildingDestination" (ngModelChange)="listFloorsOfBuildingDestination($event)" required>
-            <mat-option id="{{building.designation}}" *ngFor="let building of buildings" [value]="building.designation" [matTooltip]= "getBuildingInfo(building)">
+            <mat-option data-cy="buildingDestination" id="{{building.designation}}" *ngFor="let building of buildings" [value]="building.designation" [matTooltip]= "getBuildingInfo(building)">
               {{building.designation}}
             </mat-option>
           </mat-select>
