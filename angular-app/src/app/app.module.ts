@@ -48,7 +48,6 @@ import { CreatePathway } from './pathway/create/create-pathway';
 import { ElevatorCreateComponent } from './elevator/create/create.component';
 import { ElevatorUpdateComponent } from './elevator/update/update.component';
 import { GestorDeCampusToolbarComponent } from './gestor-de-campus-toolbar/gestor-de-campus-toolbar.component';
-import { ElevatorReplaceComponent } from './elevator/replace/replace.component';
 import { CreateComponent as RoomCreateComponent } from './room/create/create.component';
 import { BuildingToolBarComponent } from './building/building-tool-bar/building-tool-bar.component';
 import { ElevatorToolBarComponent } from './elevator/elevator-tool-bar/elevator-tool-bar.component';
@@ -70,6 +69,7 @@ import { AdministradorDeSistemaComponent} from './administrador-de-sistema/admin
 import {
   AdministradorDeSistemaToolbarComponent
 } from "./administrador-de-sistema-toolbar/administrador-de-sistema-toolbar.component";
+import { CreateManagerComponent } from "./user/create-manager/create-manager.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -108,7 +108,6 @@ import {
     ElevatorCreateComponent,
     ElevatorUpdateComponent,
     GestorDeCampusToolbarComponent,
-    ElevatorReplaceComponent,
     RoomCreateComponent,
     BuildingToolBarComponent,
     ElevatorToolBarComponent,
@@ -123,7 +122,8 @@ import {
     EditFloorComponent,
     GestorDeFrotaToolbarComponent,
     GestorDeTarefasToolbarComponent,
-    AdministradorDeSistemaComponent,AdministradorDeSistemaToolbarComponent
+    AdministradorDeSistemaComponent,AdministradorDeSistemaToolbarComponent,
+    CreateManagerComponent
   ],
   imports: [
     BrowserModule,

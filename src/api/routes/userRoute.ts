@@ -7,6 +7,8 @@ import { IUserDTO } from '../../dto/IUserDTO';
 import middlewares from '../middlewares';
 import { celebrate, Joi } from 'celebrate';
 import winston = require('winston');
+import config from "../../../config";
+import IBuildingController from "../../controllers/IControllers/IBuildingController";
 
 var user_controller = require('../../controllers/userController');
 
@@ -38,7 +40,7 @@ export default (app: Router) => {
           logger.debug(userOrError.errorValue())
           return res.status(401).send(userOrError.errorValue());
         }
-    
+
         const {userDTO, token} = userOrError.getValue();
 
         return res.status(201).json({ userDTO, token });
@@ -64,7 +66,7 @@ export default (app: Router) => {
         const { email, password } = req.body;
         const authServiceInstance = Container.get(AuthService);
         const result = await authServiceInstance.SignIn(email, password);
-        
+
         if( result.isFailure )
           return res.json().status(403);
 

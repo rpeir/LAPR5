@@ -13,6 +13,7 @@ interface UserProps {
   lastName: string;
   email: UserEmail;
   password: UserPassword;
+  nif?: string;
   role: Role;
 }
 
@@ -44,9 +45,15 @@ export class User extends AggregateRoot<UserProps> {
   get role (): Role {
     return this.props.role;
   }
+  get nif (): string {
+    return this.props.nif;
+  }
+  set nif (value: string) {
+    this.props.nif = value;
+  }
 
   set role (value: Role) {
-      this.props.role = value;
+    this.props.role = value;
   }
 
   private constructor (props: UserProps, id?: UniqueEntityID) {
@@ -56,18 +63,23 @@ export class User extends AggregateRoot<UserProps> {
   public static create (props: UserProps, id?: UniqueEntityID): Result<User> {
 
     const guardedProps = [
-      { argument: props.firstName, argumentName: 'firstName' },
-      { argument: props.lastName, argumentName: 'lastName' },
-      { argument: props.email, argumentName: 'email' },
-      { argument: props.role, argumentName: 'role' }
+      {argument: props.firstName, argumentName: 'firstName'},
+      {argument: props.lastName, argumentName: 'lastName'},
+      {argument: props.email, argumentName: 'email'},
+      {argument: props.role, argumentName: 'role'},
+      {argument: props.password, argumentName: 'password'},
     ];
-
+    const flag = Guard.againstNullOrUndefinedBulk(guardedProps);
+    if (!flag.succeeded) {
+      return Result.fail<User>(flag.message);
+    }
+    if (props.role.name === "user") {
+      guardedProps.push({argument: props.nif, argumentName: 'nif'});
+    }
     const guardResult = Guard.againstNullOrUndefinedBulk(guardedProps);
-
     if (!guardResult.succeeded) {
       return Result.fail<User>(guardResult.message)
-    }
-    else {
+    } else {
       const user = new User({
         ...props
       }, id);

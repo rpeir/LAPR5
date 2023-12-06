@@ -2,7 +2,6 @@ import {AggregateRoot} from "../../core/domain/AggregateRoot";
 import {UniqueEntityID} from "../../core/domain/UniqueEntityID";
 import {Result} from "../../core/logic/Result";
 import {Guard} from "../../core/logic/Guard";
-import {BuildingCode} from "../building/BuildingCode";
 import {Floor} from "../floor/floor";
 
 interface ElevatorProps{
@@ -43,35 +42,49 @@ export class Elevator extends AggregateRoot<ElevatorProps>{
     get description():string{
         return this.props.description;
     }
-  set code(v:number){
-     this.props.code=v;
-  }
-  set designation(v:string){
-     this.props.designation=v;
-  }
-  set buildingDesignation(v:string){
-     this.props.buildingDesignation=v;
-  }
-  set floorsServed(v:Floor[]){
-     this.props.floorsServed=v;
-  }
-    set brand(v:string){
-        this.props.brand=v;
-    }
-    set modelE(v:string){
-        this.props.modelE=v;
-    }
-    set serialNumber(v:string){
-        this.props.serialNumber=v;
-    }
-    set description(v:string){
-        this.props.description=v;
-    }
   private constructor(props:ElevatorProps, id?:UniqueEntityID) {
     super(props,id);
   }
   public static create (props: ElevatorProps, id?: UniqueEntityID): Result<Elevator> {
+    const guardResult = this.validate(props);
 
+    if (guardResult.isFailure) {
+      return Result.fail<Elevator>(guardResult.error)
+    } else {
+      const elevator = new Elevator({
+        ...props
+      }, id);
+
+      return Result.ok<Elevator>(elevator);
+    }
+  }
+
+  public update(props: ElevatorProps) : Result<Elevator> {
+    let combinedProps : ElevatorProps = {...this.props };
+
+    for (let prop in props) {
+      if (props[prop] != null || props[prop] != undefined) {
+        combinedProps[prop] = props[prop];
+      }
+    }
+
+    const guardResult = Elevator.validate(combinedProps);
+    if (guardResult.isFailure) {
+      return Result.fail<Elevator>(guardResult.error);
+    } else {
+      this.props.code = combinedProps.code;
+      this.props.designation = combinedProps.designation;
+      this.props.description = combinedProps.description;
+      this.props.brand = combinedProps.brand;
+      this.props.modelE = combinedProps.modelE;
+      this.props.serialNumber = combinedProps.serialNumber;
+      this.props.floorsServed = combinedProps.floorsServed;
+      this.props.buildingDesignation = combinedProps.buildingDesignation;
+      return Result.ok<Elevator>(this);
+    }
+  }
+
+  private static validate(props: ElevatorProps): Result<void> {
     const guardedProps = [
       {argument: props.code, argumentName: 'code'},
       {argument: props.designation, argumentName: 'designation'},
@@ -89,15 +102,11 @@ export class Elevator extends AggregateRoot<ElevatorProps>{
     const guardResult = Guard.combine([guardProps,guardBrand,guardModel,guardSerial,guardDescription]);
 
     if (!guardResult.succeeded) {
-      return Result.fail<Elevator>(guardResult.message)
+      return Result.fail(guardResult.message)
     } else if (guardBrandModel) {
-      return Result.fail<Elevator>("Model must be filled if brand is filled")
+      return Result.fail("Model must be filled if brand is filled")
     } else {
-      const user = new Elevator({
-        ...props
-      }, id);
-
-      return Result.ok<Elevator>(user);
+      return Result.ok()
     }
   }
 }

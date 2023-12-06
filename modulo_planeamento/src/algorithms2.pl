@@ -102,12 +102,12 @@ create_right(Line, Column):- NextColumn is Column + 1,
 :-dynamic bestSolution/2.
 % to use in complexity analysis
 better_dfs1(Origin, Destination, Cost, Path):-
-get_time(Ti),
+%get_time(Ti),
 (better_dfs(Origin,Destination);true),
-retract(bestSolution(Path,Cost)),
-get_time(Tf),
-T is Tf-Ti,
-write('Solution: '), write(T), nl.
+retract(bestSolution(Path,Cost)).
+%get_time(Tf),
+%T is Tf-Ti,
+%write('Solution: '), write(T), nl.
 
 better_dfs(Origin, Destination):-
           assertz(bestSolution(_,10000)),
@@ -137,8 +137,9 @@ dfs2(Actual, Destination, LA, Path):-connectCell(Actual, Next),
 findPathFromRoomToPathway(Room, PathwayDestination, Path):-roomLocation(_,Room,RoomLine,RoomColumn),
           pathwayLocation(_,PathwayDestination,PathwayLine,PathwayColumn),
           %(better_dfs(cel(RoomLine,RoomColumn), cel(PathwayLine,PathwayColumn));true),
-          (better_aStar(cel(RoomLine,RoomColumn), cel(PathwayLine,PathwayColumn));true),
-          bestSolution(Path,_),!.
+          %(better_aStar(cel(RoomLine,RoomColumn), cel(PathwayLine,PathwayColumn));true),
+          %bestSolution(Path,_),!.
+          aStar(cel(RoomLine,RoomColumn), cel(PathwayLine,PathwayColumn), Path, _),!.
 
 %=====================================================
 % FindPath from a pathway to a room
@@ -146,8 +147,9 @@ findPathFromRoomToPathway(Room, PathwayDestination, Path):-roomLocation(_,Room,R
 findPathFromPathwayToRoom(PathwaySource, RoomDestination, Path):-roomLocation(_,RoomDestination,RoomLine,RoomColumn),
           pathwayLocation(PathwaySource,_,PathwayLine,PathwayColumn),
           %(better_dfs(cel(PathwayLine,PathwayColumn), cel(RoomLine,RoomColumn));true),
-          (better_aStar(cel(PathwayLine,PathwayColumn), cel(RoomLine,RoomColumn));true),
-          bestSolution(Path,_),!.
+          %(better_aStar(cel(PathwayLine,PathwayColumn), cel(RoomLine,RoomColumn));true),
+          %bestSolution(Path,_),!.
+          aStar(cel(PathwayLine,PathwayColumn), cel(RoomLine,RoomColumn), Path, _),!.
 
 %=====================================================
 % FindPath from a room to elevator
@@ -155,8 +157,9 @@ findPathFromPathwayToRoom(PathwaySource, RoomDestination, Path):-roomLocation(_,
 findPathFromRoomToElevator(Room, Elevator, Path):-roomLocation(_,Room,RoomLine,RoomColumn),
           elevatorLocation(Elevator,ElevatorLine,ElevatorColumn),
           %(better_dfs(cel(RoomLine,RoomColumn), cel(ElevatorLine,ElevatorColumn));true),
-          (better_aStar(cel(RoomLine,RoomColumn), cel(ElevatorLine,ElevatorColumn));true),
-          bestSolution(Path,_),!.
+          %(better_aStar(cel(RoomLine,RoomColumn), cel(ElevatorLine,ElevatorColumn));true),
+          %bestSolution(Path,_),!.
+          aStar(cel(RoomLine,RoomColumn), cel(ElevatorLine,ElevatorColumn), Path, _),!.
 
 %=====================================================
 % FindPath from elevator to room
@@ -164,8 +167,9 @@ findPathFromRoomToElevator(Room, Elevator, Path):-roomLocation(_,Room,RoomLine,R
 findPathFromElevatorToRoom(Elevator, Room, Path):-roomLocation(_,Room,RoomLine,RoomColumn),
           elevatorLocation(Elevator,ElevatorLine,ElevatorColumn),
           %(better_dfs(cel(ElevatorLine,ElevatorColumn), cel(RoomLine,RoomColumn));true),
-          (better_aStar(cel(ElevatorLine,ElevatorColumn), cel(RoomLine,RoomColumn));true),
-          bestSolution(Path,_),!.
+          %(better_aStar(cel(ElevatorLine,ElevatorColumn), cel(RoomLine,RoomColumn));true),
+          %bestSolution(Path,_),!.
+          aStar(cel(ElevatorLine,ElevatorColumn), cel(RoomLine,RoomColumn), Path, _),!.
 
 %=====================================================
 % FindPath from a elevator to pathway
@@ -173,8 +177,9 @@ findPathFromElevatorToRoom(Elevator, Room, Path):-roomLocation(_,Room,RoomLine,R
 findPathFromElevatorToPathway(Elevator, Pathway, Path):-pathwayLocation(_,Pathway,PathwayLine,PathwayColumn),
           elevatorLocation(Elevator,ElevatorLine,ElevatorColumn),
           %(better_dfs(cel(ElevatorLine,ElevatorColumn), cel(PathwayLine,PathwayColumn));true),
-          (better_aStar(cel(ElevatorLine,ElevatorColumn), cel(PathwayLine,PathwayColumn));true),
-          bestSolution(Path,_),!.
+          %(better_aStar(cel(ElevatorLine,ElevatorColumn), cel(PathwayLine,PathwayColumn));true),
+          %bestSolution(Path,_),!.
+          aStar(cel(ElevatorLine,ElevatorColumn), cel(PathwayLine,PathwayColumn), Path, _),!.
 
 %=====================================================
 % FindPath from a pathway to elevator
@@ -182,8 +187,9 @@ findPathFromElevatorToPathway(Elevator, Pathway, Path):-pathwayLocation(_,Pathwa
 findPathFromPathwayToElevator(PathwaySource, Elevator, Path):-pathwayLocation(PathwaySource,_,PathwayLine,PathwayColumn),
           elevatorLocation(Elevator,ElevatorLine,ElevatorColumn),
           %(better_dfs(cel(PathwayLine,PathwayColumn), cel(ElevatorLine,ElevatorColumn));true),
-          (better_aStar(cel(PathwayLine,PathwayColumn), cel(ElevatorLine,ElevatorColumn));true),
-          bestSolution(Path,_),!.
+          %(better_aStar(cel(PathwayLine,PathwayColumn), cel(ElevatorLine,ElevatorColumn));true),
+          %bestSolution(Path,_),!.
+          aStar(cel(PathwayLine,PathwayColumn), cel(ElevatorLine,ElevatorColumn), Path, _),!.
 
 %=====================================================
 % FindPath from a pathway to pathway
@@ -191,8 +197,9 @@ findPathFromPathwayToElevator(PathwaySource, Elevator, Path):-pathwayLocation(Pa
 findPathFromPathwayToPathway(Pathway1, Pathway2, Path):-pathwayLocation(Pathway1,_,PathwayLine1,PathwayColumn1),
           pathwayLocation(_,Pathway2,PathwayLine2,PathwayColumn2),
           %(better_dfs(cel(PathwayLine1,PathwayColumn1), cel(PathwayLine2,PathwayColumn2));true),
-          (better_aStar(cel(PathwayLine1,PathwayColumn1), cel(PathwayLine2,PathwayColumn2));true),
-          bestSolution(Path,_),!.
+          %(better_aStar(cel(PathwayLine1,PathwayColumn1), cel(PathwayLine2,PathwayColumn2));true),
+          %bestSolution(Path,_),!.
+          aStar(cel(PathwayLine1,PathwayColumn1), cel(PathwayLine2,PathwayColumn2), Path, _),!.
 
 
 %=====================================================
@@ -207,7 +214,7 @@ startPath(Source,Destination,[pathW(FloorSource, FloorDestination)|OtherPath],Re
 
 startPath(Source,Destination,[elev(FloorSource, FloorDestination)|OtherPath],Result):-
             prepareElevatorInfo(FloorSource),
-            findPathFromRoomToElevator(Source,FloorDestination,TempPath),
+            findPathFromRoomToElevator(Source,FloorSource,TempPath),
             retractElevatorInfo(),
             continuePathFromElevator(FloorDestination,Destination,OtherPath,[TempPath], Result).
 
@@ -219,8 +226,10 @@ continuePathFromElevator(FloorSource,Destination,[],TempResult, Result):-
 
 continuePathFromElevator(FloorSource,Destination,[pathW(FloorSource, FloorDestination)|OtherPath],TempResult, Result):-
             prepareElevatorInfo(FloorSource),
+            getPathwaysLocations(FloorSource),
             findPathFromElevatorToPathway(FloorSource,FloorDestination,TempPath),
             retractElevatorInfo(),
+            retractall(pathwayLocation(_,_,_,_)),
             continuePathFromPathway(FloorDestination,Destination,OtherPath,[TempPath|TempResult], Result).
 
 continuePathFromElevator(FloorSource,Destination,[elev(FloorSource, FloorDestination)|OtherPath],TempResult, Result):-
@@ -243,8 +252,10 @@ continuePathFromPathway(FloorSource,Destination,[pathW(FloorSource, FloorDestina
 
 continuePathFromPathway(FloorSource,Destination,[elev(FloorSource, FloorDestination)|OtherPath],TempResult, Result):-
             preparePathwayInfo(FloorSource),
-            findPathFromPathwayToElevator(FloorSource,FloorDestination,TempPath),
+            getElevatorLocation(FloorSource),
+            findPathFromPathwayToElevator(FloorSource,FloorSource,TempPath),
             retractPathwayInfo(),
+            retractall(elevatorLocation(_,_,_)),
             continuePathFromElevator(FloorDestination,Destination,OtherPath,[TempPath|TempResult], Result).
 
 

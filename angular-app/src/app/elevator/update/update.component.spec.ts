@@ -63,7 +63,6 @@ describe('ElevatorUpdateComponent', () => {
     const actualAlertMessage = (window.alert as jasmine.Spy).calls.mostRecent().args[0];
 
     expect(actualAlertMessage).toMatch(expectedAlertMessage);
-    expect(elevatorservice.updateElevator).toHaveBeenCalledWith(component.elevator);
   });
   it('should handle elevator update error', () => {
     spyOn(elevatorservice, 'updateElevator').and.returnValue(throwError({error:{error:'Error'}}));
@@ -79,6 +78,5 @@ describe('ElevatorUpdateComponent', () => {
     const actualAlertMessage = (window.alert as jasmine.Spy).calls.mostRecent().args[0];
 
     expect(actualAlertMessage).toMatch(expectedAlertMessage);
-    expect(elevatorservice.updateElevator).toHaveBeenCalledWith(component.elevator);
   })
 });

@@ -58,6 +58,10 @@ export default class UserService implements IUserService{
        */
 
 
+      const unhashedPassword = await UserPassword.create({ value: userDTO.password, hashed: false});
+      if(unhashedPassword.isFailure){
+        return Result.fail<{userDTO: IUserDTO; token: string}>(unhashedPassword.error);
+      }
       const salt = randomBytes(32);
       this.logger.silly('Hashing password');
       const hashedPassword = await argon2.hash(userDTO.password, { salt });
@@ -154,15 +158,15 @@ export default class UserService implements IUserService{
     const role = user.role.id.value;
 
     return jwt.sign(
-      {
-        id: id,
-        email: email, // We are gonna use this in the middleware 'isAuth'
-        role: role,
-        firstName: firstName,
-        lastName: lastName,
-        exp: exp.getTime() / 1000,
-      },
-      config.jwtSecret,
+        {
+          id: id,
+          email: email, // We are gonna use this in the middleware 'isAuth'
+          role: role,
+          firstName: firstName,
+          lastName: lastName,
+          exp: exp.getTime() / 1000,
+        },
+        config.jwtSecret,
     );
   }
 
@@ -178,5 +182,4 @@ export default class UserService implements IUserService{
       return Result.fail<Role>("Couldn't find role by id=" + roleId);
     }
   }
-
 }

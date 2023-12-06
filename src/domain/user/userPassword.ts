@@ -66,20 +66,23 @@ export class UserPassword extends ValueObject<UserPasswordProps> {
   }
 
   public static isAppropriateLength (value: string): boolean {
-    return value.length >= 8;
+    return value.length >= 10;
   }
 
-  public static create (props: UserPasswordProps): Result<UserPassword> {
+  public static create(props: UserPasswordProps): Result<UserPassword> {
     const propsResult = Guard.againstNullOrUndefined(props.value, 'password');
 
     if (!propsResult.succeeded) {
       return Result.fail<UserPassword>(propsResult.message);
     } else {
-
       if (!props.hashed) {
-        if (!this.isAppropriateLength(props.value)
-        ) {
-          return Result.fail<UserPassword>('Password doesnt meet criteria [1 uppercase, 1 lowercase, one digit or symbol and 8 chars min].');
+        const hasUpperCase = /[A-Z]/.test(props.value);
+        const hasLowerCase = /[a-z]/.test(props.value);
+        const hasSymbol = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(props.value);
+        const hasNumber = /[0-9]/.test(props.value);
+
+        if (!this.isAppropriateLength(props.value) || !hasUpperCase || !hasLowerCase || !hasSymbol|| !hasNumber) {
+          return Result.fail<UserPassword>('Password must meet criteria: 1 uppercase, 1 lowercase, 1 digit, 1 symbol, and 10 characters minimum.');
         }
       }
 
@@ -89,4 +92,5 @@ export class UserPassword extends ValueObject<UserPasswordProps> {
       }));
     }
   }
+
 }

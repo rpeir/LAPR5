@@ -183,18 +183,16 @@ export default class PlanningService implements IPlanningService {
     const floor = floorOrError.getValue();
 
     const elevator = floor.floorMap.maze.elevators;
-    console.log(elevator);
     const elevatorLocation = PlanningElevatorLocation.create({
       floor: floorSource,
-      line: elevator[0][0],
-      column: elevator[0][1]
+      line: elevator[0],
+      column: elevator[1]
     });
     if (elevatorLocation.isFailure) {
       return Result.fail<IPlanningElevatorLocationDTO[]>(elevatorLocation.error);
     }
     elevatorsLocations.push(IPlanningElevatorLocationMapper.toDTO(elevatorLocation.getValue()));
 
-    console.log(elevatorsLocations);
     return Result.ok<IPlanningElevatorLocationDTO[]>(elevatorsLocations);
   }
 

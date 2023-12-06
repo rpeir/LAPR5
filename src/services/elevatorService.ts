@@ -11,60 +11,67 @@ import IBuildingRepo from "./IRepos/IBuildingRepo";
 import {IBuildingDTO} from "../dto/IBuildingDTO";
 import {UniqueEntityID} from "../core/domain/UniqueEntityID";
 import {error} from "winston";
+import { Floor } from "../domain/floor/floor";
+import { Building } from "../domain/building/building";
 
 @Service()
 export default class ElevatorService implements IElevatorService{
-    constructor(
-        @Inject(config.repos.elevator.name) private  elevatorRepo: IElevatorRepo,
-        @Inject(config.repos.floor.name) private floorRepo: IFloorRepo,
-        @Inject(config.repos.building.name) private buildingRepo: IBuildingRepo,
-    ) {
+  constructor(
+    @Inject(config.repos.elevator.name) private  elevatorRepo: IElevatorRepo,
+    @Inject(config.repos.floor.name) private floorRepo: IFloorRepo,
+    @Inject(config.repos.building.name) private buildingRepo: IBuildingRepo,
+  ) {
+  }
+
+  private async getNewElevatorCode(buildingDesignation: string): Promise<number> {
+    const latestElevatorCode = await this.elevatorRepo.findLatestElevatorByBuilding(buildingDesignation);
+    let newElevatorCode = 1;
+    if (latestElevatorCode != null) {
+      newElevatorCode = +latestElevatorCode.code + 1;
     }
-    public async createElevator(elevatorDTO: IElevatorDTO): Promise<Result<IElevatorDTO>> {
-        try{
+    return newElevatorCode;
+  }
+  public async createElevator(elevatorDTO: IElevatorDTO): Promise<Result<IElevatorDTO>> {
+    try{
 
-            const elevatorDesignation=elevatorDTO.designation;
-            const elevatorBuildingDesignation=elevatorDTO.buildingDesignation;
-            const building=await this.buildingRepo.findByDesignation(elevatorBuildingDesignation);
-            const latestElevatorCode=await this.elevatorRepo.findLatestElevatorByBuilding(building.designation);
-            let newElevatorCode=1;
-            if(latestElevatorCode!=null){
-                newElevatorCode=+latestElevatorCode.code+1;
-            }
+      const elevatorDesignation=elevatorDTO.designation;
+      const elevatorBuildingDesignation=elevatorDTO.buildingDesignation;
+      const building=await this.buildingRepo.findByDesignation(elevatorBuildingDesignation);
+      let newElevatorCode = this.getNewElevatorCode(building.designation);
 
-            const elevatorFloorsServed = await Promise.all(elevatorDTO.floorsServed.map(floor => this.floorRepo.findByBuildingAndNumber(building.id.toString(), +floor)));
+      const elevatorFloorsServed = await Promise.all(elevatorDTO.floorsServed.map(floor => this.floorRepo.findByBuildingAndNumber(building.id.toString(), +floor)));
 
-            try { elevatorFloorsServed.map(floor => {if (floor == null) throw new Error("Floor not found")});}
-            catch (err) {return Result.fail<IElevatorDTO>(err.message);
-            }
+      try { elevatorFloorsServed.map(floor => {if (floor == null) throw new Error("Floor not found")});}
+      catch (err) {return Result.fail<IElevatorDTO>(err.message);
+      }
 
-            const elevatorOrError = Elevator.create({
+      const elevatorOrError = Elevator.create({
 
-                code:newElevatorCode,
-                designation: elevatorDesignation,
-                buildingDesignation: elevatorBuildingDesignation,
-                floorsServed: elevatorFloorsServed,
-                brand: elevatorDTO.brand?elevatorDTO.brand:"",
-                modelE: elevatorDTO.modelE?elevatorDTO.modelE:"",
-                serialNumber: elevatorDTO.serialNumber?elevatorDTO.serialNumber:"",
-                description: elevatorDTO.description?elevatorDTO.description:"",
-            },new UniqueEntityID(elevatorDTO.id)
-            );
-            if(elevatorOrError.isFailure){
-                return  Result.fail<IElevatorDTO>(elevatorOrError.errorValue());
-            }
-            const elevatorResult=elevatorOrError.getValue();
-            try {
-              await this.elevatorRepo.save(elevatorResult);
-            } catch (error) {
-              return Result.fail<IElevatorDTO>(error);
-            }
-            const elevatorDTOResult =ElevatorMap.toDTO(elevatorResult) as IElevatorDTO;
-            return Result.ok<IElevatorDTO>(elevatorDTOResult);
-        } catch (err) {
-            throw err;
-        }
+          code:await newElevatorCode,
+          designation: elevatorDesignation,
+          buildingDesignation: elevatorBuildingDesignation,
+          floorsServed: elevatorFloorsServed,
+          brand: elevatorDTO.brand?elevatorDTO.brand:"",
+          modelE: elevatorDTO.modelE?elevatorDTO.modelE:"",
+          serialNumber: elevatorDTO.serialNumber?elevatorDTO.serialNumber:"",
+          description: elevatorDTO.description?elevatorDTO.description:"",
+        },new UniqueEntityID(elevatorDTO.id)
+      );
+      if(elevatorOrError.isFailure){
+        return  Result.fail<IElevatorDTO>(elevatorOrError.errorValue());
+      }
+      const elevatorResult=elevatorOrError.getValue();
+      try {
+        await this.elevatorRepo.save(elevatorResult);
+      } catch (error) {
+        return Result.fail<IElevatorDTO>(error);
+      }
+      const elevatorDTOResult =ElevatorMap.toDTO(elevatorResult) as IElevatorDTO;
+      return Result.ok<IElevatorDTO>(elevatorDTOResult);
+    } catch (err) {
+      throw err;
     }
+  }
   /*  public async listElevator(buildingDesignation:string): Promise<Result<IElevatorDTO[]>>{
         try {
           const listOrError = await this.elevatorRepo.listElevators(buildingDesignation);
@@ -97,53 +104,77 @@ export default class ElevatorService implements IElevatorService{
   }
 
   public async updateElevator(elevatorDTO: IElevatorDTO): Promise<Result<IElevatorDTO>> {
-        try {
-            let elevatorOrError=await this.elevatorRepo.findById(elevatorDTO.id);
-            if(elevatorOrError==null){
-                return Result.fail<IElevatorDTO>("Elevator not found");
-            }
-            let elevator=elevatorOrError;
-            elevatorDTO.designation=elevatorDTO.designation?elevatorDTO.designation:elevator.designation;
-
-            elevatorDTO.buildingDesignation=elevatorDTO.buildingDesignation?elevatorDTO.buildingDesignation:elevator.buildingDesignation;
-            const building=await this.buildingRepo.findByDesignation(elevator.buildingDesignation);
-            elevatorDTO.floorsServed=elevatorDTO.floorsServed?elevatorDTO.floorsServed:elevator.floorsServed.map(floor=>floor.floorNr.toString());
-            elevatorDTO.code=String(elevator.code);
-            elevatorDTO.brand=elevatorDTO.brand?elevatorDTO.brand:elevator.brand;
-            elevatorDTO.modelE=elevatorDTO.modelE?elevatorDTO.modelE:elevator.modelE;
-            elevatorDTO.serialNumber=elevatorDTO.serialNumber?elevatorDTO.serialNumber:elevator.serialNumber;
-            elevatorDTO.description=elevatorDTO.description?elevatorDTO.description:elevator.description;
-            let updatedElevator;
-            try {
-               updatedElevator = await ElevatorMap.toDomain(elevatorDTO);
-            } catch (error) {
-              return  Result.fail<IElevatorDTO>(error.message);
-            }
-
-            try {
-                 elevator=await this.elevatorRepo.save(updatedElevator);
-            } catch (error) {
-                return Result.fail<IElevatorDTO>(error);
-            }
-            const elevatorDTOResult =ElevatorMap.toDTO(elevator) as IElevatorDTO;
-            return Result.ok<IElevatorDTO>(elevatorDTOResult);
-        } catch (err){
-            throw Result.fail<IElevatorDTO>(err);
-        }
-    }
-  public async replaceElevator(elevatorDTO: IElevatorDTO): Promise<Result<IElevatorDTO>> {
     try {
       let elevatorOrError=await this.elevatorRepo.findById(elevatorDTO.id);
       if(elevatorOrError==null){
+        return Result.fail<IElevatorDTO>("Elevator not found");
+      }
+      let elevator=elevatorOrError;
+      let floorsServed : Floor[];
+      let building : Building;
+      let code : number;
+      if (elevatorDTO.buildingDesignation && elevatorDTO.buildingDesignation != elevator.buildingDesignation) {
+        building = await this.buildingRepo.findByDesignation(elevatorDTO.buildingDesignation);
+        code = await this.getNewElevatorCode(elevatorDTO.buildingDesignation);
+      } else if (elevatorDTO.floorsServed) {
+        building = await this.buildingRepo.findByDesignation(elevator.buildingDesignation);
+      }
+      if (building) {
+        floorsServed = await Promise.all(elevatorDTO.floorsServed.map(floor => this.floorRepo.findByBuildingAndNumber(building.id.toString(), +floor)));
+      }
+      let updatedElevator = elevator.update({
+        code: code ?? code,
+        designation: elevatorDTO.designation,
+        buildingDesignation: elevatorDTO.buildingDesignation,
+        floorsServed: floorsServed ?? floorsServed,
+        brand: elevatorDTO.brand,
+        modelE: elevatorDTO.modelE,
+        serialNumber: elevatorDTO.serialNumber,
+        description: elevatorDTO.description,
+      })
+
+      if(updatedElevator.isFailure){
+        return Result.fail<IElevatorDTO>(updatedElevator.errorValue());
+      } else {
+        elevator=updatedElevator.getValue();
+      }
+
+      elevator=await this.elevatorRepo.save(elevator);
+      const elevatorDTOResult =ElevatorMap.toDTO(elevator) as IElevatorDTO;
+      return Result.ok<IElevatorDTO>(elevatorDTOResult);
+    } catch (err){
+      throw Result.fail<IElevatorDTO>(err);
+    }
+  }
+  public async replaceElevator(elevatorDTO: IElevatorDTO): Promise<Result<IElevatorDTO>> {
+    try {
+      let elevator=await this.elevatorRepo.findById(elevatorDTO.id);
+      if(elevator==null){
         return await this.createElevator(elevatorDTO);
       }
-      elevatorDTO.code=elevatorOrError.code.toString();
-      const elevator=await ElevatorMap.toDomain(elevatorDTO);
-      try {
-        await this.elevatorRepo.save(elevator);
-      } catch (error) {
-        return Result.fail<IElevatorDTO>(error);
+      let code : number;
+      if (elevatorDTO.buildingDesignation != elevator.buildingDesignation) {
+        code = await this.getNewElevatorCode(elevatorDTO.buildingDesignation);
       }
+      const floorsServed = await Promise.all(elevatorDTO.floorsServed.map(floor => this.floorRepo.findByBuildingAndNumber(elevatorDTO.buildingDesignation, +floor)));
+      const updatedElevator = elevator.update({
+        code: code ?? code,
+        designation: elevatorDTO.designation,
+        buildingDesignation: elevatorDTO.buildingDesignation,
+        floorsServed: floorsServed,
+        brand: elevatorDTO.brand,
+        modelE: elevatorDTO.modelE,
+        serialNumber: elevatorDTO.serialNumber,
+        description: elevatorDTO.description,
+      })
+
+      if(updatedElevator.isFailure){
+        return Result.fail<IElevatorDTO>(updatedElevator.errorValue());
+      } else {
+        elevator=updatedElevator.getValue();
+      }
+
+      elevator=await this.elevatorRepo.save(elevator);
       const elevatorDTOResult =ElevatorMap.toDTO(elevator) as IElevatorDTO;
       return Result.ok<IElevatorDTO>(elevatorDTOResult);
     } catch (err){
