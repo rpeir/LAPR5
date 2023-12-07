@@ -1,9 +1,12 @@
 prepare:-
-asserta(nrDeGeracoes(6)),
+asserta(nrDeGeracoes(8)),
 asserta(populacao(8)),
 asserta(prob_cruzamento(0.5)),
 asserta(prob_mutacao(0.25)),
 asserta(nrDeTarefas(5)),
+asserta(taxa_elitismo(0.5)),
+asserta(custoIdeal(64)),
+asserta(maxEstagnacoes(4)),
 asserta(tarefa(t1,"A_1","B_1",_,_,10)),
 asserta(tarefa(t2,"B_1","C_1",_,_,8)),
 asserta(tarefa(t3,"D_1","B_1",_,_,12)),
