@@ -1423,7 +1423,7 @@ export default class ThumbRaiser {
             );
           }
           if (
-            this.maze.collision(
+            this.maze.collisionWithWall(
               this.collisionDetectionParameters.method,
               position,
               this.collisionDetectionParameters.method !== 'obb-aabb' ? this.player.radius : this.player.halfSize,
@@ -1432,6 +1432,16 @@ export default class ThumbRaiser {
           ) {
             this.audio.play(this.audio.deathClips, false);
             this.animations.fadeToAction('animation.robot-runner.death', 0.2);
+          }
+          if (
+            this.maze.collisionWithDoor(
+              this.collisionDetectionParameters.method,
+              position,
+              this.collisionDetectionParameters.method !== 'obb-aabb' ? this.player.radius : this.player.halfSize,
+              directionRad - this.player.defaultDirection,
+            )
+          ) {
+            this.audio.play(this.audio.deathClips, false);
           } else {
             if (playerTurned) {
               this.player.direction = directionDeg;
