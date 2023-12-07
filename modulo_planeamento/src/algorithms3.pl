@@ -13,16 +13,23 @@
 :- dynamic prob_cruzamento/1.
 :- dynamic prob_mutacao/1.
 :- dynamic nrDeGeracoes/1.
+:-dynamic taxa_elitismo/1.
+:-dynamic custoIdeal/1.
+:-dynamic maxEstagnacoes/1.
+:-dynamic lastMin/1.
+:-dynamic nrEstagnacoes/1.
 
 %======================================
-gera:-
+gera(Resultado):-
      gera_populacao(Populacao),
      write('Pop='),write(Populacao),nl,
      avalia_populacao(Populacao,PopulacaoAvaliada),
      write('PopAv='),write(PopulacaoAvaliada),nl,
      ordena_populacao(PopulacaoAvaliada,PopulacaoOrdenada),
      nrDeGeracoes(NrGeracoes),
-     gera_geracao(0,NrGeracoes,PopulacaoOrdenada).
+     asserta(nrEstagnacoes(0)),
+     asserta(lastMin(0)),
+     gera_geracao(0,NrGeracoes,PopulacaoOrdenada,Resultado).
 
 
 %======================================
@@ -96,18 +103,102 @@ btroca([X|L1],[X|L2]):-btroca(L1,L2).
 
 
 %======================================
-gera_geracao(G,G,Populacao):-!,
-      write('Geracao '),write(G), write(':'), nl, write(Populacao),nl.
+verificarEstagnacao([_*V|_]):-
+      lastMin(Min),
+      (
+        (V=Min,
+        nrEstagnacoes(NrEstagnacoes),
+        NrEstagnacoes1 is NrEstagnacoes + 1,
+        retractall(nrEstagnacoes(_)),
+        assert(nrEstagnacoes(NrEstagnacoes1)))
+      ;
+        ((retractall(nrEstagnacoes(_)),
+        assert(nrEstagnacoes(0)),
+        retractall(lastMin(_)),
+        assert(lastMin(V))))
+      ).
 
-gera_geracao(N,G,Populacao):-
+
+
+gera_geracao(G,_,[Individuo*V|Resto],[Individuo*V|Resto]):-
+      lastMin(Min),
+      V=Min,
+      nrEstagnacoes(NrEstagnacoes),
+      maxEstagnacoes(MaxEstagnacoes),
+      NrEstagnacoes= MaxEstagnacoes,!,
+      write('Geracao '),write(G), write(':'), nl,write([Individuo*V|Resto]),nl,
+      write('Estagnacao atingida: '),write(NrEstagnacoes),nl,!.
+
+
+gera_geracao(G,_,[Individuo*V|Resto],[Individuo*V|Resto]):-custoIdeal(CustoIdeal),V=<CustoIdeal,!,
+      write('Geracao '),write(G), write(':'), nl,write([Individuo*V|Resto]),nl,
+      write('Custo Ideal atingido: '), write(V),nl,!.
+
+gera_geracao(G,G,Populacao,Populacao):-!,
+      write('Geracao '),write(G), write(':'), nl, write(Populacao),nl,
+      write('Numero maximo de geracoes atingido: '), write(G),nl,!.
+
+gera_geracao(N,G,Populacao,Resultado):-
       write('Geracao '),write(N), write(':'), nl, write(Populacao),nl,
-      cruzamento(Populacao,PopulacaoCruzada),
+      random_permutation(Populacao,PopulacaoEmbaralhada),
+      cruzamento(PopulacaoEmbaralhada,PopulacaoCruzada),
       mutacao(PopulacaoCruzada,PopulacaoMutada),
       avalia_populacao(PopulacaoMutada,PopulacaoAvaliada),
       ordena_populacao(PopulacaoAvaliada,PopulacaoOrdenada),
+      junta_sem_repetidos(PopulacaoEmbaralhada,PopulacaoOrdenada,PopulacaoMaisNovaPopulacao),
+      ordena_populacao(PopulacaoMaisNovaPopulacao,PopulacaoMaisNovaPopulacaoOrdenada),
+      taxa_elitismo(Percentual),
+      populacao(Qtd),
+      nrDePassagens(Qtd,Percentual,NrPassagens),
+      separar_n_elementos(PopulacaoMaisNovaPopulacaoOrdenada, NrPassagens, PrimeiroMelhor, Resto),
+      QtdRestante is Qtd - NrPassagens,
+      selecionarResto(Resto,QtdRestante,Restantes),
+      append(PrimeiroMelhor, Restantes, ProximaPopulacao),
       N1 is N + 1,
-      gera_geracao(N1,G,PopulacaoOrdenada).
+      verificarEstagnacao(ProximaPopulacao),
+      gera_geracao(N1,G,ProximaPopulacao,Resultado).
 
+
+junta_sem_repetidos(Lista1, Lista2, Resultado) :-
+    append(Lista1, Lista2, ListaConcatenada),
+    remove_repetidos(ListaConcatenada, Resultado).
+
+
+remove_repetidos([], []).
+
+remove_repetidos([X | Resto], SemRepetidos) :-
+    member(X, Resto),!,
+    remove_repetidos(Resto, SemRepetidos).
+
+remove_repetidos([X | Resto], [X | SemRepetidos]) :-
+    remove_repetidos(Resto, SemRepetidos).
+
+nrDePassagens(Total, Percentual, Numero) :-
+    Percentual >= 0, Percentual =< 1,
+    ResultadoBruto is Total * Percentual,
+    Numero is round(ResultadoBruto).
+
+separar_n_elementos(ListaOriginal, N, ListaSeparada, Resto) :-
+    length(ListaSeparada, N), % Garante que a ListaSeparada tenha comprimento N
+    append(ListaSeparada, Resto, ListaOriginal).
+
+selecionarResto(Resto,QtdRestante,Restantes):-
+    multiplicarPorRandom(Resto,RandomResto),
+    ordena_populacao(RandomResto,RandomRestoOrdenado),
+    removerMultiplicaoRandom(RandomRestoOrdenado,RestoOrdenado),
+    avalia_populacao(RestoOrdenado,PopulacaoAvaliada),
+    ordena_populacao(PopulacaoAvaliada,PopulacaoOrdenada),
+    separar_n_elementos(PopulacaoOrdenada, QtdRestante, Restantes, _).
+
+multiplicarPorRandom([],[]).
+multiplicarPorRandom([Individuo*V|Resto],[Individuo*V1|Resto1]):-
+      random(0.0,1.0,Random),
+      V1 is V * Random,
+      multiplicarPorRandom(Resto,Resto1).
+
+removerMultiplicaoRandom([],[]).
+removerMultiplicaoRandom([Individuo*_|Resto],[Individuo|Resto1]):-
+      removerMultiplicaoRandom(Resto,Resto1).
 %======================================
 gerar_pontos_cruzamento(P1,P2):-
       gerar_pontos_cruzamento1(P1,P2).
