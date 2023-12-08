@@ -262,7 +262,7 @@ export default class Maze extends THREE.Group {
   }
 
   // Detect collisions
-  collision(method, position, halfSize, direction) {
+  collisionWithWall(method, position, halfSize, direction) {
     const indices = this.cartesianToCell(position);
     if (method !== 'obb-aabb') {
       if (
@@ -368,6 +368,169 @@ export default class Maze extends THREE.Group {
         (indices[1] > 0 &&
           (this.wallAndCornerCollision(indices, [0, -1], 0, obb, 'northwest corner (WE-oriented wall)') || // Collision with northwest corner (WE-oriented wall)
             this.wallAndCornerCollision(indices, [1, -1], 0, obb, 'southwest corner (WE-oriented wall)'))) // Collision with southwest corner (WE-oriented wall)
+      ) {
+        return true;
+      }
+      // No collision
+      return false;
+    }
+  }
+
+  // DONE - Detect collision with corners doors (method: BC/AABB)
+  doorCornerCollision(indices, offsets, orientation, position, delta, radius, name) {
+    const row = indices[0] + offsets[0];
+    const column = indices[1] + offsets[1];
+    if (this.map[row][column] === 5 - orientation || this.map[row][column] === 6) {
+      const x = position.x - (this.cellToCartesian([row, column]).x + delta.x * this.scale.x);
+      const z = position.z - (this.cellToCartesian([row, column]).z + delta.z * this.scale.z);
+      if (x * x + z * z < radius * radius) {
+        console.log('Collision with ' + name + '.');
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // DONE - Detect collision with doors (method: BC/AABB)
+  doorCollision(indices, offsets, orientation, position, delta, radius, name) {
+    const row = indices[0] + offsets[0];
+    const column = indices[1] + offsets[1];
+    if (this.map[row][column] === 5 - orientation || this.map[row][column] === 6) {
+      if (orientation !== 0) {
+        if (Math.abs(position.x - (this.cellToCartesian([row, column]).x + delta.x * this.scale.x)) < radius) {
+          console.log('Collision with ' + name + '.');
+          return true;
+        }
+      } else {
+        if (Math.abs(position.z - (this.cellToCartesian([row, column]).z + delta.z * this.scale.z)) < radius) {
+          console.log('Collision with ' + name + '.');
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  // DONE - Detect collision with doors (method: OBB/AABB)
+  doorAndCornerCollision(indices, offsets, orientation, obb, name) {
+    const row = indices[0] + offsets[0];
+    const column = indices[1] + offsets[1];
+    if (this.map[row][column] === 5 - orientation || this.map[row][column] === 6) {
+      if (obb.intersectsBox3(this.aabb[row][column][orientation])) {
+        console.log('Collision with ' + name + '.');
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // DONE - Detect collisions with doors
+  collisionWithDoor(method, position, halfSize, direction) {
+    const indices = this.cartesianToCell(position);
+    if (method !== 'obb-aabb') {
+      if (
+        this.doorCollision(indices, [0, 0], 0, position, { x: 0.0, z: -0.475 }, halfSize, 'north door') || // Collision with north wall
+        this.doorCollision(indices, [0, 0], 1, position, { x: -0.475, z: 0.0 }, halfSize, 'west door') || // Collision with west wall
+        this.doorCollision(indices, [1, 0], 0, position, { x: 0.0, z: -0.525 }, halfSize, 'south door') || // Collision with south wall
+        this.doorCollision(indices, [0, 1], 1, position, { x: -0.525, z: 0.0 }, halfSize, 'east door') || // Collision with east wall
+        this.doorCornerCollision(
+          indices,
+          [1, 0],
+          1,
+          position,
+          { x: -0.475, z: -0.5 },
+          halfSize,
+          'southwest corner (NS-oriented door)',
+        ) || // Collision with southwest corner (NS-oriented door)
+        this.doorCornerCollision(
+          indices,
+          [1, 1],
+          0,
+          position,
+          { x: -0.5, z: -0.525 },
+          halfSize,
+          'southeast corner (WE-oriented door)',
+        ) || // Collision with southeast corner (WE-oriented door)
+        this.doorCornerCollision(
+          indices,
+          [1, 1],
+          1,
+          position,
+          { x: -0.525, z: -0.5 },
+          halfSize,
+          'southeast corner (NS-oriented door)',
+        ) || // Collision with southeast corner (NS-oriented door)
+        this.doorCornerCollision(
+          indices,
+          [0, 1],
+          0,
+          position,
+          { x: -0.5, z: -0.475 },
+          halfSize,
+          'northeast corner (WE-oriented door)',
+        ) || // Collision with northeast corner (WE-oriented door)
+        (indices[0] > 0 &&
+          (this.doorCornerCollision(
+              indices,
+              [-1, 1],
+              1,
+              position,
+              { x: -0.525, z: 0.5 },
+              halfSize,
+              'northeast corner (NS-oriented door)',
+            ) || // Collision with northeast corner (NS-oriented door)
+            this.doorCornerCollision(
+              indices,
+              [-1, 0],
+              1,
+              position,
+              { x: -0.475, z: 0.5 },
+              halfSize,
+              'northwest corner (NS-oriented door)',
+            ))) || // Collision with northwest corner (NS-oriented door)
+        (indices[1] > 0 &&
+          (this.doorCornerCollision(
+              indices,
+              [0, -1],
+              0,
+              position,
+              { x: 0.5, z: -0.475 },
+              halfSize,
+              'northwest corner (WE-oriented door)',
+            ) || // Collision with northwest corner (WE-oriented door)
+            this.doorCornerCollision(
+              indices,
+              [1, -1],
+              0,
+              position,
+              { x: 0.5, z: -0.525 },
+              halfSize,
+              'southwest corner (WE-oriented door)',
+            ))) // Collision with southwest corner (WE-oriented door)
+      ) {
+        return true;
+      }
+      // No collision
+      return false;
+    } else {
+      // Create the object's oriented bounding box (OBB) in 3D space and set its orientation
+      const obb = new OBB(position, halfSize);
+      obb.applyMatrix4(new THREE.Matrix4().makeRotationY(direction));
+      if (
+        this.doorAndCornerCollision(indices, [0, 0], 0, obb, 'north door') || // Collision with north door
+        this.doorAndCornerCollision(indices, [0, 0], 1, obb, 'west door') || // Collision with west door
+        this.doorAndCornerCollision(indices, [1, 0], 0, obb, 'south door') || // Collision with south door
+        this.doorAndCornerCollision(indices, [0, 1], 1, obb, 'east door') || // Collision with east door
+        this.doorAndCornerCollision(indices, [1, 0], 1, obb, 'southwest corner (NS-oriented door)') || // Collision with southwest corner (NS-oriented door)
+        this.doorAndCornerCollision(indices, [1, 1], 0, obb, 'southeast corner (WE-oriented door)') || // Collision with southeast corner (WE-oriented door)
+        this.doorAndCornerCollision(indices, [1, 1], 1, obb, 'southeast corner (NS-oriented door)') || // Collision with southeast corner (NS-oriented door)
+        this.doorAndCornerCollision(indices, [0, 1], 0, obb, 'northeast corner (WE-oriented door)') || // Collision with northeast corner (WE-oriented door)
+        (indices[0] > 0 &&
+          (this.doorAndCornerCollision(indices, [-1, 1], 1, obb, 'northeast corner (NS-oriented door)') || // Collision with northeast corner (NS-oriented door)
+            this.doorAndCornerCollision(indices, [-1, 0], 1, obb, 'northwest corner (NS-oriented door)'))) || // Collision with northwest corner (NS-oriented door)
+        (indices[1] > 0 &&
+          (this.doorAndCornerCollision(indices, [0, -1], 0, obb, 'northwest corner (WE-oriented door)') || // Collision with northwest corner (WE-oriented door)
+            this.doorAndCornerCollision(indices, [1, -1], 0, obb, 'southwest corner (WE-oriented door)'))) // Collision with southwest corner (WE-oriented door)
       ) {
         return true;
       }

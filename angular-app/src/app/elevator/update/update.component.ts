@@ -46,6 +46,13 @@ export class ElevatorUpdateComponent implements OnInit {
     });
   }
 
+  listFloorsOfChangedBuilding(building:any) {
+    if (this.elevator != undefined) {
+      this.elevator.floorsServed = [];
+      this.listFloorsOfBuildingDesignation(building);
+    }
+  }
+
   listFloorsOfBuilding() {
     this.listFloorsOfBuildingDesignation(this.building?.designation);
   }

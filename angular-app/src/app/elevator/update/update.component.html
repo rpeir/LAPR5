@@ -34,7 +34,7 @@
 
         <mat-form-field data-cy="buildingDesignation" class="full-width" *ngIf="elevator">
           <mat-label>Select a building</mat-label>
-          <mat-select [(ngModel)]="elevator.buildingDesignation" name="buildingDesignation" (ngModelChange)="listFloorsOfBuildingDesignation($event)">
+          <mat-select [(ngModel)]="elevator.buildingDesignation" name="buildingDesignation" (ngModelChange)="listFloorsOfChangedBuilding($event)">
             <mat-option id="{{building.designation}}" *ngFor="let building of buildings" [value]="building.designation">
               {{building.designation}}
             </mat-option>
@@ -51,9 +51,9 @@
         </mat-form-field>
 
 
-        <mat-form-field data-cy="brand" class="full-width" *ngIf="elevator">
+        <mat-form-field class="full-width" *ngIf="elevator">
           <mat-label>Select a brand</mat-label>
-          <input matInput [(ngModel)]="elevator.brand" name="brand">
+          <input matInput [(ngModel)]="elevator.brand" name="brand" data-cy="brand">
         </mat-form-field>
 
         <mat-form-field data-cy="modelE" class="full-width" *ngIf="elevator">

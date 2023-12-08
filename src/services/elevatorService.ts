@@ -121,6 +121,11 @@ export default class ElevatorService implements IElevatorService{
       }
       if (building) {
         floorsServed = await Promise.all(elevatorDTO.floorsServed.map(floor => this.floorRepo.findByBuildingAndNumber(building.id.toString(), +floor)));
+        for (let i = 0; i < floorsServed.length; i++) {
+          if (floorsServed[i] == null) {
+            return Result.fail<IElevatorDTO>(`Floor ${elevatorDTO.floorsServed[i]} not found`);
+          }
+        }
       }
       let updatedElevator = elevator.update({
         code: code ?? code,
