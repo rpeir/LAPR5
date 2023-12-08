@@ -9,6 +9,7 @@ import { celebrate, Joi } from 'celebrate';
 import winston = require('winston');
 import config from "../../../config";
 import IBuildingController from "../../controllers/IControllers/IBuildingController";
+import {IUserRequestDTO} from "../../dto/IUserRequestDTO";
 
 var user_controller = require('../../controllers/userController');
 
@@ -102,8 +103,44 @@ export default (app: Router) => {
       return next(e);
     }
   });
-
   app.use('/users', route);
 
   route.get('/me', middlewares.isAuth, middlewares.attachCurrentUser, user_controller.getMe);
+
+  app.use('/auth', route);
+
+  route.post(
+      '/signupRequest',
+      celebrate({
+        body: Joi.object({
+          firstName: Joi.string().required(),
+          lastName: Joi.string().required(),
+          phoneNumber: Joi.string().required(),
+          email: Joi.string().required(),
+          password: Joi.string().required(),
+          nif: Joi.string().optional(),
+        }),
+      }),
+      async (req: Request, res: Response, next: NextFunction) => {
+        const logger = Container.get('logger') as winston.Logger;
+        logger.debug('Calling Sign-Up endpoint with body: %o', req.body )
+
+        try {
+          const authServiceInstance = Container.get(AuthService);
+          const userOrError = await authServiceInstance.userSignUpRequest(req.body as IUserRequestDTO);
+
+          if (userOrError.isFailure) {
+            logger.debug(userOrError.errorValue())
+            return res.status(401).send(userOrError.errorValue());
+          }
+
+          const userDTO = userOrError.getValue();
+
+          return res.status(201).json(userDTO);
+        } catch (e) {
+          //logger.error('🔥 error: %o', e);
+          return next(e);
+        }
+      },
+  );
 };

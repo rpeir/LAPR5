@@ -38,6 +38,8 @@ import {
 } from "./path/get-by-optimization-criteria/get-by-optimization-criteria.component";
 import { AdministradorDeSistemaComponent } from './administrador-de-sistema/administrador-de-sistema.component';
 import {CreateManagerComponent} from "./user/create-manager/create-manager.component";
+import {UtenteComponent} from "./utente/utente.component";
+import {CreateUserComponent}from "./user/create-user/create-user.component"
 
 
 
@@ -79,7 +81,10 @@ const routes: Routes = [
   //{ path: 'map-viewer', loadChildren: () => import('./lazyLoadTest/Modules/map-viewer-lazy/map-viewer-lazy.module').then(m => m.MapViewerLazyModule) },
   { path: 'path/optimization-criteria', component: GetByOptimizationCriteriaComponent},
   { path: 'system-administrator', component: AdministradorDeSistemaComponent},
-  {path: 'system-administrator/create-manager', component: CreateManagerComponent}
+  {path: 'system-administrator/create-manager', component: CreateManagerComponent},
+  {path: 'utente',component: UtenteComponent},
+  {path:'user/create-user',component:CreateUserComponent}
+
 ];
 
 @NgModule({

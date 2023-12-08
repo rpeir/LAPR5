@@ -18,7 +18,7 @@ export class LoginComponent {
   }
 
   goToUtente() {
-    this.router.navigate(['/user']);
+    this.router.navigate(['/utente']);
   }
 
   goToAdministratorDeSistema() {

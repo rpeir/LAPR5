@@ -62,6 +62,7 @@
     "mongoose": "^6.1.0",
     "morgan": "^1.9.1",
     "nodemon": "^3.0.1",
+    "phone": "^3.1.41",
     "reflect-metadata": "^0.1.13",
     "shallow-equal-object": "^1.1.1",
     "sinon": "^7.5.0",

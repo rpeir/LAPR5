@@ -15,6 +15,11 @@ export default async ({ expressApp }) => {
     schema: "../persistence/schemas/userSchema"
   };
 
+  const userRequestSchema={
+    name:"userRequestSchema",
+    schema:"../persistence/schemas/userRequestSchema"
+  }
+
   const roleSchema = {
     // compare with the approach followed in repos and services
     name: "roleSchema",
@@ -107,6 +112,10 @@ export default async ({ expressApp }) => {
     name: config.repos.user.name,
     path: config.repos.user.path
   };
+  const userRequestRepo={
+    name: config.repos.userRequest.name,
+    path: config.repos.userRequest.path,
+  }
 
   const robotTypeRepo = {
     name: config.repos.robotType.name,
@@ -200,7 +209,8 @@ export default async ({ expressApp }) => {
       floorSchema,
       elevatorSchema,
       pathwaySchema,
-      roomSchema
+      roomSchema,
+      userRequestSchema
     ],
 
     controllers: [
@@ -224,7 +234,8 @@ export default async ({ expressApp }) => {
       floorRepo,
       elevatorRepo,
       pathwayRepo,
-      roomRepo
+      roomRepo,
+      userRequestRepo
     ],
 
     services: [

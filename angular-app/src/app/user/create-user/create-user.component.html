@@ -1,0 +1,44 @@
+
+        <body>
+        <div class="container">
+            <h2 class="text-center"> Create User </h2>
+            <br>
+            <form    (ngSubmit)="createUserRequest()">
+                <mat-form-field  data-cy="firstName" class="full-width">
+                    <mat-label>Insert users's first name</mat-label>
+                    <input matInput [(ngModel)]="userRequest.firstName" name="firstName" required>
+                </mat-form-field>
+
+                <mat-form-field  data-cy="lastName" class="full-width">
+                    <mat-label>Insert userś's last name</mat-label>
+                    <input matInput [(ngModel)]="userRequest.lastName" name="lastName" required>
+                </mat-form-field>
+
+              <mat-form-field  data-cy="phoneNumber" class="full-width">
+                <mat-label>Insert the user's phone number</mat-label>
+                <input matInput [(ngModel)]="userRequest.phoneNumber" name="phoneNumber" required>
+              </mat-form-field>
+
+                <mat-form-field  data-cy="email" class="full-width">
+                    <mat-label>Insert the users's e-mail</mat-label>
+                    <input matInput [(ngModel)]="userRequest.email" name="email" required>
+                </mat-form-field>
+
+              <mat-form-field  data-cy="nif" class="full-width">
+                <mat-label>Insert the users's nif</mat-label>
+                <input matInput [(ngModel)]="userRequest.nif" name="nif" required>
+              </mat-form-field>
+
+
+
+                <mat-form-field  data-cy="password" class="full-width">
+                    <mat-label>Insert the user's password</mat-label>
+                    <input matInput [(ngModel)]="userRequest.password" name="password" required>
+                </mat-form-field>
+                <div>
+                    <input type="submit" value="Create">
+                </div>
+            </form>
+        </div>
+        </body>
+

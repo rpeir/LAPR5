@@ -107,6 +107,11 @@ export default {
       path: '../repos/userRepo',
     },
 
+    userRequest:{
+      name:'userRequestRepo',
+      path:'../repos/userRequestRepo'
+    },
+
     robotType: {
       name: 'RobotTypeRepo',
       path: '../repos/robotTypeRepo',

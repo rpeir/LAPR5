@@ -70,6 +70,9 @@ import {
   AdministradorDeSistemaToolbarComponent
 } from "./administrador-de-sistema-toolbar/administrador-de-sistema-toolbar.component";
 import { CreateManagerComponent } from "./user/create-manager/create-manager.component";
+import {UtenteComponent} from "./utente/utente.component";
+import {CreateUserComponent} from "./user/create-user/create-user.component";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -123,28 +126,30 @@ import { CreateManagerComponent } from "./user/create-manager/create-manager.com
     GestorDeFrotaToolbarComponent,
     GestorDeTarefasToolbarComponent,
     AdministradorDeSistemaComponent,AdministradorDeSistemaToolbarComponent,
-    CreateManagerComponent
+    CreateManagerComponent,
+    UtenteComponent,
+    CreateUserComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatMenuModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    FormsModule,
-    HttpClientModule,
-    MatInputModule,
-    MatSelectModule,
-    MatTooltipModule,
-    MatCardModule,
-    MatSidenavModule,
-    MatListModule,
-    MatProgressSpinnerModule,
-    MatCheckboxModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatMenuModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        FormsModule,
+        HttpClientModule,
+        MatInputModule,
+        MatSelectModule,
+        MatTooltipModule,
+        MatCardModule,
+        MatSidenavModule,
+        MatListModule,
+        MatProgressSpinnerModule,
+        MatCheckboxModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
