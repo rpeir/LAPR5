@@ -19,6 +19,9 @@
 :-dynamic lastMin/1.
 :-dynamic nrEstagnacoes/1.
 
+custoElevator(15).
+custoPathway(10).
+
 %======================================
 gera(Resultado):-
      gera_populacao(Populacao),
@@ -316,3 +319,38 @@ mutacao22([G|Individuo],P1,P2,[G|NIndividuo]):-
 mutacao23(G1,1,[G2|Individuo],G2,[G1|Individuo]):-!.
 mutacao23(G1,P,[G|Individuo],G2,[G|NIndividuo]):-P1 is P - 1,
         mutacao23(G1,P1,Individuo,G2,NIndividuo).
+
+
+%=====================================
+calcularCusto(TarefaId,FloorSource, FloorDestination, RoomSource, RoomDestination):-
+        best_path_less_elevators(FloorSource,FloorDestination,Path),!,
+        retrivePathFromPathAndBuildings(Path, ListPath),
+        count(ListPath,NElev,NPathway),
+        custoElevator(ElevatorCost),
+        custoPathway(PathwayCost),
+        startPath(RoomSource,RoomDestination,ListPath,PathInside),!,
+        calcularCustoOfPath(PathInside, Custo),
+        CustoTotal is Custo + (NElev * ElevatorCost) + (PathwayCost *  NPathway),
+        asserta(tarefa(TarefaId,FloorSource,FloorDestination,RoomSource,RoomDestination,CustoTotal)).
+
+calcularCustoOfPath([], 0).
+calcularCustoOfPath([FloorPath|Rest], Result):-
+        calcularCustoOfPath(Rest, Result1),
+        length(FloorPath, Result2),
+        Result is Result1 + Result2.
+
+
+calcularCustoEntreTarefas(TarefaId1,TarefaId2):-
+        tarefa(TarefaId1,_,FloorDestination,_,RoomDestination,_),
+        tarefa(TarefaId2,FloorSource2,_,RoomSource2,_,_),
+        best_path_less_elevators(FloorDestination,FloorSource2,Path),!,
+        retrivePathFromPathAndBuildings(Path, ListPath),
+        count(ListPath,NElev,NPathway),
+        custoElevator(ElevatorCost),
+        custoPathway(PathwayCost),
+        startPath(RoomDestination,RoomSource2,ListPath,PathInside),!,
+        calcularCustoOfPath(PathInside, Custo),
+        CustoTotal is Custo + (NElev * ElevatorCost) + (PathwayCost *  NPathway),
+        asserta(diferencaEntreTarefas(TarefaId1,TarefaId2,CustoTotal)).
+
+retrivePathFromPathAndBuildings([_,ListPath],ListPath).
