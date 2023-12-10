@@ -26,7 +26,7 @@ custoPathway(10).
 gera(Resultado):-
      gera_populacao(Populacao),
      write('Pop='),write(Populacao),nl,
-     avalia_populacao(Populacao,PopulacaoAvaliada),
+     avalia_populacao(Populacao,PopulacaoAvaliada),!,
      write('PopAv='),write(PopulacaoAvaliada),nl,
      ordena_populacao(PopulacaoAvaliada,PopulacaoOrdenada),
      nrDeGeracoes(NrGeracoes),
@@ -146,7 +146,7 @@ gera_geracao(N,G,Populacao,Resultado):-
       random_permutation(Populacao,PopulacaoEmbaralhada),
       cruzamento(PopulacaoEmbaralhada,PopulacaoCruzada),
       mutacao(PopulacaoCruzada,PopulacaoMutada),
-      avalia_populacao(PopulacaoMutada,PopulacaoAvaliada),
+      avalia_populacao(PopulacaoMutada,PopulacaoAvaliada),!,
       ordena_populacao(PopulacaoAvaliada,PopulacaoOrdenada),
       junta_sem_repetidos(PopulacaoEmbaralhada,PopulacaoOrdenada,PopulacaoMaisNovaPopulacao),
       ordena_populacao(PopulacaoMaisNovaPopulacao,PopulacaoMaisNovaPopulacaoOrdenada),
@@ -189,7 +189,7 @@ selecionarResto(Resto,QtdRestante,Restantes):-
     multiplicarPorRandom(Resto,RandomResto),
     ordena_populacao(RandomResto,RandomRestoOrdenado),
     removerMultiplicaoRandom(RandomRestoOrdenado,RestoOrdenado),
-    avalia_populacao(RestoOrdenado,PopulacaoAvaliada),
+    avalia_populacao(RestoOrdenado,PopulacaoAvaliada),!,
     ordena_populacao(PopulacaoAvaliada,PopulacaoOrdenada),
     separar_n_elementos(PopulacaoOrdenada, QtdRestante, Restantes, _).
 
@@ -354,3 +354,15 @@ calcularCustoEntreTarefas(TarefaId1,TarefaId2):-
         asserta(diferencaEntreTarefas(TarefaId1,TarefaId2,CustoTotal)).
 
 retrivePathFromPathAndBuildings([_,ListPath],ListPath).
+
+
+%======================================
+% gerar ataravez de Permutacoes
+%======================================
+
+
+geraComPermutacoes(Resultado):-
+      findall(Tarefa,tarefa(Tarefa,_,_,_,_,_),ListaTarefas),
+      findall(Permutacao,permutation(ListaTarefas,Permutacao),ListaPermutacoes),
+      avalia_populacao(ListaPermutacoes,PopulacaoAvaliada),!,
+      ordena_populacao(PopulacaoAvaliada,[Resultado|_]).
