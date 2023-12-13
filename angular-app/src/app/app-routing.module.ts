@@ -40,8 +40,7 @@ import { AdministradorDeSistemaComponent } from './administrador-de-sistema/admi
 import {CreateManagerComponent} from "./user/create-manager/create-manager.component";
 import {UtenteComponent} from "./utente/utente.component";
 import {CreateUserComponent}from "./user/create-user/create-user.component"
-
-
+import {RegisterUserComponent} from "./user/register-user/register-user.component";
 
 
 const routes: Routes = [
@@ -83,8 +82,8 @@ const routes: Routes = [
   { path: 'system-administrator', component: AdministradorDeSistemaComponent},
   {path: 'system-administrator/create-manager', component: CreateManagerComponent},
   {path: 'utente',component: UtenteComponent},
-  {path:'user/create-user',component:CreateUserComponent}
-
+  {path:'user/create-user',component:CreateUserComponent},
+  {path: 'system-administrator/register-user',component:RegisterUserComponent},
 ];
 
 @NgModule({

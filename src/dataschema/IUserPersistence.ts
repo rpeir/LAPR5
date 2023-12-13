@@ -6,4 +6,6 @@ export interface IUserPersistence {
 	password: string;
 	salt: string;
 	role: string
+  phoneNumber: string;
+  nif?:string;
   }

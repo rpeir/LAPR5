@@ -23,7 +23,7 @@ export class PhoneNumber extends ValueObject<PhoneProps>{
     const valueCheck=phone(props.value, {country: 'PT'});
     if(!valueCheck.isValid){
       return Result.fail<PhoneNumber>("Phone Number is not valid")
-    }
+  }
     if (!guardResult.succeeded) {
       return Result.fail<PhoneNumber>(guardResult.message)
     } else {
