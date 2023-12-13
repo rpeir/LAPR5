@@ -26,6 +26,7 @@ import {UserRequest} from "../domain/user/userRequest";
 import IUserRequestRepo from "./IRepos/IUserRequestRepo";
 import {UserRequestMap} from "../mappers/UserRequestMap";
 import {IUserRequestDTO} from "../dto/IUserRequestDTO";
+import UserRequestRepo from "../repos/userRequestRepo";
 @Service()
 export default class UserService implements IUserService{
   constructor(
@@ -38,7 +39,7 @@ export default class UserService implements IUserService{
 
   public async SignUp(userDTO: IUserDTO): Promise<Result<{ userDTO: IUserDTO, token: string }>> {
     try {
-      const userDocument = await this.userRepo.findByEmail( userDTO.email );
+      const userDocument = await this.userRepo.findByEmail( UserEmail.create(userDTO.email).getValue());
       const found = !!userDocument;
 
       if (found) {
@@ -121,7 +122,7 @@ export default class UserService implements IUserService{
 
   public async SignIn(email: string, password: string): Promise<Result<{ userDTO: IUserDTO, token: string }>> {
 
-    const user = await this.userRepo.findByEmail( email );
+    const user = await this.userRepo.findByEmail( UserEmail.create(email).getValue());
 
     if (!user) {
       throw new Error('User not registered');
@@ -195,7 +196,7 @@ export default class UserService implements IUserService{
   }
   public async userSignUpRequest(userDTO: IUserRequestDTO): Promise<Result<IUserRequestDTO>> {
     try {
-      const userDocument = await this.userRepo.findByEmail( userDTO.email );
+      const userDocument = await this.userRepo.findByEmail( UserEmail.create(userDTO.email).getValue());
       const found = !!userDocument;
 
       if (found) {

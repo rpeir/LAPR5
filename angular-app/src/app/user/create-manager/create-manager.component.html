@@ -34,7 +34,7 @@
 
                 <mat-form-field data-cy="role" class="full-width">
                 <mat-label>Select a role</mat-label>
-                <mat-select [(ngModel)]="user.role" name="role"  required>
+                <mat-select [(ngModel)]="user.role" name="role" required>
                     <mat-option id="{{role.name}}" *ngFor="let role of roles" [value]="role.id">
                         {{role.name | titlecase}}
                     </mat-option>

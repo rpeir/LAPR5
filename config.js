@@ -69,6 +69,10 @@ export default {
       name: 'BuildingController',
       path: '../controllers/buildingController',
     },
+    userRequest: {
+      name:'UserRequestController',
+      path:'../controllers/userRequestController'
+    },
 
     floor: {
       name: 'FloorController',
@@ -182,6 +186,15 @@ export default {
     elevator: {
       name: 'ElevatorService',
       path: '../services/elevatorService',
+    },
+
+    user: {
+      name: 'UserService',
+      path: '../services/userService',
+    },
+    userRequest:{
+      name:'UserRequestService',
+      path:'../services/userRequestService'
     },
 
     room: {

@@ -3,21 +3,22 @@
 %======================================
 
 %tarefa(Id, FloorSource, FloorDestination, RoomSource, RoomDestination, Time)
-:- dynamic tarefa/6.
+:- dynamic(tarefa/5).
 % diferencasEntrTarefas(IdTarefa1, IdTarefa2, Diferenca)
-:- dynamic diferencaEntreTarefas/3.
+:- dynamic(diferencaEntreTarefas/3).
 
-:- dynamic nrDeTarefas/1.
-:- dynamic nrDeGeracoes/1.
-:- dynamic populacao/1.
-:- dynamic prob_cruzamento/1.
-:- dynamic prob_mutacao/1.
-:- dynamic nrDeGeracoes/1.
-:-dynamic taxa_elitismo/1.
-:-dynamic custoIdeal/1.
-:-dynamic maxEstagnacoes/1.
-:-dynamic lastMin/1.
-:-dynamic nrEstagnacoes/1.
+:- dynamic(nrDeTarefas/1).
+:- dynamic(nrDeGeracoes/1).
+:- dynamic(populacao/1).
+:- dynamic(prob_cruzamento/1).
+:- dynamic(prob_mutacao/1).
+:- dynamic(nrDeGeracoes/1).
+:-dynamic(taxa_elitismo/1).
+:-dynamic(custoIdeal/1).
+:-dynamic(maxEstagnacoes/1).
+:-dynamic(lastMin/1).
+:-dynamic(nrEstagnacoes/1).
+:-dynamic(bestPermutation/1).
 
 custoElevator(15).
 custoPathway(10).
@@ -39,7 +40,7 @@ gera(Resultado):-
 gera_populacao(Populacao):-
      populacao(Tamanho),
      nrDeTarefas(NrTarefas),
-     findall(Tarefa,tarefa(Tarefa,_,_,_,_,_),ListaTarefas),
+     findall(Tarefa,tarefa(Tarefa,_,_,_,_),ListaTarefas),
      gera_populacao(Tamanho,ListaTarefas,NrTarefas,Populacao).
 
 gera_populacao(0,_,_,[]):-!.
@@ -76,16 +77,16 @@ avalia_populacao([Individuo|Resto],[Individuo*V|Resto1]):-
 
 avalia([],0).
 avalia([Tarefa|Resto],Val):-
-      tarefa(Tarefa,_,_,_,_,T),
+      tarefa(Tarefa,_,_,_,_),
       avalia(Resto,VResto),
       avaliaDiferencaComProximo(Tarefa,Resto,VNext),
-      Val is T + VNext + VResto.
+      Val is VNext + VResto.
 
 
 avaliaDiferencaComProximo(_,[],0).
 avaliaDiferencaComProximo(Tarefa,[Tarefa2|_],V):-
-      tarefa(Tarefa,_,_,_,_,_),
-      tarefa(Tarefa2,_,_,_,_,_),
+      tarefa(Tarefa,_,_,_,_),
+      tarefa(Tarefa2,_,_,_,_),
       diferencaEntreTarefas(Tarefa,Tarefa2,V).
 
 %======================================
@@ -341,8 +342,8 @@ calcularCustoOfPath([FloorPath|Rest], Result):-
 
 
 calcularCustoEntreTarefas(TarefaId1,TarefaId2):-
-        tarefa(TarefaId1,_,FloorDestination,_,RoomDestination,_),
-        tarefa(TarefaId2,FloorSource2,_,RoomSource2,_,_),
+        tarefa(TarefaId1,_,FloorDestination,_,RoomDestination),
+        tarefa(TarefaId2,FloorSource2,_,RoomSource2,_),
         best_path_less_elevators(FloorDestination,FloorSource2,Path),!,
         retrivePathFromPathAndBuildings(Path, ListPath),
         count(ListPath,NElev,NPathway),
@@ -361,8 +362,19 @@ retrivePathFromPathAndBuildings([_,ListPath],ListPath).
 %======================================
 
 
-geraComPermutacoes(Resultado):-
-      findall(Tarefa,tarefa(Tarefa,_,_,_,_,_),ListaTarefas),
-      findall(Permutacao,permutation(ListaTarefas,Permutacao),ListaPermutacoes),
-      avalia_populacao(ListaPermutacoes,PopulacaoAvaliada),!,
-      ordena_populacao(PopulacaoAvaliada,[Resultado|_]).
+geraComPermutacoes:-
+      findall(Tarefa,tarefa(Tarefa,_,_,_,_),ListaTarefas),
+      asserta(bestPermutation([]*10000)),
+      permutation(ListaTarefas,Permutacao),
+      comparaPermutacao(Permutacao),
+      fail.
+
+
+
+comparaPermutacao(Permutacao):-
+      avalia_populacao([Permutacao],PopulacaoAvaliada),!,
+      bestPermutation(ActualBestSolution),
+      append(PopulacaoAvaliada, [ActualBestSolution], PopulacaoPorOrdenar),
+      ordena_populacao(PopulacaoPorOrdenar,[BestSolution|_]),
+      retractall(bestPermutation(_)),
+      asserta(bestPermutation(BestSolution)).

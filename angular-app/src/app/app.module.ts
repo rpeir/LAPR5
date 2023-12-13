@@ -72,6 +72,7 @@ import {
 import { CreateManagerComponent } from "./user/create-manager/create-manager.component";
 import {UtenteComponent} from "./utente/utente.component";
 import {CreateUserComponent} from "./user/create-user/create-user.component";
+import {RegisterUserComponent} from "./user/register-user/register-user.component";
 
 @NgModule({
   declarations: [
@@ -129,6 +130,7 @@ import {CreateUserComponent} from "./user/create-user/create-user.component";
     CreateManagerComponent,
     UtenteComponent,
     CreateUserComponent,
+    RegisterUserComponent,
   ],
     imports: [
         BrowserModule,

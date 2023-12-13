@@ -11,6 +11,7 @@ import elevatorRoute from "./routes/elevatorRoute";
 import pathwayRoute from "./routes/pathwayRoute";
 import roomRoute from "./routes/roomRoute";
 import plannigRoute from "./routes/plannigRoute";
+import userRequestRoute from "./routes/userRequestRoute";
 export default () => {
 	const app = Router();
 
@@ -25,6 +26,7 @@ export default () => {
   pathwayRoute(app);
   roomRoute(app);
   plannigRoute(app);
+  userRequestRoute(app);
 
 	return app
 }

@@ -64,6 +64,11 @@ export default async ({ expressApp }) => {
     path: config.controllers.role.path
   };
 
+  const userRequestController={
+    name:config.controllers.userRequest.name,
+    path:config.controllers.userRequest.path
+  }
+
   const robotTypeController = {
     name: config.controllers.robotType.name,
     path: config.controllers.robotType.path
@@ -197,6 +202,14 @@ export default async ({ expressApp }) => {
     name: config.connections.planningConnection.name,
     path: config.connections.planningConnection.path
   }
+  const userRequestService={
+    name: config.services.userRequest.name,
+    path: config.services.userRequest.path
+  }
+  const userService={
+    name:config.services.user.name,
+    path:config.services.user.path
+  }
 
   await dependencyInjectorLoader({
     mongoConnection,
@@ -222,7 +235,8 @@ export default async ({ expressApp }) => {
       pathwayController,
       elevatorController,
       roomController,
-      planningController
+      planningController,
+      userRequestController
     ],
 
     repos: [
@@ -247,7 +261,9 @@ export default async ({ expressApp }) => {
       pathwayService,
       elevatorService,
       roomService,
-      planningService
+      planningService,
+      userRequestService,
+      userService,
     ],
 
     connections: [planningConnection]
