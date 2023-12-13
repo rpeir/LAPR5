@@ -8,6 +8,8 @@ import {UserMap} from "../mappers/UserMap";
 import {UserRequest} from "../domain/user/userRequest";
 import {UserRequestMap} from "../mappers/UserRequestMap";
 import {IUserRequestPersistence} from "../dataschema/IUserRequestPersistence";
+import {UserEmail} from "../domain/user/userEmail";
+import {RobotMap} from "../mappers/RobotMap";
 
 @Service()
 
@@ -23,7 +25,8 @@ export default class UserRequestRepo implements IUserRequestRepo{
         return {
             where: {},
         }
-    }public async save (req: UserRequest): Promise<UserRequest> {
+    }
+    public async save (req: UserRequest): Promise<UserRequest> {
         const query = { domainId: req.id.toString() };
 
         const userDocument = await this.userSchema.findOne( query );
@@ -49,5 +52,39 @@ export default class UserRequestRepo implements IUserRequestRepo{
 
   exists(t: UserRequest): Promise<boolean> {
     return Promise.resolve(false);
+  }
+  public async findByEmail(email: UserEmail): Promise<UserRequest> {
+    const query = { email: email.toString() };
+
+    const userDocument = await this.userSchema.findOne( query );
+
+    if (userDocument != null) {
+      return UserRequestMap.toDomain(userDocument);
+    }
+
+    return null;
+  }
+  public async listReq():Promise<UserRequest[]>{
+      const query={};
+      const reqRecord=await this.userSchema.find(query);
+    if (reqRecord != null) {
+      return Promise.all(reqRecord.map((req) => UserRequestMap.toDomain(req)));
+    } else {
+      return null;
+    }
+  }
+  public async getReqById(id: string): Promise<UserRequest> {
+    const query = {domainId: id};
+    return this.userSchema.findOne(query).then((reqRecord) => {
+      if (reqRecord != null) {
+        return Promise.resolve(UserRequestMap.toDomain(reqRecord));
+      } else {
+        return null;
+      }
+    });
+  }
+  public async deleteReq(id: string){
+      const query={domainId:id};
+      await this.userSchema.deleteOne(query);
   }
 }

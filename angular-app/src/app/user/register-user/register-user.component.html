@@ -1,0 +1,30 @@
+<app-administrador-de-sistema-toolbar></app-administrador-de-sistema-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav-content>
+    <body>
+    <div class="container">
+      <h2 class="text-center">Register User </h2>
+      <br>
+      <form>
+        <!-- Select Register -->
+        <mat-form-field class="full-width">
+          <mat-label>Select an user request</mat-label>
+          <mat-select [(ngModel)]="request" name="email">
+            <mat-option *ngFor="let userRequest of requests" [value]="userRequest">
+              {{ userRequest.email}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-raised-button color="accent" (click)="acceptUser(request)" *ngIf="request">
+            Accept
+          </button>
+          <button mat-raised-button color="warn" (click)="declineUser(request)" *ngIf="request">
+            Decline
+          </button>
+        </div>
+      </form>
+    </div>
+    </body>
+  </mat-sidenav-content>
+</mat-sidenav-container>

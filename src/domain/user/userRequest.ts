@@ -5,6 +5,10 @@ import {AggregateRoot} from "../../core/domain/AggregateRoot";
 import {UniqueEntityID} from "../../core/domain/UniqueEntityID";
 import { Result } from "../../core/logic/Result";
 import {Guard} from "../../core/logic/Guard";
+import { IUserRequestDTO } from "../../dto/IUserRequestDTO";
+import {User} from "./user";
+import {Role} from "../role/role";
+
 
 
 interface UserRequestProps {
@@ -71,5 +75,27 @@ export class UserRequest extends AggregateRoot<UserRequestProps> {
 
             return Result.ok<UserRequest>(req);
         }
+    }
+
+  // method that converts a request to a user
+  public accept(role:Role): Result<User> {
+      const userOrError = User.create({
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password,
+        phoneNumber: this.phoneNumber,
+        nif: this.nif,
+        // the role must me 'user' but it already exists in the Role enum
+        role: role,
+      }, new UniqueEntityID(this.id.toString()));
+      // check if the conversion was successful
+      if (userOrError.isFailure) {
+        // if it wasn't successful, return a failure
+        return Result.fail<User>(userOrError.errorValue());
+      } else {
+        // if it was successful, return the user
+        return Result.ok<User>(userOrError.getValue());
+      }
     }
 }

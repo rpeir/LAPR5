@@ -4,10 +4,11 @@ import {PhoneNumber} from "./phoneNumber";
 import {Role} from "./role";
 
 export class UserRequest{
+  id!: string;
   firstName!: string;
   lastName!: string;
-  email!: UserEmail;
-  password!: UserPassword;
+  email!: string;
+  password!: string;
   phoneNumber!: PhoneNumber;
   nif!: string;
 }
