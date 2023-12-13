@@ -48,13 +48,13 @@ package Task {
     interface Task <<Agregate root>> {
         - code
         - description
-
+        - state
     }
 
-    entity VigilanceTask {
+    entity SurveillanceTask {
         - emergencyNumber
     }
-    entity PickupDeliveryTask {
+    entity DeliveryTask {
         - senderName
         - receiverName
         - senderContact
@@ -111,8 +111,18 @@ package Pathway {
     }
 }
 
-Task.VigilanceTask ..|> Task.Task: extends
-Task.PickupDeliveryTask ..|> Task.Task: extends
+package User {
+  entity User <<Agregate root>> {
+    - firstName
+    - lastName
+    - email
+    - phoneNumber
+    - nif
+   }
+}
+
+Task.SurveillanceTask ..|> Task.Task: extends
+Task.DeliveryTask ..|> Task.Task: extends
 
 Room.Room --> RoomCategory: is of a
 Room.Room --> Building.Building: is in
@@ -126,16 +136,17 @@ Floor.Floor --> Floor.FloorMap: has
 
 Elevator.Elevator --> Building.Building: is on
 
-Task.PickupDeliveryTask -> Room.Room: delivery
-Task.PickupDeliveryTask -> Room.Room: pickup
+Task.Task --> Room.Room: delivery
+Task.Task --> Room.Room: pickup
 
-Task.VigilanceTask -> Floor.Floor: is executed on
+Task.SurveillanceTask -> Floor.Floor: is executed on
 
-Pathway.Pathway -> "2" Floor.Floor: connects
+Pathway.Pathway --> "2" Floor.Floor: connects
 
-Robot.Robot -> RobotType.RobotType : is of a
+Robot.Robot --> RobotType.RobotType : is of a
 
 Task.Task --> TaskType.TaskType : is of a
+Task.Task --> User.User : is executed by
 
 Robot.Robot ..> "*" Task.Task : executes
 

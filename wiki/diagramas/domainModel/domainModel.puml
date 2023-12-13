@@ -45,11 +45,11 @@ hide methods
 
     }
 
-    entity VigilanceTask {
+    entity SurveillanceTask {
         - emergencyNumber
     }
 
-    entity PickupDeliveryTask {
+    entity DeliveryTask {
         - senderName
         - receiverName
         - senderContact
@@ -95,8 +95,8 @@ hide methods
     entity Pathway {
     }
 
-VigilanceTask ..|> Task: extends
-PickupDeliveryTask ..|> Task: extends
+SurveillanceTask ..|> Task: extends
+DeliveryTask ..|> Task: extends
 
 Room --> RoomCategory: is of a
 Room --> Building : is in
@@ -109,10 +109,11 @@ Floor <-- Room: is on
 
 Elevator --> Building: is on
 
-PickupDeliveryTask --> Room: delivery
-PickupDeliveryTask --> Room: pickup
+Task --> Room: delivery
+Task --> Room: pickup
+Task --> User : executed by
 
-VigilanceTask --> Floor: is executed on
+SurveillanceTask --> Floor: is executed on
 
 Pathway --> "2" Floor: connects
 
