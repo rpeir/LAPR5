@@ -18,7 +18,7 @@ export default class UserRequestController implements IUserRequestController {
   constructor(@Inject(config.services.userRequest.name) private userRequestServiceInstance: IUserRequestService) {}
   public async listAllRequests(req:Request, res:Response, next:NextFunction){
     try{
-      const listOrError=(await this.userRequestServiceInstance.listAllRequests()) as Result<IUserRequestDTO[]>;
+      const listOrError=(await this.userRequestServiceInstance.listPendingRequests()) as Result<IUserRequestDTO[]>;
       if (listOrError.isFailure) {
         return res.status(402).json({ error: listOrError.error });
       }

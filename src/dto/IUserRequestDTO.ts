@@ -6,4 +6,5 @@ export interface IUserRequestDTO {
     email: string;
     password: string;
     nif:string
+    state:string
 }

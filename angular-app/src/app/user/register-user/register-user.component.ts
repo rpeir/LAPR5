@@ -31,7 +31,7 @@ export class RegisterUserComponent implements OnInit {
 
 
   ngOnInit() {
-    this.userService.listAllRequests().subscribe({
+    this.userService.listPendingRequests().subscribe({
       next: (data) => {
         this.requests = data;
       },

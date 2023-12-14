@@ -18,7 +18,7 @@ export class UserService{
   createUserRequest(user: UserRequest) {
     return this.httpClient.post<UserRequest>(`${this.baseUrl+'/signUpRequest'}`, user);
   }
-  listAllRequests(){
+  listPendingRequests(){
       return this.httpClient.get<UserRequest[]>(`${this.newUrl+'/listAllRequests'}`);
   }
 

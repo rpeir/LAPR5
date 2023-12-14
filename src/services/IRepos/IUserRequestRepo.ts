@@ -5,7 +5,7 @@ import {UserEmail} from "../../domain/user/userEmail";
 export default interface IUserRequestRepo extends Repo<UserRequest>{
     save(req:UserRequest):Promise<UserRequest>;
     findByEmail(email: UserEmail): Promise<UserRequest>;
-    listReq(): Promise<UserRequest[]>;
+    listReqPend(): Promise<UserRequest[]>;
     getReqById(id: string): Promise<UserRequest>;
     deleteReq(id: string):void;
 }

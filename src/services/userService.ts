@@ -27,6 +27,7 @@ import IUserRequestRepo from "./IRepos/IUserRequestRepo";
 import {UserRequestMap} from "../mappers/UserRequestMap";
 import {IUserRequestDTO} from "../dto/IUserRequestDTO";
 import UserRequestRepo from "../repos/userRequestRepo";
+import {RequestState} from "../domain/user/requestState";
 @Service()
 export default class UserService implements IUserService{
   constructor(
@@ -233,6 +234,7 @@ export default class UserService implements IUserService{
       const password =  UserPassword.create({ value: await hashedPassword, hashed: true}).getValue();
       const email =  UserEmail.create( userDTO.email ).getValue();
       const phoneNumber= PhoneNumber.create({value:userDTO.phoneNumber}).getValue();
+      const state=RequestState.create({state:"pending"}).getValue();
 
       const requestOrError = UserRequest.create({
         firstName: userDTO.firstName,
@@ -240,7 +242,8 @@ export default class UserService implements IUserService{
         phoneNumber: phoneNumber,
         email: email,
         password: password,
-        nif:userDTO.nif
+        nif:userDTO.nif,
+        state:state,
       });
 
       if (requestOrError.isFailure) {

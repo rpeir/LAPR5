@@ -14,6 +14,7 @@ import RoleRepo from "../repos/roleRepo";
 import {UserRequest} from "../domain/user/userRequest";
 import {PhoneNumber} from "../domain/user/phoneNumber";
 import {IUserRequestDTO} from "../dto/IUserRequestDTO";
+import { RequestState } from '../domain/user/requestState';
 
 export class UserRequestMap extends Mapper<UserRequest> {
 
@@ -26,6 +27,7 @@ export class UserRequestMap extends Mapper<UserRequest> {
             phoneNumber:user.phoneNumber.value,
             password: "",
             nif:user.nif,
+            state:user.state.state
         } as IUserRequestDTO;
     }
 
@@ -33,6 +35,7 @@ export class UserRequestMap extends Mapper<UserRequest> {
         const userEmailOrError = UserEmail.create(raw.email);
         const userPasswordOrError = UserPassword.create({value: raw.password, hashed: true});
         const phoneNrOrError=PhoneNumber.create({value:raw.phoneNumber});
+        const stateOrError=RequestState.create({state:raw.state});
         const repo = Container.get(RoleRepo);
        // const role = await repo.findByDomainId(raw.role);
 
@@ -43,6 +46,7 @@ export class UserRequestMap extends Mapper<UserRequest> {
             phoneNumber: phoneNrOrError.getValue(),
             password: userPasswordOrError.getValue(),
             nif:raw.nif,
+            state:raw.state
         }, new UniqueEntityID(raw.domainId))
 
         userOrError.isFailure ? console.log(userOrError.error) : '';
@@ -58,7 +62,8 @@ export class UserRequestMap extends Mapper<UserRequest> {
             phoneNumber:user.phoneNumber.value,
             firstName: user.firstName,
             lastName: user.lastName,
-            nif:user.nif
+            nif:user.nif,
+            state:user.state.state
         }
         return a;
     }

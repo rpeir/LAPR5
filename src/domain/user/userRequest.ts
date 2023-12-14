@@ -8,6 +8,7 @@ import {Guard} from "../../core/logic/Guard";
 import { IUserRequestDTO } from "../../dto/IUserRequestDTO";
 import {User} from "./user";
 import {Role} from "../role/role";
+import {RequestState} from "./requestState";
 
 
 
@@ -18,9 +19,11 @@ interface UserRequestProps {
     password: UserPassword;
     phoneNumber: PhoneNumber;
     nif: string;
+    state:RequestState;
 }
 
 export class UserRequest extends AggregateRoot<UserRequestProps> {
+
     get id (): UniqueEntityID {
         return this._id;
     }
@@ -51,6 +54,9 @@ export class UserRequest extends AggregateRoot<UserRequestProps> {
     set phoneNumber(value:PhoneNumber){
         this.props.phoneNumber=value;
     }
+    get state():RequestState{
+        return this.props.state;
+    }
     public static create(props: UserRequestProps,id?:UniqueEntityID): Result<UserRequest>{
 
         const guardedProps: any = [
@@ -60,6 +66,7 @@ export class UserRequest extends AggregateRoot<UserRequestProps> {
             {argument: props.nif, argumentName: 'nif'},
             {argument: props.phoneNumber, argumentName: 'phoneNumber'},
             {argument: props.password, argumentName: 'password'},
+            {argument: props.state, argumentName: 'state'}
         ]
         const flag = Guard.againstNullOrUndefinedBulk(guardedProps);
         if (!flag.succeeded) {
@@ -98,4 +105,9 @@ export class UserRequest extends AggregateRoot<UserRequestProps> {
         return Result.ok<User>(userOrError.getValue());
       }
     }
+
+  changeState(state: RequestState) {
+    this.props.state = state;
+
+  }
 }

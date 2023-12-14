@@ -11,6 +11,7 @@ import IUserRepo from "./IRepos/IUserRepo";
 import {UserMap} from "../mappers/UserMap";
 import {Role} from "../domain/role/role";
 import IRoleRepo from "./IRepos/IRoleRepo";
+import {RequestState} from "../domain/user/requestState";
 
 @Service()
 
@@ -21,9 +22,9 @@ export default class UserRequestService implements IUserRequestService{
     @Inject(config.repos.role.name) private roleRepo: IRoleRepo,
   ) {
   }
-  public async listAllRequests(): Promise<Result<IUserRequestDTO[]>>{
+  public async listPendingRequests(): Promise<Result<IUserRequestDTO[]>>{
     try{
-      const listOrError=await this.reqRepo.listReq();
+      const listOrError=await this.reqRepo.listReqPend();
       const listResult=listOrError.map((req)=>UserRequestMap.toDTO(req));
       if (listResult.length === 0) {
         return Result.fail<IUserRequestDTO[]>("No requests found");
@@ -50,8 +51,18 @@ export default class UserRequestService implements IUserRequestService{
       const savedUser=await this.userRepo.save(userResult);
       // convert user to DTO
       const userDTO = UserMap.toDTO(savedUser);
-      // remove the request from db
-      await this.reqRepo.deleteReq(user.id);
+      //Change the state of the request to accepetd
+      const newState = RequestState.create({ state: 'accepted' });
+
+      if (newState.isFailure) {
+        return Result.fail<{ userDTO: IUserDTO; token: string }>(newState.errorValue());
+      }
+
+      // Alterar o estado do pedido
+      register.changeState(newState.getValue());
+
+      // Salvar as alterações no pedido
+      await this.reqRepo.save(register);
       // return the user
       return Result.ok<{userDTO: IUserDTO, token: string}>({userDTO, token: ""});
     }catch (err) {

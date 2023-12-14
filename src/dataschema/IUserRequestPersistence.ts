@@ -6,4 +6,6 @@ export interface IUserRequestPersistence {
     email: string;
     password: string;
     salt: string;
+    nif:string,
+    state:string
 }

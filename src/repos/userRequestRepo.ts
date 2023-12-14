@@ -41,6 +41,11 @@ export default class UserRequestRepo implements IUserRequestRepo{
             } else {
                 userDocument.firstName = req.firstName;
                 userDocument.lastName = req.lastName;
+                userDocument.email = req.email.value;
+                userDocument.phoneNumber = req.phoneNumber.value;
+                userDocument.password = req.password.value;
+                userDocument.nif = req.nif;
+                userDocument.state = req.state.state;
                 await userDocument.save();
 
                 return req;
@@ -64,8 +69,8 @@ export default class UserRequestRepo implements IUserRequestRepo{
 
     return null;
   }
-  public async listReq():Promise<UserRequest[]>{
-      const query={};
+  public async listReqPend():Promise<UserRequest[]>{
+      const query={state:"pending"};
       const reqRecord=await this.userSchema.find(query);
     if (reqRecord != null) {
       return Promise.all(reqRecord.map((req) => UserRequestMap.toDomain(req)));

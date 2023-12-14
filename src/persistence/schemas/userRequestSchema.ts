@@ -30,6 +30,7 @@ const UserRequest = new mongoose.Schema(
         password: String,
         phoneNumber:String,
         nif:String,
+        state:String,
 
         salt: String,
     },
