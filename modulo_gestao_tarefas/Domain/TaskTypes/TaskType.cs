@@ -1,6 +1,6 @@
 using System;
 
-namespace GestaoTarefas.Domain.Tasks;
+namespace GestaoTarefas.Domain.TaskTypes;
 
 public enum TaskType
 {

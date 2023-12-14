@@ -1,6 +1,4 @@
-using GestaoTarefas.Domain.Shared;
-
-namespace GestaoTarefas.Domain.Tasks;
+namespace GestaoTarefas.Domain.Shared;
 
 public class PhoneNumber : IValueObject
 {

@@ -1,13 +1,13 @@
 using System;
 using GestaoTarefas.Domain.Shared;
 
-namespace GestaoTarefas.Domain.Tasks;
+namespace GestaoTarefas.Domain.TaskRequests;
 
-public class DeliveryTaskMapper : ITaskMapper<DeliveryTask, DeliveryTaskDto>
+public class DeliveryTaskRequestMapper : ITaskRequestMapper<DeliveryTaskRequest, DeliveryTaskRequestDto>
 {
-  public DeliveryTaskDto ToDto(DeliveryTask task)
+  public DeliveryTaskRequestDto ToDto(DeliveryTaskRequest task)
   {
-    return new DeliveryTaskDto()
+    return new DeliveryTaskRequestDto()
     {
       ConfirmationCode = task.ConfirmationCode.Value,
       DeliveryRoomId = task.DeliveryRoomId.ToString(),
@@ -20,15 +20,15 @@ public class DeliveryTaskMapper : ITaskMapper<DeliveryTask, DeliveryTaskDto>
       ReceiverName = task.ReceiverName.Value,
       SenderContact = task.SenderContact.Value,
       SenderName = task.SenderName.Value,
-      Status = task.Status.ToString()
+      RequestStatus = task.RequestStatus.ToString()
     };
   }
 
-  public DeliveryTask ToEntity(CreatingTaskDto dto)
+  public DeliveryTaskRequest ToEntity(CreatingTaskRequestDto dto)
   {
     try
     {
-      return new DeliveryTask(
+      return new DeliveryTaskRequest(
             taskDescription: new TaskDescription(dto.Description),
             userId: new Guid(dto.UserId),
             senderName: new Name(dto.SenderName),

@@ -5,8 +5,7 @@ namespace GestaoTarefas.Domain.Tasks;
 public enum Status
 {
   Pending,
-  Approved,
-  Rejected
+  Done
 }
 
 public static class StatusHelper
@@ -17,10 +16,8 @@ public static class StatusHelper
     {
       case "Pending":
         return Status.Pending;
-      case "Approved":
-        return Status.Approved;
-      case "Rejected":
-        return Status.Rejected;
+      case "Done":
+        return Status.Done;
       default:
         throw new ArgumentException("Invalid Status Type");
     }

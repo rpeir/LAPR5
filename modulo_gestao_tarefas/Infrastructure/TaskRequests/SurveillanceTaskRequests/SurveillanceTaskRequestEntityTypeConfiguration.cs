@@ -1,13 +1,13 @@
 using GestaoTarefas.Domain.Shared;
-using GestaoTarefas.Domain.Tasks;
+using GestaoTarefas.Domain.TaskRequests;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace GestaoTarefas.Infrastructure.Tasks;
+namespace GestaoTarefas.Infrastructure.TaskRequests;
 
-public class SurveillanceTaskEntityTypeConfiguration : IEntityTypeConfiguration<SurveillanceTask>
+public class SurveillanceTaskRequestEntityTypeConfiguration : IEntityTypeConfiguration<SurveillanceTaskRequest>
 {
-  public void Configure(EntityTypeBuilder<SurveillanceTask> builder)
+  public void Configure(EntityTypeBuilder<SurveillanceTaskRequest> builder)
   {
     // cf. https://www.entityframeworktutorial.net/efcore/fluent-api-in-entity-framework-core.aspx
 

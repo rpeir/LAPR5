@@ -2,9 +2,9 @@ using System;
 using GestaoTarefas.Domain.Shared;
 using GestaoTarefas.Domain.TaskTypes;
 
-namespace GestaoTarefas.Domain.Tasks;
+namespace GestaoTarefas.Domain.TaskRequests;
 
-public class DeliveryTask : Task
+public class DeliveryTaskRequest : TaskRequest
 {
   public Name SenderName { get; private set; }
   public Name ReceiverName { get; private set; }
@@ -12,7 +12,7 @@ public class DeliveryTask : Task
   public PhoneNumber ReceiverContact { get; private set; }
   public ConfirmationCode ConfirmationCode { get; private set; }
 
-  public DeliveryTask(TaskDescription taskDescription, Guid userId,
+  public DeliveryTaskRequest(TaskDescription taskDescription, Guid userId,
     Name senderName, Name receiverName, PhoneNumber senderContact, PhoneNumber receiverContact,
     ConfirmationCode confirmationCode, Guid pickupRoomId, Guid deliveryRoomId)
     : base(TaskType.Delivery, taskDescription, userId, pickupRoomId, deliveryRoomId)
