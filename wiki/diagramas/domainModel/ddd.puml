@@ -46,9 +46,7 @@ package TaskType {
 
 package Task {
     interface Task <<Agregate root>> {
-        - code
         - description
-        - state
     }
 
     entity SurveillanceTask {
@@ -121,8 +119,31 @@ package User {
    }
 }
 
+package TaskRequisition {
+    interface TaskRequisition <<Agregate root>> {
+        - description
+        - state
+    }
+
+    entity SurveillanceTaskRequisition {
+        - emergencyNumber
+    }
+
+    entity DeliveryTaskRequisition {
+        - senderName
+        - receiverName
+        - senderContact
+        - receiverContact
+        - confirmationCode
+    }
+
+}
+
 Task.SurveillanceTask ..|> Task.Task: extends
 Task.DeliveryTask ..|> Task.Task: extends
+
+TaskRequisition.SurveillanceTaskRequisition ..|> TaskRequisition.TaskRequisition: extends
+TaskRequisition.DeliveryTaskRequisition ..|> TaskRequisition.TaskRequisition: extends
 
 Room.Room --> RoomCategory: is of a
 Room.Room --> Building.Building: is in
@@ -139,7 +160,11 @@ Elevator.Elevator --> Building.Building: is on
 Task.Task --> Room.Room: delivery
 Task.Task --> Room.Room: pickup
 
+TaskRequisition.TaskRequisition --> Room.Room: delivery
+TaskRequisition.TaskRequisition --> Room.Room: pickup
+
 Task.SurveillanceTask -> Floor.Floor: is executed on
+TaskRequisition.SurveillanceTaskRequisition -> Floor.Floor: will be executed on
 
 Pathway.Pathway --> "2" Floor.Floor: connects
 
@@ -148,6 +173,11 @@ Robot.Robot --> RobotType.RobotType : is of a
 Task.Task --> TaskType.TaskType : is of a
 Task.Task --> User.User : is executed by
 
-Robot.Robot ..> "*" Task.Task : executes
+TaskRequisition.TaskRequisition --> TaskType.TaskType : is of a
+TaskRequisition.TaskRequisition --> User.User : will be executed by
+
+Robot.Robot "1" --> "*" Task.Task : executes
+
+TaskRequisition.TaskRequisition "1" ..> "1" Task.Task : is of a
 
 @enduml
