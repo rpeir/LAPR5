@@ -72,7 +72,13 @@ export default class UserRequestService implements IUserRequestService{
   }
   public async declineUser(id:string){
     try{
-      await this.reqRepo.deleteReq(id);
+      const req=await this.reqRepo.getReqById(id);
+      if(req==null){
+        return Result.fail<{userDTO: IUserDTO, token: string}>("Request not found");
+      }
+      const newState = RequestState.create({ state: 'rejected' });
+      req.changeState(newState.getValue());
+      await this.reqRepo.save(req);
     }catch (err){
       throw Result.fail(err);
     }
