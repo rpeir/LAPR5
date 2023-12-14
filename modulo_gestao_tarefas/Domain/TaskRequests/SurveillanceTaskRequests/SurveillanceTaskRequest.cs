@@ -2,15 +2,15 @@ using System;
 using GestaoTarefas.Domain.Shared;
 using GestaoTarefas.Domain.TaskTypes;
 
-namespace GestaoTarefas.Domain.Tasks;
+namespace GestaoTarefas.Domain.TaskRequests;
 
-public class SurveillanceTask : Task
+public class SurveillanceTaskRequest : TaskRequest
 {
   public PhoneNumber EmergencyNumber { get; private set; }
 
   public Guid FloorId { get; private set; }
 
-  public SurveillanceTask(TaskDescription taskDescription, Guid userId, PhoneNumber emergencyNumber,
+  public SurveillanceTaskRequest(TaskDescription taskDescription, Guid userId, PhoneNumber emergencyNumber,
     Guid floorId, Guid pickupRoomId, Guid deliveryRoomId)
     : base(TaskType.Surveillance, taskDescription, userId, pickupRoomId, deliveryRoomId)
   {

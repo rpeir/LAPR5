@@ -1,13 +1,13 @@
 using GestaoTarefas.Domain.Shared;
-using GestaoTarefas.Domain.Tasks;
+using GestaoTarefas.Domain.TaskRequests;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace GestaoTarefas.Infrastructure.Tasks;
+namespace GestaoTarefas.Infrastructure.TaskRequests;
 
-public class DeliveryTaskEntityTypeConfiguration : IEntityTypeConfiguration<DeliveryTask>
+public class DeliveryTaskRequestEntityTypeConfiguration : IEntityTypeConfiguration<DeliveryTaskRequest>
 {
-  public void Configure(EntityTypeBuilder<DeliveryTask> builder)
+  public void Configure(EntityTypeBuilder<DeliveryTaskRequest> builder)
   {
     // cf. https://www.entityframeworktutorial.net/efcore/fluent-api-in-entity-framework-core.aspx
 

@@ -2,13 +2,13 @@ using System;
 using GestaoTarefas.Domain.Shared;
 using GestaoTarefas.Domain.TaskTypes;
 
-namespace GestaoTarefas.Domain.Tasks;
+namespace GestaoTarefas.Domain.TaskRequests;
 
-public class SurveillanceTaskMapper : ITaskMapper<SurveillanceTask, SurveillanceTaskDto>
+public class SurveillanceTaskRequestMapper : ITaskRequestMapper<SurveillanceTaskRequest, SurveillanceTaskRequestDto>
 {
-  public SurveillanceTaskDto ToDto(SurveillanceTask task)
+  public SurveillanceTaskRequestDto ToDto(SurveillanceTaskRequest task)
   {
-    return new SurveillanceTaskDto()
+    return new SurveillanceTaskRequestDto()
     {
       Description = task.TaskDescription.Value,
       EmergencyNumber = task.EmergencyNumber.Value,
@@ -16,17 +16,17 @@ public class SurveillanceTaskMapper : ITaskMapper<SurveillanceTask, Surveillance
       FloorId = task.FloorId.ToString(),
       Type = TaskType.Surveillance.ToString(),
       UserId = task.UserId.ToString(),
-      Status = task.Status.ToString(),
+      RequestStatus = task.RequestStatus.ToString(),
       DeliveryRoomId = task.DeliveryRoomId.ToString(),
       PickupRoomId = task.PickupRoomId.ToString()
     };
   }
 
-  public SurveillanceTask ToEntity(CreatingTaskDto dto)
+  public SurveillanceTaskRequest ToEntity(CreatingTaskRequestDto dto)
   {
     try
     {
-      return new SurveillanceTask(
+      return new SurveillanceTaskRequest(
             taskDescription: new TaskDescription(dto.Description),
             userId: new Guid(dto.UserId),
             emergencyNumber: new PhoneNumber(dto.EmergencyNumber),

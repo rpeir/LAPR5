@@ -1,4 +1,3 @@
-using System;
 using GestaoTarefas.Domain.Shared;
 
 namespace GestaoTarefas.Domain.Tasks;

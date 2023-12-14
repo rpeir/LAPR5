@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using GestaoTarefas.Infrastructure;
 using GestaoTarefas.Infrastructure.Shared;
 using GestaoTarefas.Domain.Shared;
+using GestaoTarefas.Domain.TaskRequests;
 using GestaoTarefas.Domain.Tasks;
 using GestaoTarefas.Infrastructure.Tasks;
 using GestaoTarefas.Domain.Tasks;
+using GestaoTarefas.Infrastructure.TaskRequests;
 
 
 namespace GestaoTarefas
@@ -77,6 +79,14 @@ namespace GestaoTarefas
             services.AddTransient<TaskService>();
 
             services.AddTransient<ITaskMapper<Task, TaskDto>, TaskMapper>();
+
+            services.AddTransient<ISurveillanceTaskRequestRepository, SurveillanceTaskRequestRepository>();
+            services.AddTransient<IDeliveryTaskRequestRepository, DeliveryTaskRequestRepository>();
+            services.AddTransient<ITaskRequestRepository, TaskRequestRepository>();
+
+            services.AddTransient<TaskRequestService>();
+
+            services.AddTransient<ITaskRequestMapper<TaskRequest, TaskRequestDto>, TaskRequestMapper>();
         }
     }
 }

@@ -1,8 +1,8 @@
 using System;
 
-namespace GestaoTarefas.Domain.Tasks;
+namespace GestaoTarefas.Domain.TaskRequests;
 
-public abstract class TaskDto
+public class TaskRequestDto
 {
   // General properties
   public Guid ?Id { get; set; }
@@ -11,6 +11,6 @@ public abstract class TaskDto
   public string UserId { get; set; }
   public string PickupRoomId { get; set; }
   public string DeliveryRoomId { get; set; }
-  public string Status { get; set; }
+  public string RequestStatus { get; set; }
 
 }

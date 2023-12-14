@@ -95,8 +95,30 @@ hide methods
     entity Pathway {
     }
 
+        entity TaskRequisition {
+            - description
+            - state
+        }
+
+        entity SurveillanceTaskRequisition {
+            - emergencyNumber
+        }
+
+        entity DeliveryTaskRequisition {
+            - senderName
+            - receiverName
+            - senderContact
+            - receiverContact
+            - confirmationCode
+        }
+
+
+
 SurveillanceTask ..|> Task: extends
 DeliveryTask ..|> Task: extends
+
+SurveillanceTaskRequisition ..|> TaskRequisition : extends
+DeliveryTaskRequisition ..|> TaskRequisition : extends
 
 Room --> RoomCategory: is of a
 Room --> Building : is in
@@ -109,18 +131,26 @@ Floor <-- Room: is on
 
 Elevator --> Building: is on
 
+TaskRequisition --> Room: delivery
+TaskRequisition --> Room: pickup
+
 Task --> Room: delivery
 Task --> Room: pickup
-Task --> User : executed by
 
-SurveillanceTask --> Floor: is executed on
+SurveillanceTask -> Floor: is executed on
+SurveillanceTaskRequisition -> Floor: will be executed on
+
+Task --> User : executed by
 
 Pathway --> "2" Floor: connects
 
 Robot --> RobotType : is of a
 
-Task --> TaskType : is of a
+TaskRequisition --> TaskType : is of a
+TaskRequisition --> User : will be executed by
 
-Robot ..> "*" Task : executes
+Robot "1" --> "*" Task : executes
+
+TaskRequisition "1" ..> "1" Task : is of a
 
 @enduml
