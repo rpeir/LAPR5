@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using GestaoTarefas.Domain.Shared;
 using GestaoTarefas.Domain.TaskTypes;
 
@@ -32,7 +33,7 @@ namespace GestaoTarefas.Domain.Tasks
         protected static IGuardResult Validate(TaskType type, TaskDescription taskDescription,
           Guid userId, Guid pickupRoomId, Guid deliveryRoomId)
         {
-          var guard = Guard.AgainstNullOrUndefinedBulk(
+          var guardNulls = Guard.AgainstNullOrUndefinedBulk(
             new GuardArgumentCollection()
             {
               new GuardArgument(type, nameof(type)),
@@ -42,6 +43,22 @@ namespace GestaoTarefas.Domain.Tasks
               new GuardArgument(deliveryRoomId, nameof(deliveryRoomId))
             }
           );
+          var guardEmptyGuids = Guard.Combine(
+            new List<IGuardResult>()
+            {
+              Guard.IsTrue(!userId.Equals(Guid.Empty), "UserId is empty"),
+              Guard.IsTrue(!pickupRoomId.Equals(Guid.Empty), "PickupRoomId is empty"),
+              Guard.IsTrue(!deliveryRoomId.Equals(Guid.Empty), "DeliveryRoomId is empty")
+            }
+          );
+          var guard = Guard.Combine(
+            new List<IGuardResult>()
+            {
+              guardNulls,
+              guardEmptyGuids
+            }
+          );
+
           return guard;
         }
 

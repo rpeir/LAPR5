@@ -8,7 +8,7 @@ public enum Status
   Done
 }
 
-public static class StatusHelper
+public static class RequestStatusHelper
 {
   public static Status ToStatus(this string me)
   {

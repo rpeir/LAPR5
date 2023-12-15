@@ -1,4 +1,5 @@
 using System;
+using GestaoTarefas.Domain.Shared;
 
 namespace GestaoTarefas.Domain.TaskTypes;
 
@@ -19,7 +20,7 @@ public static class TaskTypeHelper
       case "Delivery":
         return TaskType.Delivery;
       default:
-        throw new ArgumentOutOfRangeException(nameof(me), me, null);
+        throw new ArgumentException("Invalid task type");
     }
   }
 

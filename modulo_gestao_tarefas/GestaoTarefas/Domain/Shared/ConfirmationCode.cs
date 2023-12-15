@@ -6,7 +6,7 @@ public class ConfirmationCode : IValueObject
 
   public ConfirmationCode(string value)
   {
-    var valueIsValid = value is { Length: > 4 and < 6 };
+    var valueIsValid = value is { Length: >= 4 and <= 6 };
     if (!valueIsValid)
       throw new BusinessRuleValidationException("Confirmation Code must be a value between 4 and 6 digits");
     this.Value = value;

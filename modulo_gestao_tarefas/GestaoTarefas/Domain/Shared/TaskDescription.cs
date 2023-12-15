@@ -8,7 +8,10 @@ public class TaskDescription : IValueObject
 
   public TaskDescription(string description)
   {
-    bool valueIsValid = description is {Length: < MaxLength};
+    if (description == null)
+      throw new BusinessRuleValidationException("Task description must not be null");
+    description = description.Trim();
+    bool valueIsValid = description is {Length: <= MaxLength and > 0};
     if (!valueIsValid)
       throw new BusinessRuleValidationException("Task description must be less than " + MaxLength + " characters");
     this.Value = description;

@@ -7,9 +7,11 @@ public class Name : IValueObject
 
   public Name(string value)
   {
-    bool valueIsValid = value != null;
-    if (!valueIsValid)
+    if (value == null)
       throw new BusinessRuleValidationException("Name must not be null");
+    value = value.Trim();
+    if (value.Length < 1)
+      throw new BusinessRuleValidationException("Must not be empty");
     this.Value = value;
   }
 }

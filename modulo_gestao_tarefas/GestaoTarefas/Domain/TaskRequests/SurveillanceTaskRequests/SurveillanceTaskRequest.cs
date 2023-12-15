@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using GestaoTarefas.Domain.Shared;
 using GestaoTarefas.Domain.TaskTypes;
 
@@ -24,11 +25,24 @@ public class SurveillanceTaskRequest : TaskRequest
 
   protected static IGuardResult Validate(PhoneNumber emergencyNumber, Guid floorId)
   {
-    return Guard.AgainstNullOrUndefinedBulk(
+    var guardNulls = Guard.AgainstNullOrUndefinedBulk(
       new GuardArgumentCollection()
       {
         new GuardArgument(emergencyNumber, nameof(emergencyNumber)),
         new GuardArgument(floorId, nameof(floorId))
+      }
+    );
+    var guardEmptyGuids = Guard.Combine(
+      new List<IGuardResult>()
+      {
+        Guard.IsTrue(!floorId.Equals(Guid.Empty), "FloorId is empty")
+      }
+    );
+    return Guard.Combine(
+      new List<IGuardResult>()
+      {
+        guardNulls,
+        guardEmptyGuids
       }
     );
   }
