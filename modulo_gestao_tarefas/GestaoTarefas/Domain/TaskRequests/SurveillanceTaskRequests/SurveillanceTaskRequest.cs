@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using GestaoTarefas.Domain.Shared;
+using GestaoTarefas.Domain.Tasks;
 using GestaoTarefas.Domain.TaskTypes;
 
 namespace GestaoTarefas.Domain.TaskRequests;
@@ -23,7 +24,7 @@ public class SurveillanceTaskRequest : TaskRequest
     this.FloorId = floorId;
   }
 
-  protected static IGuardResult Validate(PhoneNumber emergencyNumber, Guid floorId)
+  private static IGuardResult Validate(PhoneNumber emergencyNumber, Guid floorId)
   {
     var guardNulls = Guard.AgainstNullOrUndefinedBulk(
       new GuardArgumentCollection()
@@ -44,6 +45,18 @@ public class SurveillanceTaskRequest : TaskRequest
         guardNulls,
         guardEmptyGuids
       }
+    );
+  }
+
+  public override Task ToTask()
+  {
+    return new SurveillanceTask(
+      taskDescription: this.TaskDescription,
+      userId: this.UserId,
+      emergencyNumber: this.EmergencyNumber,
+      floorId: this.FloorId,
+      pickupRoomId: this.PickupRoomId,
+      deliveryRoomId: this.DeliveryRoomId
     );
   }
 }

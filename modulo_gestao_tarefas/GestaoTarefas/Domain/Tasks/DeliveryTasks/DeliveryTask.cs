@@ -28,7 +28,7 @@ public class DeliveryTask : Task
     this.ConfirmationCode = confirmationCode;
   }
 
-  protected static IGuardResult Validate(Name senderName, Name receiverName,
+  private static IGuardResult Validate(Name senderName, Name receiverName,
     PhoneNumber senderContact, PhoneNumber receiverContact, ConfirmationCode confirmationCode)
   {
     return Guard.AgainstNullOrUndefinedBulk(

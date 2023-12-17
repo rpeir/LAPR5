@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using GestaoTarefas.Domain.Shared;
+using GestaoTarefas.Domain.TaskRequests;
 using GestaoTarefas.Domain.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SYSTask = System.Threading.Tasks;
@@ -39,6 +40,8 @@ public class TasksController : ControllerBase
     return task;
   }
 
+
+  /*
   // POST: api/Tasks
   [HttpPost]
   public async SYSTask.Task<ActionResult<TaskDto>> Create(CreatingTaskDto dto)
@@ -58,5 +61,29 @@ public class TasksController : ControllerBase
       return StatusCode(409, e.Message);
     }
 
+  }
+  */
+
+  // POST: api/Tasks
+  [HttpPost]
+  public async SYSTask.Task<ActionResult<TaskDto>> ApproveTaskRequest(CreatingTaskDto dto)
+  {
+    try
+    {
+      if (dto.TaskRequestId == Guid.Empty)
+        return BadRequest("TaskRequestId is missing");
+
+      var task = await _service.ApproveTaskRequest(new TaskRequestId(dto.TaskRequestId));
+
+      return CreatedAtAction(nameof(GetById), new { id = task.Id }, task);
+    }
+    catch (BusinessRuleValidationException e)
+    {
+      return StatusCode(402, e.Message);
+    }
+    catch (IntegrityException e)
+    {
+      return StatusCode(409, e.Message);
+    }
   }
 }

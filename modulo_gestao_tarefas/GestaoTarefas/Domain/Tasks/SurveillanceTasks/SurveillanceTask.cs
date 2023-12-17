@@ -23,7 +23,7 @@ public class SurveillanceTask : Task
     this.FloorId = floorId;
   }
 
-  protected static IGuardResult Validate(PhoneNumber emergencyNumber, Guid floorId)
+  private static IGuardResult Validate(PhoneNumber emergencyNumber, Guid floorId)
   {
     var guardNulls = Guard.AgainstNullOrUndefinedBulk(
       new GuardArgumentCollection()

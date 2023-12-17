@@ -233,4 +233,126 @@ public class DeliveryTaskRequestTest
     // Assert
     // Exception expected
   }
+
+  [TestMethod]
+  public void DeliveryTaskRequest_Approve_IsValidIfPending()
+  {
+    // Arrange
+    var deliveryTask = new DeliveryTaskRequest(
+      taskDescription: _validTaskDescription, userId: _validUserId,
+      senderName: _validSenderName, receiverName: _validReceiverName,
+      senderContact: _validSenderContact, receiverContact: _validReceiverContact,
+      confirmationCode: _validConfirmationCode, pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+    );
+    Assert.AreEqual(deliveryTask.RequestStatus, RequestStatus.Pending);
+
+    // Act
+    deliveryTask.Approve();
+
+    // Assert
+    Assert.AreEqual(deliveryTask.RequestStatus, RequestStatus.Approved);
+  }
+
+  [TestMethod]
+  [ExpectedException(typeof(BusinessRuleValidationException))]
+  public void DeliveryTaskRequest_Approve_IsNotValidIfRejected()
+  {
+    // Arrange
+    var deliveryTask = new DeliveryTaskRequest(
+      taskDescription: _validTaskDescription, userId: _validUserId,
+      senderName: _validSenderName, receiverName: _validReceiverName,
+      senderContact: _validSenderContact, receiverContact: _validReceiverContact,
+      confirmationCode: _validConfirmationCode, pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+    );
+    deliveryTask.Reject();
+    Assert.AreEqual(deliveryTask.RequestStatus, RequestStatus.Rejected);
+
+    // Act
+    deliveryTask.Approve();
+
+    // Assert
+    // Exception expected
+  }
+
+  [TestMethod]
+  [ExpectedException(typeof(BusinessRuleValidationException))]
+  public void DeliveryTaskRequest_Approve_IsNotValidIfAlreadyApproved()
+  {
+    // Arrange
+    var deliveryTask = new DeliveryTaskRequest(
+      taskDescription: _validTaskDescription, userId: _validUserId,
+      senderName: _validSenderName, receiverName: _validReceiverName,
+      senderContact: _validSenderContact, receiverContact: _validReceiverContact,
+      confirmationCode: _validConfirmationCode, pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+    );
+    deliveryTask.Approve();
+    Assert.AreEqual(deliveryTask.RequestStatus, RequestStatus.Approved);
+
+    // Act
+    deliveryTask.Approve();
+
+    // Assert
+    // Exception expected
+  }
+
+    [TestMethod]
+  public void DeliveryTaskRequest_Reject_IsValidIfPending()
+  {
+    // Arrange
+    var deliveryTask = new DeliveryTaskRequest(
+      taskDescription: _validTaskDescription, userId: _validUserId,
+      senderName: _validSenderName, receiverName: _validReceiverName,
+      senderContact: _validSenderContact, receiverContact: _validReceiverContact,
+      confirmationCode: _validConfirmationCode, pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+    );
+    Assert.AreEqual(deliveryTask.RequestStatus, RequestStatus.Pending);
+
+    // Act
+    deliveryTask.Reject();
+
+    // Assert
+    Assert.AreEqual(deliveryTask.RequestStatus, RequestStatus.Rejected);
+  }
+
+  [TestMethod]
+  [ExpectedException(typeof(BusinessRuleValidationException))]
+  public void DeliveryTaskRequest_Rejected_IsNotValidIfAlreadyRejected()
+  {
+    // Arrange
+    var deliveryTask = new DeliveryTaskRequest(
+      taskDescription: _validTaskDescription, userId: _validUserId,
+      senderName: _validSenderName, receiverName: _validReceiverName,
+      senderContact: _validSenderContact, receiverContact: _validReceiverContact,
+      confirmationCode: _validConfirmationCode, pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+    );
+    deliveryTask.Reject();
+    Assert.AreEqual(deliveryTask.RequestStatus, RequestStatus.Rejected);
+
+    // Act
+    deliveryTask.Reject();
+
+    // Assert
+    // Exception expected
+  }
+
+  [TestMethod]
+  [ExpectedException(typeof(BusinessRuleValidationException))]
+  public void DeliveryTaskRequest_Rejected_IsNotValidIfApproved()
+  {
+    // Arrange
+    var deliveryTask = new DeliveryTaskRequest(
+      taskDescription: _validTaskDescription, userId: _validUserId,
+      senderName: _validSenderName, receiverName: _validReceiverName,
+      senderContact: _validSenderContact, receiverContact: _validReceiverContact,
+      confirmationCode: _validConfirmationCode, pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+    );
+    deliveryTask.Approve();
+    Assert.AreEqual(deliveryTask.RequestStatus, RequestStatus.Approved);
+
+    // Act
+    deliveryTask.Reject();
+
+    // Assert
+    // Exception expected
+  }
 }

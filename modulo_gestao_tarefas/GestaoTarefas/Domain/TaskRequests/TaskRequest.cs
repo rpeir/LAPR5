@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using GestaoTarefas.Domain.Shared;
 using GestaoTarefas.Domain.TaskTypes;
+using GestaoTarefas.Domain.Tasks;
 
 namespace GestaoTarefas.Domain.TaskRequests
 {
@@ -30,7 +31,35 @@ namespace GestaoTarefas.Domain.TaskRequests
           this.DeliveryRoomId = deliveryRoomId;
         }
 
-        protected static IGuardResult Validate(TaskType type, TaskDescription taskDescription,
+        public void Approve()
+        {
+          switch (this.RequestStatus)
+          {
+            case RequestStatus.Pending:
+              this.RequestStatus = TaskRequests.RequestStatus.Approved;
+              break;
+            case RequestStatus.Approved:
+              throw new BusinessRuleValidationException("Task Request already approved");
+            case RequestStatus.Rejected:
+              throw new BusinessRuleValidationException("Task Request already rejected");
+          }
+        }
+
+        public void Reject()
+        {
+          switch (this.RequestStatus)
+          {
+            case RequestStatus.Pending:
+              this.RequestStatus = TaskRequests.RequestStatus.Rejected;
+              break;
+            case RequestStatus.Approved:
+              throw new BusinessRuleValidationException("Task Request already approved");
+            case RequestStatus.Rejected:
+              throw new BusinessRuleValidationException("Task Request already rejected");
+          }
+        }
+
+        private static IGuardResult Validate(TaskType type, TaskDescription taskDescription,
           Guid userId, Guid pickupRoomId, Guid deliveryRoomId)
         {
           var guardNulls = Guard.AgainstNullOrUndefinedBulk(
@@ -61,6 +90,8 @@ namespace GestaoTarefas.Domain.TaskRequests
 
           return guard;
         }
+
+        public abstract Task ToTask();
 
     }
 

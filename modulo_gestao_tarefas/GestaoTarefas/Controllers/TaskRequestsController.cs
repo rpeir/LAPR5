@@ -20,9 +20,27 @@ public class TaskRequestsController : ControllerBase
 
   // GET: api/TaskRequests
   [HttpGet]
-  public async SYSTask.Task<ActionResult<IEnumerable<TaskRequestDto>>> GetAll()
+  public async SYSTask.Task<ActionResult<IEnumerable<TaskRequestDto>>> GetTaskRequests()
   {
-    return await _service.GetAllAsync();
+    try
+    {
+      // GET: api/TaskRequests (all)
+      if (Request.Query.Count == 0) return await _service.GetAllAsync();
+
+
+      // GET: api/TaskRequests?status=xyz
+      if (Request.Query.ContainsKey("status"))
+      {
+        return await this._service.GetByStatusAsync(Request.Query["status"]);
+      }
+
+      return StatusCode(400);
+
+    } catch (ArgumentException e)
+    {
+      return StatusCode(400, e.Message);
+    }
+
   }
 
   // GET: api/TaskRequests/5
@@ -59,4 +77,28 @@ public class TaskRequestsController : ControllerBase
     }
 
   }
+
+  // DELETE: api/TaskRequests/5
+  [HttpDelete("{id}")]
+  public async SYSTask.Task<ActionResult<TaskRequestDto>> Reject(Guid id)
+  {
+    try
+    {
+      var task = await _service.RejectAsync(new TaskRequestId(id));
+      if (task == null)
+      {
+        return NotFound();
+      }
+      return task;
+    } catch (BusinessRuleValidationException e)
+    {
+      return StatusCode(402, e.Message);
+    }
+    catch (IntegrityException e)
+    {
+      return StatusCode(409, e.Message);
+    }
+
+  }
+
 }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SYSTasks = System.Threading.Tasks;
 using GestaoTarefas.Domain.Shared;
-using Microsoft.EntityFrameworkCore;
+using GestaoTarefas.Domain.TaskRequests;
 
 namespace GestaoTarefas.Domain.Tasks;
 
@@ -12,14 +12,16 @@ public class TaskService
   private readonly ISurveillanceTaskRepository _survRepo;
   private readonly IDeliveryTaskRepository _delvRepo;
   private readonly ITaskRepository _taskRepo;
+  private readonly ITaskRequestRepository _taskRequestRepo;
   private readonly ITaskMapper<Task, TaskDto> _taskMapper;
 
-  public TaskService(IUnitOfWork unitOfWork, ITaskRepository taskRepo, IDeliveryTaskRepository delvRepo, ISurveillanceTaskRepository survRepo, ITaskMapper<Task, TaskDto> taskMapper)
+  public TaskService(IUnitOfWork unitOfWork, ITaskRepository taskRepo, IDeliveryTaskRepository delvRepo, ISurveillanceTaskRepository survRepo, ITaskRequestRepository taskRequestRepo, ITaskMapper<Task, TaskDto> taskMapper)
   {
     this._unitOfWork = unitOfWork;
     this._survRepo = survRepo;
     this._delvRepo = delvRepo;
     this._taskRepo = taskRepo;
+    this._taskRequestRepo = taskRequestRepo;
     this._taskMapper = taskMapper;
   }
 
@@ -40,6 +42,7 @@ public class TaskService
     return _taskMapper.ToDto(task);
   }
 
+  /*
   public async SYSTasks.Task<TaskDto> AddAsync(CreatingTaskDto dto)
   {
     var task = _taskMapper.ToEntity(dto);
@@ -56,6 +59,21 @@ public class TaskService
     }
 
     return _taskMapper.ToDto(task);
+  }
+  */
+
+  public async SYSTasks.Task<TaskDto> ApproveTaskRequest(TaskRequestId requestId)
+  {
+    var request = await this._taskRequestRepo.GetByIdAsync(requestId);
+
+    request.Approve();
+    var task = request.ToTask();
+
+    await this._taskRequestRepo.UpdateAsync(request);
+    await this._taskRepo.AddAsync(task);
+    await this._unitOfWork.CommitAsync();
+
+    return this._taskMapper.ToDto(task);
   }
 
 }

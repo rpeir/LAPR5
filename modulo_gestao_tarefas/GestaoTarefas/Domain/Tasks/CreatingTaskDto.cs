@@ -1,7 +1,11 @@
+using System;
+
 namespace GestaoTarefas.Domain.Tasks;
 
 public class CreatingTaskDto : TaskDto
 {
+  public Guid TaskRequestId { get; set; } = new Guid();
+
   // Surveillance properties
   public string EmergencyNumber { get; set; }
   public string FloorId { get; set; }

@@ -154,4 +154,120 @@ public class SurveillanceTaskRequestTest
       // Exception expected
     }
 
+      [TestMethod]
+  public void SurveillanceTaskRequest_Approve_IsValidIfPending()
+  {
+    // Arrange
+    var task = new SurveillanceTaskRequest(
+      taskDescription: _validTaskDescription, userId: _validUserId,
+      emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
+      pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+    );
+    Assert.AreEqual(task.RequestStatus, RequestStatus.Pending);
+
+    // Act
+    task.Approve();
+
+    // Assert
+    Assert.AreEqual(task.RequestStatus, RequestStatus.Approved);
+  }
+
+  [TestMethod]
+  [ExpectedException(typeof(BusinessRuleValidationException))]
+  public void SurveillanceTaskRequest_Approve_IsNotValidIfRejected()
+  {
+    // Arrange
+    var surveillanceTask = new SurveillanceTaskRequest(
+      taskDescription: _validTaskDescription, userId: _validUserId,
+      emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
+      pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+    );
+    surveillanceTask.Reject();
+    Assert.AreEqual(surveillanceTask.RequestStatus, RequestStatus.Rejected);
+
+    // Act
+    surveillanceTask.Approve();
+
+    // Assert
+    // Exception expected
+  }
+
+  [TestMethod]
+  [ExpectedException(typeof(BusinessRuleValidationException))]
+  public void SurveillanceTaskRequest_Approve_IsNotValidIfAlreadyApproved()
+  {
+    // Arrange
+    var surveillanceTask = new SurveillanceTaskRequest(
+      taskDescription: _validTaskDescription, userId: _validUserId,
+      emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
+      pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+    );
+    surveillanceTask.Approve();
+    Assert.AreEqual(surveillanceTask.RequestStatus, RequestStatus.Approved);
+
+    // Act
+    surveillanceTask.Approve();
+
+    // Assert
+    // Exception expected
+  }
+
+    [TestMethod]
+  public void SurveillanceTaskRequest_Reject_IsValidIfPending()
+  {
+    // Arrange
+    var surveillanceTask = new SurveillanceTaskRequest(
+      taskDescription: _validTaskDescription, userId: _validUserId,
+      emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
+      pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+    );
+    Assert.AreEqual(surveillanceTask.RequestStatus, RequestStatus.Pending);
+
+    // Act
+    surveillanceTask.Reject();
+
+    // Assert
+    Assert.AreEqual(surveillanceTask.RequestStatus, RequestStatus.Rejected);
+  }
+
+  [TestMethod]
+  [ExpectedException(typeof(BusinessRuleValidationException))]
+  public void SurveillanceTaskRequest_Rejected_IsNotValidIfAlreadyRejected()
+  {
+    // Arrange
+    var surveillanceTask = new SurveillanceTaskRequest(
+      taskDescription: _validTaskDescription, userId: _validUserId,
+      emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
+      pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+    );
+    surveillanceTask.Reject();
+    Assert.AreEqual(surveillanceTask.RequestStatus, RequestStatus.Rejected);
+
+    // Act
+    surveillanceTask.Reject();
+
+    // Assert
+    // Exception expected
+  }
+
+  [TestMethod]
+  [ExpectedException(typeof(BusinessRuleValidationException))]
+  public void SurveillanceTaskRequest_Rejected_IsNotValidIfApproved()
+  {
+    // Arrange
+    var surveillanceTask = new SurveillanceTaskRequest(
+      taskDescription: _validTaskDescription, userId: _validUserId,
+      emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
+      pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+    );
+    surveillanceTask.Approve();
+    Assert.AreEqual(surveillanceTask.RequestStatus, RequestStatus.Approved);
+
+    // Act
+    surveillanceTask.Reject();
+
+    // Assert
+    // Exception expected
+  }
+
 }

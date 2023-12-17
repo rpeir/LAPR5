@@ -8,15 +8,15 @@ public enum Status
   Done
 }
 
-public static class RequestStatusHelper
+public static class StatusHelper
 {
   public static Status ToStatus(this string me)
   {
-    switch (me)
+    switch (me.ToLower())
     {
-      case "Pending":
+      case "pending":
         return Status.Pending;
-      case "Done":
+      case "done":
         return Status.Done;
       default:
         throw new ArgumentException("Invalid Status Type");

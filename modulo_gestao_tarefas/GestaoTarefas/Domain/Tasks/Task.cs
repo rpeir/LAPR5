@@ -30,7 +30,7 @@ namespace GestaoTarefas.Domain.Tasks
           this.DeliveryRoomId = deliveryRoomId;
         }
 
-        protected static IGuardResult Validate(TaskType type, TaskDescription taskDescription,
+        private static IGuardResult Validate(TaskType type, TaskDescription taskDescription,
           Guid userId, Guid pickupRoomId, Guid deliveryRoomId)
         {
           var guardNulls = Guard.AgainstNullOrUndefinedBulk(

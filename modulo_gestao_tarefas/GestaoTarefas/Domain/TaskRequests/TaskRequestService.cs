@@ -60,4 +60,36 @@ public class TaskRequestService
     return _reqMapper.ToDto(task);
   }
 
+  public async SYSTasks.Task<List<TaskRequestDto>> GetByStatusAsync(string statusDto)
+  {
+    var status = statusDto.ToStatus();
+
+    var list = await this._reqRepo.GetByStatusAsync(status);
+
+    return _reqMapper.ToDtoList(list).ToList();
+  }
+
+  public async SYSTasks.Task<TaskRequestDto> RejectAsync(TaskRequestId id)
+  {
+    var task = await this._reqRepo.GetByIdAsync(id);
+
+    if (task == null)
+      return null;
+
+    task.Reject();
+
+    await this._reqRepo.UpdateAsync(task);
+
+    try
+    {
+      await this._unitOfWork.CommitAsync();
+    }
+    catch (DbUpdateException e)
+    {
+      throw new IntegrityException(e.GetBaseException().Message);
+    }
+
+    return _reqMapper.ToDto(task);
+  }
+
 }

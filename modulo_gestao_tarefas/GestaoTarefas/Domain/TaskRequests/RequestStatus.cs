@@ -13,13 +13,13 @@ public static class RequestStatusHelper
 {
   public static RequestStatus ToStatus(this string me)
   {
-    switch (me)
+    switch (me.ToLower())
     {
-      case "Pending":
+      case "pending":
         return RequestStatus.Pending;
-      case "Approved":
+      case "approved":
         return RequestStatus.Approved;
-      case "Rejected":
+      case "rejected":
         return RequestStatus.Rejected;
       default:
         throw new ArgumentException("Invalid Status Type");

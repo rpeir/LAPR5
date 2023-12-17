@@ -1,5 +1,6 @@
 using System;
 using GestaoTarefas.Domain.Shared;
+using GestaoTarefas.Domain.Tasks;
 using GestaoTarefas.Domain.TaskTypes;
 
 namespace GestaoTarefas.Domain.TaskRequests;
@@ -28,7 +29,7 @@ public class DeliveryTaskRequest : TaskRequest
     this.ConfirmationCode = confirmationCode;
   }
 
-  protected static IGuardResult Validate(Name senderName, Name receiverName,
+  private static IGuardResult Validate(Name senderName, Name receiverName,
     PhoneNumber senderContact, PhoneNumber receiverContact, ConfirmationCode confirmationCode)
   {
     return Guard.AgainstNullOrUndefinedBulk(
@@ -40,6 +41,21 @@ public class DeliveryTaskRequest : TaskRequest
         new GuardArgument(receiverContact, nameof(receiverContact)),
         new GuardArgument(confirmationCode, nameof(confirmationCode))
       }
+    );
+  }
+
+  public override Task ToTask()
+  {
+    return new DeliveryTask(
+      taskDescription: this.TaskDescription,
+      userId: this.UserId,
+      senderName: this.SenderName,
+      receiverName: this.ReceiverName,
+      senderContact: this.SenderContact,
+      receiverContact: this.ReceiverContact,
+      confirmationCode: this.ConfirmationCode,
+      pickupRoomId: this.PickupRoomId,
+      deliveryRoomId: this.DeliveryRoomId
     );
   }
 }

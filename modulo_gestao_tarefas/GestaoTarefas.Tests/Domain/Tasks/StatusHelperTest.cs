@@ -6,8 +6,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace GestaoTarefas.Tests.Domain.Tasks;
 
 [TestClass]
-[TestSubject(typeof(RequestStatusHelper))]
-public class RequestStatusHelperTest
+[TestSubject(typeof(StatusHelper))]
+public class StatusHelperTest
 {
 
   [TestMethod]
