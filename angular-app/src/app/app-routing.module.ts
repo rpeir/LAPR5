@@ -41,13 +41,14 @@ import {CreateManagerComponent} from "./user/create-manager/create-manager.compo
 import {UtenteComponent} from "./utente/utente.component";
 import {CreateUserComponent}from "./user/create-user/create-user.component"
 import {RegisterUserComponent} from "./user/register-user/register-user.component";
+import { VerifyAuthService } from "./auth/verify-auth.service";
 
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'buildings', component: BuildingComponent },
   { path: 'elevators', component: ElevatorComponent },
-  { path: 'floors', component: FloorComponent },
+  { path: 'floors', component: FloorComponent, canActivate: [VerifyAuthService] },
   { path: 'floors/create', component: CreateFloorComponent },
   { path: 'floors/building', component: FloorListOfBuildingComponent },
   { path: 'floors/building-pathways', component: ListOfBuildingWithPathwayComponent },
@@ -89,5 +90,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  providers: [VerifyAuthService]
 })
 export class AppRoutingModule {}
