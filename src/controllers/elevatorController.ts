@@ -12,6 +12,7 @@ export default class ElevatorController implements IElevatorController {
 
   public async createElevator(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }
@@ -31,6 +32,7 @@ export default class ElevatorController implements IElevatorController {
 
   public async listElevator(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }
@@ -52,6 +54,7 @@ export default class ElevatorController implements IElevatorController {
 
   public async updateElevator(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }
@@ -70,6 +73,7 @@ export default class ElevatorController implements IElevatorController {
   }
   public async replaceElevator(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }

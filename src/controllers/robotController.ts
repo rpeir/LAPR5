@@ -12,6 +12,7 @@ export default class RobotController implements IRobotController {
 
   public async createRobot(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'fleet manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }
@@ -30,6 +31,7 @@ export default class RobotController implements IRobotController {
 
   public async disableRobot(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'fleet manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }
@@ -45,6 +47,7 @@ export default class RobotController implements IRobotController {
   }
   public async consultAllRobots(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'fleet manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }

@@ -13,6 +13,7 @@ export default class FloorController implements IFloorController {
 
   public async uploadFloorMap(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }
@@ -29,6 +30,7 @@ export default class FloorController implements IFloorController {
 
   public async createFloor(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }
@@ -46,13 +48,12 @@ export default class FloorController implements IFloorController {
 
   public async getFloorsOfBuilding(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }
       const building = req.query.building;
-      const floorOrError = (await this.floorServiceInstance.getFloorsOfBuilding(building.toString())) as Result<
-        IFloorDTO[]
-      >;
+      const floorOrError = (await this.floorServiceInstance.getFloorsOfBuilding(building.toString())) as Result<IFloorDTO[]>;
 
       if (floorOrError.isFailure) {
         return res.status(402).send(floorOrError);
@@ -67,14 +68,13 @@ export default class FloorController implements IFloorController {
 
   public async getBuildingFloorMaxMin(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }
       const max = req.query.max;
       const min = req.query.min;
-      const buildings = (await this.floorServiceInstance.getBuildingFloorMaxMin(Number(max), Number(min))) as Result<
-        IBuildingDTO[]
-      >;
+      const buildings = (await this.floorServiceInstance.getBuildingFloorMaxMin(Number(max), Number(min))) as Result<IBuildingDTO[]>;
 
       if (buildings.isFailure) {
         return res.status(402).send(buildings);
@@ -89,6 +89,7 @@ export default class FloorController implements IFloorController {
 
   public async updateBuildingFloor(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }
@@ -106,6 +107,7 @@ export default class FloorController implements IFloorController {
   }
   public async listFloorsWithPathways(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }

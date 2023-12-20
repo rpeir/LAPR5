@@ -18,7 +18,8 @@ export default class UserRequestController implements IUserRequestController {
   constructor(@Inject(config.services.userRequest.name) private userRequestServiceInstance: IUserRequestService) {}
   public async listAllRequests(req:Request, res:Response, next:NextFunction){
     try{
-      if (req.auth.user.role.name !== 'admin') {
+      // @ts-ignore
+      if ((req).auth.user.role.name !== 'admin') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }
       const listOrError=(await this.userRequestServiceInstance.listPendingRequests()) as Result<IUserRequestDTO[]>;
@@ -33,6 +34,7 @@ export default class UserRequestController implements IUserRequestController {
     }
   }
   public async registerUser(req:Request, res:Response, next:NextFunction){
+    // @ts-ignore
     if (req.auth.user.role.name !== 'admin') {
       return res.status(401).json('Não tem permissões para aceder a este recurso').send();
     }
@@ -57,6 +59,7 @@ export default class UserRequestController implements IUserRequestController {
   }
   public async declineUser(req:Request,res:Response,next:NextFunction){
     try{
+      // @ts-ignore
       if (req.auth.user.role.name !== 'admin') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }

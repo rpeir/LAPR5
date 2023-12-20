@@ -13,6 +13,7 @@ export default class BuildingController implements IBuildingController {
 
   public async createBuilding(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }
@@ -34,6 +35,7 @@ export default class BuildingController implements IBuildingController {
   //EDIT BUILDING
   public async updateBuilding(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }
@@ -50,6 +52,7 @@ export default class BuildingController implements IBuildingController {
 
   public async listAllBuilding(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }

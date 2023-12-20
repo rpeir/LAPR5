@@ -13,6 +13,7 @@ export default class RoomController implements IRoomController {
 
   public async createRoom(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }
@@ -34,6 +35,7 @@ export default class RoomController implements IRoomController {
 
   public async getRoomsByBuildingsAndFloor(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
         return res.status(401).json('Não tem permissões para aceder a este recurso').send();
       }
