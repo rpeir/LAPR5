@@ -1,5 +1,6 @@
 using System;
 using GestaoTarefas.Domain.Shared;
+using GestaoTarefas.Domain.TaskRequests;
 
 namespace GestaoTarefas.Domain.Tasks;
 
@@ -9,6 +10,7 @@ public class DeliveryTaskMapper : ITaskMapper<DeliveryTask, DeliveryTaskDto>
   {
     return new DeliveryTaskDto()
     {
+      TaskRequestId = task.TaskRequestId.AsGuid(),
       ConfirmationCode = task.ConfirmationCode.Value,
       DeliveryRoomId = task.DeliveryRoomId.ToString(),
       Description = task.TaskDescription.Value,
@@ -29,16 +31,17 @@ public class DeliveryTaskMapper : ITaskMapper<DeliveryTask, DeliveryTaskDto>
     try
     {
       return new DeliveryTask(
-            taskDescription: new TaskDescription(dto.Description),
-            userId: new Guid(dto.UserId),
-            senderName: new Name(dto.SenderName),
-            receiverName: new Name(dto.ReceiverName),
-            senderContact: new PhoneNumber(dto.SenderContact),
-            receiverContact: new PhoneNumber(dto.ReceiverContact),
-            confirmationCode: new ConfirmationCode(dto.ConfirmationCode),
-            pickupRoomId: new Guid(dto.PickupRoomId),
-            deliveryRoomId: new Guid(dto.DeliveryRoomId)
-          );
+        taskRequestId: new TaskRequestId(dto.TaskRequestId),
+        taskDescription: new TaskDescription(dto.Description),
+        userId: new Guid(dto.UserId),
+        senderName: new Name(dto.SenderName),
+        receiverName: new Name(dto.ReceiverName),
+        senderContact: new PhoneNumber(dto.SenderContact),
+        receiverContact: new PhoneNumber(dto.ReceiverContact),
+        confirmationCode: new ConfirmationCode(dto.ConfirmationCode),
+        pickupRoomId: new Guid(dto.PickupRoomId),
+        deliveryRoomId: new Guid(dto.DeliveryRoomId)
+      );
     } catch (FormatException e)
     {
       throw new BusinessRuleValidationException(e.Message);

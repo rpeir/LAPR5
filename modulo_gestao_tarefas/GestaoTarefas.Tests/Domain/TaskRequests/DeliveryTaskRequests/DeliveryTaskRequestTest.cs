@@ -5,7 +5,7 @@ using GestaoTarefas.Domain.TaskTypes;
 using JetBrains.Annotations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GestaoTarefas.Tests.Domain.Tasks.DeliveryTasks;
+namespace GestaoTarefas.Tests.Domain.TaskRequests;
 
 [TestClass]
 [TestSubject(typeof(DeliveryTaskRequest))]

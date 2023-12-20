@@ -47,6 +47,7 @@ public class DeliveryTaskRequest : TaskRequest
   public override Task ToTask()
   {
     return new DeliveryTask(
+      taskRequestId: this.Id,
       taskDescription: this.TaskDescription,
       userId: this.UserId,
       senderName: this.SenderName,

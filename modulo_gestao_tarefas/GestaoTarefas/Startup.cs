@@ -30,12 +30,15 @@ namespace GestaoTarefas
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           services.AddDbContext<GestaoTarefasDbContext>(opt =>
-            opt.UseSqlServer(Configuration.GetConnectionString("SqlServerCS"))
-              .ReplaceService<IValueConverterSelector, StronglyEntityIdValueConverterSelector>());
+           // services.AddDbContext<GestaoTarefasDbContext>(opt =>
+           //  opt.UseSqlServer(Configuration.GetConnectionString("SqlServerCS"))
+           //    .ReplaceService<IValueConverterSelector, StronglyEntityIdValueConverterSelector>());
           //services.AddDbContext<GestaoTarefasDbContext>(opt =>
           //  opt.UseInMemoryDatabase("GestaoTarefasDB")
           //    .ReplaceService<IValueConverterSelector, StronglyEntityIdValueConverterSelector>());
+          services.AddDbContext<GestaoTarefasDbContext>(opt =>
+            opt.UseMySql(Configuration.GetConnectionString("MySqlCS"), ServerVersion.AutoDetect(Configuration.GetConnectionString("MySqlCS")))
+              .ReplaceService<IValueConverterSelector, StronglyEntityIdValueConverterSelector>());
 
           ConfigureMyServices(services);
 

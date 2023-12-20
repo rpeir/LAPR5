@@ -1,5 +1,6 @@
 using System;
 using GestaoTarefas.Domain.Shared;
+using GestaoTarefas.Domain.TaskRequests;
 using GestaoTarefas.Domain.TaskTypes;
 
 namespace GestaoTarefas.Domain.Tasks;
@@ -10,6 +11,7 @@ public class SurveillanceTaskMapper : ITaskMapper<SurveillanceTask, Surveillance
   {
     return new SurveillanceTaskDto()
     {
+      TaskRequestId = task.TaskRequestId.AsGuid(),
       Description = task.TaskDescription.Value,
       EmergencyNumber = task.EmergencyNumber.Value,
       Id = task.Id.AsGuid(),
@@ -27,13 +29,14 @@ public class SurveillanceTaskMapper : ITaskMapper<SurveillanceTask, Surveillance
     try
     {
       return new SurveillanceTask(
-            taskDescription: new TaskDescription(dto.Description),
-            userId: new Guid(dto.UserId),
-            emergencyNumber: new PhoneNumber(dto.EmergencyNumber),
-            floorId: new Guid(dto.FloorId),
-            pickupRoomId: new Guid(dto.PickupRoomId),
-            deliveryRoomId: new Guid(dto.DeliveryRoomId)
-          );
+        taskRequestId: new TaskRequestId(dto.TaskRequestId),
+        taskDescription: new TaskDescription(dto.Description),
+        userId: new Guid(dto.UserId),
+        emergencyNumber: new PhoneNumber(dto.EmergencyNumber),
+        floorId: new Guid(dto.FloorId),
+        pickupRoomId: new Guid(dto.PickupRoomId),
+        deliveryRoomId: new Guid(dto.DeliveryRoomId)
+      );
     } catch (FormatException e)
     {
       throw new BusinessRuleValidationException(e.Message);

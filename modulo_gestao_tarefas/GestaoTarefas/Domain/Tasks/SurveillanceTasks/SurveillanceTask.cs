@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using GestaoTarefas.Domain.Shared;
+using GestaoTarefas.Domain.TaskRequests;
 using GestaoTarefas.Domain.TaskTypes;
 
 namespace GestaoTarefas.Domain.Tasks;
@@ -11,9 +12,9 @@ public class SurveillanceTask : Task
 
   public Guid FloorId { get; private set; }
 
-  public SurveillanceTask(TaskDescription taskDescription, Guid userId, PhoneNumber emergencyNumber,
+  public SurveillanceTask(TaskRequestId taskRequestId,TaskDescription taskDescription, Guid userId, PhoneNumber emergencyNumber,
     Guid floorId, Guid pickupRoomId, Guid deliveryRoomId)
-    : base(TaskType.Surveillance, taskDescription, userId, pickupRoomId, deliveryRoomId)
+    : base(taskRequestId, TaskType.Surveillance, taskDescription, userId, pickupRoomId, deliveryRoomId)
   {
     var guard = Validate(emergencyNumber: emergencyNumber, floorId: floorId);
     if (!guard.Succeeded)
