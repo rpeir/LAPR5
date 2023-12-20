@@ -11,6 +11,8 @@ export default (app: Router) => {
   const ctrl = Container.get(config.controllers.elevator.name) as IElevatorController;
   route.post(
     '',
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       body: Joi.object({
         designation: Joi.string().required(),
@@ -26,12 +28,13 @@ export default (app: Router) => {
   );
   route.get(
     '',
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       query: {
         buildingDesignation: Joi.string().required(),
       },
     }),
-
     (req, res, next) => {
       ctrl.listElevator(req, res, next);
     },
@@ -39,6 +42,8 @@ export default (app: Router) => {
 
   route.put(
     '',
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       body: Joi.object({
         id: Joi.string().required(),
@@ -55,6 +60,8 @@ export default (app: Router) => {
   );
   route.patch(
     '',
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       body: Joi.object({
         id: Joi.string(),

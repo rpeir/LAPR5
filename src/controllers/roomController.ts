@@ -13,6 +13,9 @@ export default class RoomController implements IRoomController {
 
   public async createRoom(req: Request, res: Response, next: NextFunction) {
     try {
+      if (req.auth.user.role.name !== 'campus manager') {
+        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+      }
       const roomOrError = (await this.roomService.createRoom(req.body as IRoomDTO)) as Result<IRoomDTO>;
 
       if (roomOrError.isFailure) {
@@ -31,6 +34,9 @@ export default class RoomController implements IRoomController {
 
   public async getRoomsByBuildingsAndFloor(req: Request, res: Response, next: NextFunction) {
     try {
+      if (req.auth.user.role.name !== 'campus manager') {
+        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+      }
       const building = req.query.building as string
       const floor = req.query.floor as string;
       const roomsOrError = await this.roomService.getRoomsByBuildingAndFloor(building, floor);

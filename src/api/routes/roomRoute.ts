@@ -12,6 +12,8 @@ export default (app: Router) => {
 
   route.post(
     "/",
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       body: Joi.object({
         name : Joi.string().required(),

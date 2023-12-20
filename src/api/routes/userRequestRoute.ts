@@ -6,6 +6,7 @@ import IUserRequestController from "../../controllers/IControllers/IUserRequestC
 import AuthService from "../../services/userService";
 import {IUserDTO} from "../../dto/IUserDTO";
 import winston from "winston";
+import middlewares from "../middlewares";
 
 const route=Router();
 
@@ -14,6 +15,8 @@ export default (app:Router)=>{
   const ctrl=Container.get(config.controllers.userRequest.name) as IUserRequestController;
   route.get(
     '/listAllRequests',
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       query: {},
     }),
@@ -24,6 +27,8 @@ export default (app:Router)=>{
 
   route.post(
     '/register-user',
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       body: Joi.object({
         id: Joi.string().required(),
@@ -36,6 +41,8 @@ export default (app:Router)=>{
 
   route.delete(
     '/decline-user/:id',
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       params:{
         id:Joi.string().required(),

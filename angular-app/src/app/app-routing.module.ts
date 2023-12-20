@@ -48,7 +48,7 @@ const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'buildings', component: BuildingComponent },
   { path: 'elevators', component: ElevatorComponent },
-  { path: 'floors', component: FloorComponent, canActivate: [VerifyAuthService] },
+  { path: 'floors', component: FloorComponent},
   { path: 'floors/create', component: CreateFloorComponent },
   { path: 'floors/building', component: FloorListOfBuildingComponent },
   { path: 'floors/building-pathways', component: ListOfBuildingWithPathwayComponent },

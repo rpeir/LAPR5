@@ -12,6 +12,9 @@ export default class RobotController implements IRobotController {
 
   public async createRobot(req: Request, res: Response, next: NextFunction) {
     try {
+      if (req.auth.user.role.name !== 'fleet manager') {
+        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+      }
       const robotOrError = (await this.robotServiceInstance.createRobot(req.body as IRobotDTO)) as Result<IRobotDTO>;
 
       if (robotOrError.isFailure) {
@@ -27,6 +30,9 @@ export default class RobotController implements IRobotController {
 
   public async disableRobot(req: Request, res: Response, next: NextFunction) {
     try {
+      if (req.auth.user.role.name !== 'fleet manager') {
+        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+      }
       const robotOrError = (await this.robotServiceInstance.disableRobot(req.body as IRobotDTO)) as Result<IRobotDTO>;
       if (robotOrError.isFailure) {
         return res.status(402).send(robotOrError.error);
@@ -39,6 +45,9 @@ export default class RobotController implements IRobotController {
   }
   public async consultAllRobots(req: Request, res: Response, next: NextFunction) {
     try {
+      if (req.auth.user.role.name !== 'fleet manager') {
+        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+      }
       const robotOrError = (await this.robotServiceInstance.consultAllRobots()) as Result<IRobotDTO[]>;
       if (robotOrError.isFailure) {
         return res
