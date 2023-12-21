@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using GestaoTarefas.Domain.Shared;
+using GestaoTarefas.Domain.TaskRequests;
 using GestaoTarefas.Domain.TaskTypes;
 
 namespace GestaoTarefas.Domain.Tasks
@@ -13,14 +14,16 @@ namespace GestaoTarefas.Domain.Tasks
         public Status Status { get; private set; }
         public Guid PickupRoomId { get; private set; }
         public Guid DeliveryRoomId { get; private set; }
+        public TaskRequestId TaskRequestId { get; private set; }
 
-        protected Task(TaskType type, TaskDescription taskDescription,
+        protected Task(TaskRequestId taskRequestId,TaskType type, TaskDescription taskDescription,
           Guid userId, Guid pickupRoomId, Guid deliveryRoomId)
         {
-          var guard = Validate(type, taskDescription, userId, pickupRoomId, deliveryRoomId);
+          var guard = Validate(taskRequestId, type, taskDescription, userId, pickupRoomId, deliveryRoomId);
           if (!guard.Succeeded)
             throw new BusinessRuleValidationException(guard.Message);
 
+          this.TaskRequestId = taskRequestId;
           this.Id = new TaskId(Guid.NewGuid());
           this.Type = type;
           this.TaskDescription = taskDescription;
@@ -30,12 +33,13 @@ namespace GestaoTarefas.Domain.Tasks
           this.DeliveryRoomId = deliveryRoomId;
         }
 
-        private static IGuardResult Validate(TaskType type, TaskDescription taskDescription,
+        private static IGuardResult Validate(TaskRequestId taskRequestId,TaskType type, TaskDescription taskDescription,
           Guid userId, Guid pickupRoomId, Guid deliveryRoomId)
         {
           var guardNulls = Guard.AgainstNullOrUndefinedBulk(
             new GuardArgumentCollection()
             {
+              new GuardArgument(taskRequestId, nameof(taskRequestId)),
               new GuardArgument(type, nameof(type)),
               new GuardArgument(taskDescription, nameof(taskDescription)),
               new GuardArgument(userId, nameof(userId)),
@@ -46,6 +50,7 @@ namespace GestaoTarefas.Domain.Tasks
           var guardEmptyGuids = Guard.Combine(
             new List<IGuardResult>()
             {
+              Guard.IsTrue(!taskRequestId.Equals(new TaskRequestId(Guid.Empty)), "TaskRequestId is empty"),
               Guard.IsTrue(!userId.Equals(Guid.Empty), "UserId is empty"),
               Guard.IsTrue(!pickupRoomId.Equals(Guid.Empty), "PickupRoomId is empty"),
               Guard.IsTrue(!deliveryRoomId.Equals(Guid.Empty), "DeliveryRoomId is empty")
