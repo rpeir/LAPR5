@@ -36,7 +36,7 @@ import { CampusComponent } from './campus/campus.component';
 import { PathComponent } from './path/path.component';
 import { GetByOptimizationCriteriaComponent } from './path/get-by-optimization-criteria/get-by-optimization-criteria.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { CreateRobotComponent } from './robot/create/createRobot.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -73,6 +73,7 @@ import { CreateManagerComponent } from "./user/create-manager/create-manager.com
 import {UtenteComponent} from "./utente/utente.component";
 import {CreateUserComponent} from "./user/create-user/create-user.component";
 import {RegisterUserComponent} from "./user/register-user/register-user.component";
+import { AuthenticationInterceptor } from "./auth/authentication.interceptor";
 
 @NgModule({
   declarations: [
@@ -152,7 +153,11 @@ import {RegisterUserComponent} from "./user/register-user/register-user.componen
         MatProgressSpinnerModule,
         MatCheckboxModule
     ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthenticationInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
