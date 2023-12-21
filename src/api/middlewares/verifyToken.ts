@@ -6,7 +6,6 @@ var jwt = require("jsonwebtoken");
 
 async function verifyToken(req, res, next) {
   try {
-    console.log(req.auth);
     var token = req.auth.token;
     const userRepo = Container.get(config.repos.user.name) as IUserRepo;
     let user;

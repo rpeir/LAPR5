@@ -34,7 +34,6 @@ export class AuthService {
   logout() { localStorage.removeItem('user'); }
 
   getToken(): string | null {
-    console.log(JSON.parse(localStorage.getItem("user")!).token);
     return localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!).token :null;
   }
 
