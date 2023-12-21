@@ -7,7 +7,7 @@ import IRobotTypeRepo from "./IRepos/IRobotTypeRepo";
 import config from "../../config";
 import { RobotType } from "../domain/robotType/robotType";
 import { RobotTypeMap } from "../mappers/RobotTypeMap";
-import { TaskType } from "../domain/task/taskType";
+import { TaskType } from "../domain/taskType/taskType";
 import { RobotTypeName } from "../domain/robotType/robotTypeName";
 import { RobotTypeBrand } from "../domain/robotType/robotTypeBrand";
 import { RobotTypeModel } from "../domain/robotType/robotTypeModel";

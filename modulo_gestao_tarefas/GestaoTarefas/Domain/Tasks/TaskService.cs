@@ -66,6 +66,9 @@ public class TaskService
   {
     var request = await this._taskRequestRepo.GetByIdAsync(requestId);
 
+    if (request == null)
+      return null;
+
     request.Approve();
     var task = request.ToTask();
 

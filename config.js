@@ -44,6 +44,16 @@ export default {
   planningHost: process.env.PLANNING_HOST || 'vs1141.dei.isep.ipp.pt',
 
   /**
+   * Port of task server
+   */
+  tasksPort: parseInt(process.env.TASK_PORT, 10) || 6000,
+
+  /**
+   * Host of task server
+   */
+  tasksHost: process.env.TASK_HOST || 'localhost', // TODO: change to deployment host
+
+  /**
    * API configs
    */
   api: {
@@ -97,6 +107,11 @@ export default {
     planning: {
       name: 'PlanningController',
       path: '../controllers/planningController',
+    },
+
+    task: {
+      name: 'TaskController',
+      path: '../controllers/taskController',
     }
   },
 
@@ -149,6 +164,11 @@ export default {
     room: {
       name: 'RoomRepo',
       path: '../repos/roomRepo',
+    },
+
+    task: {
+      name: 'TaskRepo',
+      path: '../connections/taskConnection',
     },
   },
 
@@ -206,6 +226,11 @@ export default {
       name: 'PlanningService',
       path: '../services/planningService',
     },
+
+    task: {
+      name: 'TaskService',
+      path: '../services/taskService',
+    }
   },
 
   connections:{

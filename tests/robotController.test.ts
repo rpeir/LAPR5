@@ -6,7 +6,7 @@ import { IRobotDTO } from "../src/dto/IRobotDTO";
 import RobotController from "../src/controllers/robotController";
 import IRobotService from "../src/services/IServices/IRobotService";
 import { RobotTypeName } from "../src/domain/robotType/robotTypeName";
-import { TaskType } from "../src/domain/task/taskType";
+import { TaskType } from "../src/domain/taskType/taskType";
 import { RobotTypeModel } from "../src/domain/robotType/robotTypeModel";
 import { RobotTypeBrand } from "../src/domain/robotType/robotTypeBrand";
 import { RobotType } from "../src/domain/robotType/robotType";

@@ -3,7 +3,7 @@ import { UniqueEntityID } from "../../core/domain/UniqueEntityID";
 import { Guard } from "../../core/logic/Guard";
 import { Result } from "../../core/logic/Result";
 import { RobotTypeID } from "./robotTypeID";
-import { TaskType } from "../task/taskType";
+import { TaskType } from "../taskType/taskType";
 import { RobotTypeModel } from "./robotTypeModel";
 import { RobotTypeBrand } from "./robotTypeBrand";
 import { RobotTypeName } from "./robotTypeName";

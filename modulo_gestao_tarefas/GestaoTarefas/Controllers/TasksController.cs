@@ -75,6 +75,9 @@ public class TasksController : ControllerBase
 
       var task = await _service.ApproveTaskRequest(new TaskRequestId(dto.TaskRequestId));
 
+      if (task == null)
+        return NotFound();
+
       return CreatedAtAction(nameof(GetById), new { id = task.Id }, task);
     }
     catch (BusinessRuleValidationException e)
