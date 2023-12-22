@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using SYSTasks = System.Threading.Tasks;
@@ -62,15 +63,15 @@ public class TaskService
   }
   */
 
-  public async SYSTasks.Task<TaskDto> ApproveTaskRequest(TaskRequestId requestId)
+  public async SYSTasks.Task<TaskDto> ApproveTaskRequest(CreatingTaskDto dto)
   {
-    var request = await this._taskRequestRepo.GetByIdAsync(requestId);
+    var request = await this._taskRequestRepo.GetByIdAsync(new TaskRequestId(dto.TaskRequestId));
 
     if (request == null)
       return null;
 
     request.Approve();
-    var task = request.ToTask();
+    var task = request.ToTask(dto.RobotId);
 
     await this._taskRequestRepo.UpdateAsync(request);
     await this._taskRepo.AddAsync(task);

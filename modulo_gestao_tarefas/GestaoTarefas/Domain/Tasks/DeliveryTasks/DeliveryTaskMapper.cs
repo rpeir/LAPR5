@@ -22,7 +22,8 @@ public class DeliveryTaskMapper : ITaskMapper<DeliveryTask, DeliveryTaskDto>
       ReceiverName = task.ReceiverName.Value,
       SenderContact = task.SenderContact.Value,
       SenderName = task.SenderName.Value,
-      Status = task.Status.ToString()
+      Status = task.Status.ToString(),
+      RobotId = task.RobotId
     };
   }
 
@@ -40,7 +41,8 @@ public class DeliveryTaskMapper : ITaskMapper<DeliveryTask, DeliveryTaskDto>
         receiverContact: new PhoneNumber(dto.ReceiverContact),
         confirmationCode: new ConfirmationCode(dto.ConfirmationCode),
         pickupRoomId: new Guid(dto.PickupRoomId),
-        deliveryRoomId: new Guid(dto.DeliveryRoomId)
+        deliveryRoomId: new Guid(dto.DeliveryRoomId),
+        robotId: dto.RobotId
       );
     } catch (FormatException e)
     {

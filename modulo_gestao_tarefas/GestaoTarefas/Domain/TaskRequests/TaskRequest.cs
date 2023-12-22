@@ -91,7 +91,7 @@ namespace GestaoTarefas.Domain.TaskRequests
           return guard;
         }
 
-        public abstract Task ToTask();
+        public abstract Task ToTask(Guid robotId);
 
     }
 

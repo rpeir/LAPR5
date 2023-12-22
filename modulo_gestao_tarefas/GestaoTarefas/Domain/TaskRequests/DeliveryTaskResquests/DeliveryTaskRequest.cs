@@ -44,7 +44,7 @@ public class DeliveryTaskRequest : TaskRequest
     );
   }
 
-  public override Task ToTask()
+  public override Task ToTask(Guid robotId)
   {
     return new DeliveryTask(
       taskRequestId: this.Id,
@@ -56,7 +56,8 @@ public class DeliveryTaskRequest : TaskRequest
       receiverContact: this.ReceiverContact,
       confirmationCode: this.ConfirmationCode,
       pickupRoomId: this.PickupRoomId,
-      deliveryRoomId: this.DeliveryRoomId
+      deliveryRoomId: this.DeliveryRoomId,
+      robotId: robotId
     );
   }
 }

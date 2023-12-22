@@ -48,7 +48,7 @@ public class SurveillanceTaskRequest : TaskRequest
     );
   }
 
-  public override Task ToTask()
+  public override Task ToTask(Guid robotId)
   {
     return new SurveillanceTask(
       taskRequestId: this.Id,
@@ -57,7 +57,8 @@ public class SurveillanceTaskRequest : TaskRequest
       emergencyNumber: this.EmergencyNumber,
       floorId: this.FloorId,
       pickupRoomId: this.PickupRoomId,
-      deliveryRoomId: this.DeliveryRoomId
+      deliveryRoomId: this.DeliveryRoomId,
+      robotId: robotId
     );
   }
 }

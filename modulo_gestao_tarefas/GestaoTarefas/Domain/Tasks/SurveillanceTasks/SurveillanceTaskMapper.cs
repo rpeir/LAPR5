@@ -20,7 +20,8 @@ public class SurveillanceTaskMapper : ITaskMapper<SurveillanceTask, Surveillance
       UserId = task.UserId.ToString(),
       Status = task.Status.ToString(),
       DeliveryRoomId = task.DeliveryRoomId.ToString(),
-      PickupRoomId = task.PickupRoomId.ToString()
+      PickupRoomId = task.PickupRoomId.ToString(),
+      RobotId = task.RobotId
     };
   }
 
@@ -35,7 +36,8 @@ public class SurveillanceTaskMapper : ITaskMapper<SurveillanceTask, Surveillance
         emergencyNumber: new PhoneNumber(dto.EmergencyNumber),
         floorId: new Guid(dto.FloorId),
         pickupRoomId: new Guid(dto.PickupRoomId),
-        deliveryRoomId: new Guid(dto.DeliveryRoomId)
+        deliveryRoomId: new Guid(dto.DeliveryRoomId),
+        robotId: dto.RobotId
       );
     } catch (FormatException e)
     {

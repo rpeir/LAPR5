@@ -72,8 +72,10 @@ public class TasksController : ControllerBase
     {
       if (dto.TaskRequestId == Guid.Empty)
         return BadRequest("TaskRequestId is missing");
+      if (dto.RobotId == Guid.Empty)
+        return BadRequest("RobotId is missing");
 
-      var task = await _service.ApproveTaskRequest(new TaskRequestId(dto.TaskRequestId));
+      var task = await _service.ApproveTaskRequest(dto);
 
       if (task == null)
         return NotFound();
