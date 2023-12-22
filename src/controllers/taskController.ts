@@ -11,10 +11,54 @@ import { ITaskRequestDTO } from "../dto/ITaskRequestDTO";
 
 @Service()
 export default class TaskController implements ITaskController {
-
   constructor(
     @Inject(config.services.task.name) private taskService: ITaskService
   ) {}
+
+  public async getTaskRequests(req: Request, res: Response, next: NextFunction) {
+    try {
+      const tasks = await this.taskService.getTaskRequests();
+
+      return res.status(200).json(tasks);
+
+    } catch (error) {
+      if (error instanceof InvalidRequestError) {
+        return res.status(error.errorValue().statusCode).json(error.errorValue().error);
+      } else {
+        return next(error)
+      }
+    }
+  }
+
+  public async getTaskRequestById(req: Request, res: Response, next: NextFunction) {
+    try {
+      const task = await this.taskService.getTaskRequestById(req.params.id);
+
+      return res.status(200).json(task);
+
+    } catch (error) {
+      if (error instanceof InvalidRequestError) {
+        return res.status(error.errorValue().statusCode).json(error.errorValue().error);
+      } else {
+        return next(error)
+      }
+    }
+  }
+
+  public async createTaskRequest(req: Request, res: Response, next: NextFunction) {
+    try {
+      const task = await this.taskService.createTaskRequest(req.body);
+
+      return res.status(201).json(task);
+
+    } catch (error) {
+      if (error instanceof InvalidRequestError) {
+        return res.status(error.errorValue().statusCode).json(error.errorValue().error);
+      } else {
+        return next(error)
+      }
+    }
+  }
 
   public async getAll(req: Request, res: Response, next: NextFunction) {
     try {
@@ -52,6 +96,21 @@ export default class TaskController implements ITaskController {
       const task = await this.taskService.approveTask(req.body);
 
       return res.status(201).json(task);
+
+    } catch (error) {
+      if (error instanceof InvalidRequestError) {
+        return res.status(error.errorValue().statusCode).json(error.errorValue().error);
+      } else {
+        return next(error)
+      }
+    }
+  }
+
+  public async rejectTask(req: Request, res: Response, next: NextFunction) {
+    try {
+      const task = await this.taskService.rejectTask(req.body);
+
+      return res.status(200).json(task);
 
     } catch (error) {
       if (error instanceof InvalidRequestError) {

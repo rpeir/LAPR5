@@ -5,8 +5,8 @@ import config from "../../config";
 import { GenericAppError } from "../core/logic/AppError";
 import IRequestError = GenericAppError.IRequestError;
 import InvalidRequestError = GenericAppError.InvalidRequestError;
-
 import axios, { AxiosError } from "axios";
+import { ITaskRequestDTO } from "../dto/ITaskRequestDTO";
 
 @Service()
 export default class TaskConnection implements ITasksRepo {
@@ -53,6 +53,42 @@ export default class TaskConnection implements ITasksRepo {
       }
       const error = {statusCode: code, message: err.response.statusText, error: err.response.data} as IRequestError
       throw new InvalidRequestError(error);
+    }
+  }
+
+  public async rejectTask(requestId: string): Promise<ITaskRequestDTO> {
+    try {
+      const res = await axios.delete(`http://${config.tasksHost}:${config.tasksPort}/api/taskRequests/${requestId}`);
+      return res.data as ITaskRequestDTO;
+    } catch (err) {
+      if (err instanceof AxiosError) await this.handleAxiousError(err);
+    }
+  }
+
+  public async findTaskRequests(): Promise<ITaskRequestDTO[]> {
+    try {
+      const res = await axios.get(`http://${config.tasksHost}:${config.tasksPort}/api/taskRequests`);
+      return res.data as ITaskRequestDTO[];
+    } catch (err) {
+      if (err instanceof AxiosError) await this.handleAxiousError(err);
+    }
+  }
+
+  public async findTaskRequestById(id: string): Promise<ITaskRequestDTO> {
+    try {
+      const res = await axios.get(`http://${config.tasksHost}:${config.tasksPort}/api/taskRequests/${id}`);
+      return res.data as ITaskRequestDTO;
+    } catch (err) {
+      if (err instanceof AxiosError) await this.handleAxiousError(err);
+    }
+  }
+
+  public async createTaskRequest(taskRequestDTO: ITaskRequestDTO): Promise<ITaskRequestDTO> {
+    try {
+      const res = await axios.post(`http://${config.tasksHost}:${config.tasksPort}/api/taskRequests`, taskRequestDTO);
+      return res.data as ITaskRequestDTO;
+    } catch (err) {
+      if (err instanceof AxiosError) await this.handleAxiousError(err);
     }
   }
 }

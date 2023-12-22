@@ -4,7 +4,6 @@ import user from './routes/userRoute';
 import role from './routes/roleRoute';
 import robotRoute from "./routes/robotRoute";
 import robotTypeRoute from "./routes/robotTypeRoute";
-
 import buildingRoute from "./routes/buildingRoute";
 import floorRoute from "./routes/floorRoute";
 import elevatorRoute from "./routes/elevatorRoute";
@@ -13,6 +12,7 @@ import roomRoute from "./routes/roomRoute";
 import plannigRoute from "./routes/plannigRoute";
 import userRequestRoute from "./routes/userRequestRoute";
 import taskRoute from "./routes/taskRoute";
+import taskRequestRoute from "./routes/taskRequestRoute";
 export default () => {
 	const app = Router();
 
@@ -29,6 +29,7 @@ export default () => {
   plannigRoute(app);
   userRequestRoute(app);
   taskRoute(app);
+  taskRequestRoute(app);
 
 	return app
 }
