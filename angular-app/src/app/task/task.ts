@@ -1,7 +1,7 @@
 import { Robot } from "../robot/robot";
 
 export class Task {
-  id: number | undefined;
+  id: string | undefined;
   taskDescription: string | undefined;
   type: string | undefined;
   userId: string | undefined;
@@ -16,5 +16,5 @@ export class Task {
   receiverContact: string | undefined;
   confirmationCode: string | undefined;
   EmergencyNumber: string | undefined;
-  floorId: number | undefined;
+  floorId: string | undefined;
 }

@@ -5,16 +5,18 @@ import ITaskService from "./IServices/ITaskService";
 import { ITaskDTO } from "../dto/ITaskDTO";
 import { ITaskRequestDTO } from "../dto/ITaskRequestDTO";
 import ITaskAdapter from "../adapters/IAdapters/ITaskAdapter";
-
+import { TaskMapper } from "../mappers/TaskMapper";
 
 
 @Service()
 export default class TaskService implements ITaskService {
   constructor(
-    @Inject(config.adapters.taskAdapter.name) private taskAdapter: ITaskAdapter
-  ) {}
+    @Inject(config.adapters.taskAdapter.name) private taskAdapter: ITaskAdapter) {
+  }
+
   public async approveTask(requestId: string): Promise<ITaskDTO> {
-   return await this.taskAdapter.approveTask(requestId);
+    const task = await this.taskAdapter.approveTask(requestId);
+    return TaskMapper.toDTO(task);
   }
 
   public async rejectTask(requestId: string): Promise<ITaskRequestDTO> {
@@ -22,11 +24,13 @@ export default class TaskService implements ITaskService {
   }
 
   public async getAll(): Promise<ITaskDTO[]> {
-    return await this.taskAdapter.findAll();
+    const tasks = await this.taskAdapter.findAll();
+    return tasks.map((task) => TaskMapper.toDTO(task));
   }
 
   public async getById(id: string): Promise<ITaskDTO> {
-    return  this.taskAdapter.findById(id);
+    const task = await this.taskAdapter.findById(id);
+    return TaskMapper.toDTO(task);
   }
 
   public async getTaskRequests(params : [string, string][]): Promise<ITaskRequestDTO[]> {
@@ -42,7 +46,8 @@ export default class TaskService implements ITaskService {
   }
 
   public async getPendingTasks(): Promise<ITaskDTO[]> {
-    return await this.taskAdapter.findPendingTasks();
+    const tasks = await this.taskAdapter.findPendingTasks();
+    return tasks.map((task) => TaskMapper.toDTO(task));
   }
 
 }
