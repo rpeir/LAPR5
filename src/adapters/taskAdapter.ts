@@ -7,42 +7,57 @@ import InvalidRequestError = GenericAppError.InvalidRequestError;
 import axios, { AxiosError } from "axios";
 import { ITaskRequestDTO } from "../dto/ITaskRequestDTO";
 import ITaskAdapter from "./IAdapters/ITaskAdapter";
+import { TaskPersistence } from "../persistence/TaskPersistence";
+import { TaskMapper } from "../mappers/TaskMapper";
+import { Task } from "../domain/task/task";
 
 @Service()
 export default class TaskAdapter implements ITaskAdapter {
-  public async findPendingTasks(): Promise<ITaskDTO[]> {
+  public async findPendingTasks(): Promise<Task[]> {
     try {
       const res = await axios.get(`http://${config.tasksHost}:${config.tasksPort}/api/tasks/pending`);
-      return res.data as ITaskDTO[];
+      let tasks = [];
+      const tasksPersistence = res.data as TaskPersistence[];
+
+      for (let taskPersistence of tasksPersistence) {
+        tasks.push(await TaskMapper.toDomain(taskPersistence));
+      }
+
+      return tasks;
     } catch (err) {
       if (err instanceof AxiosError) await this.handleAxiousError(err);
     }
   }
-  public async findById(id: string): Promise<ITaskDTO> {
+  public async findById(id: string): Promise<Task> {
     try {
       const res = await axios.get(`http://${config.tasksHost}:${config.tasksPort}/api/tasks/${id}`);
-      return res.data as ITaskDTO;
+      return res.data as Task;
     } catch (err) {
       if (err instanceof AxiosError) await this.handleAxiousError(err);
     }
   }
-  public async findAll() : Promise<ITaskDTO[]> {
+  public async findAll() : Promise<Task[]>  {
     try {
       const res = await axios.get(`http://${config.tasksHost}:${config.tasksPort}/api/tasks`);
-      return res.data as ITaskDTO[];
+      let tasks = [];
+      const tasksPersistence = res.data as TaskPersistence[];
+      for (let taskPersistence of tasksPersistence) {
+        tasks.push(await TaskMapper.toDomain(taskPersistence));
+      }
+      return tasks;
     } catch (err) {
         if (err instanceof AxiosError) await this.handleAxiousError(err);
     }
   }
 
-  public async approveTask(requestId: string): Promise<ITaskDTO> {
+  public async approveTask(requestId: string): Promise<Task> {
     const body = {
       taskRequestId: requestId
     }
 
     try {
       const res = await axios.post(`http://${config.tasksHost}:${config.tasksPort}/api/tasks`, requestId);
-      return res.data as ITaskDTO;
+      return res.data as Task;
     } catch (err) {
       if (err instanceof AxiosError) await this.handleAxiousError(err);
     }

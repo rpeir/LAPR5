@@ -1,6 +1,6 @@
 import { Robot } from "../../angular-app/src/app/robot/robot";
 
-export interface ITaskDTO {
+export interface TaskPersistence{
   id : string,
   type : string,
   userId : string,

@@ -6,6 +6,7 @@ import { IRoomPersistence } from "../dataschema/IRoomPersistence";
 import { Room } from "../domain/room/room";
 import { RoomMap } from "../mappers/RoomMap";
 import { MongoAPIError, MongoServerError } from "mongodb";
+import { RoomId } from "../domain/room/roomId";
 
 @Service()
 export default class RoomRepo implements IRoomRepo {
@@ -72,5 +73,17 @@ export default class RoomRepo implements IRoomRepo {
     } else {
       return null;
     }
+  }
+
+  public async findById(roomId: RoomId | string) {
+    const idx = roomId instanceof RoomId ? roomId : new RoomId(roomId);
+    const query = { domainId: idx };
+    const roomRecord = await this.roomSchema.findOne(query);
+    if (roomRecord != null) {
+      return RoomMap.toDomain(roomRecord);
+    } else {
+      return null;
+    }
+
   }
 }

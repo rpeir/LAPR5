@@ -19,6 +19,13 @@ export default (app: Router) => {
     }
   );
 
+  route.get("/pending",
+    // middlewares.isAuth,
+    // middlewares.verifyToken,
+    (req, res, next) => {
+      ctrl.getPendingTasks(req, res, next);
+    });
+
   // get by id
   route.get(
     "/:id",
@@ -33,13 +40,6 @@ export default (app: Router) => {
       ctrl.getById(req, res, next);
     }
   );
-
-  route.get("/pending",
-    // middlewares.isAuth,
-    // middlewares.verifyToken,
-    (req, res, next) => {
-      ctrl.getPendingTasks(req, res, next);
-    });
 
   // approve task
   route.post(
