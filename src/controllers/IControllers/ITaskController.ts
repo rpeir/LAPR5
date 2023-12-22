@@ -8,4 +8,5 @@ export default interface ITaskController {
   getTaskRequests(req: Request, res: Response, next: NextFunction);
   getTaskRequestById(req: Request, res: Response, next: NextFunction);
   createTaskRequest(req: Request, res: Response, next: NextFunction);
+  getPendingTasks(req: Request, res: Response, next: NextFunction);
 }

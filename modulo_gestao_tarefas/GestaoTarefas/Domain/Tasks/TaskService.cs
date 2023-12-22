@@ -43,6 +43,14 @@ public class TaskService
     return _taskMapper.ToDto(task);
   }
 
+
+  public async SYSTasks.Task<List<TaskDto>> GetPendingAsync()
+  {
+    var list = await this._taskRepo.GetPendingAsync();
+
+    return _taskMapper.ToDtoList(list).ToList();
+  }
+
   /*
   public async SYSTasks.Task<TaskDto> AddAsync(CreatingTaskDto dto)
   {

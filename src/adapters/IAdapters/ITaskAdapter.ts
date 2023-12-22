@@ -1,7 +1,7 @@
 import { ITaskDTO } from "../../dto/ITaskDTO";
 import { ITaskRequestDTO } from "../../dto/ITaskRequestDTO";
 
-export default interface ITaskRepo {
+export default interface ITaskAdapter {
   findAll(): Promise<ITaskDTO[]>;
   findById(id: string): Promise<ITaskDTO>;
   approveTask(requestId: string): Promise<ITaskDTO>;
@@ -9,4 +9,5 @@ export default interface ITaskRepo {
   findTaskRequests(): Promise<ITaskRequestDTO[]>;
   findTaskRequestById(id: string): Promise<ITaskRequestDTO>;
   createTaskRequest(taskRequestDTO: ITaskRequestDTO): Promise<ITaskRequestDTO>;
+  findPendingTasks(): Promise<ITaskDTO[]>;
 }

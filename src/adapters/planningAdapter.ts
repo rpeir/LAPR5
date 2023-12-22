@@ -1,11 +1,11 @@
-import IPlanningConnection from "./IConnections/IPlanningConnection";
+import IPlanningAdapter from "./IAdapters/IPlanningAdapter";
 import { Service } from "typedi";
 import { Result } from "../core/logic/Result";
 import { IPathDTO } from "../dto/IPathDTO";
 import config from "../../config";
 
 @Service()
-export default class PlanningConnection implements IPlanningConnection {
+export default class PlanningAdapter implements IPlanningAdapter {
   public async getPathLessBuildings(floorSource: string, floorDestination: string) {
     const http = require("http");
     const options = {

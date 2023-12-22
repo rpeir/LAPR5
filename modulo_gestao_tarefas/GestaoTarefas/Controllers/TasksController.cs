@@ -26,6 +26,14 @@ public class TasksController : ControllerBase
     return await _service.GetAllAsync();
   }
 
+  // GET: api/Tasks/pending
+  [HttpGet("pending")]
+  public async SYSTask.Task<ActionResult<IEnumerable<TaskDto>>> getPending()
+  {
+    return await _service.GetPendingAsync();
+  }
+
+
   // GET: api/Tasks/5
   [HttpGet("{id}")]
   public async SYSTask.Task<ActionResult<TaskDto>> GetById(Guid id)

@@ -166,10 +166,6 @@ export default {
       path: '../repos/roomRepo',
     },
 
-    task: {
-      name: 'TaskRepo',
-      path: '../connections/taskConnection',
-    },
   },
 
   services: {
@@ -233,10 +229,15 @@ export default {
     }
   },
 
-  connections:{
-    planningConnection: {
-      name: 'PlanningConnection',
-      path: '../connections/planningConnection',
+  adapters:{
+    planningAdapter: {
+      name: 'PlanningAdapter',
+      path: '../adapters/planningAdapter',
+    },
+
+    taskAdapter: {
+      name: 'TaskAdapter',
+      path: '../adapters/taskAdapter',
     }
   }
 };

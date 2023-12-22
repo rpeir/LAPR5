@@ -1,5 +1,4 @@
 import { Service } from "typedi";
-import ITasksRepo from "../services/IRepos/ITaskRepo";
 import { ITaskDTO } from "../dto/ITaskDTO";
 import config from "../../config";
 import { GenericAppError } from "../core/logic/AppError";
@@ -7,9 +6,18 @@ import IRequestError = GenericAppError.IRequestError;
 import InvalidRequestError = GenericAppError.InvalidRequestError;
 import axios, { AxiosError } from "axios";
 import { ITaskRequestDTO } from "../dto/ITaskRequestDTO";
+import ITaskAdapter from "./IAdapters/ITaskAdapter";
 
 @Service()
-export default class TaskConnection implements ITasksRepo {
+export default class TaskAdapter implements ITaskAdapter {
+  public async findPendingTasks(): Promise<ITaskDTO[]> {
+    try {
+      const res = await axios.get(`http://${config.tasksHost}:${config.tasksPort}/api/tasks/pending`);
+      return res.data as ITaskDTO[];
+    } catch (err) {
+      if (err instanceof AxiosError) await this.handleAxiousError(err);
+    }
+  }
   public async findById(id: string): Promise<ITaskDTO> {
     try {
       const res = await axios.get(`http://${config.tasksHost}:${config.tasksPort}/api/tasks/${id}`);
