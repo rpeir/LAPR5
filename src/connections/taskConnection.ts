@@ -65,9 +65,15 @@ export default class TaskConnection implements ITasksRepo {
     }
   }
 
-  public async findTaskRequests(): Promise<ITaskRequestDTO[]> {
+  public async findTaskRequests(params : [string, string][]): Promise<ITaskRequestDTO[]> {
     try {
-      const res = await axios.get(`http://${config.tasksHost}:${config.tasksPort}/api/taskRequests`);
+      let urlString = `http://${config.tasksHost}:${config.tasksPort}/api/taskRequests`;
+      let i = 0;
+      for (let param of params) {
+        if (i === 0) { urlString += "?" } else { urlString += "&"}
+        urlString += param[0] + "=" + param[1];
+      }
+      const res = await axios.get(urlString);
       return res.data as ITaskRequestDTO[];
     } catch (err) {
       if (err instanceof AxiosError) await this.handleAxiousError(err);

@@ -17,7 +17,10 @@ export default class TaskController implements ITaskController {
 
   public async getTaskRequests(req: Request, res: Response, next: NextFunction) {
     try {
-      const tasks = await this.taskService.getTaskRequests();
+      // @ts-ignore
+      const params : [string, string][] = Object.entries(req.query);
+
+      const tasks = await this.taskService.getTaskRequests(params);
 
       return res.status(200).json(tasks);
 

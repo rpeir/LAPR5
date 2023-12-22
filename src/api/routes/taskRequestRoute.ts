@@ -12,8 +12,6 @@ export default (app: Router) => {
 
   route.get(
     '',
-    middlewares.isAuth,
-    middlewares.verifyToken,
     (req, res, next) => {
       ctrl.getTaskRequests(req, res, next);
     },

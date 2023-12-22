@@ -29,8 +29,8 @@ export default class TaskService implements ITaskService {
     return  this.taskRepo.findById(id);
   }
 
-  public async getTaskRequests(): Promise<ITaskRequestDTO[]> {
-    return await this.taskRepo.findTaskRequests();
+  public async getTaskRequests(params : [string, string][]): Promise<ITaskRequestDTO[]> {
+    return await this.taskRepo.findTaskRequests(params);
   }
 
   public async getTaskRequestById(id: string): Promise<ITaskRequestDTO> {

@@ -1,0 +1,11 @@
+<app-gestor-de-tarefas-toolbar></app-gestor-de-tarefas-toolbar>
+
+<div *ngIf="requests.length > 0">
+  <div *ngFor="let request of requests">
+    <mat-card>
+      <mat-card-title>
+        {{getUserById(request.userId)}}
+      </mat-card-title>
+    </mat-card>
+  </div>
+</div>

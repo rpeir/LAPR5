@@ -7,7 +7,7 @@ export default interface ITaskService {
   getById(id: string): Promise<ITaskDTO>;
   approveTask(requestId : string) : Promise<ITaskDTO>;
   rejectTask(requestId : string) : Promise<ITaskRequestDTO>;
-  getTaskRequests() : Promise<ITaskRequestDTO[]>;
+  getTaskRequests(params : [string, string][]) : Promise<ITaskRequestDTO[]>;
   getTaskRequestById(id: string) : Promise<ITaskRequestDTO>;
   createTaskRequest(taskRequestDTO : ITaskRequestDTO) : Promise<ITaskRequestDTO>;
 }

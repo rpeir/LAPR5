@@ -6,7 +6,7 @@ export default interface ITaskRepo {
   findById(id: string): Promise<ITaskDTO>;
   approveTask(requestId: string): Promise<ITaskDTO>;
   rejectTask(requestId: string): Promise<ITaskRequestDTO>;
-  findTaskRequests(): Promise<ITaskRequestDTO[]>;
+  findTaskRequests(params : [string, string][]): Promise<ITaskRequestDTO[]>;
   findTaskRequestById(id: string): Promise<ITaskRequestDTO>;
   createTaskRequest(taskRequestDTO: ITaskRequestDTO): Promise<ITaskRequestDTO>;
 }
