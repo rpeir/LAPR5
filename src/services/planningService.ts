@@ -28,7 +28,7 @@ import { PlanningRoomLocationMapper } from "../mappers/PlanningRoomLocationMappe
 import { PlanningRoomLocation } from "../domain/planning/planningRoomLocation";
 import { IPlanningElevatorLocationDTO } from "../dto/IPlanningElevatorLocationDTO";
 import { IPlanningMatrixDTO } from "../dto/IPlanningMatrixDTO";
-import IPlanningConnection from "../connections/IConnections/IPlanningConnection";
+import IPlanningAdapter from "../adapters/IAdapters/IPlanningAdapter";
 
 @Service()
 export default class PlanningService implements IPlanningService {
@@ -38,7 +38,7 @@ export default class PlanningService implements IPlanningService {
     @Inject(config.services.floor.name) private floorService: IFloorService,
     @Inject(config.services.elevator.name) private elevatorService: IElevatorService,
     @Inject(config.services.pathway.name) private pathwayService: IPathwayService,
-    @Inject(config.connections.planningConnection.name) private planningConnection: IPlanningConnection
+    @Inject(config.adapters.planningAdapter.name) private planningAdapter: IPlanningAdapter
   ) {
   }
 
@@ -121,11 +121,11 @@ export default class PlanningService implements IPlanningService {
   }
 
   public async getPathLessBuildings(floorSource: string, floorDestination: string) {
-    return this.planningConnection.getPathLessBuildings(floorSource, floorDestination);
+    return this.planningAdapter.getPathLessBuildings(floorSource, floorDestination);
   }
 
   public async getPathLessElevators(floorSource: string, floorDestination: string) {
-    return this.planningConnection.getPathLessElevators(floorSource, floorDestination);
+    return this.planningAdapter.getPathLessElevators(floorSource, floorDestination);
   }
 
   public async getFloorPlanningMatrix(floorSource: string) {
@@ -255,10 +255,10 @@ export default class PlanningService implements IPlanningService {
   }
 
   public async getPathLessBuildingsRoomToRoom(floorSource: string, floorDestination: string, roomSource: string, roomDestination: string) {
-    return this.planningConnection.getPathLessBuildingsRoomToRoom(floorSource, floorDestination, roomSource, roomDestination);
+    return this.planningAdapter.getPathLessBuildingsRoomToRoom(floorSource, floorDestination, roomSource, roomDestination);
   }
 
   public async getPathLessElevatorsRoomToRoom(floorSource: string, floorDestination: string, roomSource: string, roomDestination: string) {
-    return this.planningConnection.getPathLessElevatorsRoomToRoom(floorSource, floorDestination, roomSource, roomDestination);
+    return this.planningAdapter.getPathLessElevatorsRoomToRoom(floorSource, floorDestination, roomSource, roomDestination);
   }
 }

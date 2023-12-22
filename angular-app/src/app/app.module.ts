@@ -75,6 +75,7 @@ import {CreateUserComponent} from "./user/create-user/create-user.component";
 import {RegisterUserComponent} from "./user/register-user/register-user.component";
 import { AuthenticationInterceptor } from "./auth/authentication.interceptor";
 import { ApproveRejectComponent } from './task/approve-reject/approve-reject.component';
+import { TaskSequenceComponent } from './task-sequence/task-sequence.component';
 
 @NgModule({
   declarations: [
@@ -134,6 +135,7 @@ import { ApproveRejectComponent } from './task/approve-reject/approve-reject.com
     CreateUserComponent,
     RegisterUserComponent,
     ApproveRejectComponent,
+    TaskSequenceComponent,
   ],
     imports: [
         BrowserModule,

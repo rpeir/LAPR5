@@ -1,5 +1,5 @@
 import { Inject, Service } from "typedi";
-import { NextFunction, Request, Response } from "express";
+import e, { NextFunction, Request, Response } from "express";
 import config from "../../config";
 import ITaskController from "./IControllers/ITaskController";
 import ITaskService from "../services/IServices/ITaskService";
@@ -7,7 +7,6 @@ import { ITaskDTO } from "../dto/ITaskDTO";
 import { GenericAppError } from "../core/logic/AppError";
 import UnexpectedError = GenericAppError.UnexpectedError;
 import InvalidRequestError = GenericAppError.InvalidRequestError;
-import { ITaskRequestDTO } from "../dto/ITaskRequestDTO";
 
 @Service()
 export default class TaskController implements ITaskController {
@@ -115,6 +114,20 @@ export default class TaskController implements ITaskController {
 
       return res.status(200).json(task);
 
+    } catch (error) {
+      if (error instanceof InvalidRequestError) {
+        return res.status(error.errorValue().statusCode).json(error.errorValue().error);
+      } else {
+        return next(error)
+      }
+    }
+  }
+
+  public async getPendingTasks(req: Request, res: Response, next: NextFunction) {
+    try {
+      const tasks = await this.taskService.getPendingTasks();
+
+      return res.status(200).json(tasks);
     } catch (error) {
       if (error instanceof InvalidRequestError) {
         return res.status(error.errorValue().statusCode).json(error.errorValue().error);

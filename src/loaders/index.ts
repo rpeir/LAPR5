@@ -160,11 +160,6 @@ export default async ({ expressApp }) => {
     path : config.repos.room.path
   }
 
-  const taskRepo = {
-    name: config.repos.task.name,
-    path: config.repos.task.path
-  }
-
   const roleService = {
     name: config.services.role.name,
     path: config.services.role.path
@@ -213,10 +208,15 @@ export default async ({ expressApp }) => {
     path: config.services.task.path
   }
 
-  const planningConnection = {
-    name: config.connections.planningConnection.name,
-    path: config.connections.planningConnection.path
+  const planningAdapter = {
+    name: config.adapters.planningAdapter.name,
+    path: config.adapters.planningAdapter.path
   }
+
+  const taskAdapter = {
+    name: config.adapters.taskAdapter.name,
+    path: config.adapters.taskAdapter.path
+  };
   const userRequestService={
     name: config.services.userRequest.name,
     path: config.services.userRequest.path
@@ -265,8 +265,7 @@ export default async ({ expressApp }) => {
       elevatorRepo,
       pathwayRepo,
       roomRepo,
-      userRequestRepo,
-      taskRepo,
+      userRequestRepo
     ],
 
     services: [
@@ -284,7 +283,10 @@ export default async ({ expressApp }) => {
       taskService,
     ],
 
-    connections: [planningConnection]
+    adapters: [
+      planningAdapter,
+      taskAdapter
+    ]
   });
   Logger.info("✌️ Schemas, Controllers, Repositories, Services, etc. loaded");
 

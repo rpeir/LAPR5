@@ -3,42 +3,46 @@ import { Inject, Service } from "typedi";
 import config from "../../config";
 import ITaskService from "./IServices/ITaskService";
 import { ITaskDTO } from "../dto/ITaskDTO";
-import ITaskRepo from "./IRepos/ITaskRepo";
 import { ITaskRequestDTO } from "../dto/ITaskRequestDTO";
+import ITaskAdapter from "../adapters/IAdapters/ITaskAdapter";
 
 
 
 @Service()
 export default class TaskService implements ITaskService {
   constructor(
-    @Inject(config.repos.task.name) private taskRepo: ITaskRepo
+    @Inject(config.adapters.taskAdapter.name) private taskAdapter: ITaskAdapter
   ) {}
   public async approveTask(requestId: string): Promise<ITaskDTO> {
-   return await this.taskRepo.approveTask(requestId);
+   return await this.taskAdapter.approveTask(requestId);
   }
 
   public async rejectTask(requestId: string): Promise<ITaskRequestDTO> {
-    return await this.taskRepo.rejectTask(requestId);
+    return await this.taskAdapter.rejectTask(requestId);
   }
 
   public async getAll(): Promise<ITaskDTO[]> {
-    return await this.taskRepo.findAll();
+    return await this.taskAdapter.findAll();
   }
 
   public async getById(id: string): Promise<ITaskDTO> {
-    return  this.taskRepo.findById(id);
+    return  this.taskAdapter.findById(id);
   }
 
   public async getTaskRequests(params : [string, string][]): Promise<ITaskRequestDTO[]> {
-    return await this.taskRepo.findTaskRequests(params);
+    return await this.taskAdapter.findTaskRequests(params);
   }
 
   public async getTaskRequestById(id: string): Promise<ITaskRequestDTO> {
-    return await this.taskRepo.findTaskRequestById(id);
+    return await this.taskAdapter.findTaskRequestById(id);
   }
 
   public async createTaskRequest(taskRequestDTO: ITaskRequestDTO): Promise<ITaskRequestDTO> {
-    return await this.taskRepo.createTaskRequest(taskRequestDTO);
+    return await this.taskAdapter.createTaskRequest(taskRequestDTO);
+  }
+
+  public async getPendingTasks(): Promise<ITaskDTO[]> {
+    return await this.taskAdapter.findPendingTasks();
   }
 
 }

@@ -10,4 +10,5 @@ export default interface ITaskService {
   getTaskRequests(params : [string, string][]) : Promise<ITaskRequestDTO[]>;
   getTaskRequestById(id: string) : Promise<ITaskRequestDTO>;
   createTaskRequest(taskRequestDTO : ITaskRequestDTO) : Promise<ITaskRequestDTO>;
+  getPendingTasks(): Promise<ITaskDTO[]>;
 }
