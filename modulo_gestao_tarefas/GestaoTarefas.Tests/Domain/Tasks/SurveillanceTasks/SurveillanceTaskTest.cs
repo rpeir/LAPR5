@@ -19,6 +19,7 @@ public class SurveillanceTaskTest
   private Guid _validFloorId;
   private Guid _validPickupRoomId;
   private Guid _validDeliveryRoomId;
+  private Guid _validRobotId;
 
   [TestInitialize]
   public void BeforeEach()
@@ -30,6 +31,7 @@ public class SurveillanceTaskTest
     _validFloorId = Guid.NewGuid();
     _validPickupRoomId = Guid.NewGuid();
     _validDeliveryRoomId = Guid.NewGuid();
+    _validRobotId = Guid.NewGuid();
   }
 
   [TestMethod]
@@ -40,7 +42,8 @@ public class SurveillanceTaskTest
       taskRequestId: _validTaskRequestId,
       taskDescription: _validTaskDescription, userId: _validUserId,
       emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
-      pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+      pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId,
+      robotId: _validRobotId
     );
 
     // Assert
@@ -53,6 +56,7 @@ public class SurveillanceTaskTest
     Assert.AreEqual(_validFloorId, surveillanceTask.FloorId);
     Assert.AreEqual(Status.Pending, surveillanceTask.Status);
     Assert.AreEqual(TaskType.Surveillance, surveillanceTask.Type);
+    Assert.AreEqual(_validRobotId, surveillanceTask.RobotId);
   }
 
   [TestMethod]
@@ -67,7 +71,8 @@ public class SurveillanceTaskTest
       taskRequestId: _validTaskRequestId,
       taskDescription: invalidTaskDescription, userId: _validUserId,
       emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
-      pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+      pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId,
+      robotId: _validRobotId
     );
 
     // Assert
@@ -85,7 +90,8 @@ public class SurveillanceTaskTest
       taskRequestId: _validTaskRequestId,
       taskDescription: _validTaskDescription, userId: invalidUserId,
       emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
-      pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+      pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId,
+      robotId: _validRobotId
     );
 
     // Assert
@@ -103,7 +109,8 @@ public class SurveillanceTaskTest
       taskRequestId: _validTaskRequestId,
       taskDescription: _validTaskDescription, userId: _validUserId,
       emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
-      pickupRoomId: invalidPickupRoom, deliveryRoomId: _validDeliveryRoomId
+      pickupRoomId: invalidPickupRoom, deliveryRoomId: _validDeliveryRoomId,
+      robotId: _validRobotId
     );
 
     // Assert
@@ -121,7 +128,8 @@ public class SurveillanceTaskTest
       taskRequestId: _validTaskRequestId,
       taskDescription: _validTaskDescription, userId: _validUserId,
       emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
-      pickupRoomId: _validPickupRoomId, deliveryRoomId: invalidDeliveryRoom
+      pickupRoomId: _validPickupRoomId, deliveryRoomId: invalidDeliveryRoom,
+      robotId: _validRobotId
     );
 
     // Assert
@@ -139,7 +147,8 @@ public class SurveillanceTaskTest
       taskRequestId: _validTaskRequestId,
       taskDescription: _validTaskDescription, userId: _validUserId,
       emergencyNumber: _validEmergencyNumber, floorId: invalidFloorId,
-      pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+      pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId,
+      robotId: _validRobotId
     );
 
     // Assert
@@ -157,7 +166,27 @@ public class SurveillanceTaskTest
       taskRequestId: _validTaskRequestId,
       taskDescription: _validTaskDescription, userId: _validUserId,
       emergencyNumber: invalidEmergencyNumber, floorId: _validFloorId,
-      pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+      pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId,
+      robotId: _validRobotId
+    );
+
+    // Assert
+    // Exception expected
+  }
+
+  [TestMethod]
+  [ExpectedException(typeof(BusinessRuleValidationException))]
+  public void SurveillanceTask_Constructor_InvalidRobotId_ShouldThrowBusinessRuleValidationException()
+  {
+    // Arrange
+    var invalidRobotId = Guid.Empty;
+    // Act
+    var surveillanceTask = new SurveillanceTask(
+      taskRequestId: _validTaskRequestId,
+      taskDescription: _validTaskDescription, userId: _validUserId,
+      emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
+      pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId,
+      robotId: invalidRobotId
     );
 
     // Assert
