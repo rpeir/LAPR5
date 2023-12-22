@@ -23,6 +23,7 @@ public class DeliveryTaskTest
   private ConfirmationCode _validConfirmationCode;
   private Guid _validPickupRoomId;
   private Guid _validDeliveryRoomId;
+  private Guid _validRobotId;
 
   [TestInitialize]
   public void BeforeEach()
@@ -37,6 +38,7 @@ public class DeliveryTaskTest
     _validConfirmationCode = new ConfirmationCode("12345");
     _validPickupRoomId = Guid.NewGuid();
     _validDeliveryRoomId = Guid.NewGuid();
+    _validRobotId = Guid.NewGuid();
   }
 
   [TestMethod]
@@ -48,7 +50,8 @@ public class DeliveryTaskTest
       taskDescription: _validTaskDescription, userId: _validUserId,
       senderName: _validSenderName, receiverName: _validReceiverName,
       senderContact: _validSenderContact, receiverContact: _validReceiverContact,
-      confirmationCode: _validConfirmationCode, pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId
+      confirmationCode: _validConfirmationCode, pickupRoomId: _validPickupRoomId,
+      deliveryRoomId: _validDeliveryRoomId, robotId: _validRobotId
     );
 
     // Assert
@@ -65,6 +68,7 @@ public class DeliveryTaskTest
     Assert.AreEqual(_validConfirmationCode, deliveryTask.ConfirmationCode);
     Assert.AreEqual(Status.Pending, deliveryTask.Status);
     Assert.AreEqual(TaskType.Delivery, deliveryTask.Type);
+    Assert.AreEqual(_validRobotId, deliveryTask.RobotId);
   }
 
   [TestMethod]
@@ -81,7 +85,7 @@ public class DeliveryTaskTest
       senderName: _validSenderName, receiverName: _validReceiverName,
       senderContact: _validSenderContact, receiverContact: _validReceiverContact,
       confirmationCode: _validConfirmationCode, pickupRoomId: _validPickupRoomId,
-      deliveryRoomId: _validDeliveryRoomId
+      deliveryRoomId: _validDeliveryRoomId, robotId: _validRobotId
     );
 
     // Assert
@@ -101,7 +105,7 @@ public class DeliveryTaskTest
       senderName: _validSenderName, receiverName: _validReceiverName,
       senderContact: _validSenderContact, receiverContact: _validReceiverContact,
       confirmationCode: _validConfirmationCode, pickupRoomId: _validPickupRoomId,
-      deliveryRoomId: _validDeliveryRoomId
+      deliveryRoomId: _validDeliveryRoomId, robotId: _validRobotId
     );
 
     // Assert
@@ -121,7 +125,7 @@ public class DeliveryTaskTest
       senderName: invalidSenderName, receiverName: _validReceiverName,
       senderContact: _validSenderContact, receiverContact: _validReceiverContact,
       confirmationCode: _validConfirmationCode, pickupRoomId: _validPickupRoomId,
-      deliveryRoomId: _validDeliveryRoomId
+      deliveryRoomId: _validDeliveryRoomId, robotId: _validRobotId
     );
 
     // Assert
@@ -141,7 +145,7 @@ public class DeliveryTaskTest
       senderName: _validSenderName, receiverName: invalidReceiverName,
       senderContact: _validSenderContact, receiverContact: _validReceiverContact,
       confirmationCode: _validConfirmationCode, pickupRoomId: _validPickupRoomId,
-      deliveryRoomId: _validDeliveryRoomId
+      deliveryRoomId: _validDeliveryRoomId, robotId: _validRobotId
     );
 
     // Assert
@@ -161,7 +165,7 @@ public class DeliveryTaskTest
       senderName: _validSenderName, receiverName: _validReceiverName,
       senderContact: invalidSenderContact, receiverContact: _validReceiverContact,
       confirmationCode: _validConfirmationCode, pickupRoomId: _validPickupRoomId,
-      deliveryRoomId: _validDeliveryRoomId
+      deliveryRoomId: _validDeliveryRoomId, robotId: _validRobotId
     );
 
     // Assert
@@ -181,7 +185,7 @@ public class DeliveryTaskTest
       senderName: _validSenderName, receiverName: _validReceiverName,
       senderContact: _validSenderContact, receiverContact: invalidReceiverContact,
       confirmationCode: _validConfirmationCode, pickupRoomId: _validPickupRoomId,
-      deliveryRoomId: _validDeliveryRoomId
+      deliveryRoomId: _validDeliveryRoomId, robotId: _validRobotId
     );
 
     // Assert
@@ -201,7 +205,7 @@ public class DeliveryTaskTest
       senderName: _validSenderName, receiverName: _validReceiverName,
       senderContact: _validSenderContact, receiverContact: _validReceiverContact,
       confirmationCode: invalidConfirmationCode, pickupRoomId: _validPickupRoomId,
-      deliveryRoomId: _validDeliveryRoomId
+      deliveryRoomId: _validDeliveryRoomId, robotId: _validRobotId
     );
 
     // Assert
@@ -221,7 +225,7 @@ public class DeliveryTaskTest
       senderName: _validSenderName, receiverName: _validReceiverName,
       senderContact: _validSenderContact, receiverContact: _validReceiverContact,
       confirmationCode: _validConfirmationCode, pickupRoomId: invalidPickupRoom,
-      deliveryRoomId: _validDeliveryRoomId
+      deliveryRoomId: _validDeliveryRoomId, robotId: _validRobotId
     );
 
     // Assert
@@ -241,7 +245,27 @@ public class DeliveryTaskTest
       senderName: _validSenderName, receiverName: _validReceiverName,
       senderContact: _validSenderContact, receiverContact: _validReceiverContact,
       confirmationCode: _validConfirmationCode, pickupRoomId: _validPickupRoomId,
-      deliveryRoomId: invalidDeliveryRoom
+      deliveryRoomId: invalidDeliveryRoom, robotId: _validRobotId
+    );
+
+    // Assert
+    // Exception expected
+  }
+
+  [TestMethod]
+  [ExpectedException(typeof(BusinessRuleValidationException))]
+  public void DeliveryTask_Constructor_InvalidRobotId_ShouldThrowBusinessRuleValidationException()
+  {
+    // Arrange
+    var invalidRobotId = Guid.Empty;
+    // Act
+    var deliveryTask = new DeliveryTask(
+      taskRequestId: _validTaskRequestId,
+      taskDescription: _validTaskDescription, userId: _validUserId,
+      senderName: _validSenderName, receiverName: _validReceiverName,
+      senderContact: _validSenderContact, receiverContact: _validReceiverContact,
+      confirmationCode: _validConfirmationCode, pickupRoomId: _validPickupRoomId,
+      deliveryRoomId: _validDeliveryRoomId, robotId: invalidRobotId
     );
 
     // Assert
