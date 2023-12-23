@@ -60,6 +60,8 @@ describe("robot controller", function() {
       "robotType": "TipoA"
     };
     let req: Partial<Request> = {};
+    // @ts-ignore
+    req.auth = {user: {role: {name: "fleet manager"}}};
     req.body = body;
 
     let res: Partial<Response> = {
@@ -108,6 +110,8 @@ describe("robot controller", function() {
       "robotType": "TipoA"
     };
     let req: Partial<Request> = {};
+    // @ts-ignore
+    req.auth = {user: {role: {name: "fleet manager"}}};
     req.body = body;
 
     let res: Partial<Response> = {
@@ -198,6 +202,8 @@ describe("robot controller", function() {
       "robotType": "TipoA"
     };
     let req: Partial<Request> = {};
+    // @ts-ignore
+    req.auth = {user: {role: {name: "fleet manager"}}};
     req.body = body;
 
     let res: Partial<Response> = {
@@ -269,6 +275,8 @@ describe("robot controller", function() {
       "robotType": "TipoA"
     };
     let req: Partial<Request> = {};
+    // @ts-ignore
+    req.auth = {user: {role: {name: "fleet manager"}}};
     req.body = body;
 
     let res: Partial<Response> = {

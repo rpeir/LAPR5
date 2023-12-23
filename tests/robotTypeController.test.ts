@@ -47,6 +47,8 @@ describe("robotType controller", function() {
       "brand": "RB"
     };
     let req: Partial<Request> = {};
+    // @ts-ignore
+    req.auth = {user: {role: {name: "fleet manager"}}};
 
     req.body = body;
 
@@ -94,6 +96,8 @@ describe("robotType controller", function() {
     };
 
     let req: Partial<Request> = {};
+    // @ts-ignore
+    req.auth = {user: {role: {name: "fleet manager"}}};
     req.body = body;
 
     let res: Partial<Response> = {
@@ -154,6 +158,8 @@ describe("robotType controller", function() {
     };
 
     let req: Partial<Request> = {};
+    // @ts-ignore
+    req.auth = {user: {role: {name: "fleet manager"}}};
     req.body = body;
 
     let res: Partial<Response> = {
