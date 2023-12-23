@@ -55,5 +55,17 @@ export default (app: Router) => {
     middlewares.verifyToken,
     (req, res, next) => ctrl.consultAllRobots(req, res, next),
   );
+
+  route.get(
+    "/task-type/:taskType",
+    middlewares.isAuth,
+    middlewares.verifyToken,
+    celebrate({
+      params: Joi.object({
+        taskType: Joi.string().required()
+      })
+    }),
+    (req, res, next) => ctrl.consultRobotsByTaskType(req, res, next),
+  );
   route.use(middlewares.validateBody);
 };

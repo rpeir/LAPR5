@@ -1,0 +1,14 @@
+<div class="container">
+  <p>Please select the robot to execute the task</p>
+  <mat-form-field>
+    <mat-select placeholder="Select Robot">
+      <mat-option *ngFor="let robot of robots" [value]="robot" (click)="selectRobot(robot)">
+        <h3>{{robot.nickName}}</h3>
+        <p>Description: {{robot.description}}</p>
+        <p>Type: {{robot.robotType}}</p>
+        <p>Robot-Code: {{robot.robotCode}}</p>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+

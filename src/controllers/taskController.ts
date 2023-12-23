@@ -95,7 +95,7 @@ export default class TaskController implements ITaskController {
 
   public async approveTask(req: Request, res: Response, next: NextFunction) {
     try {
-      const task = await this.taskService.approveTask(req.body);
+      const task = await this.taskService.approveTask(req.body.taskRequestId, req.body.robotId);
 
       return res.status(201).json(task);
 
@@ -110,7 +110,7 @@ export default class TaskController implements ITaskController {
 
   public async rejectTask(req: Request, res: Response, next: NextFunction) {
     try {
-      const task = await this.taskService.rejectTask(req.body);
+      const task = await this.taskService.rejectTask(req.params.id);
 
       return res.status(200).json(task);
 

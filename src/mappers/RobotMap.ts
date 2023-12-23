@@ -12,6 +12,7 @@ import { RobotCode } from '../domain/robot/robotCode';
 export class RobotMap extends Mapper<Robot> {
   public static toDTO(robot: Robot) {
     return {
+      id: robot.id.toString(),
       robotCode: robot.robotCode.value,
       nickName: robot.nickName.value,
       robotType: robot.robotType.name.value,

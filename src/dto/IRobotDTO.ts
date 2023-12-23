@@ -1,4 +1,5 @@
 export interface IRobotDTO {
+  id: string;
   robotCode: string;
   nickName: string;
   robotType: string;

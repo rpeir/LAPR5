@@ -50,13 +50,14 @@ export default class TaskAdapter implements ITaskAdapter {
     }
   }
 
-  public async approveTask(requestId: string): Promise<Task> {
+  public async approveTask(requestId: string, robotId : string): Promise<Task> {
     const body = {
-      taskRequestId: requestId
+      taskRequestId: requestId,
+      robotId: robotId
     }
 
     try {
-      const res = await axios.post(`http://${config.tasksHost}:${config.tasksPort}/api/tasks`, requestId);
+      const res = await axios.post(`http://${config.tasksHost}:${config.tasksPort}/api/tasks`, body);
       return res.data as Task;
     } catch (err) {
       if (err instanceof AxiosError) await this.handleAxiousError(err);

@@ -12,16 +12,16 @@ export default (app: Router) => {
 
   route.get(
     "",
-    // middlewares.isAuth,
-    // middlewares.verifyToken,
+    middlewares.isAuth,
+    middlewares.verifyToken,
     (req, res, next) => {
       ctrl.getAll(req, res, next);
     }
   );
 
   route.get("/pending",
-    // middlewares.isAuth,
-    // middlewares.verifyToken,
+    middlewares.isAuth,
+    middlewares.verifyToken,
     (req, res, next) => {
       ctrl.getPendingTasks(req, res, next);
     });
@@ -48,7 +48,8 @@ export default (app: Router) => {
     middlewares.verifyToken,
     celebrate({
       body: Joi.object({
-        taskRequestId: Joi.string().required()
+        taskRequestId: Joi.string().required(),
+        robotId: Joi.string().required()
       })
     }),
     (req, res, next) => {

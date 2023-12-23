@@ -17,6 +17,8 @@ export class TaskMapper extends Mapper<Task> {
     const confirmationCode = task.confirmationCode ? task.confirmationCode : undefined;
     const EmergencyNumber = task.EmergencyNumber ? task.EmergencyNumber : undefined;
     const floorId = task.floorId ? task.floorId : undefined;
+    // @ts-ignore
+    const robot = task.robot ? task.robot.nickName.value : task.robotId;
       return {
         id: task.id.toString(),
         type: task.type,
@@ -26,7 +28,7 @@ export class TaskMapper extends Mapper<Task> {
         status: task.status,
         taskRequestId: task.taskRequestId,
         description: task.description,
-        robot: task.robot.nickName.value,
+        robot: robot,
         senderName: senderName,
         receiverName: receiverName,
         senderContact: senderContact,

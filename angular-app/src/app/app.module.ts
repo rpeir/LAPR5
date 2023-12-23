@@ -74,8 +74,10 @@ import {UtenteComponent} from "./utente/utente.component";
 import {CreateUserComponent} from "./user/create-user/create-user.component";
 import {RegisterUserComponent} from "./user/register-user/register-user.component";
 import { AuthenticationInterceptor } from "./auth/authentication.interceptor";
-import { ApproveRejectComponent } from './task/approve-reject/approve-reject.component';
+import { PendingTasksComponent } from './task/pending-tasks/pending-tasks.component';
 import { TaskSequenceComponent } from './task-sequence/task-sequence.component';
+import { SelectRobotComponent } from './task/pending-tasks/select-robot/select-robot.component';
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -134,8 +136,9 @@ import { TaskSequenceComponent } from './task-sequence/task-sequence.component';
     UtenteComponent,
     CreateUserComponent,
     RegisterUserComponent,
-    ApproveRejectComponent,
+    PendingTasksComponent,
     TaskSequenceComponent,
+    SelectRobotComponent,
   ],
     imports: [
         BrowserModule,
@@ -155,7 +158,8 @@ import { TaskSequenceComponent } from './task-sequence/task-sequence.component';
         MatSidenavModule,
         MatListModule,
         MatProgressSpinnerModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatDialogModule
     ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
