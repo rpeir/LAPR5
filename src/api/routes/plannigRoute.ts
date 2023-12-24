@@ -29,4 +29,6 @@ export default (app: Router) => {
   route.get("/path/lessBuildings/roomToRoom",(req, res, next) => ctrl.getPathLessBuildingsRoomToRoom(req,res, next));
 
   route.get("/path/lessElevators/roomToRoom",(req, res, next) => ctrl.getPathLessElevatorsRoomToRoom(req,res, next));
+
+  route.get("/taskSequence",(req, res, next) => ctrl.getTaskSequence(req,res, next));
 }

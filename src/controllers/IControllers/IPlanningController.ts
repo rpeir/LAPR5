@@ -12,4 +12,5 @@ export default interface IPlanningController {
   getPlanningRoomsLocation(req: Request, res: Response, next: NextFunction);
   getPathLessBuildingsRoomToRoom(req: Request, res: Response, next: NextFunction);
   getPathLessElevatorsRoomToRoom(req: Request, res: Response, next: NextFunction);
+  getTaskSequence(req: Request, res: Response, next: NextFunction);
 }

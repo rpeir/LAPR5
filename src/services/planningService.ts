@@ -29,6 +29,11 @@ import { PlanningRoomLocation } from "../domain/planning/planningRoomLocation";
 import { IPlanningElevatorLocationDTO } from "../dto/IPlanningElevatorLocationDTO";
 import { IPlanningMatrixDTO } from "../dto/IPlanningMatrixDTO";
 import IPlanningAdapter from "../adapters/IAdapters/IPlanningAdapter";
+import { Task } from "../domain/task/task";
+import { parseInt, split } from "lodash";
+import plannigRoute from "../api/routes/plannigRoute";
+import IRoomService from "./IServices/IRoomService";
+import { PlanningTask } from "../domain/planning/planningTask";
 
 @Service()
 export default class PlanningService implements IPlanningService {
@@ -260,5 +265,35 @@ export default class PlanningService implements IPlanningService {
 
   public async getPathLessElevatorsRoomToRoom(floorSource: string, floorDestination: string, roomSource: string, roomDestination: string) {
     return this.planningAdapter.getPathLessElevatorsRoomToRoom(floorSource, floorDestination, roomSource, roomDestination);
+  }
+
+  public async getTaskSequence(nrGenerations: number, stabilizationCriteriaValue: number, idealCost: number, tasks: Task[]) {
+    let planningTask : PlanningTask[] = [];
+    for (const task of tasks) {
+      const floorSourceOrError = await this.floorService.findByBuildingIdAndFloorNr(task.pickupRoomId.building.value,task.pickupRoomId.floor);
+      if (floorSourceOrError.isFailure) {
+        return Result.fail<PlanningTask[]>(floorSourceOrError.error);
+      }
+
+      const floorDestinationOrError = await this.floorService.findByBuildingIdAndFloorNr(task.deliveryRoomId.building.value,task.deliveryRoomId.floor);
+      if (floorDestinationOrError.isFailure) {
+        return Result.fail<PlanningTask[]>(floorDestinationOrError.error);
+      }
+      const floorSource = floorSourceOrError.getValue();
+      const floorDestination = floorDestinationOrError.getValue();
+
+      const planningTaskOrError = PlanningTask.create({
+        pickupRoom: task.pickupRoomId.name,
+        deliveryRoom: task.deliveryRoomId.name,
+        pickupFloor: floorSource.building + "_" + floorSource.floorNr,
+        deliveryFloor: floorDestination.building + "_" + floorDestination.floorNr
+      },task.id);
+      if (planningTaskOrError.isFailure) {
+        return Result.fail<PlanningTask[]>(planningTaskOrError.error);
+      }
+      planningTask.push(planningTaskOrError.getValue());
+    }
+
+    return this.planningAdapter.getTaskSequence(nrGenerations, stabilizationCriteriaValue, idealCost, planningTask);
   }
 }

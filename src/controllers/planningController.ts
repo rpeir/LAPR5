@@ -3,6 +3,9 @@ import IPlanningController from "./IControllers/IPlanningController";
 import { NextFunction, Request, Response } from "express";
 import config from "../../config";
 import IPlanningService from "../services/IServices/IPlanningService";
+import { Task } from "../domain/task/task";
+import { ITaskDTO } from "../dto/ITaskDTO";
+import { TaskMapper } from "../mappers/TaskMapper";
 
 @Service()
 export default class PlanningController implements IPlanningController {
@@ -187,6 +190,37 @@ export default class PlanningController implements IPlanningController {
       const infoDTO = infoOrError.getValue();
       return res.json(infoDTO).status(200);
     } catch (error) {
+      return next(error);
+    }
+  }
+
+  public async getTaskSequence(req: Request, res: Response, next: NextFunction) {
+    try {
+      const nrGenerations = req.query.nrGenerations as string;
+      const stabilizationCriteriaValue = req.query.stabilizationCriteriaValue as string;
+      const idealCost = req.query.idealCost as string;
+      const taskDTOS = req.body.tasks as ITaskDTO[];
+      const taskResult = [];
+      const tasks = await Promise.all(taskDTOS.map(taskDTO => TaskMapper.toDomain(taskDTO)));
+
+
+      const planningTaskOrError = await this.planningService.getTaskSequence(parseInt(nrGenerations), parseInt(stabilizationCriteriaValue), parseInt(idealCost), tasks);
+
+      if (planningTaskOrError.isFailure) {
+        return res.status(402).json({ error: planningTaskOrError.error }).send();
+      }
+      const planningTask = planningTaskOrError.getValue();
+
+      planningTask.forEach(plannedTask => {
+        tasks.forEach(unplannedTask => {
+          if (unplannedTask.id.toString() == plannedTask.id.toString()){
+            taskResult.push(unplannedTask)
+          }
+        });
+      });
+
+      return taskResult;
+    }catch (error){
       return next(error);
     }
   }
