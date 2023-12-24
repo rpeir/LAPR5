@@ -1,1 +1,80 @@
-<p>task-sequence works!</p>
+<body class="RobDroneGo">
+<div class="container">
+  <h2 class="text-center">Select a robot to execute sequence</h2>
+  <br>
+  <div *ngFor="let robotTask of robotTasks">
+    <mat-card>
+      <mat-card-content class="example-card">
+        <button mat-button (click)="getTaskSequence(robotTask.tasks)">{{robotTask.robot }}</button>
+        <div *ngFor="let task of robotTask.tasks">
+
+              <mat-table [dataSource]="robotTask.tasks" class="mat-elevation-z8">
+                <ng-container matColumnDef="description">
+                  <mat-header-cell *matHeaderCellDef> Description</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{ element.description }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="type">
+                  <mat-header-cell *matHeaderCellDef> Type</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{ element.type }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="userId">
+                  <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{ element.userId }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                  <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{ element.status }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="pickupRoomId">
+                  <mat-header-cell *matHeaderCellDef> Pickup Room</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{ element.pickupRoomId }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="deliveryRoomId">
+                  <mat-header-cell *matHeaderCellDef> Delivery Room</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{ element.deliveryRoomId }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="taskRequestId">
+                  <mat-header-cell *matHeaderCellDef> Task Request Id</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{ element.taskRequestId }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="senderName">
+                  <mat-header-cell *matHeaderCellDef> Sender Name</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{ element.senderName }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="receiverName">
+                  <mat-header-cell *matHeaderCellDef> Receiver Name</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{ element.receiverName }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="senderContact">
+                  <mat-header-cell *matHeaderCellDef> Sender Contact</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{ element.senderContact }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="receiverContact">
+                  <mat-header-cell *matHeaderCellDef> Receiver Contact</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{ element.receiverContact }}</mat-cell>
+                </ng-container>
+                  <ng-container matColumnDef="confirmationCode">
+                  <mat-header-cell *matHeaderCellDef> Confirmation Code</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{ element.confirmationCode }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="emergencyNumber">
+                  <mat-header-cell *matHeaderCellDef> Emergency Number</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{ element.emergencyNumber }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="floorId">
+                  <mat-header-cell *matHeaderCellDef> Floor Id</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{ element.floorId }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </ng-container>
+              </mat-table>
+
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+</body>
+```

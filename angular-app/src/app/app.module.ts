@@ -75,6 +75,8 @@ import {CreateUserComponent} from "./user/create-user/create-user.component";
 import {RegisterUserComponent} from "./user/register-user/register-user.component";
 import { AuthenticationInterceptor } from "./auth/authentication.interceptor";
 import { TaskSequenceComponent } from './task-sequence/task-sequence.component';
+import { MatTableModule } from "@angular/material/table";
+import { GetTaskSequenceComponent } from './get-task-sequence/get-task-sequence.component';
 
 @NgModule({
   declarations: [
@@ -134,27 +136,29 @@ import { TaskSequenceComponent } from './task-sequence/task-sequence.component';
     CreateUserComponent,
     RegisterUserComponent,
     TaskSequenceComponent,
+    GetTaskSequenceComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatIconModule,
-        MatMenuModule,
-        BrowserAnimationsModule,
-        ReactiveFormsModule,
-        FormsModule,
-        HttpClientModule,
-        MatInputModule,
-        MatSelectModule,
-        MatTooltipModule,
-        MatCardModule,
-        MatSidenavModule,
-        MatListModule,
-        MatProgressSpinnerModule,
-        MatCheckboxModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
+    MatInputModule,
+    MatSelectModule,
+    MatTooltipModule,
+    MatCardModule,
+    MatSidenavModule,
+    MatListModule,
+    MatProgressSpinnerModule,
+    MatCheckboxModule,
+    MatTableModule
+  ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthenticationInterceptor,
