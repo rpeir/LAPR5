@@ -1,0 +1,16 @@
+Pop=[[tarefa1,tarefa4,tarefa3,tarefa2],[tarefa4,tarefa1,tarefa3,tarefa2],[tarefa1,tarefa3,tarefa4,tarefa2],[tarefa2,tarefa3,tarefa4,tarefa1],[tarefa4,tarefa3,tarefa1,tarefa2],[tarefa3,tarefa1,tarefa4,tarefa2],[tarefa1,tarefa2,tarefa4,tarefa3],[tarefa3,tarefa2,tarefa1,tarefa4]]
+PopAv=[[tarefa1,tarefa4,tarefa3,tarefa2]*160,[tarefa4,tarefa1,tarefa3,tarefa2]*99,[tarefa1,tarefa3,tarefa4,tarefa2]*230,[tarefa2,tarefa3,tarefa4,tarefa1]*160,[tarefa4,tarefa3,tarefa1,tarefa2]*169,[tarefa3,tarefa1,tarefa4,tarefa2]*133,[tarefa1,tarefa2,tarefa4,tarefa3]*230,[tarefa3,tarefa2,tarefa1,tarefa4]*99]
+Geracao 0:
+[[tarefa4,tarefa1,tarefa3,tarefa2]*99,[tarefa3,tarefa2,tarefa1,tarefa4]*99,[tarefa3,tarefa1,tarefa4,tarefa2]*133,[tarefa1,tarefa4,tarefa3,tarefa2]*160,[tarefa2,tarefa3,tarefa4,tarefa1]*160,[tarefa4,tarefa3,tarefa1,tarefa2]*169,[tarefa1,tarefa3,tarefa4,tarefa2]*230,[tarefa1,tarefa2,tarefa4,tarefa3]*230]
+Geracao 1:
+[[tarefa2,tarefa3,tarefa1,tarefa4]*99,[tarefa4,tarefa1,tarefa3,tarefa2]*99,[tarefa3,tarefa2,tarefa1,tarefa4]*99,[tarefa3,tarefa1,tarefa4,tarefa2]*133,[tarefa1,tarefa4,tarefa3,tarefa2]*160,[tarefa2,tarefa3,tarefa4,tarefa1]*160,[tarefa4,tarefa3,tarefa1,tarefa2]*169,[tarefa1,tarefa3,tarefa4,tarefa2]*230]
+Geracao 2:
+[[tarefa4,tarefa1,tarefa3,tarefa2]*99,[tarefa3,tarefa2,tarefa1,tarefa4]*99,[tarefa2,tarefa3,tarefa1,tarefa4]*99,[tarefa3,tarefa1,tarefa4,tarefa2]*133,[tarefa2,tarefa3,tarefa4,tarefa1]*160,[tarefa1,tarefa4,tarefa3,tarefa2]*160,[tarefa4,tarefa3,tarefa1,tarefa2]*169,[tarefa1,tarefa3,tarefa2,tarefa4]*196]
+Geracao 3:
+[[tarefa2,tarefa3,tarefa1,tarefa4]*99,[tarefa4,tarefa1,tarefa3,tarefa2]*99,[tarefa3,tarefa2,tarefa1,tarefa4]*99,[tarefa3,tarefa1,tarefa4,tarefa2]*133,[tarefa1,tarefa4,tarefa3,tarefa2]*160,[tarefa2,tarefa3,tarefa4,tarefa1]*160,[tarefa4,tarefa3,tarefa1,tarefa2]*169,[tarefa1,tarefa3,tarefa2,tarefa4]*196]
+Geracao 4:
+[[tarefa3,tarefa2,tarefa1,tarefa4]*99,[tarefa4,tarefa1,tarefa3,tarefa2]*99,[tarefa2,tarefa3,tarefa1,tarefa4]*99,[tarefa3,tarefa1,tarefa4,tarefa2]*133,[tarefa1,tarefa4,tarefa3,tarefa2]*160,[tarefa3,tarefa2,tarefa4,tarefa1]*160,[tarefa2,tarefa3,tarefa4,tarefa1]*160,[tarefa1,tarefa4,tarefa2,tarefa3]*160]
+Geracao 5:
+[[tarefa4,tarefa1,tarefa3,tarefa2]*99,[tarefa3,tarefa2,tarefa1,tarefa4]*99,[tarefa2,tarefa3,tarefa1,tarefa4]*99,[tarefa3,tarefa1,tarefa4,tarefa2]*133,[tarefa2,tarefa1,tarefa4,tarefa3]*133,[tarefa3,tarefa2,tarefa4,tarefa1]*160,[tarefa1,tarefa4,tarefa3,tarefa2]*160,[tarefa2,tarefa3,tarefa4,tarefa1]*160]
+Estagnacao atingida: 4
+json([id=tarefa4,pickupRoom=P301,deliveryRoom=M303,pickupFloor=P_3,deliveryFloor=M_3])json([id=tarefa1,pickupRoom=M101,deliveryRoom=P303,pickupFloor=M_1,deliveryFloor=P_3])json([id=tarefa3,pickupRoom=N201,deliveryRoom=O303,pickupFloor=N_2,deliveryFloor=O_3])json([id=tarefa2,pickupRoom=N101,deliveryRoom=O303,pickupFloor=N_1,deliveryFloor=O_3])

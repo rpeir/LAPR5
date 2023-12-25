@@ -1,10 +1,7 @@
 %======================================
 % Generic algorithms
 %======================================
-
-%tarefa(Id, FloorSource, FloorDestination, RoomSource, RoomDestination, Time)
 :- dynamic(tarefa/5).
-% diferencasEntrTarefas(IdTarefa1, IdTarefa2, Diferenca)
 :- dynamic(diferencaEntreTarefas/3).
 
 :- dynamic(nrDeTarefas/1).
@@ -87,7 +84,7 @@ avaliaDiferencaComProximo(_,[],0).
 avaliaDiferencaComProximo(Tarefa,[Tarefa2|_],V):-
       tarefa(Tarefa,_,_,_,_),
       tarefa(Tarefa2,_,_,_,_),
-      diferencaEntreTarefas(Tarefa,Tarefa2,V).
+      (diferencaEntreTarefas(Tarefa,Tarefa2,V);diferencaEntreTarefas(Tarefa2,Tarefa,V)).
 
 %======================================
 ordena_populacao(PopulacaoAv,PopulacaoAvOrd):-
@@ -333,19 +330,28 @@ calcularCustoOfPath([FloorPath|Rest], Result):-
 calcularCustoEntreTarefas(TarefaId1,TarefaId2):-
         tarefa(TarefaId1,_,FloorDestination,_,RoomDestination),
         tarefa(TarefaId2,FloorSource2,_,RoomSource2,_),
-        best_path_less_elevators(FloorDestination,FloorSource2,Path),!,
-        retrivePathFromPathAndBuildings(Path, ListPath),
+          atom_string(FloorDestination,F1),
+          atom_string(FloorSource2,F2),
+          atom_string(RoomDestination,R1),
+          atom_string(RoomSource2,R2),
+        best_path_less_elevators(F1,F2,[_,ListPath]),!,
         count(ListPath,NElev,NPathway),
         custoElevator(ElevatorCost),
         custoPathway(PathwayCost),
-        startPath(RoomDestination,RoomSource2,ListPath,PathInside),!,
+        startPath(R1,R2,ListPath,PathInside),!,
         calcularCustoOfPath(PathInside, Custo),
         CustoTotal is Custo + (NElev * ElevatorCost) + (PathwayCost *  NPathway),
         asserta(diferencaEntreTarefas(TarefaId1,TarefaId2,CustoTotal)).
 
-retrivePathFromPathAndBuildings([_,ListPath],ListPath).
-
-
+calcularCustoEntreTodasAsTarefas(ListaDeTarefas) :-
+    length(ListaDeTarefas, N),
+    between(1, N, I),
+    between(1, N, J),
+    (I < J), % Evita calcular o custo entre a mesma tarefa
+    nth1(I, ListaDeTarefas, TarefaId1),
+    nth1(J, ListaDeTarefas, TarefaId2),
+    calcularCustoEntreTarefas(TarefaId1, TarefaId2),
+    fail. % Força a busca por mais soluções
 %======================================
 % gerar ataravez de Permutacoes
 %======================================

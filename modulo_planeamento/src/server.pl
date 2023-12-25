@@ -1,6 +1,7 @@
 :- use_module(library(http/http_server)).
 :- use_module(library(http/json)).
 :- use_module(library(http/http_unix_daemon)).
+:- consult("algorithms3.pl").
 :- consult("algorithms2.pl").
 :- consult("algorithms.pl").
 :- consult("client.pl").
@@ -19,6 +20,8 @@ main:- http_server(http_dispatch).
 :-http_handler(root(path/roomToRoomLessBuildings), handleRoomToRoomLessBuildings, []).
 
 :-http_handler(root(path/roomToRoomLessElevators), handleRoomToRoomLessElevators, []).
+
+:-http_handler(root(taskSequence), handleTaskSequence, [method(post)]).
 
 
 %=====================================================================
@@ -156,3 +159,68 @@ handleRoomToRoomLessBuildings(Request):-
     % send json as response
     reply_json(PathJson).
 
+%==========================================================
+%Find Task Sequence
+%=========================================================
+handleTaskSequence(Request):-
+  tell('log.txt'),
+  http_read_json(Request, TaksJson),
+  json_to_prolog(TaksJson, Tasks),
+  http_parameters(Request,
+   [nrGenerations(NrGenerationsString, [optional(true)]),
+    stabilizationCriteriaValue(StabilizationCriteriaValueString, [optional(true)]),
+    idealCost(IdealCostString, [optional(true)]),
+    populationSize(PopulationSizeString, [optional(true)]),
+    crossoverProbability(CrossoverProbabilityString, [optional(true)]),
+    mutationProbability(MutationProbabilityString, [optional(true)]),
+    elitismRate(ElitismRateString, [optional(true)])]),
+
+    atom_number(NrGenerationsString, NrGenerations),
+    atom_number(StabilizationCriteriaValueString, StabilizationCriteriaValue),
+    atom_number(IdealCostString, IdealCost),
+    atom_number(PopulationSizeString, PopulationSize),
+    atom_number(CrossoverProbabilityString, CrossoverProbability),
+    atom_number(MutationProbabilityString, MutationProbability),
+    atom_number(ElitismRateString, ElitismRate),
+
+  assert_tasks(Tasks),
+  asserta(nrDeGeracoes(NrGenerations)),
+  asserta(populacao(PopulationSize)),
+  asserta(prob_cruzamento(CrossoverProbability)),
+  asserta(prob_mutacao(MutationProbability)),
+  length(Tasks, NrTasks),
+  asserta(nrDeTarefas(NrTasks)),
+  asserta(taxa_elitismo(ElitismRate)),
+  asserta(custoIdeal(IdealCost)),
+  asserta(maxEstagnacoes(StabilizationCriteriaValue)),
+  obterListaDeIDs(ListaTarefasIDs),
+  (calcularCustoEntreTodasAsTarefas(ListaTarefasIDs);true),
+  gera([Lista*_|_]),!,
+  (tarefas_to_json_list(Lista, JsonList);true),
+  told,
+  reply_json(JsonList).
+
+%==========================================================
+assert_tasks([]).
+assert_tasks([Task|Rest]) :-
+    assert_task(Task),
+    assert_tasks(Rest).
+
+% Extract and assert individual fields of a task
+assert_task(Task) :-
+    Task = json([id=ID, pickupRoom=PickupRoom, deliveryRoom=DeliveryRoom, pickupFloor=PickupFloor, deliveryFloor=DeliveryFloor]),
+    assert(tarefa(ID, PickupFloor, DeliveryFloor,PickupRoom, DeliveryRoom)).
+
+%==========================================================
+obterListaDeIDs(ListaTarefasIDs) :-
+    findall(ID, tarefa(ID, _, _, _, _), ListaTarefasIDs).
+
+%==========================================================
+tarefa_to_json(ID, Json) :-
+    tarefa(ID, PickupFloor, DeliveryFloor, PickupRoom, DeliveryRoom),
+    Json = json([id=ID, pickupRoom=PickupRoom, deliveryRoom=DeliveryRoom, pickupFloor=PickupFloor, deliveryFloor=DeliveryFloor]).
+
+tarefas_to_json_list([], []).
+tarefas_to_json_list([TarefaId|Rest], [Json|JsonRest]) :-
+    tarefa_to_json(TarefaId, Json),
+    tarefas_to_json_list(Rest, JsonRest).

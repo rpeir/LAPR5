@@ -1,4 +1,4 @@
-:-dynamic connectCell/2.
+:-dynamic(connectCell/2).
 
 %=====================================================
 %  Create connectCell using matrixCells
@@ -36,7 +36,7 @@ createColumn(Line,Column):-m(Line,Column,0),!,
           create_left(Line,Column),
           % verifica se pode ir para a direita
           create_right(Line,Column),
-          Line1 is Line -1,
+          Line1 is Line - 1,
           createColumn(Line1,Column).
 
 createColumn(Line,Column):-m(Line,Column,1),!,
@@ -47,7 +47,7 @@ createColumn(Line,Column):-m(Line,Column,1),!,
           % NAO pode ir para a esquerda, pq tem parede á esquerda
           % verifica se pode ir para a direita
           create_right(Line,Column),
-          Line1 is Line -1,
+          Line1 is Line - 1,
           createColumn(Line1,Column).
 
 createColumn(Line,Column):-m(Line,Column,2),!,
@@ -58,7 +58,7 @@ createColumn(Line,Column):-m(Line,Column,2),!,
            create_left(Line,Column),
            % verifica se pode ir para a direita
            create_right(Line,Column),
-           Line1 is Line -1,
+           Line1 is Line - 1,
            createColumn(Line1,Column).
 
 createColumn(Line,Column):-m(Line,Column,3),!,
@@ -68,11 +68,11 @@ createColumn(Line,Column):-m(Line,Column,3),!,
           % NAO pode ir para a esquerda, pq tem parede á esquerda
           % verifica se pode ir para a direita
           create_right(Line,Column),
-          Line1 is Line -1,
+          Line1 is Line - 1,
           createColumn(Line1,Column).
 
 
-createColumn(Line,Column):-Line1 is Line -1,
+createColumn(Line,Column):-Line1 is Line - 1,
           createColumn(Line1,Column).
 
 
@@ -99,7 +99,7 @@ create_right(Line, Column):- NextColumn is Column + 1,
 % FindPath using DFS
 %=====================================================
 
-:-dynamic bestSolution/2.
+:-dynamic(bestSolution/2).
 % to use in complexity analysis
 better_dfs1(Origin, Destination, Cost, Path):-
 %get_time(Ti),
@@ -205,56 +205,57 @@ findPathFromPathwayToPathway(Pathway1, Pathway2, Path):-pathwayLocation(Pathway1
 %=====================================================
 
 %=====================================================
+startPath(_,_,[],[]).
 
 startPath(Source,Destination,[pathW(FloorSource, FloorDestination)|OtherPath],Result):-
             preparePathwayInfo(FloorSource),
             findPathFromRoomToPathway(Source,FloorDestination,TempPath),
-            retractPathwayInfo(),
+            retractPathwayInfo,
             continuePathFromPathway(FloorDestination,Destination,OtherPath,[TempPath], Result).
 
 startPath(Source,Destination,[elev(FloorSource, FloorDestination)|OtherPath],Result):-
             prepareElevatorInfo(FloorSource),
             findPathFromRoomToElevator(Source,FloorSource,TempPath),
-            retractElevatorInfo(),
+            retractElevatorInfo,
             continuePathFromElevator(FloorDestination,Destination,OtherPath,[TempPath], Result).
 
 continuePathFromElevator(FloorSource,Destination,[],TempResult, Result):-
             prepareElevatorInfo(FloorSource),
             findPathFromElevatorToRoom(FloorSource,Destination,TempPath),
-            retractElevatorInfo(),
+            retractElevatorInfo,
             reverse([TempPath|TempResult], Result).
 
 continuePathFromElevator(FloorSource,Destination,[pathW(FloorSource, FloorDestination)|OtherPath],TempResult, Result):-
             prepareElevatorInfo(FloorSource),
             getPathwaysLocations(FloorSource),
             findPathFromElevatorToPathway(FloorSource,FloorDestination,TempPath),
-            retractElevatorInfo(),
+            retractElevatorInfo,
             retractall(pathwayLocation(_,_,_,_)),
             continuePathFromPathway(FloorDestination,Destination,OtherPath,[TempPath|TempResult], Result).
 
 continuePathFromElevator(FloorSource,Destination,[elev(FloorSource, FloorDestination)|OtherPath],TempResult, Result):-
             prepareElevatorInfo(FloorSource),
             findPathFromElevatorToPathway(FloorSource,FloorDestination,TempPath),
-            retractElevatorInfo(),
+            retractElevatorInfo,
             continuePathFromRoom(FloorDestination,Destination,OtherPath, [TempPath|TempResult], Result).
 
 continuePathFromPathway(FloorSource,Destination,[],TempResult, Result):-
             preparePathwayInfo(FloorSource),
             findPathFromPathwayToRoom(FloorSource,Destination,TempPath),
-            retractPathwayInfo(),
+            retractPathwayInfo,
             reverse([TempPath|TempResult], Result).
 
 continuePathFromPathway(FloorSource,Destination,[pathW(FloorSource, FloorDestination)|OtherPath],TempResult, Result):-
             preparePathwayInfo(FloorSource),
             findPathFromPathwayToPathway(FloorSource,FloorDestination,TempPath),
-            retractPathwayInfo(),
+            retractPathwayInfo,
             continuePathFromPathway(FloorDestination,Destination,OtherPath,[TempPath|TempResult], Result).
 
 continuePathFromPathway(FloorSource,Destination,[elev(FloorSource, FloorDestination)|OtherPath],TempResult, Result):-
             preparePathwayInfo(FloorSource),
             getElevatorLocation(FloorSource),
             findPathFromPathwayToElevator(FloorSource,FloorSource,TempPath),
-            retractPathwayInfo(),
+            retractPathwayInfo,
             retractall(elevatorLocation(_,_,_)),
             continuePathFromElevator(FloorDestination,Destination,OtherPath,[TempPath|TempResult], Result).
 
@@ -280,13 +281,13 @@ prepareElevatorInfo(FloorSource):-
 % Retract Floor Matrix, Pathways, Elevators and Rooms Locations
 %=====================================================
 
-retractPathwayInfo():-
+retractPathwayInfo:-
             retractall(m(_,_,_)),
             retractall(connectCell(_,_)),
             retractall(roomLocation(_,_,_,_)),
             retractall(pathwayLocation(_,_,_,_)).
 
-retractElevatorInfo():-
+retractElevatorInfo:-
             retractall(m(_,_,_)),
             retractall(connectCell(_,_)),
             retractall(roomLocation(_,_,_,_)),
