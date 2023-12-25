@@ -4,8 +4,8 @@
     <div class="main-container">
       <mat-card *ngFor="let request of requests">
         <mat-card-title>
-          <h3>{{request.user.firstName}} {{request.user.lastName}}</h3>
-          <h4>{{request.user.email}}</h4>
+          <h3>{{request.user?.firstName}} {{request.user?.lastName}}</h3>
+          <h4>{{request.user?.email}}</h4>
           <mat-card-subtitle>
             <h5>{{request.type}}</h5>
           </mat-card-subtitle>
@@ -13,14 +13,14 @@
         <mat-card-content>
           <p>Description: {{request.description}}</p>
           <p>Status: {{request.requestStatus}}</p>
-          <p>From: {{request.pickupRoom.name}}</p>
-          <p>To: {{request.deliveryRoom.name}}</p>
+          <p>From: {{request.pickupRoom?.name}}</p>
+          <p>To: {{request.deliveryRoom?.name}}</p>
           <div class="delivery-request" *ngIf="request.type === 'Delivery'">
             <p>Sender: {{request.senderName}} (Contact: {{request.senderContact}})</p>
             <p>Receiver: {{request.receiverName}} (Contact: {{request.receiverContact}})</p>
           </div>
           <div class="surveillance-request" *ngIf="request.type === 'Surveillance'">
-            <p>Floor: {{request.floor.floorNr}}</p>
+            <p>Floor: {{request.floor?.floorNr}}</p>
           </div>
         </mat-card-content>
         <mat-card-actions>

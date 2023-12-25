@@ -8,7 +8,7 @@ export class User{
     firstName!: string;
     lastName!: string;
     email!: string;
-    password!: string;
+    password?: string;
     phoneNumber!: PhoneNumber;
     nif?: string;
     role!: Role;

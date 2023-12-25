@@ -29,7 +29,7 @@ export class PendingTasksComponent implements OnInit {
         this.requests = data;
       },
       error: (err) => {
-        window.alert(err);
+        window.alert(err.error);
       }
     });
   }
@@ -60,7 +60,7 @@ export class PendingTasksComponent implements OnInit {
         request.user = data;
       },
       error: (err) => {
-        window.alert(err);
+        window.alert(err.error);
       }
     });
     this.roomService.getRoomById(request.pickupRoomId).subscribe({
@@ -68,7 +68,7 @@ export class PendingTasksComponent implements OnInit {
         request.pickupRoom = data;
       },
       error: (err) => {
-        window.alert(err);
+        window.alert(err.error);
       }
     });
     this.roomService.getRoomById(request.deliveryRoomId).subscribe({
@@ -76,7 +76,7 @@ export class PendingTasksComponent implements OnInit {
         request.deliveryRoom = data;
       },
       error: (err) => {
-        window.alert(err);
+        window.alert(err.error);
       }
     });
   }
@@ -98,7 +98,7 @@ export class PendingTasksComponent implements OnInit {
             window.location.reload();
           },
           error: (err) => {
-            window.alert(err);
+            window.alert(err.error);
           }
         });
       }
@@ -114,18 +114,19 @@ export class PendingTasksComponent implements OnInit {
         window.location.reload();
       },
       error: (err) => {
-        window.alert(err);
+        window.alert(err.error);
       }
     });
   }
 
   getSurveillanceRequestData(request: TaskRequest) {
+    if (request.floorId)
     this.floorService.getFloorById(request.floorId).subscribe({
       next: (data) => {
         request.floor = data;
       },
       error: (err) => {
-        window.alert(err);
+        window.alert(err.error);
       }
     });
   }

@@ -29,6 +29,7 @@ describe('ListComponent', () => {
   });
   it('should handle successful robot listing', ()=> {
     const mockRobot: Robot = {
+      id: '1',
       robotCode: '1',
       nickName: 'Robot 1',
       robotType: 'Delivery',
