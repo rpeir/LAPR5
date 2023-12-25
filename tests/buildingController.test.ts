@@ -34,6 +34,7 @@ describe("building controller", function() {
 
     let body = {
       "id": "201",
+      "code": "201",
       "designation": "BUG A",
       "description": "bc",
       "length": 100,
@@ -41,6 +42,8 @@ describe("building controller", function() {
       "height": 50,
     };
     let req: Partial<Request> = {};
+    // @ts-ignore
+    req.auth = {user: {role: {name: "campus manager"}}};
     req.body = body;
 
     let res: Partial<Response> = {
@@ -88,6 +91,8 @@ describe("building controller", function() {
       "height": 50,
     };
     let req: Partial<Request> = {};
+    // @ts-ignore
+    req.auth = {user: {role: {name: "campus manager"}}};
     req.body = body;
 
     let res: Partial<Response> = {

@@ -14,8 +14,8 @@ export default class TaskService implements ITaskService {
     @Inject(config.adapters.taskAdapter.name) private taskAdapter: ITaskAdapter) {
   }
 
-  public async approveTask(requestId: string): Promise<ITaskDTO> {
-    const task = await this.taskAdapter.approveTask(requestId);
+  public async approveTask(requestId: string, robotId : string): Promise<ITaskDTO> {
+    const task = await this.taskAdapter.approveTask(requestId, robotId);
     return TaskMapper.toDTO(task);
   }
 
@@ -33,8 +33,8 @@ export default class TaskService implements ITaskService {
     return TaskMapper.toDTO(task);
   }
 
-  public async getTaskRequests(): Promise<ITaskRequestDTO[]> {
-    return await this.taskAdapter.findTaskRequests();
+  public async getTaskRequests(params : [string, string][]): Promise<ITaskRequestDTO[]> {
+    return await this.taskAdapter.findTaskRequests(params);
   }
 
   public async getTaskRequestById(id: string): Promise<ITaskRequestDTO> {

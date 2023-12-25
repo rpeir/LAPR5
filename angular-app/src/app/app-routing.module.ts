@@ -44,6 +44,7 @@ import { UtenteComponent } from "./utente/utente.component";
 import { CreateUserComponent } from "./user/create-user/create-user.component";
 import { RegisterUserComponent } from "./user/register-user/register-user.component";
 import { VerifyAuthService } from "./auth/verify-auth.service";
+import { PendingTasksComponent } from "./task/pending-tasks/pending-tasks.component";
 import { TaskSequenceComponent } from "./task-sequence/task-sequence.component";
 import { GetTaskSequenceComponent } from "./get-task-sequence/get-task-sequence.component";
 

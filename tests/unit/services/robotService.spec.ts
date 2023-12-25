@@ -108,6 +108,7 @@ describe("robot service", function() {
     await robotService.createRobot(robotDTO as IRobotDTO).then((result) => {
       expect(result.isFailure).to.equal(false);
       expect(result.getValue()).to.deep.equal({
+        "id": "124",
         "state": "true",
         "nickName": robotDTO.nickName,
         "robotCode": robotDTO.robotCode,
@@ -186,6 +187,7 @@ describe("robot service", function() {
     await robotService.createRobot(robotDTO as IRobotDTO).then((result) => {
       expect(result.isFailure).to.equal(false);
       expect(result.getValue()).to.deep.equal({
+        "id": "124",
         "state": "true",
         "nickName": robotDTO.nickName,
         "robotCode": robotDTO.robotCode,

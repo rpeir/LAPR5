@@ -9,6 +9,25 @@ import { Result } from '../core/logic/Result';
 @Service()
 export default class RobotController implements IRobotController {
   constructor(@Inject(config.services.robot.name) private robotServiceInstance: IRobotService) {}
+  public async consultRobotsByTaskType(req: Request, res: Response, next: NextFunction) {
+    try {
+      // @ts-ignore
+      if (req.auth.user.role.name !== 'task manager') {
+        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+      }
+
+      const robotOrError = (await this.robotServiceInstance.consultRobotsByTaskType(req.params.taskType)) as Result<IRobotDTO[]>;
+
+      if (robotOrError.isFailure) {
+        return res.status(402).send(robotOrError.error);
+      }
+
+      const robotDTO = robotOrError.getValue();
+      return res.status(200).json(robotDTO);
+    } catch (error) {
+      throw next(error);
+    }
+  }
 
   public async createRobot(req: Request, res: Response, next: NextFunction) {
     try {

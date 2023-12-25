@@ -75,6 +75,8 @@ beforeEach(function() {
       "description": "Elevator 1A",
     };
     let req: Partial<Request> = {};
+    // @ts-ignore
+    req.auth = {user: {role: {name: "campus manager"}}};
     req.body = body;
     let res: Partial<Response> = {
       json: sinon.spy(),

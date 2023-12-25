@@ -75,6 +75,8 @@ describe('room controller', () => {
   it('roomController (createRoom) unit test using roomService stub', async function () {
     let req: Partial<Request> = {};
     req.body = defaultBody;
+    // @ts-ignore
+    req.auth = {user: {role: {name: "campus manager"}}};
 
     let res: Partial<Response> = {
       json: sinon.spy(),
@@ -128,6 +130,8 @@ describe('room controller', () => {
 
     let req: Partial<Request> = {};
     req.body = defaultBody;
+    // @ts-ignore
+    req.auth = {user: {role: {name: "campus manager"}}};
 
     let res: Partial<Response> = {
       json: sinon.spy(),
@@ -172,6 +176,8 @@ describe('room controller', () => {
 
     let req: Partial<Request> = {};
     req.body = defaultBody;
+    // @ts-ignore
+    req.auth = {user: {role: {name: "campus manager"}}};
 
     let res: Partial<Response> = {
       json: sinon.spy(),
@@ -217,6 +223,8 @@ describe('room controller', () => {
 
     let req: Partial<Request> = {};
     req.body = defaultBody;
+    // @ts-ignore
+    req.auth = {user: {role: {name: "campus manager"}}};
 
     let res: Partial<Response> = {
       status: sinon.spy()
@@ -232,52 +240,54 @@ describe('room controller', () => {
 
   });
 
-    it('roomController + roomService (create) integration test with valid room', async function () {
-        let buildingRepoInstance = Container.get("BuildingRepo");
-        sinon.stub(buildingRepoInstance, 'findByCode').returns(
-          Building.create(defaultBuildingProps).getValue()
-        );
+  it('roomController + roomService (create) integration test with valid room', async function () {
+    let buildingRepoInstance = Container.get("BuildingRepo");
+    sinon.stub(buildingRepoInstance, 'findByCode').returns(
+      Building.create(defaultBuildingProps).getValue()
+    );
 
-        let floorRepoInstance = Container.get("FloorRepo");
-        sinon.stub(floorRepoInstance, 'existsByBuildingAndNumber').returns(
-          new Promise<boolean>((resolve, reject) => {
-            resolve(true);
-        })
-        );
+    let floorRepoInstance = Container.get("FloorRepo");
+    sinon.stub(floorRepoInstance, 'existsByBuildingAndNumber').returns(
+      new Promise<boolean>((resolve, reject) => {
+        resolve(true);
+      })
+    );
 
-        let roomRepoInstance = Container.get("RoomRepo");
-        sinon.stub(roomRepoInstance, 'save').returnsArg(0);
+    let roomRepoInstance = Container.get("RoomRepo");
+    sinon.stub(roomRepoInstance, 'save').returnsArg(0);
 
-        const service = new RoomService(
-        roomRepoInstance as IRoomRepo,
-        floorRepoInstance as IFloorRepo,
-        buildingRepoInstance as IBuildingRepo
-        );
+    const service = new RoomService(
+      roomRepoInstance as IRoomRepo,
+      floorRepoInstance as IFloorRepo,
+      buildingRepoInstance as IBuildingRepo
+    );
 
-        let req: Partial<Request> = {};
-        req.body = defaultBody;
+    let req: Partial<Request> = {};
+    req.body = defaultBody;
+    // @ts-ignore
+    req.auth = {user: {role: {name: "campus manager"}}};
 
-        let res: Partial<Response> = {
-          json: sinon.spy(),
-          status: sinon.stub().returnsThis()
-        };
+    let res: Partial<Response> = {
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
+    };
 
-        let next: Partial<NextFunction> = () => {};
+    let next: Partial<NextFunction> = () => {};
 
-        const ctrl = new RoomController(service as IRoomService);
+    const ctrl = new RoomController(service as IRoomService);
 
-        await ctrl.createRoom(<Request>req, <Response>res, <NextFunction>next);
+    await ctrl.createRoom(<Request>req, <Response>res, <NextFunction>next);
 
-        sinon.assert.calledWith(res.status, 201);
-        // check if the json is well formed
-        sinon.assert.calledWith(res.json, sinon.match({
-          name : "Test Room",
-          description : "Test Description",
-          category : "classroom",
-          floor : 1,
-          building : "A"
-        }));
-    });
+    sinon.assert.calledWith(res.status, 201);
+    // check if the json is well formed
+    sinon.assert.calledWith(res.json, sinon.match({
+      name : "Test Room",
+      description : "Test Description",
+      category : "classroom",
+      floor : 1,
+      building : "A"
+    }));
+  });
 
   it('roomController + roomService (create) integration test with existing room', async function () {
     let buildingRepoInstance = Container.get("BuildingRepo");
@@ -303,6 +313,8 @@ describe('room controller', () => {
 
     let req: Partial<Request> = {};
     req.body = defaultBody;
+    // @ts-ignore
+    req.auth = {user: {role: {name: "campus manager"}}};
 
     let res: Partial<Response> = {
       status: sinon.spy()

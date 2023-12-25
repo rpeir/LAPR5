@@ -59,6 +59,8 @@ describe("floor controller", function() {
       "description": "salas"
     };
     let req: Partial<Request> = {};
+    // @ts-ignore
+    req.auth = {user: {role: {name: "campus manager"}}};
     req.body = body;
 
     let res: Partial<Response> = {
@@ -106,6 +108,8 @@ describe("floor controller", function() {
     let req: Partial<Request> = {
       body: body
     };
+    // @ts-ignore
+    req.auth = {user: {role: {name: "campus manager"}}};
 
     let res: Partial<Response> = {
       json: sinon.spy(),
@@ -188,6 +192,8 @@ describe("floor controller", function() {
       "description": "salas"
     };
     let req: Partial<Request> = {};
+    // @ts-ignore
+    req.auth = {user: {role: {name: "campus manager"}}};
     req.body = body;
 
     let res: Partial<Response> = {

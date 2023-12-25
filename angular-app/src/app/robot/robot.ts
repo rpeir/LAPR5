@@ -1,4 +1,5 @@
 export class Robot {
+  id!: string;
   robotCode!: string;
   nickName!: string;
   robotType!: string;

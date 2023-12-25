@@ -10,6 +10,26 @@ import IRoomService from '../services/IServices/IRoomService';
 @Service()
 export default class RoomController implements IRoomController {
   constructor(@Inject(config.services.room.name) private roomService: IRoomService) {}
+  public async getRoomById(req: Request, res: Response, next: NextFunction) {
+    try {
+      // @ts-ignore
+      if (req.auth.user.role.name !== 'task manager') {
+        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+      }
+      const roomId = req.params.id;
+      const roomOrError = await this.roomService.getRoomById(roomId);
+      if (roomOrError.isFailure) {
+        return res
+          .status(402)
+          .json({ error: roomOrError.error })
+          .send();
+      }
+      const roomDTO = roomOrError.getValue();
+      return res.status(201).json(roomDTO);
+    } catch (error) {
+      next(error);
+    }
+  }
 
   public async createRoom(req: Request, res: Response, next: NextFunction) {
     try {

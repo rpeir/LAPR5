@@ -90,6 +90,18 @@ export default (app: Router) => {
     })
     , (req, res, next) => ctrl.listFloorsWithPathways(req, res, next)
   )
+
+  route.get(
+    '/:id',
+    middlewares.isAuth,
+    middlewares.verifyToken,
+    celebrate({
+      params: Joi.object({
+        id: Joi.string().required(),
+      })
+    }),
+    (req, res, next) => ctrl.getFloorById(req, res, next)
+  )
   route.use(middlewares.validateBody);
 }
 

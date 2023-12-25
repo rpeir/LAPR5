@@ -4,6 +4,7 @@ import user from './routes/userRoute';
 import role from './routes/roleRoute';
 import robotRoute from "./routes/robotRoute";
 import robotTypeRoute from "./routes/robotTypeRoute";
+
 import buildingRoute from "./routes/buildingRoute";
 import floorRoute from "./routes/floorRoute";
 import elevatorRoute from "./routes/elevatorRoute";
