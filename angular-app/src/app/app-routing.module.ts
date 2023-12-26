@@ -44,7 +44,7 @@ import { UtenteComponent } from "./utente/utente.component";
 import { CreateUserComponent } from "./user/create-user/create-user.component";
 import { RegisterUserComponent } from "./user/register-user/register-user.component";
 import { VerifyAuthService } from "./auth/verify-auth.service";
-import { PendingTasksComponent } from "./task/pending-tasks/pending-tasks.component";
+import { PendingRequestsComponent } from "./task/pending-requests/pending-requests.component";
 import { TaskSequenceComponent } from "./task-sequence/task-sequence.component";
 import { GetTaskSequenceComponent } from "./get-task-sequence/get-task-sequence.component";
 
@@ -84,12 +84,13 @@ const routes: Routes = [
   { path: "elevator/list-all-elevators", component: ElevatorListAllComponent },
   { path: "floors/upload-map", component: UploadMapComponent },
   //{ path: 'map-viewer', loadChildren: () => import('./lazyLoadTest/Modules/map-viewer-lazy/map-viewer-lazy.module').then(m => m.MapViewerLazyModule) },
-  { path: "path/optimization-criteria", component: GetByOptimizationCriteriaComponent },
-  { path: "system-administrator", component: AdministradorDeSistemaComponent },
-  { path: "system-administrator/create-manager", component: CreateManagerComponent },
-  { path: "utente", component: UtenteComponent },
-  { path: "user/create-user", component: CreateUserComponent },
-  { path: "system-administrator/register-user", component: RegisterUserComponent },
+  { path: 'path/optimization-criteria', component: GetByOptimizationCriteriaComponent},
+  { path: 'system-administrator', component: AdministradorDeSistemaComponent},
+  {path: 'system-administrator/create-manager', component: CreateManagerComponent},
+  {path: 'utente',component: UtenteComponent},
+  {path:'user/create-user',component:CreateUserComponent},
+  {path: 'system-administrator/register-user',component:RegisterUserComponent},
+  { path: 'tasks/pending', component: PendingRequestsComponent },
   { path: "task-sequence", component: TaskSequenceComponent },
   { path: "startSequence", component: GetTaskSequenceComponent }
 ];

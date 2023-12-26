@@ -11,6 +11,7 @@ describe('CreateRoomComponent', () => {
   it('should create a new room', () => {
     // Generate random values for name
     const DEFAULT_ROOM: Room = {
+      id : undefined,
       name : 'Room1 A1',
       description : 'Room Test',
       category : 'Classroom',
@@ -41,7 +42,10 @@ describe('CreateRoomComponent', () => {
 
     cy.wait('@apiCheck').then((interception) =>{
       assert.equal(interception.response.statusCode, 201);
-      assert.equal(JSON.stringify(interception.response.body), JSON.stringify({
+      assert.equal(JSON.stringify({
+        ...interception.response.body,
+        id : undefined
+      }), JSON.stringify({
         ...DEFAULT_ROOM,
         floor: DEFAULT_ROOM.floor.toString(),
         building: BUILDING_CODE,
@@ -52,6 +56,7 @@ describe('CreateRoomComponent', () => {
   it('should fail to create a new room because the name is the same', () => {
     // Generate random values for name
     const DEFAULT_ROOM: Room = {
+      id : undefined,
       name : 'Room1 A1',
       description : 'Room Test',
       category : 'Classroom',

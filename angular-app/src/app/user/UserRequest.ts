@@ -9,6 +9,6 @@ export class UserRequest{
   lastName!: string;
   email!: string;
   password!: string;
-  phoneNumber!: PhoneNumber;
+  phoneNumber!: string;
   nif!: string;
 }

@@ -8,11 +8,11 @@ import { SelectRobotComponent } from "./select-robot/select-robot.component";
 import { FloorService } from "../../floor/floor.service";
 
 @Component({
-  selector: 'app-pending-tasks',
-  templateUrl: './pending-tasks.component.html',
-  styleUrls: ['./pending-tasks.component.css']
+  selector: 'app-pending-requests',
+  templateUrl: './pending-requests.component.html',
+  styleUrls: ['./pending-requests.component.css']
 })
-export class PendingTasksComponent implements OnInit {
+export class PendingRequestsComponent implements OnInit {
 
   constructor(private taskService : TaskService, private userService : UserService, private roomService : RoomService,
               public dialog : MatDialog, private floorService : FloorService) {
@@ -29,7 +29,7 @@ export class PendingTasksComponent implements OnInit {
         this.requests = data;
       },
       error: (err) => {
-        window.alert(err);
+        window.alert(err.error);
       }
     });
   }
@@ -60,7 +60,7 @@ export class PendingTasksComponent implements OnInit {
         request.user = data;
       },
       error: (err) => {
-        window.alert(err);
+        window.alert(err.error);
       }
     });
     this.roomService.getRoomById(request.pickupRoomId).subscribe({
@@ -68,7 +68,7 @@ export class PendingTasksComponent implements OnInit {
         request.pickupRoom = data;
       },
       error: (err) => {
-        window.alert(err);
+        window.alert(err.error);
       }
     });
     this.roomService.getRoomById(request.deliveryRoomId).subscribe({
@@ -76,7 +76,7 @@ export class PendingTasksComponent implements OnInit {
         request.deliveryRoom = data;
       },
       error: (err) => {
-        window.alert(err);
+        window.alert(err.error);
       }
     });
   }
@@ -98,7 +98,7 @@ export class PendingTasksComponent implements OnInit {
             window.location.reload();
           },
           error: (err) => {
-            window.alert(err);
+            window.alert(err.error);
           }
         });
       }
@@ -114,18 +114,19 @@ export class PendingTasksComponent implements OnInit {
         window.location.reload();
       },
       error: (err) => {
-        window.alert(err);
+        window.alert(err.error);
       }
     });
   }
 
   getSurveillanceRequestData(request: TaskRequest) {
+    if (request.floorId)
     this.floorService.getFloorById(request.floorId).subscribe({
       next: (data) => {
         request.floor = data;
       },
       error: (err) => {
-        window.alert(err);
+        window.alert(err.error);
       }
     });
   }
