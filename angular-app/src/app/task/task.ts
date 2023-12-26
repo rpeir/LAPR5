@@ -8,7 +8,7 @@ export class Task {
   status!: string;
   pickupRoomId!: string;
   deliveryRoomId!: string;
-  robot!: Robot;
+  robot!: string;
   taskRequestId!: string;
   senderName?: string;
   receiverName?: string;

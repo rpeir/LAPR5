@@ -18,7 +18,6 @@ export class TaskService {
 
   getPendingTasks() {
     return this.httpClient.get<Task[]>(`${this.taskUrl}/pending`, {observe: "body", responseType: "json"});
-    return this.httpClient.get<Task[]>(`${this.taskUrl}/pending`, {observe: "body", responseType: "json"});
   }
 
   getPendingTaskRequests() {
