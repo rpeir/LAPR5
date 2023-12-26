@@ -1,6 +1,6 @@
-import { Service, Inject } from 'typedi';
+import { Service, Inject } from "typedi";
 
-import { Document, Model } from 'mongoose';
+import { Document, Model } from "mongoose";
 import IRoomRepo from "../services/IRepos/IRoomRepo";
 import { IRoomPersistence } from "../dataschema/IRoomPersistence";
 import { Room } from "../domain/room/room";
@@ -13,14 +13,14 @@ export default class RoomRepo implements IRoomRepo {
   private models: any;
 
   constructor(
-    @Inject('roomSchema') private roomSchema: Model<IRoomPersistence & Document>,
+    @Inject("roomSchema") private roomSchema: Model<IRoomPersistence & Document>
   ) {
   }
 
   private createBaseQuery(): any {
     return {
-      where: {},
-    }
+      where: {}
+    };
   }
 
   public async exists(room: Room): Promise<boolean> {
@@ -65,7 +65,7 @@ export default class RoomRepo implements IRoomRepo {
     }
   }
 
-  public async  findByBuildingAndFloor(code: string, floor: number) {
+  public async findByBuildingAndFloor(code: string, floor: number) {
     const query = { building: code, floor: floor };
     const rooms = await this.roomSchema.find(query);
     if (rooms != null) {
@@ -85,5 +85,15 @@ export default class RoomRepo implements IRoomRepo {
       return null;
     }
 
+  }
+
+  public async findByName(roomName: string) {
+    const query = { name: roomName };
+    const roomRecord = await this.roomSchema.findOne(query);
+    if (roomRecord != null) {
+      return RoomMap.toDomain(roomRecord);
+    } else {
+      return null;
+    }
   }
 }

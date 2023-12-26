@@ -106,4 +106,17 @@ export default class BuildingService implements IBuildingService {
     }
   }
 
+  public async getBuildingByCode(code: string): Promise<Result<IBuildingDTO>> {
+    try {
+      const building = await this.buildingRepo.findByCode(code);
+      if (building === null) {
+        return Result.fail<IBuildingDTO>("Building with " + code + "not found");
+      }
+      const buildingDTO = BuildingMap.toDTO(building) as IBuildingDTO;
+      return Result.ok<IBuildingDTO>(buildingDTO);
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }

@@ -65,8 +65,8 @@ export default class RobotRepo implements IRobotRepo {
     }
   }
 
-  public async findByNickName(nickName: RobotNickName | string): Promise<Robot | null> {
-    const query = {nickName: nickName instanceof RobotNickName ? nickName.value : nickName};
+  public async findByNickName(nickName: string): Promise<Robot | null> {
+    const query = {nickName: nickName};
     const robotRecord = await this.robotSchema.findOne(query);
     if (robotRecord != null) {
       return RobotMap.toDomain(robotRecord);

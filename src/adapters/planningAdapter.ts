@@ -3,7 +3,7 @@ import { Service } from "typedi";
 import { Result } from "../core/logic/Result";
 import { IPathDTO } from "../dto/IPathDTO";
 import config from "../../config";
-import { PlanningTask } from "../domain/planning/planningTask";
+import { PlanningTaskDTO } from "../dto/PlanningTaskDTO";
 
 @Service()
 export default class PlanningAdapter implements IPlanningAdapter {
@@ -172,24 +172,32 @@ export default class PlanningAdapter implements IPlanningAdapter {
     });
   }
 
-  getTaskSequence(nrGenerations: number, stabilizationCriteriaValue: number, idealCost: number, planningTask: any[]) {
+  public async getTaskSequence(nrGenerations: number, stabilizationCriteriaValue: number, idealCost: number, populationSize: number, crossoverProbability: number, mutationProbability: number, elitismRate: number, planningTask: PlanningTaskDTO[]): Promise<Result<PlanningTaskDTO[]>> {
     const http = require("http");
     const options = {
       method: "POST",
       host: config.planningHost,
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Content-Length": Buffer.byteLength(JSON.stringify(planningTask))
+      },
       port: config.planningPort,
       path: "/taskSequence?nrGenerations=" + nrGenerations
         + "&stabilizationCriteriaValue=" + stabilizationCriteriaValue
-        + "&idealCost=" + idealCost,
-      body: planningTask
+        + "&idealCost=" + idealCost
+        + "&populationSize=" + populationSize
+        + "&crossoverProbability=" + crossoverProbability
+        + "&mutationProbability=" + mutationProbability
+        + "&elitismRate=" + elitismRate,
+
     };
 
-    return new Promise<Result<PlanningTask[]>>((resolve) => {
+    return new Promise<Result<PlanningTaskDTO[]>>((resolve) => {
       let result;
 
       const request = http.request(options, (res) => {
         if (res.statusCode !== 200) {
-          result = Result.fail(`Couldn't find sequence.`);
+          result = Result.fail(`Couldn't find sequence.` + res.statusCode);
           res.resume();
           resolve(result);
         } else {
@@ -205,7 +213,7 @@ export default class PlanningAdapter implements IPlanningAdapter {
           });
         }
       });
-
+      request.write(JSON.stringify(planningTask));
       request.end();
 
       request.on("error", (err) => {

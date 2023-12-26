@@ -20,8 +20,8 @@ export default (app: Router) => {
   );
 
   route.get("/pending",
-    middlewares.isAuth,
-    middlewares.verifyToken,
+    // middlewares.isAuth,
+    // middlewares.verifyToken,
     (req, res, next) => {
       ctrl.getPendingTasks(req, res, next);
     });

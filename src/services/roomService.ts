@@ -18,12 +18,26 @@ export default class RoomService implements IRoomService {
   constructor(
     @Inject(config.repos.room.name) private roomRepo: IRoomRepo,
     @Inject(config.repos.floor.name) private floorRepo: IFloorRepo,
-    @Inject(config.repos.building.name) private buildingRepo: IBuildingRepo,
+    @Inject(config.repos.building.name) private buildingRepo: IBuildingRepo
   ) {
   }
+
   public async getRoomById(roomId: string): Promise<Result<IRoomDTO>> {
     try {
       const room = await this.roomRepo.findById(roomId);
+      if (room == null) {
+        return Result.fail<IRoomDTO>("Room does not exist");
+      }
+      const roomDTO = RoomMap.toDTO(room);
+      return Result.ok<IRoomDTO>(roomDTO);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async getRoomByName(name: string) {
+    try {
+      const room = await this.roomRepo.findByName(name);
       if (room == null) {
         return Result.fail<IRoomDTO>("Room does not exist");
       }
@@ -52,7 +66,7 @@ export default class RoomService implements IRoomService {
     }
   }
 
-  public async createRoom(roomDTO : IRoomDTO): Promise<Result<IRoomDTO>> {
+  public async createRoom(roomDTO: IRoomDTO): Promise<Result<IRoomDTO>> {
     try {
       const name = roomDTO.name;
       const description = roomDTO.description;
@@ -75,14 +89,14 @@ export default class RoomService implements IRoomService {
       }
 
       const roomOrError = Room.create({
-        name : name,
-        description : description,
-        category : category,
-        floor : floor,
-        building : building.code
+        name: name,
+        description: description,
+        category: category,
+        floor: floor,
+        building: building.code
       });
 
-      if (roomOrError.isFailure){
+      if (roomOrError.isFailure) {
         return Result.fail<IRoomDTO>(roomOrError.errorValue());
       }
       let roomResult = roomOrError.getValue();

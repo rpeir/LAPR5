@@ -44,12 +44,11 @@ export class TaskMapper extends Mapper<Task> {
     const user = await userRepo.findById(raw.userId);
 
     const roomRepo = Container.get(RoomRepo);
-    const pickupRoom = await roomRepo.findById(raw.pickupRoomId);
-    const deliveryRoom = await roomRepo.findById(raw.deliveryRoomId);
+    const pickupRoom = await roomRepo.findByName(raw.pickupRoomId);
+    const deliveryRoom = await roomRepo.findByName(raw.deliveryRoomId);
 
     const robotRepo = Container.get(RobotRepo);
-    const robot = await robotRepo.findById(raw.robotId);
-
+    const robot = await robotRepo.findByNickName(raw.robot);
     const senderName = raw.senderName ? raw.senderName : undefined;
     const receiverName = raw.receiverName ? raw.receiverName : undefined;
     const senderContact = raw.senderContact ? raw.senderContact : undefined;

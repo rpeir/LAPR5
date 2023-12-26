@@ -199,12 +199,15 @@ export default class PlanningController implements IPlanningController {
       const nrGenerations = req.query.nrGenerations as string;
       const stabilizationCriteriaValue = req.query.stabilizationCriteriaValue as string;
       const idealCost = req.query.idealCost as string;
-      const taskDTOS = req.body.tasks as ITaskDTO[];
+      const populationSize = req.query.populationSize as string;
+      const crossoverProbability = req.query.crossoverProbability as string;
+      const mutationProbability = req.query.mutationProbability as string;
+      const elitismRate = req.query.elitismRate as string;
+      const taskDTOS = req.body as ITaskDTO[];
       const taskResult = [];
       const tasks = await Promise.all(taskDTOS.map(taskDTO => TaskMapper.toDomain(taskDTO)));
 
-
-      const planningTaskOrError = await this.planningService.getTaskSequence(parseInt(nrGenerations), parseInt(stabilizationCriteriaValue), parseInt(idealCost), tasks);
+      const planningTaskOrError = await this.planningService.getTaskSequence(parseInt(nrGenerations), parseInt(stabilizationCriteriaValue), parseInt(idealCost), parseInt(populationSize), parseFloat(crossoverProbability), parseFloat(mutationProbability), parseFloat(elitismRate), tasks);
 
       if (planningTaskOrError.isFailure) {
         return res.status(402).json({ error: planningTaskOrError.error }).send();
@@ -212,14 +215,15 @@ export default class PlanningController implements IPlanningController {
       const planningTask = planningTaskOrError.getValue();
 
       planningTask.forEach(plannedTask => {
-        tasks.forEach(unplannedTask => {
-          if (unplannedTask.id.toString() == plannedTask.id.toString()){
+        taskDTOS.forEach(unplannedTask => {
+          if (unplannedTask.id.toString() == plannedTask.id){
             taskResult.push(unplannedTask)
           }
         });
       });
 
-      return taskResult;
+
+      return res.json(taskResult).status(200);
     }catch (error){
       return next(error);
     }

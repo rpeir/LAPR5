@@ -15,7 +15,6 @@ import { PlanningElevatorMapper } from "../mappers/PlanningElevatorMapper";
 import { IPlanningElevatorDTO } from "../dto/IPlanningElevatorDTO";
 import { PlanningPathwayMapper } from "../mappers/PlanningPathwayMapper";
 import { IPlanningPathwayDTO } from "../dto/IPlanningPathwayDTO";
-import { IPathDTO } from "../dto/IPathDTO";
 import { PlanningMatrix } from "../domain/planning/planningMatrix";
 import { PlanningMatrixMapper } from "../mappers/PlanningMatrixMapper";
 import { PlanningElevatorLocation } from "../domain/planning/planningElevatorLocation";
@@ -30,10 +29,7 @@ import { IPlanningElevatorLocationDTO } from "../dto/IPlanningElevatorLocationDT
 import { IPlanningMatrixDTO } from "../dto/IPlanningMatrixDTO";
 import IPlanningAdapter from "../adapters/IAdapters/IPlanningAdapter";
 import { Task } from "../domain/task/task";
-import { parseInt, split } from "lodash";
-import plannigRoute from "../api/routes/plannigRoute";
-import IRoomService from "./IServices/IRoomService";
-import { PlanningTask } from "../domain/planning/planningTask";
+import { PlanningTaskDTO } from "../dto/PlanningTaskDTO";
 
 @Service()
 export default class PlanningService implements IPlanningService {
@@ -267,33 +263,42 @@ export default class PlanningService implements IPlanningService {
     return this.planningAdapter.getPathLessElevatorsRoomToRoom(floorSource, floorDestination, roomSource, roomDestination);
   }
 
-  public async getTaskSequence(nrGenerations: number, stabilizationCriteriaValue: number, idealCost: number, tasks: Task[]) {
-    let planningTask : PlanningTask[] = [];
+  public async getTaskSequence(nrGenerations: number, stabilizationCriteriaValue: number, idealCost: number, populationSize: number, crossoverProbability: number, mutationProbability: number, elitismRate: number, tasks: Task[]): Promise<Result<PlanningTaskDTO[]>> {
+    let planningTask: PlanningTaskDTO[] = [];
     for (const task of tasks) {
-      const floorSourceOrError = await this.floorService.findByBuildingIdAndFloorNr(task.pickupRoomId.building.value,task.pickupRoomId.floor);
+      const buildingSourceOrError = await this.buildingService.getBuildingByCode(task.pickupRoomId.building.value);
+      if (buildingSourceOrError.isFailure) {
+        return Result.fail<PlanningTaskDTO[]>(buildingSourceOrError.error);
+      }
+      const buildingSource = buildingSourceOrError.getValue();
+      const floorSourceOrError = await this.floorService.findByBuildingIdAndFloorNr(buildingSource.domainId, task.pickupRoomId.floor);
       if (floorSourceOrError.isFailure) {
-        return Result.fail<PlanningTask[]>(floorSourceOrError.error);
+        return Result.fail<PlanningTaskDTO[]>(floorSourceOrError.error);
       }
 
-      const floorDestinationOrError = await this.floorService.findByBuildingIdAndFloorNr(task.deliveryRoomId.building.value,task.deliveryRoomId.floor);
+      const buildingDestinationOrError = await this.buildingService.getBuildingByCode(task.deliveryRoomId.building.value);
+      if (buildingDestinationOrError.isFailure) {
+        return Result.fail<PlanningTaskDTO[]>(buildingDestinationOrError.error);
+      }
+      const buildingDestination = buildingDestinationOrError.getValue();
+
+      const floorDestinationOrError = await this.floorService.findByBuildingIdAndFloorNr(buildingDestination.domainId, task.deliveryRoomId.floor);
       if (floorDestinationOrError.isFailure) {
-        return Result.fail<PlanningTask[]>(floorDestinationOrError.error);
+        return Result.fail<PlanningTaskDTO[]>(floorDestinationOrError.error);
       }
       const floorSource = floorSourceOrError.getValue();
       const floorDestination = floorDestinationOrError.getValue();
 
-      const planningTaskOrError = PlanningTask.create({
+      const planningTaskDTO = {
+        id : task.id.toString(),
         pickupRoom: task.pickupRoomId.name,
         deliveryRoom: task.deliveryRoomId.name,
         pickupFloor: floorSource.building + "_" + floorSource.floorNr,
         deliveryFloor: floorDestination.building + "_" + floorDestination.floorNr
-      },task.id);
-      if (planningTaskOrError.isFailure) {
-        return Result.fail<PlanningTask[]>(planningTaskOrError.error);
       }
-      planningTask.push(planningTaskOrError.getValue());
-    }
 
-    return this.planningAdapter.getTaskSequence(nrGenerations, stabilizationCriteriaValue, idealCost, planningTask);
+      planningTask.push(planningTaskDTO);
+    }
+    return this.planningAdapter.getTaskSequence(nrGenerations, stabilizationCriteriaValue, idealCost, populationSize, crossoverProbability, mutationProbability, elitismRate, planningTask);
   }
 }

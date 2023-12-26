@@ -8,7 +8,7 @@ import { IPlanningElevatorLocationDTO } from "../../dto/IPlanningElevatorLocatio
 import { IPlanningPathwayLocationDTO } from "../../dto/IPlanningPathwayLocationDTO";
 import { IPlanningMatrixDTO } from "../../dto/IPlanningMatrixDTO";
 import { Task } from "../../domain/task/task";
-import { PlanningTask } from "../../domain/planning/planningTask";
+import { PlanningTaskDTO } from "../../dto/PlanningTaskDTO";
 
 
 export default interface IPlanningService {
@@ -23,5 +23,5 @@ export default interface IPlanningService {
   getPlanningRoomsLocation(floorSource: string) : Promise<Result<IPlanningRoomLocationDTO[]>>;
   getPathLessElevatorsRoomToRoom(floorSource: string, floorDestination: string, roomSource: string, roomDestination: string): Promise<Result<IPathDTO>>;
   getPathLessBuildingsRoomToRoom(floorSource: string, floorDestination: string, roomSource: string, roomDestination: string): Promise<Result<IPathDTO>>;
-  getTaskSequence(nrGenerations: number, stabilizationCriteriaValue: number, idealCost: number, tasks: Task[]) : Promise<Result<PlanningTask[]>>;
+  getTaskSequence(nrGenerations: number, stabilizationCriteriaValue: number, idealCost: number, populationSize: number, crossoverProbability: number, mutationProbability: number, elitismRate: number, tasks: Task[]) : Promise<Result<PlanningTaskDTO[]>>;
 }

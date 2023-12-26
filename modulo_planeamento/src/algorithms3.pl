@@ -9,7 +9,6 @@
 :- dynamic(populacao/1).
 :- dynamic(prob_cruzamento/1).
 :- dynamic(prob_mutacao/1).
-:- dynamic(nrDeGeracoes/1).
 :-dynamic(taxa_elitismo/1).
 :-dynamic(custoIdeal/1).
 :-dynamic(maxEstagnacoes/1).
