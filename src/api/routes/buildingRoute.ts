@@ -11,6 +11,8 @@ export default (app: Router) => {
   const ctrl = Container.get(config.controllers.building.name) as IBuildingController;
   route.post(
     '',
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       body: Joi.object({
         code: Joi.string().required(),
@@ -26,6 +28,8 @@ export default (app: Router) => {
   //EDIT BUILDING
   route.patch(
     '',
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       body: Joi.object({
         code: Joi.string().required(),
@@ -38,7 +42,10 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.updateBuilding(req, res, next),
   );
-  route.get('', (req, res, next) => ctrl.listAllBuilding(req, res, next));
+  route.get('',
+    middlewares.isAuth,
+    middlewares.verifyToken,
+    (req, res, next) => ctrl.listAllBuilding(req, res, next));
   // Error handler middleware
   route.use(middlewares.validateBody);
 };

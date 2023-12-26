@@ -16,4 +16,5 @@ export default interface IFloorService {
 
   listFloorsWithPathways(buildingDesignation: string): Promise<Result<Map<number, IFloorDTO[]>>>;
   findByBuildingIdAndFloorNr(buildingId: string, floorNr: number): Promise<Result<IFloorDTO>>;
+  getFloorById(id: string): Promise<Result<IFloorDTO>>;
 }

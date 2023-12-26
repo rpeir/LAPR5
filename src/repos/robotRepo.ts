@@ -7,11 +7,11 @@ import { Model } from 'mongoose';
 import { IRobotPersistence } from '../dataschema/IRobotPersistence';
 import { RobotId } from '../domain/robot/robotId';
 import { RobotMap } from '../mappers/RobotMap';
+import { RobotType } from "../domain/robotType/robotType";
 
 @Service()
 export default class RobotRepo implements IRobotRepo {
   private models: any;
-
   constructor(@Inject('robotSchema') private robotSchema: Model<IRobotPersistence & Document>) {
   }
 
@@ -19,6 +19,16 @@ export default class RobotRepo implements IRobotRepo {
     return {
       where: {},
     };
+  }
+
+  public async findByRobotType(robotType: RobotType[]): Promise<Robot[]> {
+    const query = {robotType: { $in : robotType.map((robotType) => robotType.id.toString())}};
+    const robotRecord = await this.robotSchema.find(query);
+    if (robotRecord != null) {
+      return Promise.all(robotRecord.map((robot) => RobotMap.toDomain(robot)));
+    } else {
+      return null;
+    }
   }
 
   public async updateOne(robot: Robot): Promise<Robot> {

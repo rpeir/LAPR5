@@ -1,0 +1,40 @@
+/* Styles for the mat-card */
+mat-card {
+  margin: 20px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure the card takes the full height */
+}
+
+/* Styles for the mat-card-title */
+mat-card-title {
+  background-color: #2ecc71;
+  color: #ffffff;
+  padding: 10px;
+}
+
+/* Styles for the mat-card-content */
+mat-card-content {
+  padding: 10px;
+}
+
+/* Styles for the buttons inside mat-card-actions */
+mat-card-actions button {
+  margin-right: 10px;
+  margin-top: auto; /* Push the buttons to the bottom */
+}
+
+/* Styles for the "No pending requests" message */
+.no-pending-requests {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 18px;
+  color: #7f8c8d;
+}
+
+.main-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around; /* or use "space-around" or "space-evenly" based on your preference */
+}

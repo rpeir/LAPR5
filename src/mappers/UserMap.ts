@@ -24,7 +24,7 @@ export class UserMap extends Mapper<User> {
       email: user.email.value,
       nif: user.nif?user.nif:null,
       password: "",
-      role: user.role.id.toString()
+      role: user.role.name
     } as IUserDTO;
   }
 

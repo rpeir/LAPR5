@@ -9,7 +9,7 @@ import { UniqueEntityID } from "../../../src/core/domain/UniqueEntityID";
 import { IRobotTypeDTO } from "../../../src/dto/IRobotTypeDTO";
 import RobotTypeService from "../../../src/services/robotTypeService";
 import IRobotTypeRepo from "../../../src/services/IRepos/IRobotTypeRepo";
-import { TaskType } from "../../../src/domain/task/taskType";
+import { TaskType } from "../../../src/domain/taskType/taskType";
 import { expect } from 'chai';
 
 describe("robotType service", function() {

@@ -30,4 +30,8 @@ export class RobotService {
     return this.httpClient.patch<Robot>(`${this.robotUrl}/disable-by-code`, { robotCode: robotCode },
       {headers: {"Content-Type": "application/json"}, observe: "body", responseType: "json"})
   }
+
+  getRobotsByTaskType(taskType: string) {
+    return this.httpClient.get<Robot[]>(`${this.robotUrl}/task-type/${taskType}`, {observe: "body", responseType: "json"});
+  }
 }

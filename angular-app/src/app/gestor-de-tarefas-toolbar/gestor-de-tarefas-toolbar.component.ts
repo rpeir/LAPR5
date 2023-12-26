@@ -14,7 +14,7 @@ export class GestorDeTarefasToolbarComponent {
     this.router.navigate(["/path/optimization-criteria"]);
   }
   goToApproveDeclineTask(){
-    this.router.navigate(["/approve-decline-task"]);
+    this.router.navigate(["/tasks/pending"]);
   }
 
   goToLogin() {

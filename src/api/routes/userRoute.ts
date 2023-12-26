@@ -8,15 +8,14 @@ import middlewares from '../middlewares';
 import { celebrate, Joi } from 'celebrate';
 import winston = require('winston');
 import config from "../../../config";
-import IBuildingController from "../../controllers/IControllers/IBuildingController";
 import {IUserRequestDTO} from "../../dto/IUserRequestDTO";
-
-var user_controller = require('../../controllers/userController');
 
 const route = Router();
 
 export default (app: Router) => {
   app.use('/auth', route);
+
+  const user_controller = require('../../controllers/userController');
 
   route.post(
     '/signup',
@@ -143,4 +142,11 @@ export default (app: Router) => {
       }
     },
   );
+
+  route.get(
+    '/:id',
+    middlewares.isAuth,
+    middlewares.verifyToken,
+    (req,res,next) => user_controller.getUserById(req, res,next)
+  )
 };

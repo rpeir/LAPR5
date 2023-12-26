@@ -18,6 +18,10 @@ export default class UserRequestController implements IUserRequestController {
   constructor(@Inject(config.services.userRequest.name) private userRequestServiceInstance: IUserRequestService) {}
   public async listAllRequests(req:Request, res:Response, next:NextFunction){
     try{
+      // @ts-ignore
+      if ((req).auth.user.role.name !== 'admin') {
+        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+      }
       const listOrError=(await this.userRequestServiceInstance.listPendingRequests()) as Result<IUserRequestDTO[]>;
       if (listOrError.isFailure) {
         return res.status(402).json({ error: listOrError.error });
@@ -30,6 +34,10 @@ export default class UserRequestController implements IUserRequestController {
     }
   }
   public async registerUser(req:Request, res:Response, next:NextFunction){
+    // @ts-ignore
+    if (req.auth.user.role.name !== 'admin') {
+      return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+    }
       const logger = Container.get('logger') as winston.Logger;
       logger.debug('Calling Sign-Up endpoint with body: %o', req.body )
 
@@ -51,6 +59,10 @@ export default class UserRequestController implements IUserRequestController {
   }
   public async declineUser(req:Request,res:Response,next:NextFunction){
     try{
+      // @ts-ignore
+      if (req.auth.user.role.name !== 'admin') {
+        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+      }
       const id= req.params.id as string;
       await this.userRequestServiceInstance.declineUser(id);
       return res.status(200).json({message:"User request declined"});

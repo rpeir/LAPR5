@@ -60,6 +60,8 @@ describe("pathway controller", function() {
     };
 
     let req: Partial<Request> = {};
+    // @ts-ignore
+    req.auth = {user: {role: {name: "campus manager"}}};
     req.body = body;
 
     let res: Partial<Response> = {
@@ -110,6 +112,8 @@ describe("pathway controller", function() {
     };
 
     let req: Partial<Request> = {};
+    // @ts-ignore
+    req.auth = {user: {role: {name: "campus manager"}}};
     req.body = body;
 
     let res: Partial<Response> = {
@@ -228,6 +232,8 @@ describe("pathway controller", function() {
     };
 
     let req: Partial<Request> = {};
+    // @ts-ignore
+    req.auth = {user: {role: {name: "campus manager"}}};
     req.body = body;
 
     let res: Partial<Response> = {

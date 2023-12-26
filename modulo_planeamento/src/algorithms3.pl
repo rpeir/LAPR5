@@ -323,17 +323,6 @@ mutacao23(G1,P,[G|Individuo],G2,[G|NIndividuo]):-P1 is P - 1,
 
 
 %=====================================
-calcularCusto(TarefaId,FloorSource, FloorDestination, RoomSource, RoomDestination):-
-        best_path_less_elevators(FloorSource,FloorDestination,Path),!,
-        retrivePathFromPathAndBuildings(Path, ListPath),
-        count(ListPath,NElev,NPathway),
-        custoElevator(ElevatorCost),
-        custoPathway(PathwayCost),
-        startPath(RoomSource,RoomDestination,ListPath,PathInside),!,
-        calcularCustoOfPath(PathInside, Custo),
-        CustoTotal is Custo + (NElev * ElevatorCost) + (PathwayCost *  NPathway),
-        asserta(tarefa(TarefaId,FloorSource,FloorDestination,RoomSource,RoomDestination,CustoTotal)).
-
 calcularCustoOfPath([], 0).
 calcularCustoOfPath([FloorPath|Rest], Result):-
         calcularCustoOfPath(Rest, Result1),

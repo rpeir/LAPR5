@@ -20,4 +20,8 @@ export class RoomService {
     const url = `${this.baseUrl}/roomByBuildingAndFloor?building=${building}&floor=${floor}`;
     return this.httpClient.get<Room[]>(url, {headers: {"Content-Type": "application/json"}});
   }
+
+  getRoomById(roomId: string) {
+    return this.httpClient.get<Room>(`${this.baseUrl}/${roomId}`, {headers: {"Content-Type": "application/json"}});
+  }
 }

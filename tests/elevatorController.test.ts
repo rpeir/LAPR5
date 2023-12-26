@@ -14,7 +14,7 @@ import {RobotSerialNr} from "../src/domain/robot/robotSerialNr";
 import {RobotDescription} from "../src/domain/robot/robotDescription";
 import {RobotType} from "../src/domain/robotType/robotType";
 import {RobotTypeName} from "../src/domain/robotType/robotTypeName";
-import {TaskType} from "../src/domain/task/taskType";
+import {TaskType} from "../src/domain/taskType/taskType";
 import {RobotTypeModel} from "../src/domain/robotType/robotTypeModel";
 import {RobotTypeBrand} from "../src/domain/robotType/robotTypeBrand";
 import {UniqueEntityID} from "../src/core/domain/UniqueEntityID";
@@ -75,6 +75,8 @@ beforeEach(function() {
       "description": "Elevator 1A",
     };
     let req: Partial<Request> = {};
+    // @ts-ignore
+    req.auth = {user: {role: {name: "campus manager"}}};
     req.body = body;
     let res: Partial<Response> = {
       json: sinon.spy(),

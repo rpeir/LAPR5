@@ -16,4 +16,24 @@ export namespace GenericAppError {
       return new UnexpectedError(err);
     }
   }
+
+  export interface IRequestError {
+    statusCode: number;
+    message : string;
+    error: any;
+  }
+
+  export class InvalidRequestError extends Result<IRequestError> {
+
+    public constructor (err: IRequestError) {
+      super(false, err)
+      console.log(`[AppError]: Invalid request.`);
+      console.error(err);
+    }
+
+    public static create (err: IRequestError): InvalidRequestError {
+      return new InvalidRequestError(err);
+    }
+
+  }
 }

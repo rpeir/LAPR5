@@ -12,4 +12,6 @@ export default interface IFloorController {
   updateBuildingFloor(req: Request, res: Response, next: NextFunction);
 
   listFloorsWithPathways(req: Request, res: Response, next: NextFunction);
+
+  getFloorById(req: Request, res: Response, next: NextFunction);
 }

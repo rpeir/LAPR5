@@ -15,6 +15,7 @@ describe('CreateRobotComponent', () => {
   let location: Location;
 
   const DEFAULT_ROBOT : Robot = {
+    id: '123',
     nickName: 'TestRobot',
     serialNr: '123',
     robotCode: '123',

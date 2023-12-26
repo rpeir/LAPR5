@@ -13,6 +13,8 @@ export default (app: Router) => {
 
   route.post(
     '',
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       body: Joi.object({
         buildingSource: Joi.string().required(),
@@ -26,10 +28,14 @@ export default (app: Router) => {
   );
 
   route.get('',
+    middlewares.isAuth,
+    middlewares.verifyToken,
     (req, res, next) => ctrl.findAll(req, res, next)
   );
 
   route.get('',
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       query: {
         buildingSource: Joi.string().required(),
@@ -41,6 +47,8 @@ export default (app: Router) => {
 
 
   route.put('',
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       body: Joi.object({
         domainId: Joi.string().required(),
@@ -55,6 +63,8 @@ export default (app: Router) => {
   )
 
   route.patch('',
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       body: Joi.object({
         buildingSource: Joi.string(),

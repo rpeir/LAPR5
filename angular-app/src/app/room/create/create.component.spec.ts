@@ -16,6 +16,7 @@ describe('RoomCreateComponent', () => {
   let floorService: FloorService;
 
   const DEFAULT_ROOM: Room = {
+    id : '1234',
     name : 'Room A',
     description : 'Room Test',
     category : 'classroom',
@@ -66,6 +67,7 @@ describe('RoomCreateComponent', () => {
   it('should not create if not name filled', () => {
     // Arrange
     component.room = {
+      id : DEFAULT_ROOM.id,
       description : DEFAULT_ROOM.description,
       category : DEFAULT_ROOM.category,
       floor : DEFAULT_ROOM.floor,
@@ -90,6 +92,7 @@ describe('RoomCreateComponent', () => {
   it('should not create if not description filled', () => {
     // Arrange
     component.room = {
+      id : DEFAULT_ROOM.id,
       name : DEFAULT_ROOM.name,
       category : DEFAULT_ROOM.category,
       floor : DEFAULT_ROOM.floor,
@@ -114,6 +117,7 @@ describe('RoomCreateComponent', () => {
   it('should not create if not category filled', () => {
     // Arrange
     component.room = {
+      id : DEFAULT_ROOM.id,
       name : DEFAULT_ROOM.name,
       description : DEFAULT_ROOM.description,
       floor : DEFAULT_ROOM.floor,
@@ -138,6 +142,7 @@ describe('RoomCreateComponent', () => {
   it('should not create if not floor filled', () => {
     // Arrange
     component.room = {
+      id : DEFAULT_ROOM.id,
       name : DEFAULT_ROOM.name,
       description : DEFAULT_ROOM.description,
       category : DEFAULT_ROOM.category,
@@ -162,6 +167,7 @@ describe('RoomCreateComponent', () => {
   it('should not create if not building filled', () => {
     // Arrange
     component.room = {
+      id : DEFAULT_ROOM.id,
       name : DEFAULT_ROOM.name,
       description : DEFAULT_ROOM.description,
       category : DEFAULT_ROOM.category,

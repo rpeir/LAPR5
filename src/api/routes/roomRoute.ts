@@ -12,6 +12,8 @@ export default (app: Router) => {
 
   route.post(
     "/",
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       body: Joi.object({
         name : Joi.string().required(),
@@ -26,7 +28,16 @@ export default (app: Router) => {
 
   route.get(
     "/roomByBuildingAndFloor",
+    middlewares.isAuth,
+    middlewares.verifyToken,
     (req,res,next) => ctrl.getRoomsByBuildingsAndFloor(req, res,next)
+  );
+
+  route.get(
+    "/:id",
+    middlewares.isAuth,
+    middlewares.verifyToken,
+    (req,res,next) => ctrl.getRoomById(req, res,next)
   );
 
   // Celebrate failure error handler middleware

@@ -21,6 +21,18 @@ export default class FloorService implements IFloorService {
     @Inject(config.repos.floor.name) private floorRepo: IFloorRepo,
     @Inject(config.repos.pathway.name) private pathwayRepo: IPathwayRepo,
   ) {}
+  public async getFloorById(id: string): Promise<Result<IFloorDTO>> {
+    try {
+      const floor = await this.floorRepo.findById(id);
+      if (floor === null) {
+        return Result.fail<IFloorDTO>("Couldn't find floor with id: " + id);
+      }
+      const floorDTO = FloorMapper.toDTO(floor);
+      return Result.ok<IFloorDTO>(floorDTO);
+    } catch (err) {
+      throw err;
+    }
+  }
 
   public async createFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>> {
     try {

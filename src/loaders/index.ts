@@ -108,6 +108,11 @@ export default async ({ expressApp }) => {
     path: config.controllers.planning.path
   }
 
+  const taskController = {
+    name: config.controllers.task.name,
+    path: config.controllers.task.path
+  }
+
   const roleRepo = {
     name: config.repos.role.name,
     path: config.repos.role.path
@@ -198,10 +203,20 @@ export default async ({ expressApp }) => {
     path: config.services.planning.path
   }
 
-  const planningConnection = {
-    name: config.connections.planningConnection.name,
-    path: config.connections.planningConnection.path
+  const taskService = {
+    name: config.services.task.name,
+    path: config.services.task.path
   }
+
+  const planningAdapter = {
+    name: config.adapters.planningAdapter.name,
+    path: config.adapters.planningAdapter.path
+  }
+
+  const taskAdapter = {
+    name: config.adapters.taskAdapter.name,
+    path: config.adapters.taskAdapter.path
+  };
   const userRequestService={
     name: config.services.userRequest.name,
     path: config.services.userRequest.path
@@ -223,7 +238,7 @@ export default async ({ expressApp }) => {
       elevatorSchema,
       pathwaySchema,
       roomSchema,
-      userRequestSchema
+      userRequestSchema,
     ],
 
     controllers: [
@@ -236,7 +251,8 @@ export default async ({ expressApp }) => {
       elevatorController,
       roomController,
       planningController,
-      userRequestController
+      userRequestController,
+      taskController,
     ],
 
     repos: [
@@ -264,9 +280,13 @@ export default async ({ expressApp }) => {
       planningService,
       userRequestService,
       userService,
+      taskService,
     ],
 
-    connections: [planningConnection]
+    adapters: [
+      planningAdapter,
+      taskAdapter
+    ]
   });
   Logger.info("✌️ Schemas, Controllers, Repositories, Services, etc. loaded");
 

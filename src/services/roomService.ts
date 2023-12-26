@@ -21,6 +21,18 @@ export default class RoomService implements IRoomService {
     @Inject(config.repos.building.name) private buildingRepo: IBuildingRepo,
   ) {
   }
+  public async getRoomById(roomId: string): Promise<Result<IRoomDTO>> {
+    try {
+      const room = await this.roomRepo.findById(roomId);
+      if (room == null) {
+        return Result.fail<IRoomDTO>("Room does not exist");
+      }
+      const roomDTO = RoomMap.toDTO(room);
+      return Result.ok<IRoomDTO>(roomDTO);
+    } catch (error) {
+      throw error;
+    }
+  }
 
   public async getRoomsByBuildingAndFloor(buildingDesignation: string, floor: string): Promise<Result<IRoomDTO[]>> {
     try {

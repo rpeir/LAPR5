@@ -2,7 +2,7 @@ import { Mapper } from "../core/infra/Mapper";
 import { RobotType } from "../domain/robotType/robotType";
 import { IRobotTypeDTO } from "../dto/IRobotTypeDTO";
 import { UniqueEntityID } from "../core/domain/UniqueEntityID";
-import { TaskType } from "../domain/task/taskType";
+import { TaskType } from "../domain/taskType/taskType";
 import { RobotTypeBrand } from "../domain/robotType/robotTypeBrand";
 import { RobotTypeModel } from "../domain/robotType/robotTypeModel";
 import { RobotTypeName } from "../domain/robotType/robotTypeName";

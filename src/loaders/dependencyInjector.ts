@@ -1,13 +1,13 @@
 import { Container } from 'typedi';
 import LoggerInstance from './logger';
 
-export default ({ mongoConnection, schemas, controllers, repos, services, connections}: {
+export default ({ mongoConnection, schemas, controllers, repos, services, adapters}: {
                     mongoConnection;
                     schemas: { name: string; schema: any }[],
                     controllers: {name: string; path: string }[],
                     repos: {name: string; path: string }[],
                     services: {name: string; path: string }[],
-                    connections: {name: string; path: string}[]}) => {
+                    adapters: {name: string; path: string}[]}) => {
   try {
     Container.set('logger', LoggerInstance);
 
@@ -28,10 +28,10 @@ export default ({ mongoConnection, schemas, controllers, repos, services, connec
       Container.set(m.name, repoInstance);
     });
 
-    connections.forEach(m => {
-      let connectionClass = require(m.path).default;
-      let connectionInstance = Container.get(connectionClass);
-      Container.set(m.name, connectionInstance);
+    adapters.forEach(m => {
+      let adapterClass = require(m.path).default;
+      let adapterInstance = Container.get(adapterClass);
+      Container.set(m.name, adapterInstance);
     });
 
     services.forEach(m => {

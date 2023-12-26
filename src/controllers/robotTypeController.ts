@@ -12,6 +12,10 @@ export default class RobotTypeController implements IRobotTypeController {
 
   public async createRobotType(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
+      if (req.auth.user.role.name !== 'fleet manager') {
+        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+      }
       const robotTypeOrError = (await this.robotTypeService.createRobotType(req.body as IRobotTypeDTO)) as Result<IRobotTypeDTO>;
 
       if (robotTypeOrError.isFailure) {
@@ -27,6 +31,10 @@ export default class RobotTypeController implements IRobotTypeController {
 
   public async getRobotTypes(req: Request, res: Response, next: NextFunction) {
     try {
+      // @ts-ignore
+      if (req.auth.user.role.name !== 'fleet manager') {
+        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+      }
       const robotTypesOrError = (await this.robotTypeService.getRobotTypes()) as Result<IRobotTypeDTO[]>;
 
       if (robotTypesOrError.isFailure) {

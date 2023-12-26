@@ -55,4 +55,8 @@ export class FloorService {
   uploadFloorMap(floor: Floor) {
     return this.httpClient.patch<Floor>(`${this.floorUrl}`, floor, { observe: 'body', responseType: 'json' });
   }
+
+  getFloorById(floorId: string) {
+    return this.httpClient.get<Floor>(`${this.floorUrl}/${floorId}`)
+  }
 }

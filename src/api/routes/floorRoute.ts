@@ -13,6 +13,8 @@ export default (app: Router) => {
 
   route.post(
     "",
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       body: Joi.object({
         floorNr: Joi.number().required(),
@@ -25,6 +27,8 @@ export default (app: Router) => {
   );
 
   route.get("/building",
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       query: Joi.object({
       building: Joi.string().required(),
@@ -35,6 +39,8 @@ export default (app: Router) => {
 
   route.get(
     "/building/max/min",
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       query: Joi.object({
         max: Joi.number().required(),
@@ -46,6 +52,8 @@ export default (app: Router) => {
 
   route.put(
     "",
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       body: Joi.object({
         domainId: Joi.string().required(),
@@ -59,7 +67,8 @@ export default (app: Router) => {
 
   route.patch(
     "",
-    // check if i can do this with building nr and floor nr
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       body: Joi.object({
         floorNr: Joi.number().required(),
@@ -72,12 +81,26 @@ export default (app: Router) => {
   )
   route.get(
     '/with-pathways',
+    middlewares.isAuth,
+    middlewares.verifyToken,
     celebrate({
       query: Joi.object({
         buildingDesignation: Joi.string().required(),
       })
     })
     , (req, res, next) => ctrl.listFloorsWithPathways(req, res, next)
+  )
+
+  route.get(
+    '/:id',
+    middlewares.isAuth,
+    middlewares.verifyToken,
+    celebrate({
+      params: Joi.object({
+        id: Joi.string().required(),
+      })
+    }),
+    (req, res, next) => ctrl.getFloorById(req, res, next)
   )
   route.use(middlewares.validateBody);
 }

@@ -12,6 +12,7 @@ import { RobotType } from "../domain/robotType/robotType";
 import { Robot } from "../domain/robot/robot";
 import { RobotMap } from "../mappers/RobotMap";
 import { RobotCode } from "../domain/robot/robotCode";
+import { TaskType } from "../domain/taskType/taskType";
 
 @Service()
 export default class RobotService implements IRobotService {
@@ -19,6 +20,24 @@ export default class RobotService implements IRobotService {
     @Inject(config.repos.robot.name) private robotRepo: IRobotRepo,
     @Inject(config.repos.robotType.name) private robotTypeRepo: IRobotTypeRepo
   ) {
+  }
+  public async consultRobotsByTaskType(taskType: string): Promise<Result<IRobotDTO[]>> {
+    try {
+      if (!taskType) {
+        return Result.fail<IRobotDTO[]>("Task type must be provided");
+      }
+      // parse task type
+      const taskTypeOrError = taskType as TaskType;
+
+      const robotTypeOrError = await this.robotTypeRepo.findByTaskType(taskTypeOrError);
+
+      const robots = await this.robotRepo.findByRobotType(robotTypeOrError);
+
+      const robotsDTO = robots.map((robot) => RobotMap.toDTO(robot) as IRobotDTO);
+      return Result.ok<IRobotDTO[]>(robotsDTO);
+    } catch (err) {
+      throw err;
+    }
   }
 
   public async disableRobot(robotDTO: IRobotDTO): Promise<Result<IRobotDTO>> {

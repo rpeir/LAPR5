@@ -9,7 +9,7 @@ import { RobotSerialNr } from "../../../src/domain/robot/robotSerialNr";
 import { RobotDescription } from "../../../src/domain/robot/robotDescription";
 import { RobotType } from "../../../src/domain/robotType/robotType";
 import { RobotTypeName } from "../../../src/domain/robotType/robotTypeName";
-import { TaskType } from "../../../src/domain/task/taskType";
+import { TaskType } from "../../../src/domain/taskType/taskType";
 import { RobotTypeModel } from "../../../src/domain/robotType/robotTypeModel";
 import { RobotTypeBrand } from "../../../src/domain/robotType/robotTypeBrand";
 import { UniqueEntityID } from "../../../src/core/domain/UniqueEntityID";
@@ -108,6 +108,7 @@ describe("robot service", function() {
     await robotService.createRobot(robotDTO as IRobotDTO).then((result) => {
       expect(result.isFailure).to.equal(false);
       expect(result.getValue()).to.deep.equal({
+        "id": "124",
         "state": "true",
         "nickName": robotDTO.nickName,
         "robotCode": robotDTO.robotCode,
@@ -186,6 +187,7 @@ describe("robot service", function() {
     await robotService.createRobot(robotDTO as IRobotDTO).then((result) => {
       expect(result.isFailure).to.equal(false);
       expect(result.getValue()).to.deep.equal({
+        "id": "124",
         "state": "true",
         "nickName": robotDTO.nickName,
         "robotCode": robotDTO.robotCode,
