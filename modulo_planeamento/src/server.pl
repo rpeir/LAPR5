@@ -198,7 +198,7 @@ handleTaskSequence(Request):-
   gera([Lista*_|_]),!,
   (tarefas_to_json_list(Lista, JsonList);true),
   told,
-  retractall(tarefa(_)),
+  retractall(tarefa(_,_,_,_,_)),
   retractall(nrDeGeracoes(_)),
   retractall(populacao(_)),
   retractall(prob_cruzamento(_)),
@@ -207,9 +207,7 @@ handleTaskSequence(Request):-
   retractall(taxa_elitismo(_)),
   retractall(custoIdeal(_)),
   retractall(maxEstagnacoes(_)),
-  retractall(diferencaEntreTarefas(_)),
-  retractall(lastMin(_)),
-  retractall(nrEstagnacoes(_)),
+  retractall(diferencaEntreTarefas(_,_,_)),
   reply_json(JsonList).
 
 %==========================================================
