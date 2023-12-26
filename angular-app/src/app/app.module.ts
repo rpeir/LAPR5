@@ -74,9 +74,9 @@ import {UtenteComponent} from "./utente/utente.component";
 import {CreateUserComponent} from "./user/create-user/create-user.component";
 import {RegisterUserComponent} from "./user/register-user/register-user.component";
 import { AuthenticationInterceptor } from "./auth/authentication.interceptor";
-import { PendingTasksComponent } from './task/pending-tasks/pending-tasks.component';
+import { PendingRequestsComponent } from './task/pending-requests/pending-requests.component';
 import { TaskSequenceComponent } from './task-sequence/task-sequence.component';
-import { SelectRobotComponent } from './task/pending-tasks/select-robot/select-robot.component';
+import { SelectRobotComponent } from './task/pending-requests/select-robot/select-robot.component';
 import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
@@ -136,7 +136,7 @@ import { MatDialogModule } from "@angular/material/dialog";
     UtenteComponent,
     CreateUserComponent,
     RegisterUserComponent,
-    PendingTasksComponent,
+    PendingRequestsComponent,
     TaskSequenceComponent,
     SelectRobotComponent,
   ],

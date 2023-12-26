@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { PendingTasksComponent } from './pending-tasks.component';
+import { PendingRequestsComponent } from './pending-requests.component';
 import { TaskService } from '../task.service';
 import { UserService } from '../../user/user.service';
 import { RoomService } from '../../room/room.service';
@@ -18,9 +18,9 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatCardModule } from "@angular/material/card";
 
-describe('PendingTasksComponent', () => {
-  let component: PendingTasksComponent;
-  let fixture: ComponentFixture<PendingTasksComponent>;
+describe('PendingRequestsComponent', () => {
+  let component: PendingRequestsComponent;
+  let fixture: ComponentFixture<PendingRequestsComponent>;
   let mockTaskService: jasmine.SpyObj<TaskService>;
   let mockUserService: jasmine.SpyObj<UserService>;
   let mockRoomService: jasmine.SpyObj<RoomService>;
@@ -97,7 +97,7 @@ describe('PendingTasksComponent', () => {
     mockMatDialog = jasmine.createSpyObj('MatDialog', ['open', 'afterClosed']);
 
     TestBed.configureTestingModule({
-      declarations: [PendingTasksComponent, GestorDeTarefasToolbarComponent],
+      declarations: [PendingRequestsComponent, GestorDeTarefasToolbarComponent],
       providers: [
         { provide: TaskService, useValue: mockTaskService },
         { provide: UserService, useValue: mockUserService },
@@ -109,7 +109,7 @@ describe('PendingTasksComponent', () => {
       imports: [MatToolbarModule, MatIconModule, MatMenuModule, MatCardModule]
     });
 
-    fixture = TestBed.createComponent(PendingTasksComponent);
+    fixture = TestBed.createComponent(PendingRequestsComponent);
     component = fixture.componentInstance;
   });
 

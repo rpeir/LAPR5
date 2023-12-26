@@ -1,8 +1,8 @@
 <app-gestor-de-tarefas-toolbar></app-gestor-de-tarefas-toolbar>
 
-  <div *ngIf="requests.length > 0">
+  <div class="pending-requests" *ngIf="requests.length > 0">
     <div class="main-container">
-      <mat-card *ngFor="let request of requests">
+      <mat-card id="{{request.id}}}" *ngFor="let request of requests">
         <mat-card-title>
           <h3>{{request.user?.firstName}} {{request.user?.lastName}}</h3>
           <h4>{{request.user?.email}}</h4>

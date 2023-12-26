@@ -42,7 +42,7 @@ import {UtenteComponent} from "./utente/utente.component";
 import {CreateUserComponent}from "./user/create-user/create-user.component"
 import {RegisterUserComponent} from "./user/register-user/register-user.component";
 import { VerifyAuthService } from "./auth/verify-auth.service";
-import { PendingTasksComponent } from "./task/pending-tasks/pending-tasks.component";
+import { PendingRequestsComponent } from "./task/pending-requests/pending-requests.component";
 
 
 const routes: Routes = [
@@ -86,7 +86,7 @@ const routes: Routes = [
   {path: 'utente',component: UtenteComponent},
   {path:'user/create-user',component:CreateUserComponent},
   {path: 'system-administrator/register-user',component:RegisterUserComponent},
-  { path: 'tasks/pending', component: PendingTasksComponent }
+  { path: 'tasks/pending', component: PendingRequestsComponent }
 ];
 
 @NgModule({
