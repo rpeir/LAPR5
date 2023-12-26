@@ -21,7 +21,7 @@ export class GestorDeTarefasToolbarComponent {
     this.router.navigate([""]);
   }
   goToObtainExecutionSequence(){
-    this.router.navigate(["/execution-sequence"]);
+    this.router.navigate(["/task-sequence"]);
   }
 
   goToHome() {
