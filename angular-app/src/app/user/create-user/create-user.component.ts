@@ -3,6 +3,7 @@ import {UserService} from "../user.service";
 import {UserEmail} from "../userEmail";
 import {UserPassword} from "../userPassword"
 import {UserRequest} from "../UserRequest";
+import {PhoneNumber} from "../phoneNumber";
 
 @Component({
     selector: 'app-create',
@@ -18,6 +19,7 @@ export class CreateUserComponent implements OnInit {
     email: UserEmail | undefined;
     password: UserPassword | undefined;
     nif: string | undefined;
+    phoneNumber:  PhoneNumber| undefined;
     userRequest = new UserRequest();
 
     ngOnInit(): void {
