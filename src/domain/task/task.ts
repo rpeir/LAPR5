@@ -97,7 +97,7 @@ export class Task extends AggregateRoot<TaskProps>{
   public static create(props: TaskProps, id?: UniqueEntityID): Result<Task> {
       const guardedProps = [
         { argument: props.type, argumentName: 'type' },
-        //{ argument: props.user, argumentName: 'userId' },
+        { argument: props.user, argumentName: 'userId' },
         { argument: props.pickupRoom, argumentName: 'pickupRoomId' },
         { argument: props.deliveryRoom, argumentName: 'deliveryRoomId' },
         { argument: props.status, argumentName: 'status' },

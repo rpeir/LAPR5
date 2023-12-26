@@ -17,8 +17,6 @@ export class TaskMapper extends Mapper<Task> {
     const confirmationCode = task.confirmationCode ? task.confirmationCode : undefined;
     const EmergencyNumber = task.EmergencyNumber ? task.EmergencyNumber : undefined;
     const floorId = task.floorId ? task.floorId : undefined;
-    // @ts-ignore
-    const robot = task.robot ? task.robot.nickName.value : task.robotId;
       return {
         id: task.id.toString(),
         type: task.type,
@@ -28,7 +26,7 @@ export class TaskMapper extends Mapper<Task> {
         status: task.status,
         taskRequestId: task.taskRequestId,
         description: task.description,
-        robot: robot,
+        robot: task.robot.nickName.value,
         senderName: senderName,
         receiverName: receiverName,
         senderContact: senderContact,
@@ -44,11 +42,11 @@ export class TaskMapper extends Mapper<Task> {
     const user = await userRepo.findById(raw.userId);
 
     const roomRepo = Container.get(RoomRepo);
-    const pickupRoom = await roomRepo.findByName(raw.pickupRoomId);
-    const deliveryRoom = await roomRepo.findByName(raw.deliveryRoomId);
+    const pickupRoom = await roomRepo.findById(raw.pickupRoomId);
+    const deliveryRoom = await roomRepo.findById(raw.deliveryRoomId);
 
     const robotRepo = Container.get(RobotRepo);
-    const robot = await robotRepo.findByNickName(raw.robot);
+    const robot = await robotRepo.findById(raw.robotId);
     const senderName = raw.senderName ? raw.senderName : undefined;
     const receiverName = raw.receiverName ? raw.receiverName : undefined;
     const senderContact = raw.senderContact ? raw.senderContact : undefined;

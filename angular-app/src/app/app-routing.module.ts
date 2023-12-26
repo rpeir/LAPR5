@@ -50,7 +50,7 @@ import { GetTaskSequenceComponent } from "./get-task-sequence/get-task-sequence.
 
 
 const routes: Routes = [
-  { path: "", component: TaskSequenceComponent },
+  { path: "", component: LoginComponent },
   { path: "buildings", component: BuildingComponent },
   { path: "elevators", component: ElevatorComponent },
   { path: "floors", component: FloorComponent },

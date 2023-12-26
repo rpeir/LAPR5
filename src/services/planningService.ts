@@ -30,6 +30,8 @@ import { IPlanningMatrixDTO } from "../dto/IPlanningMatrixDTO";
 import IPlanningAdapter from "../adapters/IAdapters/IPlanningAdapter";
 import { Task } from "../domain/task/task";
 import { PlanningTaskDTO } from "../dto/PlanningTaskDTO";
+import { ITaskDTO } from "../dto/ITaskDTO";
+import IRoomService from "./IServices/IRoomService";
 
 @Service()
 export default class PlanningService implements IPlanningService {
@@ -39,7 +41,8 @@ export default class PlanningService implements IPlanningService {
     @Inject(config.services.floor.name) private floorService: IFloorService,
     @Inject(config.services.elevator.name) private elevatorService: IElevatorService,
     @Inject(config.services.pathway.name) private pathwayService: IPathwayService,
-    @Inject(config.adapters.planningAdapter.name) private planningAdapter: IPlanningAdapter
+    @Inject(config.adapters.planningAdapter.name) private planningAdapter: IPlanningAdapter,
+    @Inject(config.services.room.name) private roomService: IRoomService
   ) {
   }
 
@@ -263,26 +266,38 @@ export default class PlanningService implements IPlanningService {
     return this.planningAdapter.getPathLessElevatorsRoomToRoom(floorSource, floorDestination, roomSource, roomDestination);
   }
 
-  public async getTaskSequence(nrGenerations: number, stabilizationCriteriaValue: number, idealCost: number, populationSize: number, crossoverProbability: number, mutationProbability: number, elitismRate: number, tasks: Task[]): Promise<Result<PlanningTaskDTO[]>> {
+  public async getTaskSequence(nrGenerations: number, stabilizationCriteriaValue: number, idealCost: number, populationSize: number, crossoverProbability: number, mutationProbability: number, elitismRate: number, tasksDTO: ITaskDTO[]): Promise<Result<PlanningTaskDTO[]>> {
     let planningTask: PlanningTaskDTO[] = [];
-    for (const task of tasks) {
-      const buildingSourceOrError = await this.buildingService.getBuildingByCode(task.pickupRoomId.building.value);
+    for (const taskDTO of tasksDTO) {
+      const roomSourceOrError = await this.roomService.getRoomByName(taskDTO.pickupRoomId);
+      if (roomSourceOrError.isFailure) {
+        return Result.fail<PlanningTaskDTO[]>(roomSourceOrError.error);
+      }
+      const roomSource = roomSourceOrError.getValue();
+
+      const buildingSourceOrError = await this.buildingService.getBuildingByCode(roomSource.building);
       if (buildingSourceOrError.isFailure) {
         return Result.fail<PlanningTaskDTO[]>(buildingSourceOrError.error);
       }
       const buildingSource = buildingSourceOrError.getValue();
-      const floorSourceOrError = await this.floorService.findByBuildingIdAndFloorNr(buildingSource.domainId, task.pickupRoomId.floor);
+      const floorSourceOrError = await this.floorService.findByBuildingIdAndFloorNr(buildingSource.domainId, roomSource.floor);
       if (floorSourceOrError.isFailure) {
         return Result.fail<PlanningTaskDTO[]>(floorSourceOrError.error);
       }
 
-      const buildingDestinationOrError = await this.buildingService.getBuildingByCode(task.deliveryRoomId.building.value);
+      const roomDestinationOrError = await this.roomService.getRoomByName(taskDTO.deliveryRoomId);
+      if (roomDestinationOrError.isFailure) {
+        return Result.fail<PlanningTaskDTO[]>(roomDestinationOrError.error);
+      }
+      const roomDestination = roomDestinationOrError.getValue();
+
+      const buildingDestinationOrError = await this.buildingService.getBuildingByCode(roomDestination.building);
       if (buildingDestinationOrError.isFailure) {
         return Result.fail<PlanningTaskDTO[]>(buildingDestinationOrError.error);
       }
       const buildingDestination = buildingDestinationOrError.getValue();
 
-      const floorDestinationOrError = await this.floorService.findByBuildingIdAndFloorNr(buildingDestination.domainId, task.deliveryRoomId.floor);
+      const floorDestinationOrError = await this.floorService.findByBuildingIdAndFloorNr(buildingDestination.domainId, roomDestination.floor);
       if (floorDestinationOrError.isFailure) {
         return Result.fail<PlanningTaskDTO[]>(floorDestinationOrError.error);
       }
@@ -290,9 +305,9 @@ export default class PlanningService implements IPlanningService {
       const floorDestination = floorDestinationOrError.getValue();
 
       const planningTaskDTO = {
-        id : task.id.toString(),
-        pickupRoom: task.pickupRoomId.name,
-        deliveryRoom: task.deliveryRoomId.name,
+        id : taskDTO.id,
+        pickupRoom: taskDTO.pickupRoomId,
+        deliveryRoom: taskDTO.deliveryRoomId,
         pickupFloor: floorSource.building + "_" + floorSource.floorNr,
         deliveryFloor: floorDestination.building + "_" + floorDestination.floorNr
       }

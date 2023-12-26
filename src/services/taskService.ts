@@ -47,6 +47,7 @@ export default class TaskService implements ITaskService {
 
   public async getPendingTasks(): Promise<ITaskDTO[]> {
     const tasks = await this.taskAdapter.findPendingTasks();
+    console.log(tasks);
     return tasks.map((task) => TaskMapper.toDTO(task));
   }
 

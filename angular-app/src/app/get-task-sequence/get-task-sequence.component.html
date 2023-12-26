@@ -108,8 +108,104 @@
       </div>
     </div>
 
+    <div class="form-fields-container">
+      <div  class="form-field">
+        <mat-form-field>
+          <mat-label>Mutation Probability</mat-label>
+          <input matInput type="number" placeholder="Mutation Probability" [(ngModel)]="mutationProbability" name="idealCost">
+        </mat-form-field>
+      </div>
+
+      <div  class="form-field">
+        <mat-form-field>
+          <mat-label>Population Size</mat-label>
+          <input matInput type="number" placeholder="Population Size" [(ngModel)]="populationSize" name="idealCost">
+        </mat-form-field>
+      </div>
+
+      <div  class="form-field">
+        <mat-form-field>
+          <mat-label>CrossOver Probability</mat-label>
+          <input matInput type="number" placeholder="CrossOver Probability" [(ngModel)]="crossOverProbability" name="idealCost">
+        </mat-form-field>
+      </div>
+
+      <div  class="form-field">
+        <mat-form-field>
+          <mat-label>Elitism Rate</mat-label>
+          <input matInput type="number" placeholder="Elitism Rate" [(ngModel)]="elitismRate" name="idealCost">
+        </mat-form-field>
+      </div>
+    </div>
+
     <div *ngIf="atLeastOneCheckboxChecked">
       <input type="submit" value="Start sequence">
+    </div>
+
+
+    <div *ngIf="taskSequence">
+      <mat-table [dataSource]="taskSequence" class="mat-elevation-z8">
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef> Description</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.description }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <mat-header-cell *matHeaderCellDef> Type</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.type }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="userId">
+          <mat-header-cell *matHeaderCellDef> User</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.userId }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.status }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="pickupRoomId">
+          <mat-header-cell *matHeaderCellDef> Pickup Room</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.pickupRoomId }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="deliveryRoomId">
+          <mat-header-cell *matHeaderCellDef> Delivery Room</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.deliveryRoomId }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="taskRequestId">
+          <mat-header-cell *matHeaderCellDef> Task Request Id</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.taskRequestId }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="senderName">
+          <mat-header-cell *matHeaderCellDef> Sender Name</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.senderName }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="receiverName">
+          <mat-header-cell *matHeaderCellDef> Receiver Name</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.receiverName }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="senderContact">
+          <mat-header-cell *matHeaderCellDef> Sender Contact</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.senderContact }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="receiverContact">
+          <mat-header-cell *matHeaderCellDef> Receiver Contact</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.receiverContact }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="confirmationCode">
+          <mat-header-cell *matHeaderCellDef> Confirmation Code</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.confirmationCode }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="emergencyNumber">
+          <mat-header-cell *matHeaderCellDef> Emergency Number</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.emergencyNumber }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="floorId">
+          <mat-header-cell *matHeaderCellDef> Floor Id</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.floorId }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </ng-container>
+      </mat-table>
     </div>
 
   </form>

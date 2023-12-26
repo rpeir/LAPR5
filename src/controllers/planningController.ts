@@ -205,9 +205,8 @@ export default class PlanningController implements IPlanningController {
       const elitismRate = req.query.elitismRate as string;
       const taskDTOS = req.body as ITaskDTO[];
       const taskResult = [];
-      const tasks = await Promise.all(taskDTOS.map(taskDTO => TaskMapper.toDomain(taskDTO)));
 
-      const planningTaskOrError = await this.planningService.getTaskSequence(parseInt(nrGenerations), parseInt(stabilizationCriteriaValue), parseInt(idealCost), parseInt(populationSize), parseFloat(crossoverProbability), parseFloat(mutationProbability), parseFloat(elitismRate), tasks);
+      const planningTaskOrError = await this.planningService.getTaskSequence(parseInt(nrGenerations), parseInt(stabilizationCriteriaValue), parseInt(idealCost), parseInt(populationSize), parseFloat(crossoverProbability), parseFloat(mutationProbability), parseFloat(elitismRate), taskDTOS);
 
       if (planningTaskOrError.isFailure) {
         return res.status(402).json({ error: planningTaskOrError.error }).send();

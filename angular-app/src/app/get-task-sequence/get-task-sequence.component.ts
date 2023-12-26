@@ -34,7 +34,11 @@ export class GetTaskSequenceComponent implements OnInit {
   nrGenerations: number = 0;
   stabilizationCriteriaValue: number = 0;
   idealCost: number = 0;
-  taskSequence: Task[] = [];
+  taskSequence: Task[] | undefined;
+  mutationProbability: number= 0;
+  populationSize: number = 0;
+  crossOverProbability: number = 0;
+  elitismRate: number = 0
 
 
   ngOnInit(): void {
@@ -42,12 +46,12 @@ export class GetTaskSequenceComponent implements OnInit {
   }
 
   getSequence() {
-    this.taskSequenceService.getSequence(this.nrGenerations, this.stabilizationCriteriaValue, this.idealCost, this.tasks).subscribe({
+    this.taskSequenceService.getSequence(this.nrGenerations, this.stabilizationCriteriaValue, this.idealCost, this.crossOverProbability, this.mutationProbability, this.populationSize, this.elitismRate, this.tasks).subscribe({
         next: taskSequence => {
           this.taskSequence = taskSequence;
         },
         error: err => {
-          console.log(err);
+          window.alert(err);
         }
       }
     )

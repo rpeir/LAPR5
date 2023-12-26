@@ -20,7 +20,13 @@ export class TaskSequenceService {
     this.passedTasks.next(tasks);
   }
 
-  getSequence(nrGenerations: number, stabilizationCriteriaValue: number, idealCost: number, tasks: Task[]) {
-    return this.httpClient.post<Task[]>(`${this.taskUrl}?nrGenerations=${nrGenerations}&stabilizationCriteriaValue=${stabilizationCriteriaValue}&idealCost=${idealCost}` , {tasks}, {observe: "body", responseType: "json"});
+  getSequence(nrGenerations: number, stabilizationCriteriaValue: number, idealCost: number, crossOverProbability: number, mutationProbability: number, populationSize: number, elitismRate: number, tasks: Task[]) {
+    return this.httpClient.post<Task[]>(`${this.taskUrl}?nrGenerations=${nrGenerations}
+    &stabilizationCriteriaValue=${stabilizationCriteriaValue}
+    &idealCost=${idealCost}
+    &crossOverProbability=${crossOverProbability}
+    &mutationProbability=${mutationProbability}
+    &populationSize=${populationSize}
+    &elitismRate=${elitismRate}` , {tasks}, {observe: "body", responseType: "json"});
   }
 }
