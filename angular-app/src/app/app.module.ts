@@ -55,9 +55,9 @@ import { EditFloorComponent } from './floor/edit/edit-floor.component';
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
 import { CreateManagerComponent } from "./user/create-manager/create-manager.component";
-import {LoginComponent} from "./auth/login/login.component";
-import {CreateUserComponent} from "./user/create-user/create-user.component";
-import {RegisterUserComponent} from "./user/register-user/register-user.component";
+import { LoginComponent } from "./auth/login/login.component";
+import { CreateUserComponent } from "./user/create-user/create-user.component";
+import { RegisterUserComponent } from "./user/register-user/register-user.component";
 import { AuthenticationInterceptor } from "./auth/authentication.interceptor";
 import { PendingRequestsComponent } from './task/pending-requests/pending-requests.component';
 import { TaskSequenceComponent } from './task-sequence/task-sequence.component';
@@ -66,8 +66,11 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatTableModule } from "@angular/material/table";
 import { GetTaskSequenceComponent } from './get-task-sequence/get-task-sequence.component';
 import { HomeComponent } from './home/home.component';
-import {NgOptimizedImage} from "@angular/common";
+import { NgOptimizedImage } from "@angular/common";
 import { LogoutComponent } from './auth/logout/logout.component';
+import { AccountComponent } from './account/account.component';
+import { MatTabsModule } from "@angular/material/tabs";
+import { ChangeProfileComponent } from './account/change-profile/change-profile.component';
 
 @NgModule({
   declarations: [
@@ -120,6 +123,8 @@ import { LogoutComponent } from './auth/logout/logout.component';
     GetTaskSequenceComponent,
     HomeComponent,
     LogoutComponent,
+    AccountComponent,
+    ChangeProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -142,7 +147,8 @@ import { LogoutComponent } from './auth/logout/logout.component';
     MatCheckboxModule,
     MatTableModule,
     MatDialogModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    MatTabsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

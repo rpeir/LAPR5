@@ -9,7 +9,7 @@ export class User{
     lastName!: string;
     email!: string;
     password?: string;
-    phoneNumber!: PhoneNumber;
+    phoneNumber!: PhoneNumber | string;
     nif?: string;
     role!: Role;
 }

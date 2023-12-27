@@ -1,0 +1,39 @@
+<main>
+  <div class="container">
+    <h2>Change Account Information</h2>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" placeholder="Ex. user@email.org"/>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>New Password</mat-label>
+        <input matInput matNativeControl type="{{passwordShow? 'text' : 'password'}}" formControlName="password"/>
+        <mat-checkbox (change)="showHidePassword($event)">Show password</mat-checkbox>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" *ngIf="isUser()">
+        <mat-label>NIF</mat-label>
+        <input matInput formControlName="nif" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Phone Number</mat-label>
+        <input matInput formControlName="phoneNumber" placeholder="Ex. 912345678"/>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">Save Changes</button>
+    </form>
+  </div>
+</main>

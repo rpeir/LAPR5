@@ -46,6 +46,8 @@ import {
   taskManagerGuard,
   userGuard
 } from "./auth/autorization.guard";
+import {AccountComponent} from "./account/account.component";
+import {ChangeProfileComponent} from "./account/change-profile/change-profile.component";
 
 
 const routes: Routes = [
@@ -88,6 +90,7 @@ const routes: Routes = [
   { path: "tasks/sequence", component: TaskSequenceComponent , canActivate: [taskManagerGuard]},
   { path: "tasks/startSequence", component: GetTaskSequenceComponent , canActivate: [taskManagerGuard]},
   { path: 'logout', component: LogoutComponent },
+  { path: 'account', component: AccountComponent },
   { path: '**', redirectTo: '' }
 
 ];

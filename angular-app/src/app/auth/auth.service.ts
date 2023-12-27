@@ -31,6 +31,10 @@ export class AuthService {
     return this.userSubject.value;
   }
 
+  public userObservable(): Observable<User | null> {
+    return this.user;
+  }
+
 
   login(email:string, password:string ) {
     return this.http.post<any>(this.theUrl, {email, password}).pipe(
@@ -112,4 +116,5 @@ export class AuthService {
     }
     return false;
   }
+
 }

@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {User} from "./user";
 import {UserRequest} from "./UserRequest";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +33,9 @@ export class UserService{
 
   getUserById(userId: string) {
     return this.httpClient.get<User>(this.baseUrl+"/"+userId);
+  }
+
+  updateUser(user: User): Observable<User> {
+    throw new Error("Not implemented")
   }
 }
