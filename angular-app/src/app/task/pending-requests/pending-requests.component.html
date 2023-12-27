@@ -1,36 +1,42 @@
-<app-gestor-de-tarefas-toolbar></app-gestor-de-tarefas-toolbar>
+<app-main-toolbar></app-main-toolbar>
 
-  <div class="pending-requests" *ngIf="requests.length > 0">
-    <div class="main-container">
-      <mat-card id="{{request.id}}}" *ngFor="let request of requests">
-        <mat-card-title>
-          <h3>{{request.user?.firstName}} {{request.user?.lastName}}</h3>
-          <h4>{{request.user?.email}}</h4>
-          <mat-card-subtitle>
-            <h5>{{request.type}}</h5>
-          </mat-card-subtitle>
-        </mat-card-title>
-        <mat-card-content>
-          <p>Description: {{request.description}}</p>
-          <p>Status: {{request.requestStatus}}</p>
-          <p>From: {{request.pickupRoom?.name}}</p>
-          <p>To: {{request.deliveryRoom?.name}}</p>
-          <div class="delivery-request" *ngIf="request.type === 'Delivery'">
-            <p>Sender: {{request.senderName}} (Contact: {{request.senderContact}})</p>
-            <p>Receiver: {{request.receiverName}} (Contact: {{request.receiverContact}})</p>
-          </div>
-          <div class="surveillance-request" *ngIf="request.type === 'Surveillance'">
-            <p>Floor: {{request.floor?.floorNr}}</p>
-          </div>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button color="primary" (click)="acceptRequest(request)">Accept</button>
-          <button mat-raised-button color="warn" (click)="rejectRequest(request)">Reject</button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
+
+  <div *ngIf="loading" id="loading">
+    <mat-spinner></mat-spinner>
   </div>
-  <div class="no-pending-requests" *ngIf="requests.length === 0">
-    <h3>No pending requests</h3>
+  <div *ngIf="!loading">
+    <div class="pending-requests" *ngIf="requests.length > 0">
+      <div class="main-container">
+        <mat-card id="{{request.id}}}" *ngFor="let request of requests">
+          <mat-card-title>
+            <h3>{{request.user?.firstName}} {{request.user?.lastName}}</h3>
+            <h4>{{request.user?.email}}</h4>
+            <mat-card-subtitle>
+              <h5>{{request.type}}</h5>
+            </mat-card-subtitle>
+          </mat-card-title>
+          <mat-card-content>
+            <p>Description: {{request.description}}</p>
+            <p>Status: {{request.requestStatus}}</p>
+            <p>From: {{request.pickupRoom?.name}}</p>
+            <p>To: {{request.deliveryRoom?.name}}</p>
+            <div class="delivery-request" *ngIf="request.type === 'Delivery'">
+              <p>Sender: {{request.senderName}} (Contact: {{request.senderContact}})</p>
+              <p>Receiver: {{request.receiverName}} (Contact: {{request.receiverContact}})</p>
+            </div>
+            <div class="surveillance-request" *ngIf="request.type === 'Surveillance'">
+              <p>Floor: {{request.floor?.floorNr}}</p>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="acceptRequest(request)">Accept</button>
+            <button mat-raised-button color="warn" (click)="rejectRequest(request)">Reject</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+    <div class="no-pending-requests" *ngIf="requests.length === 0">
+      <h3>No pending requests</h3>
+    </div>
   </div>
 

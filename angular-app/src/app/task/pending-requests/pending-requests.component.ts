@@ -19,11 +19,13 @@ export class PendingRequestsComponent implements OnInit {
   }
 
   requests : TaskRequest[] = [];
+  loading = true;
 
   ngOnInit(): void {
     this.taskService.getPendingTaskRequests().subscribe({
       complete: () => {
         this.getAllRequestsData();
+        this.loading = false;
       },
       next: (data) => {
         this.requests = data;

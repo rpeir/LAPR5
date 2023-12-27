@@ -4,6 +4,8 @@ import {UserEmail} from "../userEmail";
 import {UserPassword} from "../userPassword"
 import {UserRequest} from "../UserRequest";
 import {PhoneNumber} from "../phoneNumber";
+import {AuthService} from "../../auth/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-create',
@@ -11,7 +13,7 @@ import {PhoneNumber} from "../phoneNumber";
     styleUrls: ['./create-user.component.css']
 })
 export class CreateUserComponent implements OnInit {
-    constructor(private userService:UserService) {
+    constructor(private userService:UserService, private authService: AuthService, private router: Router) {
 
     }
     firstName: string | undefined;
@@ -23,6 +25,9 @@ export class CreateUserComponent implements OnInit {
     userRequest = new UserRequest();
 
     ngOnInit(): void {
+      if (this.authService.isLoggedIn()) {
+        this.router.navigate(["/"]);
+      }
     }
 
     createUserRequest() {

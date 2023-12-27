@@ -1,0 +1,23 @@
+<div class="page">
+  <header>
+    <h1 id="title">RobDroneGo</h1>
+  </header>
+  <main class="main">
+    <form (ngSubmit)="login()">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" [(ngModel)]="email" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" [(ngModel)]="password" required>
+
+      <button type="submit">Login</button>
+      <div class="signup-link">
+        <p>Don't have an account? <a [routerLink]="'/signup'">Sign up</a></p>
+      </div>
+    </form>
+
+    <aside id="robot">
+      <img src="/assets/initial-robot.gif" alt="Page Content GIF">
+    </aside>
+  </main>
+</div>

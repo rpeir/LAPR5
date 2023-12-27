@@ -1,0 +1,87 @@
+<mat-toolbar color="primary">
+  <button matTooltip="Main Menu" [matMenuTriggerFor]="mainMenu" mat-icon-button id="menu-button" aria-label=" icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <mat-menu #mainMenu [ngSwitch]="userRole">
+
+    <div id="task-manager-options" *ngSwitchCase="'task manager'">
+      <button id="optimization-criteria-option" mat-menu-item [routerLink]="'/path/optimization-criteria'" >
+        <span>Get Path by Optimization Criteria</span>
+      </button>
+      <button id="aprove-decline-task" mat-menu-item [routerLink]="'/tasks/pending'">
+        <span>Approve/Decline Task</span>
+      </button>
+      <button id="obtain-execution-sequence" mat-menu-item [routerLink]="'/tasks/sequence'">
+        <span>Obtain Execution Sequence</span>
+      </button>
+    </div>
+
+    <div id="campus-manager-options" *ngSwitchCase="'campus manager'">
+      <button id="buildings-option" mat-menu-item [routerLink]="'/buildings'">
+        <span>Buildings</span>
+      </button>
+      <button id="elevators-option" mat-menu-item [routerLink]="'/elevators'">
+        <span>Elevators</span>
+      </button>
+      <button id="floors-option" mat-menu-item [routerLink]="'/floors'">
+        <span>Floors</span>
+      </button>
+      <button id="rooms-option" mat-menu-item [routerLink]="'/rooms'">
+        <span>Rooms</span>
+      </button>
+      <button id="pathways-option" mat-menu-item [routerLink]="'/pathways'">
+        <span>Pathways</span>
+      </button>
+    </div>
+
+    <div id="fleet-manager-options" *ngSwitchCase="'fleet manager'">
+      <button id="robots-option" mat-menu-item [routerLink]="'/robots'">
+        <span>Robots</span>
+      </button>
+      <button id="robot-types-option" mat-menu-item [routerLink]="'/robotTypes'">
+        <span>Robot types</span>
+      </button>
+    </div>
+
+    <div id="admin-options" *ngSwitchCase="'admin'">
+      <button id="create-manager-option" mat-menu-item [routerLink]="'/system-administrator/create-manager'">
+        <span>Create Manager</span>
+      </button>
+      <button id="create-user-option" mat-menu-item [routerLink]="'/system-administrator/register-user'">
+        <span>Register User</span>
+      </button>
+    </div>
+
+    <div id="user-options" *ngSwitchCase="'user'">
+      <button id="request-task-option" mat-menu-item [routerLink]="'/tasks/request'">
+        <span>Request Task</span>
+      </button>
+      <button id="map-viewer-option" mat-menu-item [routerLink]="'/map-viewer'">
+        <span>Map Viewer</span>
+      </button>
+    </div>
+
+    <div id="no-login-option" *ngSwitchDefault>
+      <button id="login-option" mat-menu-item [routerLink]="'/login'">
+        <span>Login</span>
+      </button>
+    </div>
+
+  </mat-menu>
+
+
+
+  <span>Welcome, {{userName}}!</span>
+  <div class="right-elems-container">
+    <button matTooltip="Home" mat-icon-button class="home" aria-label=" icon-button with menu icon" [routerLink]="'/home'">
+      <mat-icon>home</mat-icon>
+    </button>
+    <button matTooltip="Account" mat-icon-button class="profile" aria-label=" icon-button with menu icon" [routerLink]="'/Account'">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <button matTooltip="Logout" mat-icon-button class="exit" aria-label=" icon-button with menu icon" [routerLink]="'/logout'">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>

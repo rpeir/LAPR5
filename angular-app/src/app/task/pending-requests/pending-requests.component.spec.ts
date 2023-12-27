@@ -12,7 +12,7 @@ import { Room } from "../../room/room";
 import { User } from "../../user/user";
 import { Floor } from "../../floor/floor";
 import { Robot } from "../../robot/robot";
-import { GestorDeTarefasToolbarComponent } from "../../gestor-de-tarefas-toolbar/gestor-de-tarefas-toolbar.component";
+import { MainToolbarComponent } from "../../main-toolbar/main-toolbar.component";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
@@ -97,14 +97,14 @@ describe('PendingRequestsComponent', () => {
     mockMatDialog = jasmine.createSpyObj('MatDialog', ['open', 'afterClosed']);
 
     TestBed.configureTestingModule({
-      declarations: [PendingRequestsComponent, GestorDeTarefasToolbarComponent],
+      declarations: [PendingRequestsComponent, MainToolbarComponent],
       providers: [
         { provide: TaskService, useValue: mockTaskService },
         { provide: UserService, useValue: mockUserService },
         { provide: RoomService, useValue: mockRoomService },
         { provide: FloorService, useValue: mockFloorService },
         { provide: MatDialog, useValue: mockMatDialog },
-        { provide: GestorDeTarefasToolbarComponent, useValue: {} }
+        { provide: MainToolbarComponent, useValue: {} }
       ],
       imports: [MatToolbarModule, MatIconModule, MatMenuModule, MatCardModule]
     });

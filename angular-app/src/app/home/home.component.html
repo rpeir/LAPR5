@@ -1,0 +1,16 @@
+<app-main-toolbar></app-main-toolbar>
+
+<div id="main-home">
+  <div class="container">
+    <h1 class="text-center">Welcome to {{ userRoleString | titlecase }} page</h1>
+    <div id="main-gif" [ngSwitch]="userRoleString">
+      <img *ngSwitchCase="'admin'" src="/assets/admin.gif" alt="Page Content GIF">
+      <img *ngSwitchCase="'task manager'" src="/assets/task-manager.gif" alt="Page Content GIF">
+      <img *ngSwitchCase="'user'" src="/assets/initial-robot.gif" alt="Page Content GIF">
+      <img *ngSwitchCase="'fleet manager'" src="/assets/fleet-manager.gif" alt="Page Content GIF">
+      <img *ngSwitchCase="'campus manager'" src="/assets/campus-manager.gif" alt="Page Content GIF">
+      <img *ngSwitchDefault src="/assets/initial-robot.gif" alt="Page Content GIF">
+    </div>
+
+  </div>
+</div>

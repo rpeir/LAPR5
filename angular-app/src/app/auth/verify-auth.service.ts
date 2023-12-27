@@ -16,11 +16,11 @@ export class VerifyAuthService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     // check If the user is logged in
-    if (localStorage.getItem("user")) {
+    if (localStorage.getItem("token")) {
       return true;
     }
     //not logged in so redirect to login page
-    this.router.navigate(["/login"], { queryParams: { returnUrl: state.url } });
+    this.router.navigate(["/login"], { queryParams: { returnUrl: route.url } });
     return false;
   }
 
