@@ -19,34 +19,12 @@ export class ConsentComponent {
   isImageConsent : boolean = false;
   isNifConsent : boolean = false;
   isRoleConsent : boolean = false;
+  allComplete : boolean = false;
 
-  nameConsent(event : MatCheckboxChange) {
-    this.isNameConsent = event.checked;
-  }
-
-  emailConsent(event : MatCheckboxChange) {
-    this.isEmailConsent = event.checked;
-  }
-
-  phoneConsent(event : MatCheckboxChange) {
-    this.isPhoneConsent = event.checked;
-  }
-
-  imageConsent(event : MatCheckboxChange) {
-    this.isImageConsent = event.checked;
-  }
-
-  nifConsent(event : MatCheckboxChange) {
-    this.isNifConsent = event.checked;
-  }
-
-  roleConsent(event : MatCheckboxChange) {
-    this.isRoleConsent = event.checked;
-  }
 
   handleConsent() {
     // Check if all checkboxes are checked before proceeding
-    if (this.isNameConsent && this.isEmailConsent && this.isPhoneConsent && this.isImageConsent && this.isNifConsent && this.isRoleConsent) {
+    if (this.allComplete) {
       this.dialogRef.close(true);
     } else {
       window.alert("Please check all checkboxes to proceed.");
@@ -59,5 +37,34 @@ export class ConsentComponent {
 
   goToPrivacyPolicy() {
     this.dialogRef.close(false);
+  }
+
+  updateAllComplete() {
+    this.allComplete =
+      this.isNameConsent &&
+      this.isImageConsent &&
+      this.isEmailConsent &&
+      this.isPhoneConsent &&
+      this.isRoleConsent &&
+      this.isNifConsent;
+  }
+
+  someComplete(): boolean {
+    return (this.isNameConsent ||
+      this.isImageConsent ||
+      this.isEmailConsent ||
+      this.isPhoneConsent ||
+      this.isRoleConsent ||
+      this.isNifConsent ) && !this.allComplete;
+  }
+
+  setAll(completed: boolean) {
+    this.allComplete = completed;
+    this.isNameConsent = completed;
+    this.isEmailConsent = completed;
+    this.isNifConsent = completed;
+    this.isPhoneConsent = completed;
+    this.isRoleConsent = completed;
+    this.isImageConsent = completed;
   }
 }
