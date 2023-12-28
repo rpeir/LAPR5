@@ -50,7 +50,11 @@ export class AuthService {
     )
   }
 
-  logout() { localStorage.removeItem('user');  localStorage.removeItem('token'); this.userSubject.next(null); }
+  logout() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem("consent");
+    this.userSubject.next(null); }
 
   getToken(): string | null {
     return localStorage.getItem("token");

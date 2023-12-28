@@ -1,4 +1,4 @@
-import * as sinon from "sinon";
+import sinon from "sinon";
 import {IBuildingDTO} from "../../../src/dto/IBuildingDTO";
 import {Container} from "typedi";
 import {Building} from "../../../src/domain/building/building";
@@ -46,6 +46,7 @@ describe('building service', () => {
     it('create building with invalid Code', async () => {
         defaultBuildingDTO.code='buildingCode is not within range 1 to 5';
         let buildingRepoInstance = Container.get("BuildingRepo");
+        // @ts-ignore
         sinon.stub(buildingRepoInstance, "findByCode").returns(
             Building.create(defaultBuildingProps).getValue());
 

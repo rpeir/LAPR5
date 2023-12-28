@@ -1,4 +1,4 @@
-import * as sinon from "sinon";
+import sinon from "sinon";
 import { expect } from "chai";
 import { Container } from "typedi";
 import { Building } from "../../../src/domain/building/building";
@@ -13,7 +13,7 @@ import IPathwayRepo from "../../../src/services/IRepos/IPathwayRepo";
 import IFloorRepo from "../../../src/services/IRepos/IFloorRepo";
 import { IPathwayDTO } from "../../../src/dto/IPathwayDTO";
 
-describe("pathway  service", function() {
+describe("pathway service", function() {
 
   const sandbox = sinon.createSandbox();
 
@@ -94,7 +94,10 @@ describe("pathway  service", function() {
 
     /////
 
-    let createStub = sinon.stub(Pathway, "create").returns(Result.ok({
+
+    let createStub = sinon.stub(Pathway, "create").returns(
+      // @ts-ignore
+      Result.ok({
         "id" : new UniqueEntityID("129"),
         "buildingSource": buildingSource,
         "buildingDestination": buildingDestination,
@@ -105,13 +108,16 @@ describe("pathway  service", function() {
     ));
 
     let buildingRepoInstance = Container.get("BuildingRepo");
+    // @ts-ignore
     const buildingMock = sandbox.stub(buildingRepoInstance, "findByDesignation");
     buildingMock.onCall(0).returns(new Promise(resolve => resolve(buildingSource)))
       .onCall(1).returns(new Promise(resolve => resolve(buildingDestination)));
 
     let pathwayRepoInstance = Container.get("PathwayRepo");
+    // @ts-ignore
     sinon.stub(pathwayRepoInstance, "existsPathwayBetweenFloors").returns(new Promise(resolve => resolve(false)));
 
+    // @ts-ignore
     sinon.stub(pathwayRepoInstance, "save").returns(new Promise<Pathway>((resolve, reject) => {
       resolve(Pathway.create({
         "buildingSource":  buildingSource,
@@ -124,6 +130,7 @@ describe("pathway  service", function() {
 
 
     let floorRepoInstance = Container.get("FloorRepo");
+    // @ts-ignore
     const floorMock = sandbox.stub(floorRepoInstance, "findByBuildingIdAndFloorNr");
     floorMock.onCall(0).returns(new Promise(resolve => resolve(floorSource)))
       .onCall(1).returns(new Promise(resolve => resolve(floorDestination)));
@@ -192,13 +199,16 @@ describe("pathway  service", function() {
     /////
 
     let buildingRepoInstance = Container.get("BuildingRepo");
+    // @ts-ignore
     const buildingMock = sandbox.stub(buildingRepoInstance, "findByDesignation");
     buildingMock.onCall(0).returns(new Promise(resolve => resolve(buildingSource)))
       .onCall(1).returns(new Promise(resolve => resolve(buildingDestination)));
 
     let pathwayRepoInstance = Container.get("PathwayRepo");
+    // @ts-ignore
     sinon.stub(pathwayRepoInstance, "existsPathwayBetweenFloors").returns(new Promise(resolve => resolve(false)));
 
+    // @ts-ignore
     sinon.stub(pathwayRepoInstance, "save").returns(new Promise<Pathway>((resolve, reject) => {
       resolve(Pathway.create({
         "buildingSource":  buildingSource,
@@ -211,6 +221,7 @@ describe("pathway  service", function() {
 
 
     let floorRepoInstance = Container.get("FloorRepo");
+    // @ts-ignore
     const floorMock = sandbox.stub(floorRepoInstance, "findByBuildingIdAndFloorNr");
     floorMock.onCall(0).returns(new Promise(resolve => resolve(floorSource)))
       .onCall(1).returns(new Promise(resolve => resolve(floorDestination)));

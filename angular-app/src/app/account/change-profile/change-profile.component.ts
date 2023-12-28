@@ -23,7 +23,7 @@ export class ChangeProfileComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.minLength(10)]],
       nif: ['', [Validators.pattern('[0-9]{9}')]],
       phoneNumber: ['', [Validators.required, Validators.pattern('[92][0-9]{8}')]]

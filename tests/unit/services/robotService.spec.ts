@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import * as sinon from "sinon";
+import sinon from "sinon";
 import { Container } from "typedi";
 import { Robot } from "../../../src/domain/robot/robot";
 import { Result } from "../../../src/core/logic/Result";
@@ -54,6 +54,7 @@ describe("robot service", function() {
       "robotType": "Marko"
     };
 
+    // @ts-ignore
     let createStub = sinon.stub(Robot, "create").returns(Result.ok(
       {
         "id": "124",
@@ -72,6 +73,7 @@ describe("robot service", function() {
     ));
 
     let robotTypeRepoInstance = Container.get("RobotTypeRepo");
+    // @ts-ignore
     sinon.stub(robotTypeRepoInstance, "findByName").returns(new Promise<RobotType>((resolve, reject) => {
       resolve(RobotType.create(
         {
@@ -83,6 +85,7 @@ describe("robot service", function() {
     }));
 
     let robotRepoInstance = Container.get("RobotRepo");
+    // @ts-ignore
     sinon.stub(robotRepoInstance, "save").returns(new Promise<Robot>((resolve, reject) => {
       resolve(Robot.create({
           "nickName": RobotNickName.create(robotDTO.nickName).getValue(),
@@ -133,6 +136,7 @@ describe("robot service", function() {
       "robotType": "Marko"
     };
 
+    // @ts-ignore
     let createStub = sinon.stub(Robot, "create").returns(Result.ok(
       {
         "id": "124",
@@ -151,6 +155,7 @@ describe("robot service", function() {
     ));
 
     let robotTypeRepoInstance = Container.get("RobotTypeRepo");
+    // @ts-ignore
     sinon.stub(robotTypeRepoInstance, "findByName").returns(new Promise<RobotType>((resolve, reject) => {
       resolve(RobotType.create(
         {
@@ -162,6 +167,7 @@ describe("robot service", function() {
     }));
 
     let robotRepoInstance = Container.get("RobotRepo");
+    // @ts-ignore
     sinon.stub(robotRepoInstance, "save").returns(new Promise<Robot>((resolve, reject) => {
       resolve(Robot.create({
           "nickName": RobotNickName.create(robotDTO.nickName).getValue(),

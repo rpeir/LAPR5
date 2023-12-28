@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import * as sinon from "sinon";
-import {Container} from "typedi";
+import sinon from "sinon";
+import { Container } from "typedi";
 import IRoomDTO from "../../../src/dto/IRoomDTO";
 import IRoomRepo from "../../../src/services/IRepos/IRoomRepo";
 import IBuildingRepo from "../../../src/services/IRepos/IBuildingRepo";
@@ -9,7 +9,6 @@ import {BuildingCode} from "../../../src/domain/building/BuildingCode";
 import {Building} from "../../../src/domain/building/building";
 import {Room} from "../../../src/domain/room/room";
 import RoomService from "../../../src/services/roomService";
-import {Result} from "../../../src/core/logic/Result";
 
 describe('room service', () => {
   const sandbox = sinon.createSandbox();
@@ -70,11 +69,13 @@ describe('room service', () => {
     defaultRoomDTO.category = "Invalid Room Category";
 
     let buildingRepoInstance = Container.get("BuildingRepo");
+    // @ts-ignore
     sinon.stub(buildingRepoInstance, 'findByCode').returns(
       Building.create(defaultBuildingProps).getValue()
     );
 
     let floorRepoInstance = Container.get("FloorRepo");
+    // @ts-ignore
     sinon.stub(floorRepoInstance, 'existsByBuildingAndNumber').returns(
       new Promise<boolean>((resolve, reject) => {
         resolve(true);
@@ -82,6 +83,7 @@ describe('room service', () => {
     );
 
     let roomRepoInstance = Container.get("RoomRepo");
+    // @ts-ignore
     sinon.stub(roomRepoInstance, 'save').returns(
       (room : Room) => room
     );
@@ -103,11 +105,13 @@ describe('room service', () => {
     defaultRoomDTO.building = "Invalid";
 
     let buildingRepoInstance = Container.get("BuildingRepo");
+    // @ts-ignore
     sinon.stub(buildingRepoInstance, 'findByCode').returns(
       null
     );
 
     let floorRepoInstance = Container.get("FloorRepo");
+    // @ts-ignore
     sinon.stub(floorRepoInstance, 'existsByBuildingAndNumber').returns(
       new Promise<boolean>((resolve, reject) => {
         resolve(false);
@@ -115,6 +119,7 @@ describe('room service', () => {
     );
 
     let roomRepoInstance = Container.get("RoomRepo");
+    // @ts-ignore
     sinon.stub(roomRepoInstance, 'save').returns(
       null
     );
@@ -136,11 +141,13 @@ describe('room service', () => {
     defaultRoomDTO.floor = 2;
 
     let buildingRepoInstance = Container.get("BuildingRepo");
+    // @ts-ignore
     sinon.stub(buildingRepoInstance, 'findByCode').returns(
       Building.create(defaultBuildingProps).getValue()
     );
 
     let floorRepoInstance = Container.get("FloorRepo");
+    // @ts-ignore
     sinon.stub(floorRepoInstance, 'existsByBuildingAndNumber').returns(
       new Promise<boolean>((resolve, reject) => {
         resolve(false);
@@ -148,6 +155,7 @@ describe('room service', () => {
     );
 
     let roomRepoInstance = Container.get("RoomRepo");
+    // @ts-ignore
     sinon.stub(roomRepoInstance, 'save').returns(
       (room : Room) => room
     );
@@ -167,11 +175,13 @@ describe('room service', () => {
 
     it('createRoom unit test with valid room using stub repos', async function () {
         let buildingRepoInstance = Container.get("BuildingRepo");
+        // @ts-ignore
         sinon.stub(buildingRepoInstance, 'findByCode').returns(
           Building.create(defaultBuildingProps).getValue()
         );
 
         let floorRepoInstance = Container.get("FloorRepo");
+        // @ts-ignore
         sinon.stub(floorRepoInstance, 'existsByBuildingAndNumber').returns(
           new Promise<boolean>((resolve, reject) => {
             resolve(true);
@@ -179,6 +189,7 @@ describe('room service', () => {
         );
 
         let roomRepoInstance = Container.get("RoomRepo");
+        // @ts-ignore
         sinon.stub(roomRepoInstance, 'save').returnsArg(0);
 
         const service = new RoomService(
@@ -200,11 +211,13 @@ describe('room service', () => {
 
   it('createRoom unit test with existing room using stub repos', async function () {
     let buildingRepoInstance = Container.get("BuildingRepo");
+    // @ts-ignore
     sinon.stub(buildingRepoInstance, 'findByCode').returns(
       Building.create(defaultBuildingProps).getValue()
     );
 
     let floorRepoInstance = Container.get("FloorRepo");
+    // @ts-ignore
     sinon.stub(floorRepoInstance, 'existsByBuildingAndNumber').returns(
       new Promise<boolean>((resolve, reject) => {
         resolve(true);
@@ -213,6 +226,7 @@ describe('room service', () => {
 
     let roomRepoInstance = Container.get("RoomRepo");
     let err = new Error();
+    // @ts-ignore
     sinon.stub(roomRepoInstance, 'save').throws(err);
 
     const service = new RoomService(

@@ -1,4 +1,4 @@
-import * as sinon from 'sinon';
+import sinon from 'sinon';
 import { expect } from 'chai';
 import { Container } from 'typedi';
 import { BuildingId } from '../../../src/domain/building/buildingId';
@@ -12,9 +12,7 @@ import IFloorRepo from '../../../src/services/IRepos/IFloorRepo';
 import FloorService from '../../../src/services/floorService';
 import IPathwayRepo from '../../../src/services/IRepos/IPathwayRepo';
 import { IFloorDTO } from '../../../src/dto/IFloorDTO';
-import { Pathway } from '../../../src/domain/pathway/pathway';
-import PathwayService from '../../../src/services/pathwayService';
-import { IPathwayDTO } from '../../../src/dto/IPathwayDTO';
+
 
 describe('floor service', function() {
   const sandbox = sinon.createSandbox();
@@ -57,6 +55,7 @@ describe('floor service', function() {
     };
 
     const buildingRepoInstance = Container.get('BuildingRepo');
+    // @ts-ignore
     sinon.stub(buildingRepoInstance, 'findByDesignation').returns(
       new Promise<BuildingId>((resolve, reject) => {
         resolve(
@@ -76,6 +75,7 @@ describe('floor service', function() {
     );
 
     const createStub = sinon.stub(Floor, 'create').returns(
+      // @ts-ignore
       Result.ok({
         domainId: '123',
         floorNr: floorDTO.floorNr,
@@ -97,6 +97,8 @@ describe('floor service', function() {
     );
 
     const floorRepoInstance = Container.get('FloorRepo');
+
+    // @ts-ignore
     sinon.stub(floorRepoInstance, 'save').returns(
       new Promise<Floor>((resolve, reject) => {
         resolve(
@@ -154,6 +156,7 @@ describe('floor service', function() {
     };
 
     const buildingRepoInstance = Container.get('BuildingRepo');
+    // @ts-ignore
     sinon.stub(buildingRepoInstance, 'findByDesignation').returns(
       new Promise<BuildingId>((resolve, reject) => {
         resolve(
@@ -173,6 +176,7 @@ describe('floor service', function() {
     );
 
     const floorRepoInstance = Container.get('FloorRepo');
+    // @ts-ignore
     sinon.stub(floorRepoInstance, 'save').returns(
       new Promise<BuildingId>((resolve, reject) => {
         resolve(
