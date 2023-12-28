@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../auth/auth.service";
 import {Role} from "../user/role";
-import {CanActivate, CanActivateFn, Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
