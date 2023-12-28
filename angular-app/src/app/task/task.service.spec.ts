@@ -17,15 +17,7 @@ describe('TaskService', () => {
       status: 'Pending',
       pickupRoomId: '1234',
       deliveryRoomId: '1234',
-      robot: {
-        id: '1234',
-        robotCode: '1234',
-        nickName: 'Test robot',
-        robotType: 'Test robot type',
-        serialNr: '1234',
-        description: 'Test robot description',
-        state: 'Available'
-      },
+      robot: "1234",
       taskRequestId: '1234',
       senderName: 'Test sender name',
       receiverName: 'Test receiver name',
@@ -88,7 +80,7 @@ describe('TaskService', () => {
 
   it('should accept a task request', () => {
     const requestId = DEFAULT_TASKS[0].taskRequestId;
-    const robotId =  DEFAULT_TASKS[0].robot.id ?? '';
+    const robotId =  DEFAULT_TASKS[0].robot ?? '';
     const mockTask = DEFAULT_TASKS[0];
 
     service.acceptTaskRequest(requestId, robotId).subscribe(task => {

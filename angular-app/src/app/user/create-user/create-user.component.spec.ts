@@ -4,10 +4,14 @@ import {TestBed} from "@angular/core/testing";
 import {HttpClientModule} from "@angular/common/http";
 import {UserRequest} from "../UserRequest";
 import {of} from "rxjs";
+import {AuthService} from "../../auth/auth.service";
+import {Router} from "@angular/router";
 
 describe('CreateUserComponent', () => {
     let component: CreateUserComponent;
     let userService: UserService;
+    let authService: AuthService;
+    let router: Router;
 
 
     beforeEach(async () => {
@@ -17,7 +21,10 @@ describe('CreateUserComponent', () => {
         })
             .compileComponents();
         userService = TestBed.inject(UserService);
-        component = new CreateUserComponent(userService);
+        authService = TestBed.inject(AuthService);
+        router = TestBed.inject(Router);
+
+        component = new CreateUserComponent(userService, authService, router);
     });
 
     it('should create', () => {
