@@ -1,6 +1,6 @@
 import { Container } from "typedi";
 import { NextFunction, Request, Response } from "express";
-import * as sinon from "sinon";
+import sinon from "sinon";
 import { Result } from "../src/core/logic/Result";
 import { IRobotDTO } from "../src/dto/IRobotDTO";
 import RobotController from "../src/controllers/robotController";
@@ -11,7 +11,6 @@ import { RobotTypeModel } from "../src/domain/robotType/robotTypeModel";
 import { RobotTypeBrand } from "../src/domain/robotType/robotTypeBrand";
 import { RobotType } from "../src/domain/robotType/robotType";
 import { UniqueEntityID } from "../src/core/domain/UniqueEntityID";
-import { IRobotTypeDTO } from "../src/dto/IRobotTypeDTO";
 import { Robot } from "../src/domain/robot/robot";
 import { RobotNickName } from "../src/domain/robot/robotNickName";
 import { RobotCode } from "../src/domain/robot/robotCode";
@@ -74,6 +73,7 @@ describe("robot controller", function() {
 
 
     let robotServiceInstance = Container.get("RobotService");
+    // @ts-ignore
     sinon.stub(robotServiceInstance, "createRobot").returns(Result.ok<IRobotDTO>({
       "nickName": req.body.nickName,
       "robotCode": req.body.robotCode,
@@ -89,7 +89,9 @@ describe("robot controller", function() {
     await ctrl.createRobot(<Request>req, <Response>res, <NextFunction>next);
 
     // Assert
+    // @ts-ignore
     sinon.assert.calledOnce(res.json);
+    // @ts-ignore
     sinon.assert.calledWith(res.json, sinon.match({
       "nickName": req.body.nickName,
       "robotCode": req.body.robotCode,
@@ -122,6 +124,7 @@ describe("robot controller", function() {
 
     };
 
+    // @ts-ignore
     let createStub = sinon.stub(Robot, "create").returns(Result.ok(
       {
         "id": "124",
@@ -140,6 +143,7 @@ describe("robot controller", function() {
     ));
 
     let robotTypeRepoInstance = Container.get("RobotTypeRepo");
+    // @ts-ignore
     sinon.stub(robotTypeRepoInstance, "findByName").returns(new Promise<RobotType>((resolve, reject) => {
       resolve(RobotType.create(
         {
@@ -151,6 +155,7 @@ describe("robot controller", function() {
     }));
 
     let robotRepoInstance = Container.get("RobotRepo");
+    // @ts-ignore
     sinon.stub(robotRepoInstance, "save").returns(new Promise<Robot>((resolve, reject) => {
       resolve(Robot.create(      {
           "nickName": RobotNickName.create(req.body.nickName).getValue(),
@@ -176,7 +181,9 @@ describe("robot controller", function() {
     await ctrl.createRobot(<Request>req, <Response>res, <NextFunction>next);
 
     // Assert
+    // @ts-ignore
     sinon.assert.calledOnce(res.json);
+    // @ts-ignore
     sinon.assert.calledWith(res.json, sinon.match({
         "state": "true",
         "nickName": req.body.nickName,
@@ -215,6 +222,7 @@ describe("robot controller", function() {
     };
 
     let robotTypeRepoInstance = Container.get("RobotTypeRepo");
+    // @ts-ignore
     sinon.stub(robotTypeRepoInstance, "findByName").returns(new Promise<RobotType>((resolve, reject) => {
       resolve(RobotType.create(
         {
@@ -226,6 +234,7 @@ describe("robot controller", function() {
     }));
 
     let robotRepoInstance = Container.get("RobotRepo");
+    // @ts-ignore
     sinon.stub(robotRepoInstance, "save").returns(new Promise<Robot>((resolve, reject) => {
       resolve(Robot.create(      {
           "nickName": RobotNickName.create(req.body.nickName).getValue(),
@@ -251,7 +260,9 @@ describe("robot controller", function() {
     await ctrl.createRobot(<Request>req, <Response>res, <NextFunction>next);
 
     // Assert
+    // @ts-ignore
     sinon.assert.calledOnce(res.json);
+    // @ts-ignore
     sinon.assert.calledWith(res.json, sinon.match({
         "state": "true",
         "nickName": req.body.nickName,
@@ -287,6 +298,7 @@ describe("robot controller", function() {
 
     };
     let robotServiceInstance = Container.get("RobotService");
+    // @ts-ignore
     sinon.stub(robotServiceInstance, "consultAllRobots").returns(Result.ok<IRobotDTO[]>([{
       "nickName": req.body.nickName,
       "robotCode": req.body.robotCode,
@@ -298,7 +310,9 @@ describe("robot controller", function() {
 
     const ctrl = new RobotController(robotServiceInstance as IRobotService);
     await ctrl.consultAllRobots(<Request>req, <Response>res, <NextFunction>next);
+    // @ts-ignore
     sinon.assert.calledWith(res.status, 200);
+    // @ts-ignore
     sinon.assert.calledWith(res.json, sinon.match([{
       "nickName": req.body.nickName,
       "robotCode": req.body.robotCode,

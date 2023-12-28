@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import * as sinon from "sinon";
+import sinon from "sinon";
 import { Container } from "typedi";
 import { Result } from "../src/core/logic/Result";
 import { IFloorDTO } from "../src/dto/IFloorDTO";
@@ -72,6 +72,7 @@ describe("floor controller", function() {
     };
 
     let floorServiceInstance = Container.get("FloorService");
+    // @ts-ignore
     sinon.stub(floorServiceInstance, "createFloor").returns(Result.ok<IFloorDTO>(
       {
         "domainId": "12345",
@@ -87,7 +88,9 @@ describe("floor controller", function() {
     await ctrl.createFloor(<Request>req, <Response>res, <NextFunction>next);
 
     //Assert
+    // @ts-ignore
     sinon.assert.calledWith(res.status, 201);
+    // @ts-ignore
     sinon.assert.calledWith(res.json, sinon.match({
         domainId: "12345",
         floorNr: req.body.floorNr,
@@ -120,6 +123,7 @@ describe("floor controller", function() {
     };
 
     let buildingRepoInstance = Container.get("BuildingRepo");
+    // @ts-ignore
     sinon.stub(buildingRepoInstance, "findByDesignation").returns(new Promise<BuildingId>((resolve, reject) => {
       resolve(Building.create({
         code: BuildingCode.create("CODE3").getValue(),
@@ -131,6 +135,7 @@ describe("floor controller", function() {
       }, new UniqueEntityID("123")).getValue());
     }));
 
+    // @ts-ignore
     let createStub = sinon.stub(Floor,"create").returns(Result.ok({
       "domainId": "123",
       id: new UniqueEntityID("123"),
@@ -149,6 +154,7 @@ describe("floor controller", function() {
     }));
 
     let floorRepoInstance = Container.get("FloorRepo");
+    // @ts-ignore
     sinon.stub(floorRepoInstance, "save").returns(new Promise<Floor>((resolve, reject) => {
       resolve(Floor.create({
         "floorNr": req.body.floorNr,
@@ -173,7 +179,9 @@ describe("floor controller", function() {
     await ctrl.createFloor(<Request>req, <Response>res, <NextFunction>next);
 
     //Assert
+    // @ts-ignore
     sinon.assert.calledWith(res.status, 201);
+    // @ts-ignore
     sinon.assert.calledWith(res.json, sinon.match({
         "domainId": "123",
         "floorNr": req.body.floorNr,
@@ -205,6 +213,7 @@ describe("floor controller", function() {
     };
 
     let buildingRepoInstance = Container.get("BuildingRepo");
+    // @ts-ignore
     sinon.stub(buildingRepoInstance, "findByDesignation").returns(new Promise<BuildingId>((resolve, reject) => {
       resolve(Building.create({
         code: BuildingCode.create("CODE3").getValue(),
@@ -217,6 +226,7 @@ describe("floor controller", function() {
     }));
 
     let floorRepoInstance = Container.get("FloorRepo");
+    // @ts-ignore
     sinon.stub(floorRepoInstance, "save").returns(new Promise<Floor>((resolve, reject) => {
       resolve(Floor.create({
         "floorNr": req.body.floorNr,
@@ -241,7 +251,9 @@ describe("floor controller", function() {
     await ctrl.createFloor(<Request>req, <Response>res, <NextFunction>next);
 
     //Assert
+    // @ts-ignore
     sinon.assert.calledWith(res.status, 201);
+    // @ts-ignore
     sinon.assert.calledWith(res.json, sinon.match({
         "domainId": "123",
         "building": req.body.building,
