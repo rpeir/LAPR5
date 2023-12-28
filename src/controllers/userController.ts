@@ -53,3 +53,4 @@ exports.getMe = async function(req, res: Response) {
   const userDTO = UserMap.toDTO(user) as IUserDTO;
   return res.json(userDTO).status(200);
 };
+

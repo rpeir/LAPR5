@@ -48,6 +48,7 @@ import {
 } from "./auth/autorization.guard";
 import {AccountComponent} from "./account/account.component";
 import {ChangeProfileComponent} from "./account/change-profile/change-profile.component";
+import {CopyDataComponent} from "./account/copy-data/copy-data.component";
 import {PrivacyPolicyComponent} from "./privacy-policy/privacy-policy.component";
 
 
