@@ -20,8 +20,18 @@ form {
   margin-top: 20px; /* Adjust this margin as needed */
 
 }
+
+.password {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  vertical-align: center;
+  justify-content: flex-start;
+}
+
+
 .container {
-  max-width: 400px;
+  max-width: 500px;
   margin: auto;
   padding: 20px;
 }

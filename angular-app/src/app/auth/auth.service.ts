@@ -16,6 +16,7 @@ export class AuthService {
   private user: Observable<User | null>;
   private token : Observable<string | null>;
   private theUrl = environment.apiURL + "/api/auth/signin";
+  private baseUrl = environment.apiURL + "/api/auth";
   constructor(private http: HttpClient) {
     this.userSubject = new BehaviorSubject<User | null>(
       JSON.parse(localStorage.getItem('user')!)
@@ -117,4 +118,14 @@ export class AuthService {
     return false;
   }
 
+  updateUser(user: User): Observable<User> {
+    const updated = this.http.patch<User>(`${this.baseUrl}`, user);
+    updated.subscribe({
+      next: (user) => {
+        localStorage.setItem('user', JSON.stringify(user));
+        this.userSubject.next(user);
+      }
+    });
+    return updated;
+  }
 }

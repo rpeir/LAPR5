@@ -5,6 +5,6 @@ import {IUserRequestDTO} from "../../dto/IUserRequestDTO";
 export default interface IUserService  {
   SignUp(userDTO: IUserDTO): Promise<Result<{userDTO: IUserDTO, token: string}>>;
   SignIn(email: string, password: string): Promise<Result<{ userDTO: IUserDTO, token: string }>>;
-
-    userSignUpRequest(userDTO: IUserRequestDTO):Promise<Result<IUserRequestDTO>>;
+  userSignUpRequest(userDTO: IUserRequestDTO):Promise<Result<IUserRequestDTO>>;
+  updateUser(dto: IUserDTO): Promise<Result<IUserDTO>>;
 }

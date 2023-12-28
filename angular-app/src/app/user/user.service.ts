@@ -35,7 +35,4 @@ export class UserService{
     return this.httpClient.get<User>(this.baseUrl+"/"+userId);
   }
 
-  updateUser(user: User): Observable<User> {
-    throw new Error("Not implemented")
-  }
 }

@@ -5,33 +5,59 @@
       <mat-form-field appearance="fill">
         <mat-label>First Name</mat-label>
         <input matInput formControlName="firstName" />
+        <mat-error *ngIf="userForm.controls['firstName']?.hasError('required')">
+          First Name is <strong>required</strong>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Last Name</mat-label>
         <input matInput formControlName="lastName" />
+        <mat-error *ngIf="userForm.controls['lastName']?.hasError('required')">
+          Last Name is <strong>required</strong>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
         <input matInput formControlName="email" placeholder="Ex. user@email.org"/>
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>New Password</mat-label>
-        <input matInput matNativeControl type="{{passwordShow? 'text' : 'password'}}" formControlName="password"/>
-        <mat-checkbox (change)="showHidePassword($event)">Show password</mat-checkbox>
+        <mat-error *ngIf="userForm.controls['email']?.hasError('email')">
+          Must be a valid email address
+        </mat-error>
+        <mat-error *ngIf="userForm.controls['email']?.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill" *ngIf="isUser()">
         <mat-label>NIF</mat-label>
         <input matInput formControlName="nif" />
+        <mat-error *ngIf="userForm.controls['nif']?.hasError('required')">
+          NIF is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="userForm.controls['nif']?.hasError('pattern')">
+          NIF must have 9 digits
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Phone Number</mat-label>
         <input matInput formControlName="phoneNumber" placeholder="Ex. 912345678"/>
+        <mat-error *ngIf="userForm.controls['phoneNumber']?.hasError('required')">
+          Phone Number is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="userForm.controls['phoneNumber']?.hasError('pattern')">
+          Phone Number must have 9 digits
+        </mat-error>
       </mat-form-field>
+
+      <div class="password">
+        <mat-form-field appearance="fill">
+          <mat-label>New Password</mat-label>
+          <input matInput matNativeControl type="{{passwordShow? 'text' : 'password'}}" formControlName="password" placeholder="Empty to not change"/>
+        </mat-form-field>
+        <mat-checkbox (change)="showHidePassword($event)">Show</mat-checkbox>
+      </div>
 
       <button mat-raised-button color="primary" type="submit">Save Changes</button>
     </form>

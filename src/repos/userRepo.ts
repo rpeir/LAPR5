@@ -49,6 +49,10 @@ export default class UserRepo implements IUserRepo {
       } else {
         userDocument.firstName = user.firstName;
         userDocument.lastName = user.lastName;
+        userDocument.email = user.email.value;
+        userDocument.password = user.password.value;
+        userDocument.nif = user.nif;
+        userDocument.phoneNumber = user.phoneNumber.value;
         await userDocument.save();
 
         return user;

@@ -8,6 +8,23 @@ import IUserRepo from '../services/IRepos/IUserRepo';
 
 import { UserMap } from '../mappers/UserMap';
 import { IUserDTO } from '../dto/IUserDTO';
+import IUserService from "../services/IServices/IUserService";
+
+export async function updateUser(req, res: Response, next: NextFunction) {
+
+  const id = req.auth.id;
+
+  if (!id) return res.json(new Error('Token inexistente ou inválido')).status(401);
+
+  const userService = Container.get(config.services.user.name) as IUserService;
+
+  const userDTO = await userService.updateUser({...req.body, id: id} as IUserDTO);
+
+  if (userDTO.isFailure) return res.status(402).json(userDTO.error);
+
+  return res.status(200).json(userDTO.getValue());
+}
+
 
 export async function getUserById(req, res: Response, next: NextFunction) {
 

@@ -1,5 +1,5 @@
 import {Component, OnInit, signal} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { UserService } from "../../user/user.service";
 import { AuthService } from "../../auth/auth.service";
 import { User } from "../../user/user";
@@ -23,27 +23,44 @@ export class ChangeProfileComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required]],
       password: ['', [Validators.minLength(10)]],
-      nif: ['', Validators.pattern('[0-9]{9}')],
+      nif: ['', [Validators.pattern('[0-9]{9}')]],
       phoneNumber: ['', [Validators.required, Validators.pattern('[92][0-9]{8}')]]
     });
+    if (this.authService.isUser()) {
+      this.userForm.controls['nif'].addValidators(Validators.required);
+    }
   }
 
   ngOnInit(): void {
-    this.authService.userObservable().subscribe((user) => {
-      if (user) {
-        this.user = user;
-        this.userForm.patchValue(user);
+    this.authService.userObservable().subscribe({
+      next: (user) => {
+        if (user) {
+          this.user = user;
+          this.userForm.patchValue(user);
+        }
+      },
+      error: (err) => {
+        window.alert(err.error);
       }
     });
   }
 
   onSubmit(): void {
     if (this.userForm.valid) {
-      this.userService.updateUser({...this.userForm.value, id: this.user?.id} as User).subscribe(() => {
-        console.log('User updated successfully.');
-        location.reload();
+      const user = this.userForm.value;
+      if (user.password === '') {
+        delete user.password;
+      }
+      this.authService.updateUser({...user, id: this.user?.id} as User).subscribe({
+        next: (user)=> {
+          window.alert('User updated successfully.');
+          location.reload();
+        },
+        error: (err) => {
+          window.alert(err.error);
+        }
       });
     }
   }
