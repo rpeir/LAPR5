@@ -18,6 +18,7 @@ const floorMapSchema = new mongoose.Schema(
             width: Number,
             height: Number,
           },
+          uppercorner: [Number],
         },
       ],
       exits: [

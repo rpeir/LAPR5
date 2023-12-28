@@ -396,7 +396,7 @@ export default class ThumbRaiser {
     this.thirdPersonViewCameraParameters = merge({}, cameraData, thirdPersonViewCameraParameters);
     this.topViewCameraParameters = merge({}, cameraData, topViewCameraParameters);
     this.miniMapCameraParameters = merge({}, cameraData, miniMapCameraParameters);
-
+    this.pathInsideMaze = null;
     // Set the game state
     this.gameRunning = false;
 
@@ -434,7 +434,6 @@ export default class ThumbRaiser {
     this.maze = new Maze(this.mazeParameters);
 
     // Create the player
-    //TODO get player parameters from json instead of hardcoding from default_data.js?
     this.player = new Player(this.playerParameters);
 
     // Create the lights
@@ -528,7 +527,7 @@ export default class ThumbRaiser {
       camera: 'none', // Camera whose viewport is currently being pointed
       frame: 'none', // Viewport frame currently being pointed
     };
-
+    this.raycaster = new THREE.Raycaster();
     // Build the help panels
     this.buildHelpPanels();
 
@@ -536,7 +535,6 @@ export default class ThumbRaiser {
     this.buildCreditsPanel();
   }
 
-  // TODO alter the maze (e.g. change the floor map) after the game has started --> took onload event dedicated function to an isolated function to be able to reuse it - loadMap
   changeMaze(floorMap) {
     //this.maze.setNewMaze(floorMap);
     this.scene.remove(this.maze);
@@ -547,6 +545,17 @@ export default class ThumbRaiser {
     this.maze = new Maze(this.mazeParameters);
     this.maze.loadMap(floorMap);
     this.player.position.copy(this.maze.cellToCartesian(floorMap.player.initialPosition));
+    this.scene.add(this.maze);
+  }
+  // Function for auto play
+  changeMazeForAutoPlay(floorMap) {
+    this.scene.remove(this.maze);
+    this.mazeParameters = {
+      mazeDescription: floorMap,
+      helpersColor: new THREE.Color(0xff0077),
+    };
+    this.maze = new Maze(this.mazeParameters);
+    this.maze.loadMap(floorMap);
     this.scene.add(this.maze);
   }
 
@@ -966,7 +975,6 @@ export default class ThumbRaiser {
       this.player.shiftKey = event.shiftKey;
     }
   }
-
   mouseDown(event) {
     if (event.target.id === 'canvas') {
       event.preventDefault();
@@ -1013,6 +1021,39 @@ export default class ThumbRaiser {
   mouseMove(event) {
     if (event.target.id === 'canvas') {
       document.activeElement.blur();
+      this.mouse.currentPosition = new THREE.Vector2(event.clientX, window.innerHeight - event.clientY - 1);
+      let mouseNDC = new THREE.Vector2();
+      // mouseNDC.x = (this.mouse.currentPosition.x / window.innerWidth) * 2 - 1;
+      //mouseNDC.y = -(this.mouse.currentPosition.y / window.innerHeight) * 2 + 1;
+      /*let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 5;*/
+      //this.raycaster.setFromCamera(mouseNDC, camera);
+      if (this.mouse.camera !== 'none') {
+        const mouseViewport = mouseNDC.clone();
+        mouseViewport.x = ((mouseNDC.x + 1) * this.mouse.camera.viewport.width) / 2;
+        mouseViewport.y = ((-mouseNDC.y + 1) * this.mouse.camera.viewport.height) / 2;
+        this.scene.updateMatrixWorld();
+
+        this.raycaster.setFromCamera(mouseViewport, this.mouse.camera.perspective);
+        this.scene.updateMatrixWorld();
+
+        /*f (this.mouse.camera.isPerspectiveCamera) {
+          this.mouse.camera.perspectiveCamera().updateMatrixWorld();
+          this.mouse.camera.perspectiveCamera().updateProjectionMatrix();
+          this.raycaster.setFromCamera(mouseViewport, this.mouse.camera.perspectiveCamera());
+        } else if (this.mouse.camera.isOrthographicCamera) {
+          this.mouse.camera.orthographicCamera().updateMatrixWorld();
+          this.mouse.camera.orthographicCamera().updateProjectionMatrix();
+          this.raycaster.setFromCamera(mouseViewport, this.mouse.camera.orthographicCamera());
+        }*/
+      }
+      //console.log('Ray origin:', this.raycaster.ray.origin);
+      //console.log('Ray direction:', this.raycaster.ray.direction);
+      //let intersects = this.raycaster.intersectObject(this.maze.children[0]);
+      let intersects = this.raycaster.intersectObject(this.scene, true);
+
+      //console.log(intersects[0].point);
+      //console.log(intersects[0]);
       if (event.buttons === 0 || event.buttons === 1 || event.buttons === 2) {
         // Store current mouse position in window coordinates (mouse coordinate system: origin in the top-left corner; window coordinate system: origin in the bottom-left corner)
         this.mouse.currentPosition = new THREE.Vector2(event.clientX, window.innerHeight - event.clientY - 1);
@@ -1197,7 +1238,7 @@ export default class ThumbRaiser {
     }
     this.updateViewsPanel();
   }
-
+  //TODO: change this so that when reaching exit location, it changes the maze
   finalSequence() {
     // Enable ambient light
     this.ambientLight.visible = true;
@@ -1233,6 +1274,65 @@ export default class ThumbRaiser {
     //this.audio.stop(this.audio.introductionClips);
     this.audio.play(this.audio.danceClips, false);
     this.audio.play(this.audio.endClips, false);
+  }
+  //Function that moves the player inside of a floor
+  async movePlayer(pathInside, deltaT) {
+    // Check if pathInside is defined and has at least one element
+    if (pathInside && pathInside.length > 0) {
+      // Set initial position in floor
+      const initialCell = pathInside[0];
+      let position = this.maze.cellToCartesian([initialCell.line, initialCell.column]);
+      this.player.position.set(position.x, position.y, position.z);
+      console.log('player position', this.player.position);
+      // Loop for the rest of the path
+      for (let i = 1; i < pathInside.length; i++) {
+        // Get the next cell in the path
+        const nextCell = pathInside[i];
+        // Get the previous cell in the path
+        const previousCell = pathInside[i - 1];
+        // Move the player to the next cell
+        await this.movePlayerToNextCell(previousCell.line, previousCell.column, nextCell.line, nextCell.column, deltaT);
+      }
+    }
+  }
+
+  // Function that moves the player to the next cell
+  async movePlayerToNextCell(line1, column1, line2, column2) {
+    // Compute the player new position
+    const newPosition = this.maze.cellToCartesian([line2, column2]);
+    // Compute the player new direction
+    await this.computePlayerDirection(line1, column1, line2, column2);
+    // Make the player move to the new position
+    this.player.keyStates.forward = true;
+    // Loop for checking if the robot has reached new position
+    while (
+      Math.abs(this.player.position.x - newPosition.x) > 0.05 ||
+      Math.abs(this.player.position.z - newPosition.z) > 0.05
+    ) {
+      await this.waitTime(1);
+    }
+    this.player.keyStates.forward = false;
+    this.player.position.set(newPosition.x, newPosition.y, newPosition.z);
+  }
+  //Function that computes player change of direction
+  computePlayerDirection(line1, column1, line2, column2) {
+    if (line1 === line2) {
+      if (column1 < column2) {
+        this.player.direction = 90;
+      } else {
+        this.player.direction = 270;
+      }
+    } else {
+      if (line1 < line2) {
+        this.player.direction = 0;
+      } else {
+        this.player.direction = 180;
+      }
+    }
+  }
+
+  waitTime(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   update() {
@@ -1393,6 +1493,7 @@ export default class ThumbRaiser {
           }
           let playerTurned = false;
           let directionDeg = this.player.direction;
+          console.log('player direction', directionDeg);
           if (this.player.keyStates.left) {
             playerTurned = true;
             directionDeg += directionIncrement;
@@ -1452,7 +1553,6 @@ export default class ThumbRaiser {
             } else {
               if (this.animations.idleTimeOut()) {
                 this.animations.resetIdleTime();
-                //this.audio.play(this.audio.idleClips, false);
               }
               this.animations.fadeToAction(
                 'animation.robot-runner.idle',

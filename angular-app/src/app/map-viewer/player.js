@@ -48,6 +48,7 @@ export default class Player extends THREE.Group {
       forward: false,
       shiftKey: false,
     };
+    this.auto = false;
 
     this.loaded = false;
 

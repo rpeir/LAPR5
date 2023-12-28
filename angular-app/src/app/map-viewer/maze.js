@@ -110,6 +110,7 @@ export default class Maze extends THREE.Group {
       },
       secondaryColor: new THREE.Color(parseInt(floorMap.ground.secondaryColor, 16)),
     });
+    ground.name = 'ground';
     this.add(ground);
   }
   setDoors(floorMap) {
@@ -139,7 +140,7 @@ export default class Maze extends THREE.Group {
       },
       secondaryColor: new THREE.Color(0x5c4033),
     });
-    console.log(this.door.materials);
+    this.door.name = 'door';
   }
 
   // Create a wall
@@ -170,6 +171,7 @@ export default class Maze extends THREE.Group {
       },
       secondaryColor: new THREE.Color(parseInt(floorMap.wall.secondaryColor, 16)),
     });
+    this.wall.name = 'wall';
   }
 
   setElevators(floorMap) {
@@ -185,6 +187,7 @@ export default class Maze extends THREE.Group {
         rotation: new THREE.Euler(0, 0, 0),
         scale: new THREE.Vector3(0.1, 0.1, 0.1),
       });
+      elevator.name = 'elevator';
       this.add(elevator);
     }
   }
@@ -471,14 +474,14 @@ export default class Maze extends THREE.Group {
         ) || // Collision with northeast corner (WE-oriented door)
         (indices[0] > 0 &&
           (this.doorCornerCollision(
-              indices,
-              [-1, 1],
-              1,
-              position,
-              { x: -0.525, z: 0.5 },
-              halfSize,
-              'northeast corner (NS-oriented door)',
-            ) || // Collision with northeast corner (NS-oriented door)
+            indices,
+            [-1, 1],
+            1,
+            position,
+            { x: -0.525, z: 0.5 },
+            halfSize,
+            'northeast corner (NS-oriented door)',
+          ) || // Collision with northeast corner (NS-oriented door)
             this.doorCornerCollision(
               indices,
               [-1, 0],
@@ -490,14 +493,14 @@ export default class Maze extends THREE.Group {
             ))) || // Collision with northwest corner (NS-oriented door)
         (indices[1] > 0 &&
           (this.doorCornerCollision(
-              indices,
-              [0, -1],
-              0,
-              position,
-              { x: 0.5, z: -0.475 },
-              halfSize,
-              'northwest corner (WE-oriented door)',
-            ) || // Collision with northwest corner (WE-oriented door)
+            indices,
+            [0, -1],
+            0,
+            position,
+            { x: 0.5, z: -0.475 },
+            halfSize,
+            'northwest corner (WE-oriented door)',
+          ) || // Collision with northwest corner (WE-oriented door)
             this.doorCornerCollision(
               indices,
               [1, -1],
@@ -658,11 +661,13 @@ export default class Maze extends THREE.Group {
       door_mesh = new THREE.Mesh(mergedDoorGeometry, this.door.materials[i]);
       door_mesh.castShadow = true;
       door_mesh.receiveShadow = true;
+      door_mesh.name = 'door_mesh';
       this.add(door_mesh);
       mergedGeometry = BufferGeometryUtils.mergeGeometries(geometries[i], false);
       mesh = new THREE.Mesh(mergedGeometry, this.wall.materials[i]);
       mesh.castShadow = true;
       mesh.receiveShadow = true;
+      mesh.name = 'wallmesh';
       this.add(mesh);
     }
 

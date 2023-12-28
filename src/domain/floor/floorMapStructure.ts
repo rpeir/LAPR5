@@ -16,6 +16,7 @@ interface FloorMapProps {
         width: number;
         height: number;
       };
+      uppercorner: number[];
     }[];
     exits: {
       label: string;
@@ -132,8 +133,6 @@ interface FloorMapProps {
 }
 
 export class FloorMapStructure extends ValueObject<FloorMapProps> {
-
-
   get maze(): {
     size: {
       width: number;
@@ -147,6 +146,7 @@ export class FloorMapStructure extends ValueObject<FloorMapProps> {
         width: number;
         height: number;
       };
+      uppercorner: number[];
     }[];
     exits: {
       label: string;
@@ -271,8 +271,6 @@ export class FloorMapStructure extends ValueObject<FloorMapProps> {
   } {
     return this.props.player;
   }
-
-
   private constructor(props: FloorMapProps) {
     super(props);
   }

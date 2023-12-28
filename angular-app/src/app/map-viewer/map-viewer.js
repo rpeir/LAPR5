@@ -2,13 +2,15 @@ import * as THREE from 'three';
 import Orientation from './orientation.js';
 import ThumbRaiser from './thumb_raiser.js';
 import 'lodash';
-import { environment } from "../../environments/environment";
+import { environment } from '../../environments/environment';
 
 let thumbRaiser;
 
 export default function start() {
   let floormap; // The map of the selected floor
   let floorsOfBuilding = []; // The list of floors of the selected building
+  let floorsOfPath = [];
+  let pathJSON;
 
   async function initializeAndAnimate() {
     try {
@@ -19,7 +21,106 @@ export default function start() {
       console.error('An error occurred during initialization:', error);
     }
   }
+  // Function to load the json with a path
+  async function loadJsonData(jsonData) {
+    try {
+      const buildings = jsonData.buildings;
+      const fetchPromises = [];
+      // Create an array of promises for each building's floors
+      for (const building of buildings) {
+        const promise = fetch(environment.apiURL + `/api/floors/building?building=${encodeURIComponent(building)}`)
+          .then(response => response.json())
+          .then(floors => {
+            for (const floor of floors) {
+              if (!floorsOfPath.includes(floor)) {
+                if (jsonData.paths.find(path => path.floorSource === floor.description)) {
+                  floorsOfPath.push(floor);
+                }
+                if (jsonData.paths.find(path => path.floorDestination === floor.description)) {
+                  floorsOfPath.push(floor);
+                }
+              }
+            }
+            // Add the last floor flordestination
+            // If floorsOfPath does not contain the last floor, add it
+            /*if (
+              !floorsOfPath.find(
+                floor => floor.description === jsonData.paths[jsonData.paths.length - 1].floorDestination,
+              )
+            )
+              floorsOfPath.push(
+                floors.find(floor => floor.description === jsonData.paths[jsonData.paths.length - 1].floorDestination),
+              );*/
+          })
+          .catch(error => {
+            console.error(`Error fetching floors for building ${building}:`, error);
+          });
+        fetchPromises.push(promise);
+      }
+      // Wait for all promises to resolve
+      await Promise.all(fetchPromises);
+    } catch (error) {
+      console.error('Error processing JSON data:', error);
+    }
+    // Start the automatic path
+    await changeMapsForAutomaticPath();
+  }
+  document.getElementById('loadJsonButton').addEventListener('click', function() {
+    const fileInput = document.getElementById('jsonFile');
+    const file = fileInput.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        try {
+          pathJSON = JSON.parse(event.target.result);
+          console.log('JSON loaded:', pathJSON);
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          loadJsonData(pathJSON).then(r => console.log('Automatic path finished'));
+        } catch (error) {
+          console.error('Error parsing JSON:', error);
+        }
+      };
+      reader.readAsText(file);
+    } else {
+      console.error('No file selected.');
+    }
+  });
+  // Function to change the maps for the automatic path.
+  // It waits for the player to finish the current floor before changing the map
+  async function changeMapsForAutomaticPath() {
+    let i = 0;
+    console.log(floorsOfPath);
+    for (const floor of floorsOfPath) {
+      thumbRaiser.changeMazeForAutoPlay(floor.floorMap);
+      // Wait for pathJSON.pathInside[i] to be defined
+      await waitFor(() => pathJSON.pathInside[i] !== undefined);
+      await waitTime(2000);
+      //thumbRaiser.player.keyStates.forward = true;
+      //await waitTime(3000);
+      //thumbRaiser.player.keyStates.forward = false;
+      await thumbRaiser.movePlayer(pathJSON.pathInside[i]);
+      //thumbRaiser.pathInsideMaze = pathJSON.pathInside[i];
+      //check if i need to wait for the player to finish the floor
+      i++;
+    }
+  }
 
+  function waitTime(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  // Utility function to wait for a condition to be true
+  function waitFor(conditionFunction) {
+    return new Promise(resolve => {
+      const checkCondition = () => {
+        if (conditionFunction()) {
+          resolve();
+        } else {
+          setTimeout(checkCondition, 100); // Check again in 100 milliseconds
+        }
+      };
+      checkCondition();
+    });
+  }
   document.addEventListener('DOMContentLoaded', function() {
     // Fetch buildings and set up event listener after the DOM is loaded
     fetchBuildings();
@@ -80,7 +181,7 @@ export default function start() {
 
   function fetchBuildings() {
     // Replace the URL with the endpoint that provides the list of buildings
-    fetch(environment.apiURL+'/api/buildings')
+    fetch(environment.apiURL + '/api/buildings')
       .then(response => response.json())
       .then(buildings => {
         const buildingSelector = document.getElementById('buildingSelector');
@@ -107,7 +208,7 @@ export default function start() {
   }
   function fetchFloorsOfBuilding(buildingDesignation) {
     // Replace the URL with the endpoint that provides the list of floors for the selected building
-    fetch(environment.apiURL+`/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`)
+    fetch(environment.apiURL + `/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`)
       .then(response => response.json())
       .then(floors => {
         const floorMapSelector = document.getElementById('mapSelector');
