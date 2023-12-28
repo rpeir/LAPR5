@@ -1,0 +1,41 @@
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+#consent-container {
+  margin: auto;
+  padding: 20px;
+}
+#consent-message {
+  margin-bottom: 20px;
+}
+#consent-info {
+  margin-bottom: 20px;
+}
+#consent-checkboxes {
+  margin-bottom: 20px;
+}
+#consent-checkboxes-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#consent-buttons {
+  padding: 20px;
+  gap: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.consent-button {
+  width: 50%;
+}
+
+#privacy-policy-link {
+  margin-top: 20px;
+  display: block;
+}

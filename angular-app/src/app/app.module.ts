@@ -71,6 +71,8 @@ import { LogoutComponent } from './auth/logout/logout.component';
 import { AccountComponent } from './account/account.component';
 import { MatTabsModule } from "@angular/material/tabs";
 import { ChangeProfileComponent } from './account/change-profile/change-profile.component';
+import { ConsentComponent } from './auth/consent/consent.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
 @NgModule({
   declarations: [
@@ -125,6 +127,8 @@ import { ChangeProfileComponent } from './account/change-profile/change-profile.
     LogoutComponent,
     AccountComponent,
     ChangeProfileComponent,
+    ConsentComponent,
+    PrivacyPolicyComponent,
   ],
   imports: [
     BrowserModule,
