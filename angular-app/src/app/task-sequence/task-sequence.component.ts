@@ -62,6 +62,6 @@ export class TaskSequenceComponent implements OnInit {
 
   getTaskSequence(tasks: Task[]) {
     this.taskSequenceService.changeTasks(tasks);
-      this.router.navigate(['/startSequence']);
+      this.router.navigate(['/tasks/startSequence']);
   }
 }

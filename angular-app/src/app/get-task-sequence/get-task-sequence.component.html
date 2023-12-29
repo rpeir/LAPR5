@@ -79,7 +79,7 @@
         <mat-checkbox (change)="toggleIdealCostCriteria()">Ideal Cost</mat-checkbox>
       </div>
       <div *ngIf="!atLeastOneCheckboxChecked" class="error-message">
-       You must select at least one stopping criteria
+        You must select at least one stopping criteria
       </div>
 
     </div>
@@ -110,32 +110,64 @@
     </div>
 
     <div class="form-fields-container">
-      <div  class="form-field">
-        <mat-form-field>
-          <mat-label>Mutation Probability</mat-label>
-          <input matInput type="number" placeholder="Mutation Probability" [(ngModel)]="mutationProbability" name="idealCost">
-        </mat-form-field>
+      <div class="form-field">
+        <div class="example-label-container">
+          <label id="mutationProbability-label" class="example-name-label">Mutation Probability </label>
+          <label class="example-value-label">{{ mutationProbabilitySlider.value }}</label>
+        </div>
+        <mat-slider
+          class="example-margin"
+          [max]="1"
+          [min]="0.1"
+          [step]="0.1"
+          [discrete]="true">
+          <input matSliderThumb [(ngModel)]="mutationProbability" #mutationProbabilitySlider>
+        </mat-slider>
       </div>
 
-      <div  class="form-field">
-        <mat-form-field>
-          <mat-label>Population Size</mat-label>
-          <input matInput type="number" placeholder="Population Size" [(ngModel)]="populationSize" name="idealCost">
-        </mat-form-field>
+      <div class="form-field">
+        <div class="example-label-container">
+          <label id="populationSize-label" class="example-name-label">Population Size </label>
+          <label class="example-value-label">{{ populationSizeSlider.value }}</label>
+        </div>
+        <mat-slider
+          class="example-margin"
+          [max]="20"
+          [min]="2"
+          [step]="1"
+          [discrete]="true">
+          <input matSliderThumb [(ngModel)]="populationSize" #populationSizeSlider>
+        </mat-slider>
       </div>
 
-      <div  class="form-field">
-        <mat-form-field>
-          <mat-label>CrossOver Probability</mat-label>
-          <input matInput type="number" placeholder="CrossOver Probability" [(ngModel)]="crossOverProbability" name="idealCost">
-        </mat-form-field>
+      <div class="form-field">
+        <div class="example-label-container">
+          <label id="crossOverProbability-label" class="example-name-label">CrossOver Probability </label>
+          <label class="example-value-label">{{ crossOverProbabilitySlider.value }}</label>
+        </div>
+        <mat-slider
+          class="example-margin"
+          [max]="1"
+          [min]="0.1"
+          [step]="0.1"
+          [discrete]="true">
+          <input matSliderThumb [(ngModel)]="crossOverProbability" #crossOverProbabilitySlider>
+        </mat-slider>
       </div>
 
-      <div  class="form-field">
-        <mat-form-field>
-          <mat-label>Elitism Rate</mat-label>
-          <input matInput type="number" placeholder="Elitism Rate" [(ngModel)]="elitismRate" name="idealCost">
-        </mat-form-field>
+      <div class="form-field">
+        <div class="example-label-container">
+          <label id="elitismRate-label" class="example-name-label">Elitism Rate </label>
+          <label class="example-value-label">{{ elitismRateSlider.value }}</label>
+        </div>
+        <mat-slider
+          class="example-margin"
+          [max]="1"
+          [min]="0.1"
+          [step]="0.1"
+          [discrete]="true">
+          <input matSliderThumb [(ngModel)]="elitismRate" #elitismRateSlider>
+        </mat-slider>
       </div>
     </div>
 

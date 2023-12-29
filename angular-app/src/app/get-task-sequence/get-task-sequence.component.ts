@@ -35,7 +35,7 @@ export class GetTaskSequenceComponent implements OnInit {
   stabilizationCriteriaValue: number = 0;
   idealCost: number = 0;
   taskSequence: Task[] | undefined;
-  mutationProbability: number= 0;
+  mutationProbability: number = 0;
   populationSize: number = 0;
   crossOverProbability: number = 0;
   elitismRate: number = 0

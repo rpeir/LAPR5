@@ -76,6 +76,7 @@ import { ConsentComponent } from './auth/consent/consent.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { MakeTaskRequestComponent } from './make-task-request/make-task-request.component';
 import { MatRadioModule } from "@angular/material/radio";
+import { MatSliderModule } from "@angular/material/slider";
 
 @NgModule({
   declarations: [
@@ -158,7 +159,8 @@ import { MatRadioModule } from "@angular/material/radio";
     MatDialogModule,
     NgOptimizedImage,
     MatTabsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSliderModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
