@@ -1,12 +1,13 @@
 <mat-toolbar color="primary">
-  <button matTooltip="Main Menu" [matMenuTriggerFor]="mainMenu" mat-icon-button id="menu-button" aria-label=" icon-button with menu icon">
+  <button matTooltip="Main Menu" [matMenuTriggerFor]="mainMenu" mat-icon-button id="menu-button"
+          aria-label=" icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
 
   <mat-menu #mainMenu [ngSwitch]="userRole">
 
     <div id="task-manager-options" *ngSwitchCase="'task manager'">
-      <button id="optimization-criteria-option" mat-menu-item [routerLink]="'/path/optimization-criteria'" >
+      <button id="optimization-criteria-option" mat-menu-item [routerLink]="'/path/optimization-criteria'">
         <span>Get Path by Optimization Criteria</span>
       </button>
       <button id="aprove-decline-task" mat-menu-item [routerLink]="'/tasks/pending'">
@@ -14,6 +15,9 @@
       </button>
       <button id="obtain-execution-sequence" mat-menu-item [routerLink]="'/tasks/sequence'">
         <span>Obtain Execution Sequence</span>
+      </button>
+      <button id="makeTaskRequest" mat-menu-item [routerLink]="'/tasks/makeTaskRequest'">
+        <span>Request a task</span>
       </button>
     </div>
 
@@ -30,6 +34,9 @@
       <button id="rooms-option" mat-menu-item [routerLink]="'/rooms'">
         <span>Rooms</span>
       </button>
+      <button id="makeTaskRequestCampusManager" mat-menu-item [routerLink]="'/tasks/makeTaskRequest'">
+        <span>Request a task</span>
+      </button>
       <button id="pathways-option" mat-menu-item [routerLink]="'/pathways'">
         <span>Pathways</span>
       </button>
@@ -41,6 +48,9 @@
       </button>
       <button id="robot-types-option" mat-menu-item [routerLink]="'/robotTypes'">
         <span>Robot types</span>
+      </button>
+      <button id="makeTaskRequestFleetManager" mat-menu-item [routerLink]="'/tasks/makeTaskRequest'">
+        <span>Request a task</span>
       </button>
     </div>
 
@@ -60,6 +70,9 @@
       <button id="map-viewer-option" mat-menu-item [routerLink]="'/map-viewer'">
         <span>Map Viewer</span>
       </button>
+      <button id="makeTaskRequestUser" mat-menu-item [routerLink]="'/tasks/makeTaskRequest'">
+        <span>Request a task</span>
+      </button>
     </div>
 
     <div id="no-login-option" *ngSwitchDefault>
@@ -71,16 +84,18 @@
   </mat-menu>
 
 
-
-  <span>Welcome, {{userName}}!</span>
+  <span>Welcome, {{ userName }}!</span>
   <div class="right-elems-container">
-    <button matTooltip="Home" mat-icon-button class="home" aria-label=" icon-button with menu icon" [routerLink]="'/home'">
+    <button matTooltip="Home" mat-icon-button class="home" aria-label=" icon-button with menu icon"
+            [routerLink]="'/home'">
       <mat-icon>home</mat-icon>
     </button>
-    <button matTooltip="Account" mat-icon-button class="profile" aria-label=" icon-button with menu icon" [routerLink]="'/account'">
+    <button matTooltip="Account" mat-icon-button class="profile" aria-label=" icon-button with menu icon"
+            [routerLink]="'/account'">
       <mat-icon>account_circle</mat-icon>
     </button>
-    <button matTooltip="Logout" mat-icon-button class="exit" aria-label=" icon-button with menu icon" [routerLink]="'/logout'">
+    <button matTooltip="Logout" mat-icon-button class="exit" aria-label=" icon-button with menu icon"
+            [routerLink]="'/logout'">
       <mat-icon>exit_to_app</mat-icon>
     </button>
   </div>
