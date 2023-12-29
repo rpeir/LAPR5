@@ -15,6 +15,7 @@ export default function start() {
   let floorMapsServed = [];
   let floorsOfBuildingWithElevator = [];
   let selectedFloor;
+  let playerAuto = false;
 
   async function initializeAndAnimate() {
     try {
@@ -56,8 +57,10 @@ export default function start() {
     } catch (error) {
       console.error('Error processing JSON data:', error);
     }
+    playerAuto = true;
     // Start the automatic path
     await changeMapsForAutomaticPath();
+    playerAuto = false;
   }
   document.getElementById('loadJsonButton').addEventListener('click', function() {
     const fileInput = document.getElementById('jsonFile');
@@ -67,7 +70,6 @@ export default function start() {
       reader.onload = function(event) {
         try {
           pathJSON = JSON.parse(event.target.result);
-          console.log('JSON loaded:', pathJSON);
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           loadJsonData(pathJSON).then(r => console.log('Automatic path finished'));
         } catch (error) {
@@ -79,11 +81,9 @@ export default function start() {
       console.error('No file selected.');
     }
   });
-  // Function to change the maps for the automatic path.
-  // It waits for the player to finish the current floor before changing the map
+  // Function to change the maps for the automatic path. It waits for the player to finish the current floor before changing the map
   async function changeMapsForAutomaticPath() {
     let i = 0;
-    console.log(floorsOfPath);
     for (const floor of floorsOfPath) {
       selectedFloor = floor;
       thumbRaiser.changeMazeForAutoPlay(floor.floorMap);
@@ -143,7 +143,7 @@ export default function start() {
     const selectedMap = mapSelector.value;
     try {
       if (!floorsOfBuilding || floorsOfBuilding.length === 0) {
-        //console.error('No floors available for the selected building.');
+        console.error('No floors available for the selected building.');
         return;
       }
       // Call the function to fetch the selected map
@@ -159,22 +159,48 @@ export default function start() {
     }
   }
 
-  //TODO implement pathway notification
-  function notifyFloorChange(floorName) {
+  async function notifyFloorChange(exit) {
+    if (document.getElementById('notice-popup')) {
+      return;
+    }
+    let buildingDesignation;
+    const regex = /([^_]+)_\d/;
+    const match = exit.floorId.match(regex);
+    if (match) {
+      buildingDesignation = match[1];
+    } else {
+      console.log('No match found');
+    }
+    const response = await fetch(
+      environment.apiURL + `/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`,
+    );
+    let floors = await response.json();
+    console.log(floors);
+    const currentFloor = selectedFloor;
+    const floor = await floors.find(floor => floor.description === exit.floorId);
     // create a new div element
     const newDiv = document.createElement('div');
     newDiv.setAttribute('id', 'notice-popup');
-    const newContent = document.createTextNode('Loading floor ' + floorName);
+    const newContent = document.createTextNode('Loading floor ' + exit.floorId);
     newDiv.appendChild(newContent);
 
     const currentDiv = document.getElementById('views-panel');
     currentDiv.after(newDiv);
 
     setTimeout(function() {
-      newDiv.parentNode.removeChild(newDiv);
-    }, 5000);
+      newDiv.remove();
+    }, 6000);
+    try {
+      thumbRaiser.changeMazeForAutoPlay(floor.floorMap);
+      selectedFloor = floor;
+      let newExitLocation = floor.floorMap.maze.exitLocation.find(exit => exit.floorId === currentFloor.description);
+      let newPosition = thumbRaiser.maze.cellToCartesian(newExitLocation.location);
+      thumbRaiser.player.position.set(newPosition.x, newPosition.y, newPosition.z);
+    } catch (error) {
+      console.error('Error changing map:', error);
+    }
   }
-  async function continuouslyCheckElevator(variableToCheck) {
+  async function continuouslyCheckElevator() {
     // Check the value of the variable
     if (thumbRaiser) {
       if (thumbRaiser.player.isInElevator) {
@@ -187,12 +213,30 @@ export default function start() {
     }
     // Call the function recursively after 0.5 seconds
     setTimeout(function() {
-      continuouslyCheckElevator(variableToCheck);
+      continuouslyCheckElevator();
     }, 500);
   }
-  continuouslyCheckElevator('myVariable').then(r => {});
+  continuouslyCheckElevator().then(r => {});
 
-  //function constinuouslyCheckPathWay
+  async function continuouslyCheckPathWay() {
+    if (thumbRaiser) {
+      if (thumbRaiser.player.isInPathway) {
+        if (thumbRaiser.closestExit.floorId) {
+          thumbRaiser.player.isInPathway = false;
+          await notifyFloorChange(thumbRaiser.closestExit);
+        }
+      } else {
+        if (document.getElementById('notice-popup')) {
+          document.getElementById('notice-popup').remove();
+        }
+      }
+    }
+    // Call the function recursively after 0.5 seconds
+    setTimeout(function() {
+      continuouslyCheckPathWay();
+    }, 250);
+  }
+  continuouslyCheckPathWay().then(r => {});
   // Function to fetch floors the elevator stepped on
   async function floorsServedByElevator() {
     let buildingDesignation;
@@ -225,7 +269,6 @@ export default function start() {
         environment.apiURL + `/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`,
       );
       floorsOfBuildingWithElevator = await responseFloors.json();
-      console.log('floorsOfBuildingWithElevator', floorsOfBuildingWithElevator);
     } catch (error) {
       console.error('Error fetching floors:', error);
     }
@@ -280,6 +323,9 @@ export default function start() {
         }, 1000);
       }),
     );
+    if (playerAuto) {
+      document.querySelector(`[data-floor="${selectedFloor.floorNr}"]`).style.backgroundColor = 'red';
+    }
   }
 
   async function fetchAndSetMap(selectedMap) {
@@ -316,18 +362,17 @@ export default function start() {
           buildingSelector.appendChild(option);
         });
       })
-      .then(() => {
-        //TODO: this isn't loading the map on page load
-        // Set the default building and fetch floors
+      .then(async () => {
         const buildingSelector = document.getElementById('buildingSelector');
         const defaultBuilding = buildingSelector.value;
-        fetchFloorsOfBuilding(defaultBuilding);
+        await fetchFloorsOfBuilding(defaultBuilding);
+        thumbRaiser.changeMaze(floorsOfBuilding[0].floorMap);
       })
       .catch(error => console.error('Error fetching buildings:', error));
   }
-  function fetchFloorsOfBuilding(buildingDesignation) {
+  async function fetchFloorsOfBuilding(buildingDesignation) {
     // Replace the URL with the endpoint that provides the list of floors for the selected building
-    fetch(environment.apiURL + `/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`)
+    await fetch(environment.apiURL + `/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`)
       .then(response => response.json())
       .then(floors => {
         const floorMapSelector = document.getElementById('mapSelector');

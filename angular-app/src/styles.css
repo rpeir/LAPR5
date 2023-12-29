@@ -4,11 +4,11 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 #notice-popup {
   position: fixed;
-  top: 20%;
+  top: 40%;
   background-color: rgba(255,255,255, 0.5);
   padding: 20px;
-  left: 40%;
-  font-size: 35pt;
+  left: 33%;
+  font-size: 60pt;
 }
 
 .floor-btn {

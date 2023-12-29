@@ -67,7 +67,7 @@
       <button id="request-task-option" mat-menu-item [routerLink]="'/tasks/request'">
         <span>Request Task</span>
       </button>
-      <button id="map-viewer-option" mat-menu-item [routerLink]="'/map-viewer'">
+      <button id="map-viewer-option" mat-menu-item (click)="goToMap()">
         <span>Map Viewer</span>
       </button>
       <button id="makeTaskRequestUser" mat-menu-item [routerLink]="'/tasks/makeTaskRequest'">

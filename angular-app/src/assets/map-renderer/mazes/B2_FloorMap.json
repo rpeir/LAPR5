@@ -9,9 +9,9 @@
       [1,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1],
       [1,0,1,0,0,0,1,0,3,2,2,2,1,0,1,0,0,0,1,0,0,0,1],
       [1,0,1,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,1],
-      [3,2,1,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,3,0,2,2,1],
-      [1,0,1,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1],
-      [1,0,1,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,1],
+      [2,2,1,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,3,0,2,2,1],
+      [0,0,1,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1],
+      [1,0,1,0,0,0,4,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,1],
       [1,0,1,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1],
       [1,0,2,2,2,2,0,0,1,0,0,0,1,0,2,2,2,2,0,0,0,0,0],
       [1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0],
@@ -20,42 +20,33 @@
     "rooms": [
       {
         "roomId": "B201",
-        "size": {
-          "width": 2,
-          "height": 4
-        }
+        "position": [],
+        "size": [2,4],
+        "uppercorner": [0, 0]
       },
       {
         "roomId": "B202",
-        "position": [12, 3],
-        "size": {
-          "width": 4,
-          "height": 8
-        }
+        "position": [3, 12],
+        "size": [4,8],
+        "uppercorner": [2,8]
       },
       {
         "roomId": "B203",
         "position": [6, 6],
-        "size": {
-          "width": 4,
-          "height": 8
-        }
+        "size": [4,8],
+        "uppercorner": [0, 2]
       },
       {
         "roomId": "B205",
-        "position": [18, 6],
-        "size": {
-          "width": 4,
-          "height": 8
-        }
+        "position": [6, 18],
+        "size": [4,8],
+        "uppercorner": [0, 14]
       },
       {
         "roomId": "B207",
-        "position": [19, 4],
-        "size": {
-          "width": 4,
-          "height": 4
-        }
+        "position": [4, 19],
+        "size": [4,4],
+        "uppercorner": [0, 18]
       }
     ],
     "exits": [
@@ -76,11 +67,19 @@
         "location": [5.5, 15]
       }
     ],
-    "elevators": [21, 7],
+    "elevators": [20, 6],
     "exitLocation": [
       {
-        "floorId": "C3",
-        "location": [3, 3]
+        "floorId": "C_3",
+        "location": [8, 22]
+      },
+      {
+        "floorId": "A_2",
+        "location": [4, 0]
+      },
+      {
+        "floorId": "D_3",
+        "location": [9, 21]
       }
     ]
   },
@@ -98,19 +97,19 @@
     "primaryColor": "0xffffff",
     "maps": {
       "color": {
-        "url": "./assets/map-renderer/textures/ground_0003_2k_372HqZ/ground_0003_color_2k.jpg"
+        "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_basecolor.jpg"
       },
       "ao": {
-        "url": "./assets/map-renderer/textures/ground_0003_2k_372HqZ/ground_0003_ao_2k.jpg",
+        "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_ambientOcclusion.jpg",
         "intensity": 1.0
       },
       "displacement": {
-        "url": "./assets/map-renderer/textures/ground_0003_2k_372HqZ/ground_0003_height_2k.png",
+        "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_height.png",
         "scale": 1.0,
         "bias": -0.53
       },
       "normal": {
-        "url": "./assets/map-renderer/textures/ground_0003_2k_372HqZ/ground_0003_normal_opengl_2k.png",
+        "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_normal.jpg",
         "type": 0,
         "scale": { "x": 2.0, "y": 2.0 }
       },
@@ -119,7 +118,7 @@
         "scale": 1.0
       },
       "roughness": {
-        "url": "./assets/map-renderer/textures/ground_0003_2k_372HqZ/ground_0003_roughness_2k.jpg",
+        "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_roughness.jpg",
         "rough": 1.0
       }
     },
@@ -128,7 +127,7 @@
     "repeat": { "u": 4.0, "v": 4.0 },
     "magFilter": 1,
     "minFilter": 5,
-    "secondaryColor": "0xf0f0f0"
+    "secondaryColor": "0x858585"
   },
   "wall": {
     "segments": {
@@ -138,19 +137,19 @@
     "primaryColor": "0xffffff",
     "maps": {
       "color": {
-        "url": "./assets/map-renderer/textures/concrete_0007_2k_xtGY5J/concrete_0007_color_2k.jpg"
+        "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_COLOR.jpg"
       },
       "ao": {
-        "url": "./assets/map-renderer/textures/concrete_0007_2k_xtGY5J/concrete_0007_ao_2k.jpg",
+        "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_OCC.jpg",
         "intensity": 1.0
       },
       "displacement": {
-        "url": "./map-renderer/assets/textures/concrete_0007_2k_xtGY5J/concrete_0007_height_2k.png",
+        "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_DISP.png",
         "scale": 0.5,
         "bias": -0.25
       },
       "normal": {
-        "url": "./assets/map-renderer/textures/concrete_0007_2k_xtGY5J/concrete_0007_normal_opengl_2k.png",
+        "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_NORM.jpg",
         "type": 0,
         "scale": { "x": 2.0, "y": 2.0 }
       },
@@ -159,7 +158,7 @@
         "scale": 1.0
       },
       "roughness": {
-        "url": "./assets/map-renderer/textures/concrete_0007_2k_xtGY5J/concrete_0007_roughness_2k.jpg",
+        "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_ROUGH.jpg",
         "rough": 1.0
       }
     },
@@ -168,7 +167,7 @@
     "repeat": { "u": 2.0, "v": 1.0 },
     "magFilter": 1,
     "minFilter": 5,
-    "secondaryColor": "0xf0f0f0"
+    "secondaryColor": "0xffffff"
   },
   "player": {
     "initialPosition": [6, 20],

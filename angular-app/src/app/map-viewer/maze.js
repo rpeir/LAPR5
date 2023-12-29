@@ -224,6 +224,9 @@ export default class Maze extends THREE.Group {
   cornerCollision(indices, offsets, orientation, position, delta, radius, name) {
     const row = indices[0] + offsets[0];
     const column = indices[1] + offsets[1];
+    if (!this.map[row] || !this.map[row][column]) {
+      return false;
+    }
     if (this.map[row][column] === 2 - orientation || this.map[row][column] === 3) {
       const x = position.x - (this.cellToCartesian([row, column]).x + delta.x * this.scale.x);
       const z = position.z - (this.cellToCartesian([row, column]).z + delta.z * this.scale.z);
@@ -239,6 +242,9 @@ export default class Maze extends THREE.Group {
   wallCollision(indices, offsets, orientation, position, delta, radius, name) {
     const row = indices[0] + offsets[0];
     const column = indices[1] + offsets[1];
+    if (!this.map[row] || !this.map[row][column]) {
+      return false;
+    }
     if (this.map[row][column] === 2 - orientation || this.map[row][column] === 3) {
       if (orientation !== 0) {
         if (Math.abs(position.x - (this.cellToCartesian([row, column]).x + delta.x * this.scale.x)) < radius) {
@@ -259,6 +265,9 @@ export default class Maze extends THREE.Group {
   wallAndCornerCollision(indices, offsets, orientation, obb, name) {
     const row = indices[0] + offsets[0];
     const column = indices[1] + offsets[1];
+    if (!this.map[row] || !this.map[row][column]) {
+      return false;
+    }
     if (this.map[row][column] === 2 - orientation || this.map[row][column] === 3) {
       if (obb.intersectsBox3(this.aabb[row][column][orientation])) {
         console.log('Collision with ' + name + '.');
@@ -387,6 +396,9 @@ export default class Maze extends THREE.Group {
   doorCornerCollision(indices, offsets, orientation, position, delta, radius, name) {
     const row = indices[0] + offsets[0];
     const column = indices[1] + offsets[1];
+    if (!this.map[row] || !this.map[row][column]) {
+      return false;
+    }
     if (this.map[row][column] === 5 - orientation || this.map[row][column] === 6) {
       const x = position.x - (this.cellToCartesian([row, column]).x + delta.x * this.scale.x);
       const z = position.z - (this.cellToCartesian([row, column]).z + delta.z * this.scale.z);
@@ -402,6 +414,9 @@ export default class Maze extends THREE.Group {
   doorCollision(indices, offsets, orientation, position, delta, radius, name) {
     const row = indices[0] + offsets[0];
     const column = indices[1] + offsets[1];
+    if (!this.map[row] || !this.map[row][column]) {
+      return false;
+    }
     if (this.map[row][column] === 5 - orientation || this.map[row][column] === 6) {
       if (orientation !== 0) {
         if (Math.abs(position.x - (this.cellToCartesian([row, column]).x + delta.x * this.scale.x)) < radius) {
@@ -422,6 +437,9 @@ export default class Maze extends THREE.Group {
   doorAndCornerCollision(indices, offsets, orientation, obb, name) {
     const row = indices[0] + offsets[0];
     const column = indices[1] + offsets[1];
+    if (!this.map[row] || !this.map[row][column]) {
+      return false;
+    }
     if (this.map[row][column] === 5 - orientation || this.map[row][column] === 6) {
       if (obb.intersectsBox3(this.aabb[row][column][orientation])) {
         console.log('Collision with ' + name + '.');
@@ -546,9 +564,7 @@ export default class Maze extends THREE.Group {
     }
   }
 
-  foundExit(position) {
-    //TODO - check if player is in exit location
-  }
+
 
   loadMap(description) {
     // Store the maze's size, map and exit location
@@ -676,5 +692,18 @@ export default class Maze extends THREE.Group {
     this.setInitialPlayerPosition(description);
 
     this.loaded = true;
+  }
+  closestExitLocation(position) {
+    let closest = 0;
+    let closestDistance = 100000000;
+    let distance;
+    for (let i = 0; i < this.exitLocation.length; i++) {
+      distance = this.cellToCartesian(this.exitLocation[i].location).distanceTo(position);
+      if (distance < closestDistance) {
+        closest = i;
+        closestDistance = distance;
+      }
+    }
+    return this.exitLocation[closest];
   }
 }

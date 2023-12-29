@@ -403,6 +403,8 @@ export default class ThumbRaiser {
     // Create the audio listener, the audio sources and load the sound clips
     this.audio = new Audio(this.audioParameters);
 
+    this.closestExit = null;
+
     // Create two 2D scenes (the viewports' background and frame)
     this.background = new THREE.Scene();
     this.frame = new THREE.Scene();
@@ -536,7 +538,6 @@ export default class ThumbRaiser {
   }
 
   changeMaze(floorMap) {
-    //this.maze.setNewMaze(floorMap);
     this.scene.remove(this.maze);
     this.mazeParameters = {
       mazeDescription: floorMap,
@@ -1497,14 +1498,26 @@ export default class ThumbRaiser {
             this.animations.fadeToAction('animation.robot-runner.walk', 0.2);
             this.player.position.set(position.x, position.y, position.z);
             let elevatorLocation = this.maze.elevatorLocation;
-            //console.log('elevator location', elevatorLocation);
             let cellPlayerLocation = this.maze.cartesianToCell(this.player.position);
-            //console.log('cell player location', cellPlayerLocation);
             this.player.isInElevator =
               (cellPlayerLocation[0] === elevatorLocation[0] && cellPlayerLocation[1] === elevatorLocation[1]) ||
               (cellPlayerLocation[0] === elevatorLocation[0] && cellPlayerLocation[1] === elevatorLocation[1] + 1) ||
               (cellPlayerLocation[0] === elevatorLocation[0] + 1 && cellPlayerLocation[1] === elevatorLocation[1]) ||
               (cellPlayerLocation[0] === elevatorLocation[0] + 1 && cellPlayerLocation[1] === elevatorLocation[1] + 1);
+            if (this.player.isInElevator) {
+              console.log('player is in elevator');
+            }
+            if (
+              !(
+                this.player.position.x >= this.maze.cellToCartesian([0, 0]).x &&
+                this.player.position.z >= this.maze.cellToCartesian([0, 0]).z
+              ) ||
+              this.player.position.x >= this.maze.cellToCartesian([0, this.maze.size.width]).x ||
+              this.player.position.z >= this.maze.cellToCartesian([this.maze.size.depth, 0]).z
+            ) {
+              this.closestExit = this.maze.closestExitLocation(this.player.position);
+              this.player.isInPathway = true;
+            }
           } else {
             if (this.animations.idleTimeOut()) {
               this.animations.resetIdleTime();
