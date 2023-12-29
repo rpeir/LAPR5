@@ -12,9 +12,9 @@ public class SurveillanceTask : Task
 
   public Guid FloorId { get; private set; }
 
-  public SurveillanceTask(TaskRequestId taskRequestId,TaskDescription taskDescription, Guid userId, PhoneNumber emergencyNumber,
+  public SurveillanceTask(IdentificationCode identificationCode,TaskDescription taskDescription, Guid userId, PhoneNumber emergencyNumber,
     Guid floorId, Guid pickupRoomId, Guid deliveryRoomId, Guid robotId)
-    : base(taskRequestId, TaskType.Surveillance, taskDescription, userId, pickupRoomId, deliveryRoomId, robotId)
+    : base(identificationCode, TaskType.Surveillance, taskDescription, userId, pickupRoomId, deliveryRoomId, robotId)
   {
     var guard = Validate(emergencyNumber: emergencyNumber, floorId: floorId);
     if (!guard.Succeeded)

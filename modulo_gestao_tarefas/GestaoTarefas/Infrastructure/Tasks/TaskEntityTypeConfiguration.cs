@@ -16,7 +16,8 @@ public class TaskEntityTypeConfiguration : IEntityTypeConfiguration<Task>
     //builder.ToTable("Tasks", SchemaNames.DDDSample1);
     builder.HasKey(b => b.Id);
     //builder.Property<bool>("_active").HasColumnName("Active");
-    builder.HasOne<TaskRequest>().WithOne().HasForeignKey<Task>(t => t.TaskRequestId).IsRequired();
+    builder.Property(t => t.IdentificationCode).HasConversion(ic => ic.Value, ic => new IdentificationCode(ic));
+    builder.HasIndex(t => t.IdentificationCode).IsUnique();
     builder.Property(t => t.TaskDescription).HasConversion(d => d.Value, d => new TaskDescription(d));
     builder.Property(t => t.Type).HasConversion(tt => tt.ToString(), tt => tt.ToTaskType());
     builder.Property(t => t.Status).HasConversion(st => st.ToString(), st => StatusHelper.ToStatus(st));

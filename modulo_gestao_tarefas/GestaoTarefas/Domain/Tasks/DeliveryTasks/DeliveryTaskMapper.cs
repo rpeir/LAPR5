@@ -10,7 +10,7 @@ public class DeliveryTaskMapper : ITaskMapper<DeliveryTask, DeliveryTaskDto>
   {
     return new DeliveryTaskDto()
     {
-      TaskRequestId = task.TaskRequestId.AsGuid(),
+      IdentificationCode = task.IdentificationCode.Value,
       ConfirmationCode = task.ConfirmationCode.Value,
       DeliveryRoomId = task.DeliveryRoomId.ToString(),
       Description = task.TaskDescription.Value,
@@ -32,7 +32,7 @@ public class DeliveryTaskMapper : ITaskMapper<DeliveryTask, DeliveryTaskDto>
     try
     {
       return new DeliveryTask(
-        taskRequestId: new TaskRequestId(dto.TaskRequestId),
+        identificationCode: new IdentificationCode(dto.IdentificationCode),
         taskDescription: new TaskDescription(dto.Description),
         userId: new Guid(dto.UserId),
         senderName: new Name(dto.SenderName),

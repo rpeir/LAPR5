@@ -1,6 +1,5 @@
 using System;
 using GestaoTarefas.Domain.Shared;
-using GestaoTarefas.Domain.TaskRequests;
 using GestaoTarefas.Domain.TaskTypes;
 
 namespace GestaoTarefas.Domain.Tasks;
@@ -11,7 +10,7 @@ public class SurveillanceTaskMapper : ITaskMapper<SurveillanceTask, Surveillance
   {
     return new SurveillanceTaskDto()
     {
-      TaskRequestId = task.TaskRequestId.AsGuid(),
+      IdentificationCode = task.IdentificationCode.Value,
       Description = task.TaskDescription.Value,
       EmergencyNumber = task.EmergencyNumber.Value,
       Id = task.Id.AsGuid(),
@@ -30,7 +29,7 @@ public class SurveillanceTaskMapper : ITaskMapper<SurveillanceTask, Surveillance
     try
     {
       return new SurveillanceTask(
-        taskRequestId: new TaskRequestId(dto.TaskRequestId),
+        identificationCode: new IdentificationCode(dto.IdentificationCode),
         taskDescription: new TaskDescription(dto.Description),
         userId: new Guid(dto.UserId),
         emergencyNumber: new PhoneNumber(dto.EmergencyNumber),

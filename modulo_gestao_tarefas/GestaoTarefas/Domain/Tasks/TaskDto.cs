@@ -13,7 +13,7 @@ public abstract class TaskDto
   [JsonProperty("pickupRoomId")] public string PickupRoomId { get; set; }
   [JsonProperty("deliveryRoomId")] public string DeliveryRoomId { get; set; }
   [JsonProperty("status")] public string Status { get; set; }
-  [JsonProperty("taskRequestId")] public Guid TaskRequestId { get; set; } = new Guid();
+  [JsonProperty("identificationCode")] public string IdentificationCode { get; set; }
   [JsonProperty("robotId")] public Guid RobotId { get; set; } = new Guid();
 
 }

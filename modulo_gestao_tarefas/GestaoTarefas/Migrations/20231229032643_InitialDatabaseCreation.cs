@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GestaoTarefas.Migrations
 {
-    public partial class DatabaseCreation : Migration
+    public partial class InitialDatabaseCreation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,6 +27,9 @@ namespace GestaoTarefas.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     PickupRoomId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     DeliveryRoomId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    IdentificationCode = table.Column<string>(type: "varchar(255)", nullable: false, computedColumnSql: "CONCAT(Type,'-',RIGHT(CONCAT('000000000',Id),9))")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     SenderName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ReceiverName = table.Column<string>(type: "longtext", nullable: true)
@@ -63,7 +66,7 @@ namespace GestaoTarefas.Migrations
                     PickupRoomId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     DeliveryRoomId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     RobotId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    TaskRequestId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    IdentificationCode = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     SenderName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -82,29 +85,29 @@ namespace GestaoTarefas.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tasks", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Tasks_TaskRequests_TaskRequestId",
-                        column: x => x.TaskRequestId,
-                        principalTable: "TaskRequests",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tasks_TaskRequestId",
+                name: "IX_TaskRequests_IdentificationCode",
+                table: "TaskRequests",
+                column: "IdentificationCode",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tasks_IdentificationCode",
                 table: "Tasks",
-                column: "TaskRequestId",
+                column: "IdentificationCode",
                 unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Tasks");
+                name: "TaskRequests");
 
             migrationBuilder.DropTable(
-                name: "TaskRequests");
+                name: "Tasks");
         }
     }
 }

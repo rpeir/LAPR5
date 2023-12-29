@@ -28,10 +28,13 @@ public class TaskRequestsController : ControllerBase
       if (Request.Query.Count == 0) return await _service.GetAllAsync();
 
 
-      // GET: api/TaskRequests?status=xyz
-      if (Request.Query.ContainsKey("status"))
+      // GET: api/TaskRequests?status=xyz&userId=xyz
+      if (Request.Query.ContainsKey("status") || Request.Query.ContainsKey("userId"))
       {
-        return await this._service.GetByStatusAsync(Request.Query["status"]);
+        return await this._service.GetByStatusUserAsync(
+          statusDto: Request.Query["status"],
+          userIdDto: Request.Query["userId"]
+          );
       }
 
       return StatusCode(400);

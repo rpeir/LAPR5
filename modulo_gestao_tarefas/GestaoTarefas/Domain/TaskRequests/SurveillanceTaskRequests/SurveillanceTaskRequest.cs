@@ -51,7 +51,7 @@ public class SurveillanceTaskRequest : TaskRequest
   public override Task ToTask(Guid robotId)
   {
     return new SurveillanceTask(
-      taskRequestId: this.Id,
+      identificationCode: this.IdentificationCode,
       taskDescription: this.TaskDescription,
       userId: this.UserId,
       emergencyNumber: this.EmergencyNumber,

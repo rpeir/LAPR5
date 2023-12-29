@@ -18,7 +18,9 @@ public class SurveillanceTaskRequestMapper : ITaskRequestMapper<SurveillanceTask
       UserId = task.UserId.ToString(),
       RequestStatus = task.RequestStatus.ToString(),
       DeliveryRoomId = task.DeliveryRoomId.ToString(),
-      PickupRoomId = task.PickupRoomId.ToString()
+      PickupRoomId = task.PickupRoomId.ToString(),
+      IdentificationCode = task.IdentificationCode.Value,
+      CreatedAt = task.CreatedAt
     };
   }
 
