@@ -74,6 +74,7 @@ import { ChangeProfileComponent } from './account/change-profile/change-profile.
 import {CopyDataComponent} from "./account/copy-data/copy-data.component";
 import { ConsentComponent } from './auth/consent/consent.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { DeleteAccountComponent} from "./account/delete-account/delete-account.component";
 
 @NgModule({
   declarations: [
@@ -131,6 +132,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
     ConsentComponent,
     PrivacyPolicyComponent,
     CopyDataComponent,
+    DeleteAccountComponent
   ],
   imports: [
     BrowserModule,

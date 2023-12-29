@@ -83,4 +83,18 @@ export default class UserRequestService implements IUserRequestService{
       throw Result.fail(err);
     }
   }
+  public async deleteUserRequest(id: string){
+    try{
+      const req=await this.reqRepo.getReqById(id);
+      if(req==null){
+        return Result.fail<{userDTO: IUserDTO, token: string}>("Request not found");
+      }
+      const newState=RequestState.create({state:'cancelled'});
+      req.changeState(newState.getValue());
+      req.deleteReq();
+      await this.reqRepo.save(req);
+    }catch (err){
+      throw Result.fail(err);
+    }
+  }
 }

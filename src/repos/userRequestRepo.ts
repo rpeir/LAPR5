@@ -41,17 +41,17 @@ export default class UserRequestRepo implements IUserRequestRepo{
             } else {
                 userDocument.firstName = req.firstName;
                 userDocument.lastName = req.lastName;
-                userDocument.email = req.email.value;
-                userDocument.phoneNumber = req.phoneNumber.value;
-                userDocument.password = req.password.value;
+                userDocument.email = req.email ? req.email.value : undefined
+                userDocument.phoneNumber = req.phoneNumber ? req.phoneNumber.value : undefined;
+                userDocument.password = req.password ? req.password.value : undefined;
                 userDocument.nif = req.nif;
                 userDocument.state = req.state.state;
                 await userDocument.save();
 
                 return req;
-            }
-        } catch (err) {
-            throw err;
+              }
+            } catch (err) {
+            throw err
         }
     }
 

@@ -310,4 +310,12 @@ export default class UserService implements IUserService{
 
     return UserPassword.create({ value: hashedPassword, hashed: true})
   }
+  public async deleteUser(id: string): Promise<Result<boolean>> {
+    try {
+      await this.userRepo.deleteById(id);
+      return Result.ok<boolean>(true);
+    } catch (e) {
+      return Result.fail<boolean>(e);
+    }
+  }
 }

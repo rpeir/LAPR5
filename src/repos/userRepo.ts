@@ -86,4 +86,17 @@ export default class UserRepo implements IUserRepo {
     else
       return null;
   }
+  public async deleteById (userId: UserId | string): Promise<boolean> {
+    const idX = userId instanceof UserId ? (<UserId>userId).id.toValue() : userId;
+
+    const query = { domainId: idX };
+    const userRecord = await this.userSchema.findOne( query );
+
+    if( userRecord != null) {
+      await userRecord.remove();
+      return true;
+    }
+    else
+      return false;
+  }
 }
