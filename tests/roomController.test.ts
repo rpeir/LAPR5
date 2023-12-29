@@ -86,12 +86,14 @@ describe('room controller', () => {
 
 
     let roomServiceInstance = Container.get("RoomService");
+    // @ts-ignore
     sinon.stub(roomServiceInstance, "createRoom").returns(Result.ok<IRoomDTO>(defaultBody));
 
     const ctrl = new RoomController(roomServiceInstance as IRoomService);
 
     await ctrl.createRoom(<Request>req, <Response>res, <NextFunction>next);
 
+    // @ts-ignore
     sinon.assert.calledWith(res.json, sinon.match({
       name : "Test Room",
       description : "Test Description",
@@ -106,11 +108,13 @@ describe('room controller', () => {
     defaultBody.category = "Invalid Room Category";
 
     let buildingRepoInstance = Container.get("BuildingRepo");
+    // @ts-ignore
     sinon.stub(buildingRepoInstance, 'findByCode').returns(
       Building.create(defaultBuildingProps).getValue()
     );
 
     let floorRepoInstance = Container.get("FloorRepo");
+    // @ts-ignore
     sinon.stub(floorRepoInstance, 'existsByBuildingAndNumber').returns(
       new Promise<boolean>((resolve, reject) => {
         resolve(true);
@@ -118,6 +122,7 @@ describe('room controller', () => {
     );
 
     let roomRepoInstance = Container.get("RoomRepo");
+    // @ts-ignore
     sinon.stub(roomRepoInstance, 'save').returns(
       (room : Room) => room
     );
@@ -144,6 +149,7 @@ describe('room controller', () => {
     await ctrl.createRoom(<Request>req, <Response>res, <NextFunction>next);
 
     // check the status code
+    // @ts-ignore
     sinon.assert.calledWith(res.status, 402);
 
   });
@@ -152,11 +158,13 @@ describe('room controller', () => {
     defaultBody.building = "Invalid";
 
     let buildingRepoInstance = Container.get("BuildingRepo");
+    // @ts-ignore
     sinon.stub(buildingRepoInstance, 'findByCode').returns(
       null
     );
 
     let floorRepoInstance = Container.get("FloorRepo");
+    // @ts-ignore
     sinon.stub(floorRepoInstance, 'existsByBuildingAndNumber').returns(
       new Promise<boolean>((resolve, reject) => {
         resolve(false);
@@ -164,6 +172,7 @@ describe('room controller', () => {
     );
 
     let roomRepoInstance = Container.get("RoomRepo");
+    // @ts-ignore
     sinon.stub(roomRepoInstance, 'save').returns(
       null
     );
@@ -191,6 +200,7 @@ describe('room controller', () => {
     await ctrl.createRoom(<Request>req, <Response>res, <NextFunction>next);
 
     // check the status code
+    // @ts-ignore
     sinon.assert.calledWith(res.status, 402);
 
   });
@@ -199,11 +209,13 @@ describe('room controller', () => {
     defaultBody.floor = 2;
 
     let buildingRepoInstance = Container.get("BuildingRepo");
+    // @ts-ignore
     sinon.stub(buildingRepoInstance, 'findByCode').returns(
       Building.create(defaultBuildingProps).getValue()
     );
 
     let floorRepoInstance = Container.get("FloorRepo");
+    // @ts-ignore
     sinon.stub(floorRepoInstance, 'existsByBuildingAndNumber').returns(
       new Promise<boolean>((resolve, reject) => {
         resolve(false);
@@ -211,6 +223,7 @@ describe('room controller', () => {
     );
 
     let roomRepoInstance = Container.get("RoomRepo");
+    // @ts-ignore
     sinon.stub(roomRepoInstance, 'save').returns(
       (room : Room) => room
     );
@@ -236,17 +249,20 @@ describe('room controller', () => {
     await ctrl.createRoom(<Request>req, <Response>res, <NextFunction>next);
 
     // check the status code
+    // @ts-ignore
     sinon.assert.calledWith(res.status, 402);
 
   });
 
   it('roomController + roomService (create) integration test with valid room', async function () {
     let buildingRepoInstance = Container.get("BuildingRepo");
+    // @ts-ignore
     sinon.stub(buildingRepoInstance, 'findByCode').returns(
       Building.create(defaultBuildingProps).getValue()
     );
 
     let floorRepoInstance = Container.get("FloorRepo");
+    // @ts-ignore
     sinon.stub(floorRepoInstance, 'existsByBuildingAndNumber').returns(
       new Promise<boolean>((resolve, reject) => {
         resolve(true);
@@ -254,6 +270,7 @@ describe('room controller', () => {
     );
 
     let roomRepoInstance = Container.get("RoomRepo");
+    // @ts-ignore
     sinon.stub(roomRepoInstance, 'save').returnsArg(0);
 
     const service = new RoomService(
@@ -278,8 +295,10 @@ describe('room controller', () => {
 
     await ctrl.createRoom(<Request>req, <Response>res, <NextFunction>next);
 
+    // @ts-ignore
     sinon.assert.calledWith(res.status, 201);
     // check if the json is well formed
+    // @ts-ignore
     sinon.assert.calledWith(res.json, sinon.match({
       name : "Test Room",
       description : "Test Description",
@@ -291,11 +310,13 @@ describe('room controller', () => {
 
   it('roomController + roomService (create) integration test with existing room', async function () {
     let buildingRepoInstance = Container.get("BuildingRepo");
+    // @ts-ignore
     sinon.stub(buildingRepoInstance, 'findByCode').returns(
       Building.create(defaultBuildingProps).getValue()
     );
 
     let floorRepoInstance = Container.get("FloorRepo");
+    // @ts-ignore
     sinon.stub(floorRepoInstance, 'existsByBuildingAndNumber').returns(
       new Promise<boolean>((resolve, reject) => {
         resolve(true);
@@ -303,6 +324,7 @@ describe('room controller', () => {
     );
 
     let roomRepoInstance = Container.get("RoomRepo");
+    // @ts-ignore
     sinon.stub(roomRepoInstance, 'save').throws('Room already exists');
 
     const service = new RoomService(
@@ -327,6 +349,7 @@ describe('room controller', () => {
     await ctrl.createRoom(<Request>req, <Response>res, <NextFunction>next);
 
     // check the status code
+    // @ts-ignore
     sinon.assert.calledWith(res.status, 402);
 
   });

@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
-import { GestorDeFrotaToolbarComponent } from "../gestor-de-frota-toolbar/gestor-de-frota-toolbar.component";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
+import {MainToolbarComponent} from "../../main-toolbar/main-toolbar.component";
 
 describe('GestorDeFrotaComponent', () => {
   let component: LoginComponent;
@@ -12,7 +12,7 @@ describe('GestorDeFrotaComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LoginComponent, GestorDeFrotaToolbarComponent],
+      declarations: [LoginComponent, MainToolbarComponent],
       imports: [MatToolbarModule, MatIconModule, MatMenuModule]
     });
     fixture = TestBed.createComponent(LoginComponent);

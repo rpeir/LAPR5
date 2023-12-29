@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GestaoTarefas.Domain.TaskRequests;
+using GestaoTarefas.Domain.TaskTypes;
 using GestaoTarefas.Infrastructure.Shared;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,8 +16,17 @@ public class TaskRequestRepository : BaseRepository<TaskRequest, TaskRequestId>,
   {
   }
 
-  public async Task<IEnumerable<TaskRequest>> GetByStatusAsync(RequestStatus status)
+  public async Task<IEnumerable<TaskRequest>> GetByStatusUserAsync(
+    RequestStatus? status = null, Guid? userId = null)
   {
-    return await this.Objs.Where(r => r.RequestStatus == status).ToListAsync();
+    var query = this.Objs.AsQueryable();
+
+    if (status != null)
+      query = query.Where(r => r.RequestStatus == status);
+
+    if (userId != null)
+      query = query.Where(r => r.UserId == userId);
+
+    return await query.ToListAsync();
   }
 }

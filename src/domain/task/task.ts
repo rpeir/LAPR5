@@ -13,7 +13,7 @@ interface TaskProps {
   pickupRoom : Room,
   deliveryRoom : Room,
   status : string,
-  taskRequestId : string,
+  identificationCode : string,
   description: string,
   robot: Robot;
   senderName?: string;
@@ -50,8 +50,8 @@ export class Task extends AggregateRoot<TaskProps>{
     return this.props.status;
   }
 
-  get taskRequestId(): string {
-    return this.props.taskRequestId;
+  get identificationCode(): string {
+    return this.props.identificationCode;
   }
 
   get description(): string {
@@ -101,7 +101,7 @@ export class Task extends AggregateRoot<TaskProps>{
         { argument: props.pickupRoom, argumentName: 'pickupRoomId' },
         { argument: props.deliveryRoom, argumentName: 'deliveryRoomId' },
         { argument: props.status, argumentName: 'status' },
-        { argument: props.taskRequestId, argumentName: 'taskRequestId' },
+        { argument: props.identificationCode, argumentName: 'identificationCode' },
         { argument: props.description, argumentName: 'description' },
         { argument: props.robot, argumentName: 'robot' },
       ];

@@ -52,10 +52,6 @@ export default class BuildingController implements IBuildingController {
 
   public async listAllBuilding(req: Request, res: Response, next: NextFunction) {
     try {
-      // @ts-ignore
-      if (req.auth.user.role.name !== 'campus manager') {
-        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
-      }
       const buildingsOrError = (await this.buildingServiceInstance.listAllBuilding()) as Result<IBuildingDTO[]>;
       if (buildingsOrError.isFailure) {
         return res.status(402).send();

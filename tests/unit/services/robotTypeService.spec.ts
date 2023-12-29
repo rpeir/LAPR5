@@ -43,6 +43,7 @@ describe("robotType service", function() {
 
 
     let robotTypeRepoInstance = Container.get("RobotTypeRepo");
+    // @ts-ignore
     sinon.stub(robotTypeRepoInstance, "save").returns(new Promise<RobotType>((resolve, reject) => {
       resolve(RobotType.create({
         "name": RobotTypeName.create(robotTypeDTO.name).getValue(),
@@ -52,6 +53,7 @@ describe("robotType service", function() {
       }, new UniqueEntityID("123")).getValue());
     }));
 
+    // @ts-ignore
     let createStub = sinon.stub(RobotType, "create").returns(Result.ok({
       "id": "123",
       "name": RobotTypeName.create(robotTypeDTO.name).getValue(),
@@ -96,6 +98,7 @@ describe("robotType service", function() {
 
 
     let robotTypeRepoInstance = Container.get("RobotTypeRepo");
+    // @ts-ignore
     let createStub = sinon.stub(robotTypeRepoInstance, "save").returns(new Promise<RobotType>((resolve, reject) => {
       resolve(RobotType.create({
         "name": RobotTypeName.create(robotTypeDTO.name).getValue(),

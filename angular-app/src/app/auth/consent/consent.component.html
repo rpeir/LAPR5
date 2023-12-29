@@ -1,0 +1,77 @@
+<main>
+
+  <div id="consent-container">
+    <div id="consent-message">
+      <p>This website collects the following personal information:</p>
+    </div>
+    <ul id="consent-info">
+      <li>Full Name</li>
+      <li>Email</li>
+      <li>Phone Number</li>
+      <li>NIF (Tax Identification Number)</li>
+      <li>Role</li>
+      <li>Image</li>
+    </ul>
+    <div id="consent-checkboxes">
+      <div id="consent-checkboxes-title">Purposes to which you want to link:</div>
+      <label>
+        <mat-checkbox id="nameConsent" [(ngModel)]="isNameConsent" (ngModelChange)="updateAllComplete()">
+          I agree to the collection of my full name for unique identification and communication.
+        </mat-checkbox>
+      </label>
+      <br>
+      <label>
+        <mat-checkbox id="emailConsent" [(ngModel)]="isEmailConsent" (ngModelChange)="updateAllComplete()">
+          I agree to the use of my email address as a unique identifier for authentication.
+        </mat-checkbox>
+      </label>
+      <br>
+      <label>
+        <mat-checkbox id="phoneConsent" [(ngModel)]="isPhoneConsent" (ngModelChange)="updateAllComplete()">
+          I agree to the use of my phone number for direct communication, alternative authentication, and robot notifications.
+        </mat-checkbox>
+      </label>
+      <br>
+      <label>
+        <mat-checkbox id="imageConsent" [(ngModel)]="isImageConsent" (ngModelChange)="updateAllComplete()">
+          I agree to image captures for visual identification, security, and monitoring.
+        </mat-checkbox>
+      </label>
+      <br>
+      <label>
+        <mat-checkbox id="nifConsent" [(ngModel)]="isNifConsent" (ngModelChange)="updateAllComplete()">
+          I agree to the collection of my Tax Identification Number for tax and identification purposes.
+        </mat-checkbox>
+      </label>
+      <br>
+      <label>
+        <mat-checkbox id="roleConsent" [(ngModel)]="isRoleConsent" (ngModelChange)="updateAllComplete()">
+          I agree to the collection of my position to identify my role and responsibilities.
+        </mat-checkbox>
+      </label>
+      <mat-divider></mat-divider>
+      <label>
+        <mat-checkbox id="accept-all"
+                      [checked]="allComplete"
+                      [indeterminate]="someComplete()"
+                      (change)="setAll($event.checked)">
+          I agree all
+        </mat-checkbox>
+      </label>
+    </div>
+    <div id="consent-buttons">
+      <button mat-raised-button color="primary" class="consent-button" (click)="handleConsent()">
+        <mat-icon>check</mat-icon>
+        Agree
+      </button>
+      <button mat-raised-button color="warn" class="consent-button" (click)="denyConsent()">
+        <mat-icon>close</mat-icon>
+        Refuse
+      </button>
+    </div>
+
+    <a [routerLink]="'/privacy-policy'" (click)="goToPrivacyPolicy()" id="privacy-policy-link">For additional information, please read our Privacy Policy</a>
+  </div>
+
+
+</main>

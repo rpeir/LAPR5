@@ -1,4 +1,4 @@
 export enum TaskType {
-  surveillance = "surveillance", delivery = "delivery"
+  surveillance = "Surveillance", delivery = "Delivery"
 }
 

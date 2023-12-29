@@ -71,6 +71,42 @@ createColumn(Line,Column):-m(Line,Column,3),!,
           Line1 is Line - 1,
           createColumn(Line1,Column).
 
+createColumn(Line,Column):-m(Line,Column,4),!,
+          % pode ir para cima
+          create_up(Line,Column),
+          % verifica se pode ir para baixo
+          create_down(Line,Column),
+          % pode ir para a esquerda
+          create_left(Line,Column),
+          % verifica se pode ir para a direita
+          create_right(Line,Column),
+          Line1 is Line - 1,
+          createColumn(Line1,Column).
+
+createColumn(Line,Column):-m(Line,Column,5),!,
+          % pode ir para cima
+          create_up(Line,Column),
+          % verifica se pode ir para baixo
+          create_down(Line,Column),
+          % pode ir para a esquerda
+          create_left(Line,Column),
+          % verifica se pode ir para a direita
+          create_right(Line,Column),
+          Line1 is Line - 1,
+          createColumn(Line1,Column).
+
+createColumn(Line,Column):-m(Line,Column,6),!,
+          % pode ir para cima
+          create_up(Line,Column),
+          % verifica se pode ir para baixo
+          create_down(Line,Column),
+          % pode ir para a esquerda
+          create_left(Line,Column),
+          % verifica se pode ir para a direita
+          create_right(Line,Column),
+          Line1 is Line - 1,
+          createColumn(Line1,Column).
+
 
 createColumn(Line,Column):-Line1 is Line - 1,
           createColumn(Line1,Column).
@@ -82,7 +118,8 @@ create_up(Line, Column):- PreviousLine is Line - 1,
 
 % create connection to cell below, if it is not a wall
 create_down(Line, Column):- NextLine is Line + 1,
-          ((m(NextLine, Column,1);m(NextLine, Column,0)), assertz(connectCell(cel(Line,Column),cel(NextLine,Column)));true).
+          ((m(NextLine, Column,0);m(NextLine, Column,1);m(NextLine, Column,4);m(NextLine, Column,5);m(NextLine, Column,6)),
+          assertz(connectCell(cel(Line,Column),cel(NextLine,Column)));true).
 
 % create connection to cell on the left, unconditionally
 create_left(Line, Column):- PreviousColumn is Column - 1,
@@ -90,7 +127,8 @@ create_left(Line, Column):- PreviousColumn is Column - 1,
 
 % create connection to cell on the right, if it is not a wall
 create_right(Line, Column):- NextColumn is Column + 1,
-          ((m(Line, NextColumn,2);m(Line, NextColumn,0)), assertz(connectCell(cel(Line,Column),cel(Line,NextColumn)));true).
+          ((m(Line, NextColumn,2);m(Line, NextColumn,0);m(Line, NextColumn,4);m(Line, NextColumn,5);m(Line, NextColumn,6)),
+           assertz(connectCell(cel(Line,Column),cel(Line,NextColumn)));true).
 
 %=====================================================
 

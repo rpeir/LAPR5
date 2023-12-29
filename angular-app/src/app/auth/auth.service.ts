@@ -16,6 +16,7 @@ export class AuthService {
   private user: Observable<User | null>;
   private token : Observable<string | null>;
   private theUrl = environment.apiURL + "/api/auth/signin";
+  private baseUrl = environment.apiURL + "/api/auth";
   constructor(private http: HttpClient) {
     this.userSubject = new BehaviorSubject<User | null>(
       JSON.parse(localStorage.getItem('user')!)
@@ -29,6 +30,10 @@ export class AuthService {
 
   public getUser(): User | null {
     return this.userSubject.value;
+  }
+
+  public userObservable(): Observable<User | null> {
+    return this.user;
   }
 
 
@@ -45,7 +50,11 @@ export class AuthService {
     )
   }
 
-  logout() { localStorage.removeItem('user');  localStorage.removeItem('token'); this.userSubject.next(null); }
+  logout() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem("consent");
+    this.userSubject.next(null); }
 
   getToken(): string | null {
     return localStorage.getItem("token");
@@ -111,5 +120,16 @@ export class AuthService {
       return role === UserRole.USER;
     }
     return false;
+  }
+
+  updateUser(user: User): Observable<User> {
+    const updated = this.http.patch<User>(`${this.baseUrl}`, user);
+    updated.subscribe({
+      next: (user) => {
+        localStorage.setItem('user', JSON.stringify(user));
+        this.userSubject.next(user);
+      }
+    });
+    return updated;
   }
 }

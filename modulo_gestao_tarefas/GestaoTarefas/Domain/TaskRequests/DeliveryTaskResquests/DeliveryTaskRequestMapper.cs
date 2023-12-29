@@ -20,7 +20,9 @@ public class DeliveryTaskRequestMapper : ITaskRequestMapper<DeliveryTaskRequest,
       ReceiverName = task.ReceiverName.Value,
       SenderContact = task.SenderContact.Value,
       SenderName = task.SenderName.Value,
-      RequestStatus = task.RequestStatus.ToString()
+      RequestStatus = task.RequestStatus.ToString(),
+      IdentificationCode = task.IdentificationCode.Value,
+      CreatedAt = task.CreatedAt
     };
   }
 

@@ -31,7 +31,7 @@ export class RoomMap extends Mapper<Room> {
         floor : room.floor,
         building : buildingCode.isSuccess? buildingCode.getValue() : room.building
       }
-      ,new UniqueEntityID(room.id)
+      ,new UniqueEntityID(room.domainId)
     );
 
     roomOrError.isFailure ? console.log(roomOrError.error) : '';

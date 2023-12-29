@@ -47,7 +47,7 @@ public class DeliveryTaskRequest : TaskRequest
   public override Task ToTask(Guid robotId)
   {
     return new DeliveryTask(
-      taskRequestId: this.Id,
+      identificationCode: this.IdentificationCode,
       taskDescription: this.TaskDescription,
       userId: this.UserId,
       senderName: this.SenderName,

@@ -7,7 +7,7 @@ export interface ITaskDTO {
   pickupRoomId : string,
   deliveryRoomId : string,
   status : string,
-  taskRequestId : string,
+  identificationCode : string,
   description: string,
   robot: string;
   senderName?: string;

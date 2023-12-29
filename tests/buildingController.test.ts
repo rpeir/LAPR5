@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from "express";
 import {Container} from "typedi";
-import * as sinon from "sinon";
+import sinon from "sinon";
 import {Result} from "../src/core/logic/Result";
 import {IBuildingDTO} from "../src/dto/IBuildingDTO";
 import BuildingController from "../src/controllers/buildingController";
@@ -57,6 +57,7 @@ describe("building controller", function() {
 
 
     let buildingServiceInstance = Container.get("BuildingService");
+    // @ts-ignore
     sinon.stub(buildingServiceInstance, "createBuilding").returns(Result.ok<IBuildingDTO>({
       "domainId": req.body.id,
       "code": req.body.code,
@@ -68,8 +69,9 @@ describe("building controller", function() {
     }));
     const ctrl = new BuildingController((buildingServiceInstance as IBuildingService));
     await ctrl.createBuilding(<Request>req, <Response>res, <NextFunction>next);
-
+    // @ts-ignore
     sinon.assert.calledOnce(res.status);
+    // @ts-ignore
     sinon.assert.calledWith(res.json, sinon.match({
       "code": req.body.code,
       "designation": req.body.designation,
@@ -103,6 +105,7 @@ describe("building controller", function() {
 
     };
     let buildingRepoInstance = Container.get("BuildingRepo");
+    // @ts-ignore
     sinon.stub(buildingRepoInstance, "save").returns(new Promise<Building>((resolve, reject) => {
       resolve(Building.create({
         code: req.body.code,
@@ -116,7 +119,9 @@ describe("building controller", function() {
     let buildingServiceInstance = Container.get("BuildingService");
     const ctrl = new BuildingController((buildingServiceInstance as IBuildingService));
     await ctrl.createBuilding(<Request>req, <Response>res, <NextFunction>next);
+    // @ts-ignore
     sinon.assert.calledOnce(res.json);
+    // @ts-ignore
     sinon.assert.calledWith(res.json, sinon.match({
       "code": req.body.code,
       "designation": req.body.designation,

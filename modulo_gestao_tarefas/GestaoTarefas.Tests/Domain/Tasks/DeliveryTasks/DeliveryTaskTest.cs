@@ -13,7 +13,7 @@ namespace GestaoTarefas.Tests.Domain.Tasks.DeliveryTasks;
 public class DeliveryTaskTest
 {
 
-  private TaskRequestId _validTaskRequestId;
+  private IdentificationCode _validIdentificationCode;
   private TaskDescription _validTaskDescription;
   private Guid _validUserId;
   private Name _validSenderName;
@@ -28,7 +28,7 @@ public class DeliveryTaskTest
   [TestInitialize]
   public void BeforeEach()
   {
-    _validTaskRequestId = new TaskRequestId(Guid.NewGuid());
+    _validIdentificationCode = new IdentificationCode("ID123456789");
     _validTaskDescription = new TaskDescription("Valid task description");
     _validUserId = Guid.NewGuid();
     _validSenderName = new Name("John Sender");
@@ -46,7 +46,7 @@ public class DeliveryTaskTest
   {
     // Act
     var deliveryTask = new DeliveryTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: _validTaskDescription, userId: _validUserId,
       senderName: _validSenderName, receiverName: _validReceiverName,
       senderContact: _validSenderContact, receiverContact: _validReceiverContact,
@@ -80,7 +80,7 @@ public class DeliveryTaskTest
 
     // Act
     var deliveryTask = new DeliveryTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: invalidTaskDescription, userId: _validUserId,
       senderName: _validSenderName, receiverName: _validReceiverName,
       senderContact: _validSenderContact, receiverContact: _validReceiverContact,
@@ -100,7 +100,7 @@ public class DeliveryTaskTest
     var invalidUserId = Guid.Empty;
     // Act
     var deliveryTask = new DeliveryTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: _validTaskDescription, userId: invalidUserId,
       senderName: _validSenderName, receiverName: _validReceiverName,
       senderContact: _validSenderContact, receiverContact: _validReceiverContact,
@@ -120,7 +120,7 @@ public class DeliveryTaskTest
     const Name invalidSenderName = null;
     // Act
     var deliveryTask = new DeliveryTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: _validTaskDescription, userId: _validUserId,
       senderName: invalidSenderName, receiverName: _validReceiverName,
       senderContact: _validSenderContact, receiverContact: _validReceiverContact,
@@ -140,7 +140,7 @@ public class DeliveryTaskTest
     const Name invalidReceiverName = null;
     // Act
     var deliveryTask = new DeliveryTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: _validTaskDescription, userId: _validUserId,
       senderName: _validSenderName, receiverName: invalidReceiverName,
       senderContact: _validSenderContact, receiverContact: _validReceiverContact,
@@ -160,7 +160,7 @@ public class DeliveryTaskTest
     const PhoneNumber invalidSenderContact = null;
     // Act
     var deliveryTask = new DeliveryTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: _validTaskDescription, userId: _validUserId,
       senderName: _validSenderName, receiverName: _validReceiverName,
       senderContact: invalidSenderContact, receiverContact: _validReceiverContact,
@@ -180,7 +180,7 @@ public class DeliveryTaskTest
     const PhoneNumber invalidReceiverContact = null;
     // Act
     var deliveryTask = new DeliveryTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: _validTaskDescription, userId: _validUserId,
       senderName: _validSenderName, receiverName: _validReceiverName,
       senderContact: _validSenderContact, receiverContact: invalidReceiverContact,
@@ -200,7 +200,7 @@ public class DeliveryTaskTest
     const ConfirmationCode invalidConfirmationCode = null;
     // Act
     var deliveryTask = new DeliveryTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: _validTaskDescription, userId: _validUserId,
       senderName: _validSenderName, receiverName: _validReceiverName,
       senderContact: _validSenderContact, receiverContact: _validReceiverContact,
@@ -220,7 +220,7 @@ public class DeliveryTaskTest
     var invalidPickupRoom = Guid.Empty;
     // Act
     var deliveryTask = new DeliveryTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: _validTaskDescription, userId: _validUserId,
       senderName: _validSenderName, receiverName: _validReceiverName,
       senderContact: _validSenderContact, receiverContact: _validReceiverContact,
@@ -240,7 +240,7 @@ public class DeliveryTaskTest
     var invalidDeliveryRoom = Guid.Empty;
     // Act
     var deliveryTask = new DeliveryTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: _validTaskDescription, userId: _validUserId,
       senderName: _validSenderName, receiverName: _validReceiverName,
       senderContact: _validSenderContact, receiverContact: _validReceiverContact,
@@ -260,7 +260,7 @@ public class DeliveryTaskTest
     var invalidRobotId = Guid.Empty;
     // Act
     var deliveryTask = new DeliveryTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: _validTaskDescription, userId: _validUserId,
       senderName: _validSenderName, receiverName: _validReceiverName,
       senderContact: _validSenderContact, receiverContact: _validReceiverContact,

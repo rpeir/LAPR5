@@ -18,12 +18,4 @@ export class MainToolbarComponent implements OnInit{
     this.userRole = this.authService.getUser()?.role;
   }
 
-
-  goToLogin() {
-    this.router.navigate([""]);
-  }
-
-  goToHome() {
-    this.router.navigate(["/task-manager"]);
-  }
 }

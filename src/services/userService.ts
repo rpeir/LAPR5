@@ -28,16 +28,16 @@ import {UserRequestMap} from "../mappers/UserRequestMap";
 import {IUserRequestDTO} from "../dto/IUserRequestDTO";
 import UserRequestRepo from "../repos/userRequestRepo";
 import {RequestState} from "../domain/user/requestState";
+import path from "node:path";
+import * as fs from "fs";
 @Service()
 export default class UserService implements IUserService{
   constructor(
-      @Inject(config.repos.user.name) private userRepo : IUserRepo,
-      @Inject(config.repos.role.name) private roleRepo : IRoleRepo,
-      @Inject(config.repos.userRequest.name) private userRequestRepo : IUserRequestRepo,
-      @Inject('logger') private logger,
+    @Inject(config.repos.user.name) private userRepo : IUserRepo,
+    @Inject(config.repos.role.name) private roleRepo : IRoleRepo,
+    @Inject(config.repos.userRequest.name) private userRequestRepo : IUserRequestRepo,
+    @Inject('logger') private logger,
   ) {}
-
-
   public async SignUp(userDTO: IUserDTO): Promise<Result<{ userDTO: IUserDTO, token: string }>> {
     try {
       const userDocument = await this.userRepo.findByEmail( UserEmail.create(userDTO.email).getValue());
@@ -121,6 +121,7 @@ export default class UserService implements IUserService{
     }
   }
 
+
   public async SignIn(email: string, password: string): Promise<Result<{ userDTO: IUserDTO, token: string }>> {
 
     const user = await this.userRepo.findByEmail( UserEmail.create(email).getValue());
@@ -170,19 +171,18 @@ export default class UserService implements IUserService{
     const role = user.role.id.value;
 
     return jwt.sign(
-        {
-          id: id,
-          email: email, // We are gonna use this in the middleware 'isAuth'
-          role: role,
-          firstName: firstName,
-          lastName: lastName,
-          phoneNumber: phoneNumber,
-          exp: exp.getTime() / 1000,
-        },
-        config.jwtSecret,
+      {
+        id: id,
+        email: email, // We are gonna use this in the middleware 'isAuth'
+        role: role,
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phoneNumber,
+        exp: exp.getTime() / 1000,
+      },
+      config.jwtSecret,
     );
   }
-
 
   private async getRole (roleId: string): Promise<Result<Role>> {
 
@@ -195,6 +195,8 @@ export default class UserService implements IUserService{
       return Result.fail<Role>("Couldn't find role by id=" + roleId);
     }
   }
+
+
   public async userSignUpRequest(userDTO: IUserRequestDTO): Promise<Result<IUserRequestDTO>> {
     try {
       const userDocument = await this.userRepo.findByEmail( UserEmail.create(userDTO.email).getValue());
@@ -259,6 +261,61 @@ export default class UserService implements IUserService{
     } catch (e) {
       this.logger.error(e);
       throw e;
+    }
+  }
+  public async updateUser(dto: IUserDTO): Promise<Result<IUserDTO>> {
+    const user : User = await this.userRepo.findById(dto.id);
+    if (!user) return Result.fail<IUserDTO>('Utilizador não registado');
+    let email : UserEmail = undefined;
+    if (dto.email) {
+      const emailOrError = UserEmail.create(dto.email);
+      if (emailOrError.isFailure) return Result.fail(emailOrError.error);
+      email = emailOrError.getValue();
+    }
+    let password : UserPassword = undefined;
+    if (dto.password) {
+      const passwordOrError = await this.hashPassword(dto.password);
+      if (passwordOrError.isFailure) return Result.fail(passwordOrError.error);
+      password = passwordOrError.getValue();
+    }
+    let phoneNumber : PhoneNumber = undefined;
+    if (dto.phoneNumber) {
+      const phoneNumberOrError = PhoneNumber.create({value:dto.phoneNumber});
+      if (phoneNumberOrError.isFailure) return Result.fail(phoneNumberOrError.error);
+      phoneNumber = phoneNumberOrError.getValue();
+    }
+
+    const updated = user.update({
+      ...dto,
+      email: email,
+      password: password,
+      phoneNumber: phoneNumber,
+    });
+
+    if (updated.isFailure) return Result.fail(updated.error);
+
+    await this.userRepo.save(user);
+    const userDTO = UserMap.toDTO(user) as IUserDTO;
+    return Result.ok<IUserDTO>(userDTO);
+  }
+
+  private async hashPassword(password: string): Promise<Result<UserPassword>> {
+    const unhashedPassword =  UserPassword.create({ value: password, hashed: false});
+    if(unhashedPassword.isFailure){
+      return Result.fail(unhashedPassword.error);
+    }
+    const salt = randomBytes(32);
+    this.logger.silly('Hashing password');
+    const hashedPassword = await argon2.hash(password, { salt });
+
+    return UserPassword.create({ value: hashedPassword, hashed: true})
+  }
+  public async deleteUser(id: string): Promise<Result<boolean>> {
+    try {
+      await this.userRepo.deleteById(id);
+      return Result.ok<boolean>(true);
+    } catch (e) {
+      return Result.fail<boolean>(e);
     }
   }
 }

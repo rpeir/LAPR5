@@ -13,10 +13,10 @@ public class DeliveryTask : Task
   public PhoneNumber ReceiverContact { get; private set; }
   public ConfirmationCode ConfirmationCode { get; private set; }
 
-  public DeliveryTask(TaskRequestId taskRequestId,TaskDescription taskDescription, Guid userId,
+  public DeliveryTask(IdentificationCode identificationCode,TaskDescription taskDescription, Guid userId,
     Name senderName, Name receiverName, PhoneNumber senderContact, PhoneNumber receiverContact,
     ConfirmationCode confirmationCode, Guid pickupRoomId, Guid deliveryRoomId, Guid robotId)
-    : base(taskRequestId, TaskType.Delivery, taskDescription, userId, pickupRoomId, deliveryRoomId, robotId)
+    : base(identificationCode, TaskType.Delivery, taskDescription, userId, pickupRoomId, deliveryRoomId, robotId)
   {
     var guard = Validate(senderName: senderName, receiverName: receiverName, senderContact: senderContact,
       receiverContact: receiverContact, confirmationCode: confirmationCode);

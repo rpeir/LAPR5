@@ -1,0 +1,153 @@
+<app-main-toolbar></app-main-toolbar>
+<body class="RobDroneGo">
+<div class="container">
+  <h2 class="text-center">Make a Task Request</h2>
+
+  <form (ngSubmit)="createTaskRequest()">
+
+
+    <mat-form-field  class="full-width">
+      <mat-label>Task description</mat-label>
+      <input matInput [(ngModel)]="taskRequest.description" name="description" placeholder="Max 250 characters">
+    </mat-form-field>
+
+    <div class="stopping-criteria-container">
+      <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        [(ngModel)]="taskRequest.type"
+        name="taskType">
+        <mat-label>Select a taskType</mat-label>
+        <br>
+        <div class="form-field">
+          <mat-radio-button class="example-radio-button" [value]="taskTypes.surveillance">
+            {{taskTypes.surveillance}}
+          </mat-radio-button>
+          <mat-radio-button class="example-radio-button" [value]="taskTypes.delivery" (click)="changeToSurveillance()">
+            {{taskTypes.delivery}}
+          </mat-radio-button>
+        </div>
+      </mat-radio-group>
+    </div>
+
+
+    <div>
+      <div class="form-fields-container">
+        <mat-form-field class="nice-width" >
+          <mat-label>Select a source building</mat-label>
+          <mat-select [(ngModel)]="buildingSource" name="buildingSource"
+                      (ngModelChange)="listFloorsOfBuildingSource($event)">
+            <mat-option *ngFor="let building of buildings" [value]="building.designation"
+                        [matTooltip]="getBuildingInfo(building)">
+              {{ building.designation }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="nice-width">
+          <mat-label>Select a building destination</mat-label>
+          <mat-select [(ngModel)]="buildingDestination" name="buildingDestination"
+                      (ngModelChange)="listFloorsOfBuildingDestination($event)"
+                      [disabled]="taskTypes.surveillance == taskRequest.type">
+            <mat-option *ngFor="let building of buildings" [value]="building.designation"
+                        [matTooltip]="getBuildingInfo(building)">
+              {{ building.designation }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-fields-container">
+        <mat-form-field class="nice-width">
+          <mat-label>Select a source Floor</mat-label>
+          <mat-select [(ngModel)]="floorSource" name="floorSource"
+                      (ngModelChange)="listRoomsOfFloorSource()">
+            <mat-option *ngFor="let floor of floorsSource" [value]="floor.floorNr" [matTooltip]="getFloorInfo(floor)">
+              {{ floor.floorNr }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="nice-width">
+          <mat-label>Select a destination Floor</mat-label>
+          <mat-select [(ngModel)]="floorDestination" name="floorDestination"
+                      (ngModelChange)="listRoomsOfFloorDestination()"
+                      [disabled]="taskTypes.surveillance == taskRequest.type">
+            <mat-option *ngFor="let floor of floorsDestination" [value]="floor.floorNr"
+                        [matTooltip]="getFloorInfo(floor)">
+              {{ floor.floorNr }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-fields-container">
+        <mat-form-field class="nice-width">
+          <mat-label>Select a source room</mat-label>
+          <mat-select [(ngModel)]="taskRequest.pickupRoomId" name="roomSource">
+            <mat-option *ngFor="let room of sourceRooms" [value]="room.name" [matTooltip]="getRoomInfo(room)">
+              {{ room.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="nice-width">
+          <mat-label>Select a destination room</mat-label>
+          <mat-select [(ngModel)]="taskRequest.deliveryRoomId" name="roomDestination">
+            <mat-option *ngFor="let room of destinationRooms" [value]="room.name" [matTooltip]="getRoomInfo(room)">
+              {{ room.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div *ngIf="taskRequest.type == taskTypes.delivery">
+      <mat-form-field  class="full-width">
+        <mat-label>Sender Name</mat-label>
+        <input matInput [(ngModel)]="taskRequest.senderName" name="senderName">
+        <input matInput placeholder="Max 250 characters">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Receiver Name</mat-label>
+        <input matInput [(ngModel)]="taskRequest.receiverName" name="receiverName">
+        <input matInput placeholder="Max 250 characters">
+      </mat-form-field>
+
+      <mat-form-field  class="full-width">
+        <mat-label>Sender Contact</mat-label>
+        <input matInput [(ngModel)]="taskRequest.senderContact" name="senderContact">
+        <input matInput placeholder="Max 250 characters">
+      </mat-form-field>
+
+      <mat-form-field  class="full-width">
+        <mat-label>Receiver Contact</mat-label>
+        <input matInput [(ngModel)]="taskRequest.receiverContact" name="receiverContact">
+        <input matInput placeholder="Max 250 characters">
+      </mat-form-field>
+
+      <mat-form-field  class="full-width">
+        <mat-label>Confirmation Code</mat-label>
+        <input matInput [(ngModel)]="taskRequest.confirmationCode" name="confirmationCode">
+        <input matInput placeholder="Max 250 characters">
+      </mat-form-field>
+    </div>
+
+
+    <div *ngIf="taskRequest.type == taskTypes.surveillance">
+      <mat-form-field data-cy="emergencyNumber" class="full-width">
+        <mat-label>Emergency number</mat-label>
+        <input matInput [(ngModel)]="taskRequest.emergencyNumber" name="emergencyNumber">
+        <input matInput placeholder="Max 250 characters">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <input type="submit" data-cy="input" value="create">
+    </div>
+
+  </form>
+
+
+</div>
+</body>

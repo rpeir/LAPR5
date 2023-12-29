@@ -6,4 +6,5 @@ export default interface IUserRequestService{
   listPendingRequests():Promise<Result<IUserRequestDTO[]>>;
   registerUser(user: IUserRequestDTO): Promise<Result<{userDTO: IUserDTO, token: string}>>;
   declineUser(id: string):void;
+  deleteUserRequest(id: string):void;
 }

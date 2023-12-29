@@ -68,7 +68,19 @@ export class User extends AggregateRoot<UserProps> {
   }
 
   public static create (props: UserProps, id?: UniqueEntityID): Result<User> {
+    const guardResult = this.validate(props);
+    if (guardResult.isFailure) {
+      return Result.fail<User>(guardResult.error)
+    } else {
+      const user = new User({
+        ...props
+      }, id);
 
+      return Result.ok<User>(user);
+    }
+  }
+
+  public static validate(props : UserProps) : Result<void> {
     const guardedProps = [
       {argument: props.firstName, argumentName: 'firstName'},
       {argument: props.lastName, argumentName: 'lastName'},
@@ -79,20 +91,41 @@ export class User extends AggregateRoot<UserProps> {
     ];
     const flag = Guard.againstNullOrUndefinedBulk(guardedProps);
     if (!flag.succeeded) {
-      return Result.fail<User>(flag.message);
+      return Result.fail(flag.message);
     }
     if (props.role.name === "user") {
       guardedProps.push({argument: props.nif, argumentName: 'nif'});
     }
     const guardResult = Guard.againstNullOrUndefinedBulk(guardedProps);
     if (!guardResult.succeeded) {
-      return Result.fail<User>(guardResult.message)
+      return Result.fail(guardResult.message)
     } else {
-      const user = new User({
-        ...props
-      }, id);
+      return Result.ok();
+    }
+  }
 
-      return Result.ok<User>(user);
+  public update(props : any) : Result<User> {
+    let combinedProps : UserProps = {...this.props };
+
+    for (let prop in props) {
+      if (props[prop] != null || props[prop] != undefined) {
+        combinedProps[prop] = props[prop];
+      }
+    }
+
+    const guardResult = User.validate(combinedProps);
+
+    if (guardResult.isFailure) {
+      return Result.fail(guardResult.error);
+    } else {
+      this.props.firstName = combinedProps.firstName;
+      this.props.lastName = combinedProps.lastName;
+      this.props.email = combinedProps.email;
+      this.props.role = combinedProps.role;
+      this.props.phoneNumber = combinedProps.phoneNumber;
+      this.props.password = combinedProps.password;
+      this.props.nif = combinedProps.nif;
+      return Result.ok(this);
     }
   }
 }

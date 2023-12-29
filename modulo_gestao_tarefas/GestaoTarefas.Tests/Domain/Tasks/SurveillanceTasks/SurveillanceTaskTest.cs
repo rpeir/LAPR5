@@ -12,7 +12,7 @@ namespace GestaoTarefas.Tests.Domain.Tasks.SurveillanceTasks;
 [TestSubject(typeof(SurveillanceTask))]
 public class SurveillanceTaskTest
 {
-  private TaskRequestId _validTaskRequestId;
+  private IdentificationCode _validIdentificationCode;
   private TaskDescription _validTaskDescription;
   private Guid _validUserId;
   private PhoneNumber _validEmergencyNumber;
@@ -24,7 +24,7 @@ public class SurveillanceTaskTest
   [TestInitialize]
   public void BeforeEach()
   {
-    _validTaskRequestId = new TaskRequestId(Guid.NewGuid());
+    _validIdentificationCode = new IdentificationCode("ID1234567");
     _validTaskDescription = new TaskDescription("Valid task description");
     _validUserId = Guid.NewGuid();
     _validEmergencyNumber = new PhoneNumber("912345678");
@@ -39,7 +39,7 @@ public class SurveillanceTaskTest
   {
     // Act
     var surveillanceTask = new SurveillanceTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: _validTaskDescription, userId: _validUserId,
       emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
       pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId,
@@ -68,7 +68,7 @@ public class SurveillanceTaskTest
 
     // Act
     var surveillanceTask = new SurveillanceTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: invalidTaskDescription, userId: _validUserId,
       emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
       pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId,
@@ -87,7 +87,7 @@ public class SurveillanceTaskTest
     var invalidUserId = Guid.Empty;
     // Act
     var surveillanceTask = new SurveillanceTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: _validTaskDescription, userId: invalidUserId,
       emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
       pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId,
@@ -106,7 +106,7 @@ public class SurveillanceTaskTest
     var invalidPickupRoom = Guid.Empty;
     // Act
     var surveillanceTask = new SurveillanceTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: _validTaskDescription, userId: _validUserId,
       emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
       pickupRoomId: invalidPickupRoom, deliveryRoomId: _validDeliveryRoomId,
@@ -125,7 +125,7 @@ public class SurveillanceTaskTest
     var invalidDeliveryRoom = Guid.Empty;
     // Act
     var surveillanceTask = new SurveillanceTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: _validTaskDescription, userId: _validUserId,
       emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
       pickupRoomId: _validPickupRoomId, deliveryRoomId: invalidDeliveryRoom,
@@ -144,7 +144,7 @@ public class SurveillanceTaskTest
     var invalidFloorId = Guid.Empty;
     // Act
     var surveillanceTask = new SurveillanceTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: _validTaskDescription, userId: _validUserId,
       emergencyNumber: _validEmergencyNumber, floorId: invalidFloorId,
       pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId,
@@ -163,7 +163,7 @@ public class SurveillanceTaskTest
     const PhoneNumber invalidEmergencyNumber = null;
     // Act
     var surveillanceTask = new SurveillanceTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: _validTaskDescription, userId: _validUserId,
       emergencyNumber: invalidEmergencyNumber, floorId: _validFloorId,
       pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId,
@@ -182,7 +182,7 @@ public class SurveillanceTaskTest
     var invalidRobotId = Guid.Empty;
     // Act
     var surveillanceTask = new SurveillanceTask(
-      taskRequestId: _validTaskRequestId,
+      identificationCode: _validIdentificationCode,
       taskDescription: _validTaskDescription, userId: _validUserId,
       emergencyNumber: _validEmergencyNumber, floorId: _validFloorId,
       pickupRoomId: _validPickupRoomId, deliveryRoomId: _validDeliveryRoomId,

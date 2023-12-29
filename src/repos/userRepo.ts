@@ -49,6 +49,10 @@ export default class UserRepo implements IUserRepo {
       } else {
         userDocument.firstName = user.firstName;
         userDocument.lastName = user.lastName;
+        userDocument.email = user.email.value;
+        userDocument.password = user.password.value;
+        userDocument.nif = user.nif;
+        userDocument.phoneNumber = user.phoneNumber.value;
         await userDocument.save();
 
         return user;
@@ -81,5 +85,18 @@ export default class UserRepo implements IUserRepo {
     }
     else
       return null;
+  }
+  public async deleteById (userId: UserId | string): Promise<boolean> {
+    const idX = userId instanceof UserId ? (<UserId>userId).id.toValue() : userId;
+
+    const query = { domainId: idX };
+    const userRecord = await this.userSchema.findOne( query );
+
+    if( userRecord != null) {
+      await userRecord.remove();
+      return true;
+    }
+    else
+      return false;
   }
 }

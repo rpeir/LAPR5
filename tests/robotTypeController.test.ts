@@ -61,6 +61,7 @@ describe("robotType controller", function() {
 
 
     let robotTypeServiceInstance = Container.get("RobotTypeService");
+    // @ts-ignore
     sinon.stub(robotTypeServiceInstance, "createRobotType").returns(Result.ok<IRobotTypeDTO>({
       "id": "123",
       "name": req.body.name,
@@ -76,7 +77,9 @@ describe("robotType controller", function() {
     await ctrl.createRobotType(<Request>req, <Response>res, <NextFunction>next);
 
     // Assert
+    // @ts-ignore
     sinon.assert.calledOnce(res.json);
+    // @ts-ignore
     sinon.assert.calledWith(res.json, sinon.match({
       "id": "123",
       "name": req.body.name,
@@ -108,6 +111,7 @@ describe("robotType controller", function() {
     let next: Partial<NextFunction> = () => {
     };
 
+    // @ts-ignore
     let createStub = sinon.stub(RobotType, "create").returns(Result.ok({
       "id": "123",
       "name": RobotTypeName.create(req.body.name).getValue(),
@@ -117,6 +121,7 @@ describe("robotType controller", function() {
     }));
 
     let robotTypeRepoInstance = Container.get("RobotTypeRepo");
+    // @ts-ignore
     sinon.stub(robotTypeRepoInstance, "save").returns(new Promise<RobotType>((resolve, reject) => {
       resolve(RobotType.create({
         "name": RobotTypeName.create(req.body.name).getValue(),
@@ -136,7 +141,9 @@ describe("robotType controller", function() {
     await ctrl.createRobotType(<Request>req, <Response>res, <NextFunction>next);
 
     // Assert
+    // @ts-ignore
     sinon.assert.calledOnce(res.json);
+    // @ts-ignore
     sinon.assert.calledWith(res.json, sinon.match({
       "id": "123",
       "name": req.body.name,
@@ -171,6 +178,7 @@ describe("robotType controller", function() {
     };
 
     let robotTypeRepoInstance = Container.get("RobotTypeRepo");
+    // @ts-ignore
     sinon.stub(robotTypeRepoInstance, "save").returns(new Promise<RobotType>((resolve, reject) => {
       resolve(RobotType.create({
         "name": RobotTypeName.create(req.body.name).getValue(),
@@ -190,7 +198,9 @@ describe("robotType controller", function() {
     await ctrl.createRobotType(<Request>req, <Response>res, <NextFunction>next);
 
     // Assert
+    // @ts-ignore
     sinon.assert.calledOnce(res.json);
+    // @ts-ignore
     sinon.assert.calledWith(res.json, sinon.match({
       "id": "123",
       "name": req.body.name,
