@@ -33,6 +33,7 @@ export default class Maze extends THREE.Group {
     super();
     merge(this, parameters);
     this.loaded = false;
+    this.exitLocation = [];
 
     this.onLoad = function(description) {
       this.loadMap(description);
@@ -76,7 +77,9 @@ export default class Maze extends THREE.Group {
     this.size = floorMap.maze.size;
     this.halfSize = { width: this.size.width / 2.0, depth: this.size.depth / 2.0 };
     this.map = floorMap.maze.map;
-    this.exitLocation = this.cellToCartesian(floorMap.maze.exitLocation);
+    floorMap.maze.exitLocation.forEach(element => {
+      this.exitLocation.push(element);
+    });
   }
   // Create the ground
   setGround(floorMap) {
@@ -179,7 +182,7 @@ export default class Maze extends THREE.Group {
       return;
     }
 
-    for (const elevatorConfig of floorMap.maze.elevators) {
+    /*for (const elevatorConfig of floorMap.maze.elevators) {
       const elevator = new Elevator({
         modelUrl: './assets/map-renderer/models/gltf/Elevator/elevator1.glb',
         //position: new THREE.Vector3(0, 0, 0),
@@ -189,7 +192,8 @@ export default class Maze extends THREE.Group {
       });
       elevator.name = 'elevator';
       this.add(elevator);
-    }
+    }*/
+    this.elevatorLocation = floorMap.maze.elevators;
   }
 
   // Store the player's initial position and direction
@@ -543,10 +547,7 @@ export default class Maze extends THREE.Group {
   }
 
   foundExit(position) {
-    return (
-      Math.abs(position.x - this.exitLocation.x) < 0.5 * this.scale.x &&
-      Math.abs(position.z - this.exitLocation.z) < 0.5 * this.scale.z
-    );
+    //TODO - check if player is in exit location
   }
 
   loadMap(description) {
