@@ -51,6 +51,7 @@ import {ChangeProfileComponent} from "./account/change-profile/change-profile.co
 import { MakeTaskRequestComponent } from "./make-task-request/make-task-request.component";
 import {CopyDataComponent} from "./account/copy-data/copy-data.component";
 import {PrivacyPolicyComponent} from "./privacy-policy/privacy-policy.component";
+import {DeleteAccountComponent} from "./account/delete-account/delete-account.component";
 
 
 const routes: Routes = [
@@ -96,7 +97,7 @@ const routes: Routes = [
   { path: 'account', component: AccountComponent },
   { path: 'tasks/makeTaskRequest', component: MakeTaskRequestComponent},
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
 
 ];
 

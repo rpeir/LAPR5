@@ -77,6 +77,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { MakeTaskRequestComponent } from './make-task-request/make-task-request.component';
 import { MatRadioModule } from "@angular/material/radio";
 import { MatSliderModule } from "@angular/material/slider";
+import { DeleteAccountComponent} from "./account/delete-account/delete-account.component";
 
 @NgModule({
   declarations: [
@@ -135,6 +136,7 @@ import { MatSliderModule } from "@angular/material/slider";
     ConsentComponent,
     PrivacyPolicyComponent,
     CopyDataComponent,
+    DeleteAccountComponent
   ],
   imports: [
     BrowserModule,

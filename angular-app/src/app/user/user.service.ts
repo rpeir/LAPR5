@@ -35,4 +35,8 @@ export class UserService{
   getUserById(userId: string) {
     return this.httpClient.get<User>(this.baseUrl+"/"+userId);
   }
+
+  deleteUser(id: string) {
+    return this.httpClient.delete<User>(this.baseUrl+"/"+id);
+  }
 }

@@ -15,9 +15,9 @@ import {RequestState} from "./requestState";
 interface UserRequestProps {
     firstName: string;
     lastName: string;
-    email: UserEmail;
-    password: UserPassword;
-    phoneNumber: PhoneNumber;
+    email: UserEmail|undefined;
+    password: UserPassword|undefined
+    phoneNumber: PhoneNumber|undefined;
     nif: string;
     state:RequestState;
 }
@@ -109,5 +109,13 @@ export class UserRequest extends AggregateRoot<UserRequestProps> {
   changeState(state: RequestState) {
     this.props.state = state;
 
+  }
+  deleteReq(){
+     this.props.phoneNumber=undefined
+     // this.props.email=undefined;
+      this.props.firstName='********+';
+      this.props.lastName='**********';
+      this.props.nif=undefined;
+      this.props.password=undefined;
   }
 }

@@ -156,4 +156,10 @@ export default (app: Router) => {
     middlewares.verifyToken,
     (req,res,next) => user_controller.updateUser(req, res,next)
   );
+  route.delete(
+    '/:id',
+    middlewares.isAuth,
+    middlewares.verifyToken,
+    (req,res,next) => user_controller.deleteUser(req, res,next)
+  );
 };
