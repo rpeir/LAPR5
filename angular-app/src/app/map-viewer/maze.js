@@ -670,8 +670,6 @@ export default class Maze extends THREE.Group {
         }
       }
     }
-    // TODO CHECK IF CELL CAN BE 4 OR 5
-
     let mergedGeometry, mesh, door_mesh, mergedDoorGeometry;
     for (let i = 0; i < 2; i++) {
       mergedDoorGeometry = BufferGeometryUtils.mergeGeometries(door_geometries[i], false);

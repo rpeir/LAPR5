@@ -62,8 +62,6 @@ export default class Ground extends THREE.Mesh {
       secondaryMaterial, // Negative Z
     ];
     this.position.set(0.0, -this.size.y / 2.0, 0.0);
-    //this.geometry.scale(-1, -1, -1);
-    this.geometry.computeBoundingBox();
     this.castShadow = false;
     this.receiveShadow = true;
   }

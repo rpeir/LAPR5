@@ -396,7 +396,7 @@ export default class ThumbRaiser {
     this.thirdPersonViewCameraParameters = merge({}, cameraData, thirdPersonViewCameraParameters);
     this.topViewCameraParameters = merge({}, cameraData, topViewCameraParameters);
     this.miniMapCameraParameters = merge({}, cameraData, miniMapCameraParameters);
-    this.pathInsideMaze = null;
+
     // Set the game state
     this.gameRunning = false;
 
@@ -529,7 +529,6 @@ export default class ThumbRaiser {
       camera: 'none', // Camera whose viewport is currently being pointed
       frame: 'none', // Viewport frame currently being pointed
     };
-    this.raycaster = new THREE.Raycaster();
     // Build the help panels
     this.buildHelpPanels();
 
@@ -1022,39 +1021,6 @@ export default class ThumbRaiser {
   mouseMove(event) {
     if (event.target.id === 'canvas') {
       document.activeElement.blur();
-      this.mouse.currentPosition = new THREE.Vector2(event.clientX, window.innerHeight - event.clientY - 1);
-      let mouseNDC = new THREE.Vector2();
-      // mouseNDC.x = (this.mouse.currentPosition.x / window.innerWidth) * 2 - 1;
-      //mouseNDC.y = -(this.mouse.currentPosition.y / window.innerHeight) * 2 + 1;
-      /*let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.z = 5;*/
-      //this.raycaster.setFromCamera(mouseNDC, camera);
-      if (this.mouse.camera !== 'none') {
-        const mouseViewport = mouseNDC.clone();
-        mouseViewport.x = ((mouseNDC.x + 1) * this.mouse.camera.viewport.width) / 2;
-        mouseViewport.y = ((-mouseNDC.y + 1) * this.mouse.camera.viewport.height) / 2;
-        this.scene.updateMatrixWorld();
-
-        this.raycaster.setFromCamera(mouseViewport, this.mouse.camera.perspective);
-        this.scene.updateMatrixWorld();
-
-        /*f (this.mouse.camera.isPerspectiveCamera) {
-          this.mouse.camera.perspectiveCamera().updateMatrixWorld();
-          this.mouse.camera.perspectiveCamera().updateProjectionMatrix();
-          this.raycaster.setFromCamera(mouseViewport, this.mouse.camera.perspectiveCamera());
-        } else if (this.mouse.camera.isOrthographicCamera) {
-          this.mouse.camera.orthographicCamera().updateMatrixWorld();
-          this.mouse.camera.orthographicCamera().updateProjectionMatrix();
-          this.raycaster.setFromCamera(mouseViewport, this.mouse.camera.orthographicCamera());
-        }*/
-      }
-      //console.log('Ray origin:', this.raycaster.ray.origin);
-      //console.log('Ray direction:', this.raycaster.ray.direction);
-      //let intersects = this.raycaster.intersectObject(this.maze.children[0]);
-      let intersects = this.raycaster.intersectObject(this.scene, true);
-
-      //console.log(intersects[0].point);
-      //console.log(intersects[0]);
       if (event.buttons === 0 || event.buttons === 1 || event.buttons === 2) {
         // Store current mouse position in window coordinates (mouse coordinate system: origin in the top-left corner; window coordinate system: origin in the bottom-left corner)
         this.mouse.currentPosition = new THREE.Vector2(event.clientX, window.innerHeight - event.clientY - 1);
