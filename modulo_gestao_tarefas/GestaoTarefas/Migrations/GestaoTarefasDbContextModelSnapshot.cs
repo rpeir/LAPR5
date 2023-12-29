@@ -24,8 +24,17 @@ namespace GestaoTarefas.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<Guid>("DeliveryRoomId")
                         .HasColumnType("char(36)");
+
+                    b.Property<string>("IdentificationCode")
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("varchar(255)")
+                        .HasComputedColumnSql("CONCAT(Type,'-',RIGHT(CONCAT('000000000',Id),9))");
 
                     b.Property<Guid>("PickupRoomId")
                         .HasColumnType("char(36)");
@@ -46,6 +55,9 @@ namespace GestaoTarefas.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdentificationCode")
+                        .IsUnique();
+
                     b.ToTable("TaskRequests");
 
                     b.HasDiscriminator<string>("Type");
@@ -58,6 +70,9 @@ namespace GestaoTarefas.Migrations
 
                     b.Property<Guid>("DeliveryRoomId")
                         .HasColumnType("char(36)");
+
+                    b.Property<string>("IdentificationCode")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("PickupRoomId")
                         .HasColumnType("char(36)");
@@ -72,10 +87,6 @@ namespace GestaoTarefas.Migrations
                     b.Property<string>("TaskDescription")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("TaskRequestId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -85,7 +96,7 @@ namespace GestaoTarefas.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TaskRequestId")
+                    b.HasIndex("IdentificationCode")
                         .IsUnique();
 
                     b.ToTable("Tasks");
@@ -161,15 +172,6 @@ namespace GestaoTarefas.Migrations
                         .HasColumnType("char(36)");
 
                     b.HasDiscriminator().HasValue("Surveillance");
-                });
-
-            modelBuilder.Entity("GestaoTarefas.Domain.Tasks.Task", b =>
-                {
-                    b.HasOne("GestaoTarefas.Domain.TaskRequests.TaskRequest", null)
-                        .WithOne()
-                        .HasForeignKey("GestaoTarefas.Domain.Tasks.Task", "TaskRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

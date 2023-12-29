@@ -14,18 +14,17 @@ namespace GestaoTarefas.Domain.Tasks
         public Status Status { get; private set; }
         public Guid PickupRoomId { get; private set; }
         public Guid DeliveryRoomId { get; private set; }
-
         public Guid RobotId { get ; private set; }
-        public TaskRequestId TaskRequestId { get; private set; }
+        public IdentificationCode IdentificationCode { get; private set; }
 
-        protected Task(TaskRequestId taskRequestId,TaskType type, TaskDescription taskDescription,
+        protected Task(IdentificationCode identificationCode,TaskType type, TaskDescription taskDescription,
           Guid userId, Guid pickupRoomId, Guid deliveryRoomId, Guid robotId)
         {
-          var guard = Validate(taskRequestId, type, taskDescription, userId, pickupRoomId, deliveryRoomId, robotId);
+          var guard = Validate(identificationCode, type, taskDescription, userId, pickupRoomId, deliveryRoomId, robotId);
           if (!guard.Succeeded)
             throw new BusinessRuleValidationException(guard.Message);
 
-          this.TaskRequestId = taskRequestId;
+          this.IdentificationCode = identificationCode;
           this.Id = new TaskId(Guid.NewGuid());
           this.Type = type;
           this.TaskDescription = taskDescription;
@@ -36,7 +35,7 @@ namespace GestaoTarefas.Domain.Tasks
           this.RobotId = robotId;
         }
 
-        private static IGuardResult Validate(TaskRequestId taskRequestId,TaskType type, TaskDescription taskDescription,
+        private static IGuardResult Validate(IdentificationCode taskRequestId,TaskType type, TaskDescription taskDescription,
           Guid userId, Guid pickupRoomId, Guid deliveryRoomId, Guid robotId)
         {
           var guardNulls = Guard.AgainstNullOrUndefinedBulk(
@@ -54,7 +53,6 @@ namespace GestaoTarefas.Domain.Tasks
           var guardEmptyGuids = Guard.Combine(
             new List<IGuardResult>()
             {
-              Guard.IsTrue(!taskRequestId.Equals(new TaskRequestId(Guid.Empty)), "TaskRequestId is empty"),
               Guard.IsTrue(!userId.Equals(Guid.Empty), "UserId is empty"),
               Guard.IsTrue(!pickupRoomId.Equals(Guid.Empty), "PickupRoomId is empty"),
               Guard.IsTrue(!deliveryRoomId.Equals(Guid.Empty), "DeliveryRoomId is empty"),

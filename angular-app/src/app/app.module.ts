@@ -74,6 +74,8 @@ import { ChangeProfileComponent } from './account/change-profile/change-profile.
 import {CopyDataComponent} from "./account/copy-data/copy-data.component";
 import { ConsentComponent } from './auth/consent/consent.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { MakeTaskRequestComponent } from './make-task-request/make-task-request.component';
+import { MatRadioModule } from "@angular/material/radio";
 import { DeleteAccountComponent} from "./account/delete-account/delete-account.component";
 
 @NgModule({
@@ -129,6 +131,7 @@ import { DeleteAccountComponent} from "./account/delete-account/delete-account.c
     LogoutComponent,
     AccountComponent,
     ChangeProfileComponent,
+    MakeTaskRequestComponent,
     ConsentComponent,
     PrivacyPolicyComponent,
     CopyDataComponent,
@@ -156,7 +159,8 @@ import { DeleteAccountComponent} from "./account/delete-account/delete-account.c
     MatTableModule,
     MatDialogModule,
     NgOptimizedImage,
-    MatTabsModule
+    MatTabsModule,
+    MatRadioModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

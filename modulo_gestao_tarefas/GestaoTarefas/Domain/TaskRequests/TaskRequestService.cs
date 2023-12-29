@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using SYSTasks = System.Threading.Tasks;
 using GestaoTarefas.Domain.Shared;
+using GestaoTarefas.Domain.TaskTypes;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestaoTarefas.Domain.TaskRequests;
@@ -60,11 +63,23 @@ public class TaskRequestService
     return _reqMapper.ToDto(task);
   }
 
-  public async SYSTasks.Task<List<TaskRequestDto>> GetByStatusAsync(string statusDto)
+  public async SYSTasks.Task<List<TaskRequestDto>> GetByStatusUserAsync(string statusDto, string userIdDto)
   {
-    var status = statusDto.ToStatus();
+    RequestStatus? status = null;
+    Guid? userId = null;
 
-    var list = await this._reqRepo.GetByStatusAsync(status);
+    try
+    {
+      if (statusDto != null) status = statusDto.ToStatus();
+      if (userIdDto != null) userId = new Guid(userIdDto);
+    }
+    catch (Exception e)
+    {
+      throw new ArgumentException(e.Message);
+    }
+
+    var list = await this._reqRepo.GetByStatusUserAsync(
+      status: status, userId: userId);
 
     return _reqMapper.ToDtoList(list).ToList();
   }

@@ -19,7 +19,6 @@ export default class TaskAdapter implements ITaskAdapter {
       let tasks = [];
       const tasksPersistence = res.data as TaskPersistence[];
 
-      console.log(tasksPersistence);
       for (let taskPersistence of tasksPersistence) {
         tasks.push(await TaskMapper.toDomain(taskPersistence));
       }

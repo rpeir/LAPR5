@@ -1,4 +1,4 @@
-import { Inject, Service } from "typedi";
+import { Container, Inject, Service } from "typedi";
 
 import config from "../../config";
 import ITaskService from "./IServices/ITaskService";
@@ -6,6 +6,13 @@ import { ITaskDTO } from "../dto/ITaskDTO";
 import { ITaskRequestDTO } from "../dto/ITaskRequestDTO";
 import ITaskAdapter from "../adapters/IAdapters/ITaskAdapter";
 import { TaskMapper } from "../mappers/TaskMapper";
+import RoomRepo from "../repos/roomRepo";
+import { TaskType } from "../domain/taskType/taskType";
+import { ISurveillanceTaskRequestDTO } from "../dto/ISurveillanceTaskRequestDTO";
+import FloorRepo from "../repos/floorRepo";
+import BuildingRepo from "../repos/buildingRepo";
+import { IDeliveryTaskRequestDTO } from "../dto/IDeliveryTaskRequestDTO";
+import { TaskRequest } from "../../angular-app/src/app/task/taskRequest";
 
 
 @Service()
@@ -14,7 +21,7 @@ export default class TaskService implements ITaskService {
     @Inject(config.adapters.taskAdapter.name) private taskAdapter: ITaskAdapter) {
   }
 
-  public async approveTask(requestId: string, robotId : string): Promise<ITaskDTO> {
+  public async approveTask(requestId: string, robotId: string): Promise<ITaskDTO> {
     const task = await this.taskAdapter.approveTask(requestId, robotId);
     return TaskMapper.toDTO(task);
   }
@@ -33,7 +40,7 @@ export default class TaskService implements ITaskService {
     return TaskMapper.toDTO(task);
   }
 
-  public async getTaskRequests(params : [string, string][]): Promise<ITaskRequestDTO[]> {
+  public async getTaskRequests(params: [string, string][]): Promise<ITaskRequestDTO[]> {
     return await this.taskAdapter.findTaskRequests(params);
   }
 
@@ -42,12 +49,64 @@ export default class TaskService implements ITaskService {
   }
 
   public async createTaskRequest(taskRequestDTO: ITaskRequestDTO): Promise<ITaskRequestDTO> {
-    return await this.taskAdapter.createTaskRequest(taskRequestDTO);
+
+    const roomRepo = Container.get(RoomRepo);
+    const pickupRoom = await roomRepo.findByName(taskRequestDTO.pickupRoomId);
+    const deliveryRoom = await roomRepo.findByName(taskRequestDTO.deliveryRoomId);
+
+
+
+    let newTaskRequestDTO;
+
+    if (taskRequestDTO.type == TaskType.surveillance) {
+      const floorRepo = Container.get(FloorRepo);
+      const buildingRepo = Container.get(BuildingRepo);
+      const building = await buildingRepo.findByCode(pickupRoom.building.value);
+      const floor = await floorRepo.findByBuildingAndNumber(building.id.toString(), pickupRoom.floor);
+      const surveillanceTaskDT0 = taskRequestDTO as ISurveillanceTaskRequestDTO;
+      const emergencyNumber = surveillanceTaskDT0.emergencyNumber ? surveillanceTaskDT0.emergencyNumber : undefined;
+      const floorId = floor.id;
+
+      newTaskRequestDTO = {
+        description: taskRequestDTO.description,
+        type: taskRequestDTO.type,
+        userId: taskRequestDTO.userId,
+        pickupRoomId: pickupRoom.id.toString(),
+        deliveryRoomId: deliveryRoom.id.toString(),
+        emergencyNumber : emergencyNumber,
+        floorId : floorId.toString(),
+      } as ITaskRequestDTO;
+
+    }
+
+    if (taskRequestDTO.type == TaskType.delivery) {
+      const deliveryTaskDTO = taskRequestDTO as IDeliveryTaskRequestDTO;
+      const senderName = deliveryTaskDTO.senderName ? deliveryTaskDTO.senderName : undefined;
+      const receiverName = deliveryTaskDTO.receiverName ? deliveryTaskDTO.receiverName : undefined;
+      const senderContact = deliveryTaskDTO.senderContact ? deliveryTaskDTO.senderContact : undefined;
+      const receiverContact = deliveryTaskDTO.receiverContact ? deliveryTaskDTO.receiverContact : undefined;
+      const confirmationCode = deliveryTaskDTO.confirmationCode ? deliveryTaskDTO.confirmationCode : undefined;
+
+      newTaskRequestDTO = {
+        description: taskRequestDTO.description,
+        type: taskRequestDTO.type,
+        userId: taskRequestDTO.userId,
+        pickupRoomId: pickupRoom.id.toString(),
+        deliveryRoomId: deliveryRoom.id.toString(),
+        senderName : senderName,
+        senderContact : senderContact,
+        receiverName : receiverName,
+        receiverContact : receiverContact,
+        confirmationCode : confirmationCode,
+      } as ITaskRequestDTO;
+    }
+
+
+    return await this.taskAdapter.createTaskRequest(newTaskRequestDTO);
   }
 
   public async getPendingTasks(): Promise<ITaskDTO[]> {
     const tasks = await this.taskAdapter.findPendingTasks();
-    console.log(tasks);
     return tasks.map((task) => TaskMapper.toDTO(task));
   }
 

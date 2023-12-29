@@ -40,7 +40,7 @@ hide methods
     }
 
     interface Task {
-        - code
+        - identificationCode
         - description
 
     }
@@ -96,6 +96,7 @@ hide methods
     }
 
         entity TaskRequisition {
+            - identificationCode
             - description
             - state
         }

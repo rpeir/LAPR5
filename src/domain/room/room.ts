@@ -17,6 +17,10 @@ interface RoomProps {
 
 export class Room extends AggregateRoot<RoomProps>{
 
+  get id(): UniqueEntityID{
+    return this._id;
+  }
+
   get name(): string {
     return this.props.name;
   }

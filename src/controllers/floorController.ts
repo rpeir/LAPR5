@@ -68,10 +68,6 @@ export default class FloorController implements IFloorController {
 
   public async getFloorsOfBuilding(req: Request, res: Response, next: NextFunction) {
     try {
-      // @ts-ignore
-      if (req.auth.user.role.name !== 'campus manager') {
-        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
-      }
       const building = req.query.building;
       const floorOrError = (await this.floorServiceInstance.getFloorsOfBuilding(building.toString())) as Result<IFloorDTO[]>;
 

@@ -14,6 +14,9 @@ namespace GestaoTarefas.Domain.TaskRequests
         public RequestStatus RequestStatus { get; private set; }
         public Guid PickupRoomId { get; private set; }
         public Guid DeliveryRoomId { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+
+        public IdentificationCode IdentificationCode { get; private set; }
 
         protected TaskRequest(TaskType type, TaskDescription taskDescription,
           Guid userId, Guid pickupRoomId, Guid deliveryRoomId)
@@ -29,6 +32,7 @@ namespace GestaoTarefas.Domain.TaskRequests
           this.RequestStatus = RequestStatus.Pending;
           this.PickupRoomId = pickupRoomId;
           this.DeliveryRoomId = deliveryRoomId;
+          this.CreatedAt = DateTime.Now;
         }
 
         public void Approve()

@@ -48,6 +48,7 @@ import {
 } from "./auth/autorization.guard";
 import {AccountComponent} from "./account/account.component";
 import {ChangeProfileComponent} from "./account/change-profile/change-profile.component";
+import { MakeTaskRequestComponent } from "./make-task-request/make-task-request.component";
 import {CopyDataComponent} from "./account/copy-data/copy-data.component";
 import {PrivacyPolicyComponent} from "./privacy-policy/privacy-policy.component";
 import {DeleteAccountComponent} from "./account/delete-account/delete-account.component";
@@ -94,6 +95,7 @@ const routes: Routes = [
   { path: "tasks/startSequence", component: GetTaskSequenceComponent , canActivate: [taskManagerGuard]},
   { path: 'logout', component: LogoutComponent },
   { path: 'account', component: AccountComponent },
+  { path: 'tasks/makeTaskRequest', component: MakeTaskRequestComponent},
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: '**', redirectTo: '' },
 
