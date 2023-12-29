@@ -4,6 +4,7 @@ import {environment} from "../../environments/environment";
 import {User} from "./user";
 import {UserRequest} from "./UserRequest";
 import {Observable} from "rxjs";
+import {IUserDTO} from "../../../../src/dto/IUserDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,4 @@ export class UserService{
   getUserById(userId: string) {
     return this.httpClient.get<User>(this.baseUrl+"/"+userId);
   }
-
 }

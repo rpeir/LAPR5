@@ -71,6 +71,7 @@ import { LogoutComponent } from './auth/logout/logout.component';
 import { AccountComponent } from './account/account.component';
 import { MatTabsModule } from "@angular/material/tabs";
 import { ChangeProfileComponent } from './account/change-profile/change-profile.component';
+import {CopyDataComponent} from "./account/copy-data/copy-data.component";
 import { ConsentComponent } from './auth/consent/consent.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
@@ -129,6 +130,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
     ChangeProfileComponent,
     ConsentComponent,
     PrivacyPolicyComponent,
+    CopyDataComponent,
   ],
   imports: [
     BrowserModule,

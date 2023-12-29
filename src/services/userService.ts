@@ -28,6 +28,8 @@ import {UserRequestMap} from "../mappers/UserRequestMap";
 import {IUserRequestDTO} from "../dto/IUserRequestDTO";
 import UserRequestRepo from "../repos/userRequestRepo";
 import {RequestState} from "../domain/user/requestState";
+import path from "node:path";
+import * as fs from "fs";
 @Service()
 export default class UserService implements IUserService{
   constructor(

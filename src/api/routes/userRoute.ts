@@ -156,5 +156,4 @@ export default (app: Router) => {
     middlewares.verifyToken,
     (req,res,next) => user_controller.updateUser(req, res,next)
   );
-
 };
