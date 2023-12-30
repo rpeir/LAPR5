@@ -6,4 +6,6 @@
 
 (tmux kill-session -t gestao_tarefas >/dev/null && echo "Killed gestao_tarefas tmux session! Continuing...")
 
+(tmux kill-session -t planeamento >/dev/null && echo "Killed planeamento tmux session! Continuing...")
+
 echo "Done!"
