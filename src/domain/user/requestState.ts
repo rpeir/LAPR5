@@ -20,7 +20,7 @@ export class RequestState extends ValueObject<RequestStateProps>{
         }
     }
     public static isValidState (state: string): boolean {
-        const states = ['pending', 'accepted', 'rejected'];
+        const states = ['pending', 'accepted', 'rejected','cancelled'];
         return states.includes(state);
     }
 }

@@ -35,4 +35,12 @@ export class TaskService {
   rejectTaskRequest(id: string) {
     return this.httpClient.delete<TaskRequest>(`${this.requestsUrl}/${id}`, {observe: "body", responseType: "json"});
   }
+
+  createTaskRequest(taskRequest: TaskRequest) {
+    return this.httpClient.post<TaskRequest>(`${this.requestsUrl}`,taskRequest,{
+      headers: { 'Content-Type': 'application/json' },
+      observe: 'body',
+      responseType: 'json',
+    });
+  }
 }

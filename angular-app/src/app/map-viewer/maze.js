@@ -33,6 +33,7 @@ export default class Maze extends THREE.Group {
     super();
     merge(this, parameters);
     this.loaded = false;
+    this.exitLocation = [];
 
     this.onLoad = function(description) {
       this.loadMap(description);
@@ -76,7 +77,9 @@ export default class Maze extends THREE.Group {
     this.size = floorMap.maze.size;
     this.halfSize = { width: this.size.width / 2.0, depth: this.size.depth / 2.0 };
     this.map = floorMap.maze.map;
-    this.exitLocation = this.cellToCartesian(floorMap.maze.exitLocation);
+    floorMap.maze.exitLocation.forEach(element => {
+      this.exitLocation.push(element);
+    });
   }
   // Create the ground
   setGround(floorMap) {
@@ -110,6 +113,7 @@ export default class Maze extends THREE.Group {
       },
       secondaryColor: new THREE.Color(parseInt(floorMap.ground.secondaryColor, 16)),
     });
+    ground.name = 'ground';
     this.add(ground);
   }
   setDoors(floorMap) {
@@ -139,7 +143,7 @@ export default class Maze extends THREE.Group {
       },
       secondaryColor: new THREE.Color(0x5c4033),
     });
-    console.log(this.door.materials);
+    this.door.name = 'door';
   }
 
   // Create a wall
@@ -170,23 +174,21 @@ export default class Maze extends THREE.Group {
       },
       secondaryColor: new THREE.Color(parseInt(floorMap.wall.secondaryColor, 16)),
     });
+    this.wall.name = 'wall';
   }
 
   setElevators(floorMap) {
     if (!floorMap.maze.elevators) {
       return;
     }
-
-    for (const elevatorConfig of floorMap.maze.elevators) {
-      const elevator = new Elevator({
-        modelUrl: './assets/map-renderer/models/gltf/Elevator/elevator1.glb',
-        //position: new THREE.Vector3(0, 0, 0),
-        position: this.cellToCartesian(elevatorConfig),
-        rotation: new THREE.Euler(0, 0, 0),
-        scale: new THREE.Vector3(0.1, 0.1, 0.1),
-      });
-      this.add(elevator);
-    }
+    const geometry = new THREE.BoxGeometry(2, 1, 2);
+    const material = new THREE.MeshBasicMaterial({ color: 0x222222 });
+    const cube = new THREE.Mesh(geometry, material);
+    this.elevatorLocation = floorMap.maze.elevators;
+    //let centeredElevator = [this.elevatorLocation+0.5, this.elevatorLocation+1];
+    let elevatorCartesian = this.cellToCartesian(this.elevatorLocation);
+    cube.position.set(elevatorCartesian.x+0.5, 0, elevatorCartesian.z+0.5);
+    this.add(cube);
   }
 
   // Store the player's initial position and direction
@@ -217,6 +219,9 @@ export default class Maze extends THREE.Group {
   cornerCollision(indices, offsets, orientation, position, delta, radius, name) {
     const row = indices[0] + offsets[0];
     const column = indices[1] + offsets[1];
+    if (!this.map[row] || !this.map[row][column]) {
+      return false;
+    }
     if (this.map[row][column] === 2 - orientation || this.map[row][column] === 3) {
       const x = position.x - (this.cellToCartesian([row, column]).x + delta.x * this.scale.x);
       const z = position.z - (this.cellToCartesian([row, column]).z + delta.z * this.scale.z);
@@ -232,6 +237,9 @@ export default class Maze extends THREE.Group {
   wallCollision(indices, offsets, orientation, position, delta, radius, name) {
     const row = indices[0] + offsets[0];
     const column = indices[1] + offsets[1];
+    if (!this.map[row] || !this.map[row][column]) {
+      return false;
+    }
     if (this.map[row][column] === 2 - orientation || this.map[row][column] === 3) {
       if (orientation !== 0) {
         if (Math.abs(position.x - (this.cellToCartesian([row, column]).x + delta.x * this.scale.x)) < radius) {
@@ -252,6 +260,9 @@ export default class Maze extends THREE.Group {
   wallAndCornerCollision(indices, offsets, orientation, obb, name) {
     const row = indices[0] + offsets[0];
     const column = indices[1] + offsets[1];
+    if (!this.map[row] || !this.map[row][column]) {
+      return false;
+    }
     if (this.map[row][column] === 2 - orientation || this.map[row][column] === 3) {
       if (obb.intersectsBox3(this.aabb[row][column][orientation])) {
         console.log('Collision with ' + name + '.');
@@ -380,6 +391,9 @@ export default class Maze extends THREE.Group {
   doorCornerCollision(indices, offsets, orientation, position, delta, radius, name) {
     const row = indices[0] + offsets[0];
     const column = indices[1] + offsets[1];
+    if (!this.map[row] || !this.map[row][column]) {
+      return false;
+    }
     if (this.map[row][column] === 5 - orientation || this.map[row][column] === 6) {
       const x = position.x - (this.cellToCartesian([row, column]).x + delta.x * this.scale.x);
       const z = position.z - (this.cellToCartesian([row, column]).z + delta.z * this.scale.z);
@@ -395,6 +409,9 @@ export default class Maze extends THREE.Group {
   doorCollision(indices, offsets, orientation, position, delta, radius, name) {
     const row = indices[0] + offsets[0];
     const column = indices[1] + offsets[1];
+    if (!this.map[row] || !this.map[row][column]) {
+      return false;
+    }
     if (this.map[row][column] === 5 - orientation || this.map[row][column] === 6) {
       if (orientation !== 0) {
         if (Math.abs(position.x - (this.cellToCartesian([row, column]).x + delta.x * this.scale.x)) < radius) {
@@ -415,6 +432,9 @@ export default class Maze extends THREE.Group {
   doorAndCornerCollision(indices, offsets, orientation, obb, name) {
     const row = indices[0] + offsets[0];
     const column = indices[1] + offsets[1];
+    if (!this.map[row] || !this.map[row][column]) {
+      return false;
+    }
     if (this.map[row][column] === 5 - orientation || this.map[row][column] === 6) {
       if (obb.intersectsBox3(this.aabb[row][column][orientation])) {
         console.log('Collision with ' + name + '.');
@@ -471,14 +491,14 @@ export default class Maze extends THREE.Group {
         ) || // Collision with northeast corner (WE-oriented door)
         (indices[0] > 0 &&
           (this.doorCornerCollision(
-              indices,
-              [-1, 1],
-              1,
-              position,
-              { x: -0.525, z: 0.5 },
-              halfSize,
-              'northeast corner (NS-oriented door)',
-            ) || // Collision with northeast corner (NS-oriented door)
+            indices,
+            [-1, 1],
+            1,
+            position,
+            { x: -0.525, z: 0.5 },
+            halfSize,
+            'northeast corner (NS-oriented door)',
+          ) || // Collision with northeast corner (NS-oriented door)
             this.doorCornerCollision(
               indices,
               [-1, 0],
@@ -490,14 +510,14 @@ export default class Maze extends THREE.Group {
             ))) || // Collision with northwest corner (NS-oriented door)
         (indices[1] > 0 &&
           (this.doorCornerCollision(
-              indices,
-              [0, -1],
-              0,
-              position,
-              { x: 0.5, z: -0.475 },
-              halfSize,
-              'northwest corner (WE-oriented door)',
-            ) || // Collision with northwest corner (WE-oriented door)
+            indices,
+            [0, -1],
+            0,
+            position,
+            { x: 0.5, z: -0.475 },
+            halfSize,
+            'northwest corner (WE-oriented door)',
+          ) || // Collision with northwest corner (WE-oriented door)
             this.doorCornerCollision(
               indices,
               [1, -1],
@@ -537,13 +557,6 @@ export default class Maze extends THREE.Group {
       // No collision
       return false;
     }
-  }
-
-  foundExit(position) {
-    return (
-      Math.abs(position.x - this.exitLocation.x) < 0.5 * this.scale.x &&
-      Math.abs(position.z - this.exitLocation.z) < 0.5 * this.scale.z
-    );
   }
 
   loadMap(description) {
@@ -650,19 +663,19 @@ export default class Maze extends THREE.Group {
         }
       }
     }
-    // TODO CHECK IF CELL CAN BE 4 OR 5
-
     let mergedGeometry, mesh, door_mesh, mergedDoorGeometry;
     for (let i = 0; i < 2; i++) {
       mergedDoorGeometry = BufferGeometryUtils.mergeGeometries(door_geometries[i], false);
       door_mesh = new THREE.Mesh(mergedDoorGeometry, this.door.materials[i]);
       door_mesh.castShadow = true;
       door_mesh.receiveShadow = true;
+      door_mesh.name = 'door_mesh';
       this.add(door_mesh);
       mergedGeometry = BufferGeometryUtils.mergeGeometries(geometries[i], false);
       mesh = new THREE.Mesh(mergedGeometry, this.wall.materials[i]);
       mesh.castShadow = true;
       mesh.receiveShadow = true;
+      mesh.name = 'wallmesh';
       this.add(mesh);
     }
 
@@ -670,5 +683,18 @@ export default class Maze extends THREE.Group {
     this.setInitialPlayerPosition(description);
 
     this.loaded = true;
+  }
+  closestExitLocation(position) {
+    let closest = 0;
+    let closestDistance = 100000000;
+    let distance;
+    for (let i = 0; i < this.exitLocation.length; i++) {
+      distance = this.cellToCartesian(this.exitLocation[i].location).distanceTo(position);
+      if (distance < closestDistance) {
+        closest = i;
+        closestDistance = distance;
+      }
+    }
+    return this.exitLocation[closest];
   }
 }

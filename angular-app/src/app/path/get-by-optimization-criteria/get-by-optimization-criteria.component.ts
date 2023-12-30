@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FloorService } from "../../floor/floor.service";
 import { Location } from "@angular/common";
 import { BuildingService } from "../../building/building.service";
@@ -15,7 +15,7 @@ import { Room } from "../../room/room";
   templateUrl: "./get-by-optimization-criteria.component.html",
   styleUrls: ["./get-by-optimization-criteria.component.css"]
 })
-export class GetByOptimizationCriteriaComponent {
+export class GetByOptimizationCriteriaComponent implements OnInit{
 
 
   constructor(private roomService: RoomService, private pathService: PathService, private floorService: FloorService, private location: Location, private buildingService: BuildingService, private pathwayService: PathwayService) {

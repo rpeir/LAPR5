@@ -14,9 +14,14 @@ export default class ElevatorController implements IElevatorController {
     try {
       // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
-        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+        return res
+          .status(401)
+          .json('Não tem permissões para aceder a este recurso')
+          .send();
       }
-      const elevatorOrError = (await this.elevatorServiceInstance.createElevator(req.body as IElevatorDTO)) as Result<IElevatorDTO>;
+      const elevatorOrError = (await this.elevatorServiceInstance.createElevator(req.body as IElevatorDTO)) as Result<
+        IElevatorDTO
+      >;
       if (elevatorOrError.isFailure) {
         return res
           .status(402)
@@ -33,8 +38,11 @@ export default class ElevatorController implements IElevatorController {
   public async listElevator(req: Request, res: Response, next: NextFunction) {
     try {
       // @ts-ignore
-      if (req.auth.user.role.name !== 'campus manager') {
-        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+      if (req.auth.user.role.name !== 'campus manager' && req.auth.user.role.name !== 'user') {
+        return res
+          .status(401)
+          .json('Não tem permissões para aceder a este recurso')
+          .send();
       }
       const buildingDesignation = req.query.buildingDesignation as string;
       const listOrError = (await this.elevatorServiceInstance.listElevator(buildingDesignation)) as Result<
@@ -56,9 +64,14 @@ export default class ElevatorController implements IElevatorController {
     try {
       // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
-        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+        return res
+          .status(401)
+          .json('Não tem permissões para aceder a este recurso')
+          .send();
       }
-      const elevatorOrError = (await this.elevatorServiceInstance.updateElevator(req.body as IElevatorDTO)) as Result<IElevatorDTO>;
+      const elevatorOrError = (await this.elevatorServiceInstance.updateElevator(req.body as IElevatorDTO)) as Result<
+        IElevatorDTO
+      >;
       if (elevatorOrError.isFailure) {
         return res
           .status(402)
@@ -75,9 +88,14 @@ export default class ElevatorController implements IElevatorController {
     try {
       // @ts-ignore
       if (req.auth.user.role.name !== 'campus manager') {
-        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+        return res
+          .status(401)
+          .json('Não tem permissões para aceder a este recurso')
+          .send();
       }
-      const elevatorOrError = (await this.elevatorServiceInstance.replaceElevator(req.body as IElevatorDTO)) as Result<IElevatorDTO>;
+      const elevatorOrError = (await this.elevatorServiceInstance.replaceElevator(req.body as IElevatorDTO)) as Result<
+        IElevatorDTO
+      >;
       if (elevatorOrError.isFailure) {
         return res
           .status(402)

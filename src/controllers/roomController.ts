@@ -13,8 +13,11 @@ export default class RoomController implements IRoomController {
   public async getRoomById(req: Request, res: Response, next: NextFunction) {
     try {
       // @ts-ignore
-      if (req.auth.user.role.name !== 'task manager') {
-        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+      if (req.auth.user.role.name !== 'campus manager' && req.auth.user.role.name !== 'user') {
+        return res
+          .status(401)
+          .json('Não tem permissões para aceder a este recurso')
+          .send();
       }
       const roomId = req.params.id;
       const roomOrError = await this.roomService.getRoomById(roomId);
@@ -56,8 +59,11 @@ export default class RoomController implements IRoomController {
   public async getRoomsByBuildingsAndFloor(req: Request, res: Response, next: NextFunction) {
     try {
       // @ts-ignore
-      if (req.auth.user.role.name !== 'campus manager') {
-        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+      if (req.auth.user.role.name !== 'campus manager' && req.auth.user.role.name !== 'user') {
+        return res
+          .status(401)
+          .json('Não tem permissões para aceder a este recurso')
+          .send();
       }
       const building = req.query.building as string
       const floor = req.query.floor as string;

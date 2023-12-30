@@ -7,4 +7,5 @@ export default interface IUserService  {
   SignIn(email: string, password: string): Promise<Result<{ userDTO: IUserDTO, token: string }>>;
   userSignUpRequest(userDTO: IUserRequestDTO):Promise<Result<IUserRequestDTO>>;
   updateUser(dto: IUserDTO): Promise<Result<IUserDTO>>;
+  deleteUser(id: string): Promise<Result<boolean>>;
 }

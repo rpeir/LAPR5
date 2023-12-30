@@ -2,16 +2,31 @@ import * as THREE from 'three';
 import Orientation from './orientation.js';
 import ThumbRaiser from './thumb_raiser.js';
 import 'lodash';
-import { environment } from "../../environments/environment";
+import { environment } from '../../environments/environment';
 
 let thumbRaiser;
 
 export default function start() {
   let floormap; // The map of the selected floor
   let floorsOfBuilding = []; // The list of floors of the selected building
+  let floorsOfPath = [];
+  let pathJSON;
+  let floorsServed = [];
+  let floorMapsServed = [];
+  let floorsOfBuildingWithElevator = [];
+  let selectedFloor;
+  let playerAuto = false;
+  const token = localStorage.getItem('token');
+  let pathFile = localStorage.getItem('pathFile');
 
   async function initializeAndAnimate() {
     try {
+      if (pathFile) {
+        pathJSON = JSON.parse(pathFile);
+        await loadJsonData(pathJSON);
+        pathFile = null;
+        localStorage.removeItem('pathFile');
+      }
       await changeMap();
       initialize();
       animate();
@@ -19,7 +34,112 @@ export default function start() {
       console.error('An error occurred during initialization:', error);
     }
   }
+  // Function to load the json with a path
+  async function loadJsonData(jsonData) {
+    try {
+      const buildings = jsonData.buildings;
+      const fetchPromises = [];
+      // Create an array of promises for each building's floors
+      for (const building of buildings) {
+        const promise = fetch(environment.apiURL + `/api/floors/building?building=${encodeURIComponent(building)}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then(response => response.json())
+          .then(floors => {
+            for (const floor of floors) {
+              if (!floorsOfPath.includes(floor)) {
+                if (jsonData.paths.find(path => path.floorSource === floor.description)) {
+                  floorsOfPath.push(floor);
+                }
+                if (jsonData.paths.find(path => path.floorDestination === floor.description)) {
+                  floorsOfPath.push(floor);
+                }
+              }
+            }
+          })
+          .catch(error => {
+            console.error(`Error fetching floors for building ${building}:`, error);
+          });
+        fetchPromises.push(promise);
+      }
+      // Wait for all promises to resolve
+      await Promise.all(fetchPromises);
+    } catch (error) {
+      console.error('Error processing JSON data:', error);
+    }
+    playerAuto = true;
+    // Start the automatic path
+    await changeMapsForAutomaticPath();
+    playerAuto = false;
+  }
+  document.getElementById('loadJsonButton').addEventListener('click', function() {
+    const fileInput = document.getElementById('jsonFile');
+    const file = fileInput.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        try {
+          pathJSON = JSON.parse(event.target.result);
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          loadJsonData(pathJSON).then(r => console.log('Automatic path finished'));
+        } catch (error) {
+          console.error('Error parsing JSON:', error);
+        }
+      };
+      reader.readAsText(file);
+    } else {
+      console.error('No file selected.');
+    }
+  });
+  // Function to change the maps for the automatic path. It waits for the player to finish the current floor before changing the map
+  async function changeMapsForAutomaticPath() {
+    let i = 0;
+    for (const floor of floorsOfPath) {
+      selectedFloor = floor;
+      thumbRaiser.changeMazeForAutoPlay(floor.floorMap);
+      // Wait for pathJSON.pathInside[i] to be defined
+      await waitFor(() => pathJSON.pathInside[i] !== undefined);
+      await waitTime(2000);
+      await thumbRaiser.movePlayer(pathJSON.pathInside[i]);
+      i++;
+    }
+    notifyFinishedTask();
+  }
 
+  async function notifyFinishedTask() {
+    if (document.getElementById('task-popup')) {
+      return;
+    }
+    // create a new div element
+    const newDiv = document.createElement('div');
+    newDiv.setAttribute('id', 'task-popup');
+    const newContent = document.createTextNode('Task completed!');
+    newDiv.appendChild(newContent);
+    const currentDiv = document.getElementById('views-panel');
+    currentDiv.after(newDiv);
+    setTimeout(function() {
+      newDiv.remove();
+    }, 2500);
+  }
+
+  function waitTime(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  // Utility function to wait for a condition to be true
+  function waitFor(conditionFunction) {
+    return new Promise(resolve => {
+      const checkCondition = () => {
+        if (conditionFunction()) {
+          resolve();
+        } else {
+          setTimeout(checkCondition, 100); // Check again in 100 milliseconds
+        }
+      };
+      checkCondition();
+    });
+  }
   document.addEventListener('DOMContentLoaded', function() {
     // Fetch buildings and set up event listener after the DOM is loaded
     fetchBuildings();
@@ -47,7 +167,7 @@ export default function start() {
     const selectedMap = mapSelector.value;
     try {
       if (!floorsOfBuilding || floorsOfBuilding.length === 0) {
-        //console.error('No floors available for the selected building.');
+        console.error('No floors available for the selected building.');
         return;
       }
       // Call the function to fetch the selected map
@@ -63,9 +183,198 @@ export default function start() {
     }
   }
 
+  async function notifyFloorChange(exit) {
+    if (document.getElementById('notice-popup')) {
+      return;
+    }
+    let buildingDesignation;
+    const regex = /([^_]+)_\d/;
+    const match = exit.floorId.match(regex);
+    if (match) {
+      buildingDesignation = match[1];
+    } else {
+      console.log('No match found');
+    }
+
+    const response = await fetch(
+      environment.apiURL + `/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    let floors = await response.json();
+    console.log(floors);
+    const currentFloor = selectedFloor;
+    const floor = await floors.find(floor => floor.description === exit.floorId);
+    // create a new div element
+    const newDiv = document.createElement('div');
+    newDiv.setAttribute('id', 'notice-popup');
+    const newContent = document.createTextNode('Loading floor ' + exit.floorId);
+    newDiv.appendChild(newContent);
+
+    const currentDiv = document.getElementById('views-panel');
+    currentDiv.after(newDiv);
+
+    setTimeout(function() {
+      newDiv.remove();
+    }, 6000);
+    try {
+      thumbRaiser.changeMazeForAutoPlay(floor.floorMap);
+      selectedFloor = floor;
+      let newExitLocation = floor.floorMap.maze.exitLocation.find(exit => exit.floorId === currentFloor.description);
+      let newPosition = thumbRaiser.maze.cellToCartesian(newExitLocation.location);
+      thumbRaiser.player.position.set(newPosition.x, newPosition.y, newPosition.z);
+    } catch (error) {
+      console.error('Error changing map:', error);
+    }
+  }
+  async function continuouslyCheckElevator() {
+    // Check the value of the variable
+    if (thumbRaiser) {
+      if (thumbRaiser.player.isInElevator) {
+        await floorsServedByElevator();
+      } else {
+        if (document.getElementById('elevator-popup')) {
+          document.getElementById('elevator-popup').remove();
+        }
+      }
+    }
+    // Call the function recursively after 0.5 seconds
+    setTimeout(function() {
+      continuouslyCheckElevator();
+    }, 100);
+  }
+  continuouslyCheckElevator().then(r => {});
+
+  async function continuouslyCheckPathWay() {
+    if (thumbRaiser) {
+      if (thumbRaiser.player.isInPathway) {
+        if (thumbRaiser.closestExit.floorId) {
+          thumbRaiser.player.isInPathway = false;
+          await notifyFloorChange(thumbRaiser.closestExit);
+        }
+      } else {
+        if (document.getElementById('notice-popup')) {
+          document.getElementById('notice-popup').remove();
+        }
+      }
+    }
+    // Call the function recursively after 0.5 seconds
+    setTimeout(function() {
+      continuouslyCheckPathWay();
+    }, 100);
+  }
+  continuouslyCheckPathWay().then(r => {});
+  // Function to fetch floors the elevator stepped on
+  async function floorsServedByElevator() {
+    let buildingDesignation;
+    const response = await fetch(environment.apiURL + '/api/buildings', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const buildings = await response.json();
+    buildings.forEach(building => {
+      if (building.designation === selectedFloor.building) {
+        buildingDesignation = building.designation;
+      }
+    });
+    const floors = [];
+    try {
+      const response = await fetch(environment.apiURL + `/api/elevators/?buildingDesignation=${buildingDesignation}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const elevators = await response.json();
+
+      elevators.forEach(elevator => {
+        elevator.floorsServed.forEach(floor => {
+          if (!floors.includes(floor)) {
+            floors.push(floor);
+          }
+        });
+      });
+    } catch (error) {
+      console.error('Error fetching elevators:', error);
+    }
+    floorsServed = floors;
+    try {
+      const responseFloors = await fetch(
+        environment.apiURL + `/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      floorsOfBuildingWithElevator = await responseFloors.json();
+    } catch (error) {
+      console.error('Error fetching floors:', error);
+    }
+    for (const floorNr of floorsServed) {
+      const floor = floorsOfBuildingWithElevator.find(floor => floor.floorNr === floorNr);
+      if (floor) {
+        floorMapsServed.push(floor);
+      }
+    }
+    popupElevatorUi(buildingDesignation, floorMapsServed);
+  }
+
+  function popupElevatorUi(buildingName, floors) {
+    if (document.getElementById('elevator-popup')) {
+      floorMapsServed = [];
+      return;
+    }
+    // create a new div element
+    const newDiv = document.createElement('div');
+    newDiv.setAttribute('id', 'elevator-popup');
+    const newContent = document.createTextNode('Elevator ' + buildingName);
+    newDiv.appendChild(newContent);
+
+    floors.forEach(floor => {
+      const floorBtn = document.createElement('div');
+      floorBtn.setAttribute('class', 'floor-btn');
+      const floorText = document.createTextNode(floor.floorNr.toString());
+      floorBtn.append(floorText);
+      floorBtn.setAttribute('data-floor', floor.floorNr.toString());
+      newDiv.appendChild(floorBtn);
+    });
+
+    const currentDiv = document.getElementById('views-panel');
+    currentDiv.after(newDiv);
+    let floorFromButton;
+    const divs = document.querySelectorAll('.floor-btn');
+    divs.forEach(el =>
+      el.addEventListener('click', event => {
+        event.target.style.backgroundColor = 'red';
+        //clicked button floor data
+        floorFromButton = event.target.getAttribute('data-floor');
+        floors.forEach(floor => {
+          console.log(floor.floorNr, floorFromButton);
+          if (floor.floorNr === parseInt(floorFromButton)) {
+            thumbRaiser.changeMazeForAutoPlay(floor.floorMap);
+            let position = thumbRaiser.maze.cellToCartesian(floor.floorMap.maze.elevators);
+            thumbRaiser.player.position.set(position.x, position.y, position.z);
+          }
+        });
+        setTimeout(function() {
+          document.getElementById('elevator-popup').remove();
+        }, 1000);
+      }),
+    );
+    if (playerAuto) {
+      document.querySelector(`[data-floor="${selectedFloor.floorNr}"]`).style.backgroundColor = 'red';
+    }
+  }
+
   async function fetchAndSetMap(selectedMap) {
     try {
-      floormap = await floorsOfBuilding.find(floor => floor.floorNr === parseInt(selectedMap)).floorMap;
+      selectedFloor = await floorsOfBuilding.find(floor => floor.floorNr === parseInt(selectedMap));
+      floormap = selectedFloor.floorMap;
       if (floormap) {
         console.log('Fetched map:', floormap);
       } else {
@@ -80,7 +389,11 @@ export default function start() {
 
   function fetchBuildings() {
     // Replace the URL with the endpoint that provides the list of buildings
-    fetch(environment.apiURL+'/api/buildings')
+    fetch(environment.apiURL + '/api/buildings', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then(response => response.json())
       .then(buildings => {
         const buildingSelector = document.getElementById('buildingSelector');
@@ -96,18 +409,21 @@ export default function start() {
           buildingSelector.appendChild(option);
         });
       })
-      .then(() => {
-        //TODO: this isn't loading the map on page load
-        // Set the default building and fetch floors
+      .then(async () => {
         const buildingSelector = document.getElementById('buildingSelector');
         const defaultBuilding = buildingSelector.value;
-        fetchFloorsOfBuilding(defaultBuilding);
+        await fetchFloorsOfBuilding(defaultBuilding);
+        thumbRaiser.changeMaze(floorsOfBuilding[0].floorMap);
       })
       .catch(error => console.error('Error fetching buildings:', error));
   }
-  function fetchFloorsOfBuilding(buildingDesignation) {
+  async function fetchFloorsOfBuilding(buildingDesignation) {
     // Replace the URL with the endpoint that provides the list of floors for the selected building
-    fetch(environment.apiURL+`/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`)
+    await fetch(environment.apiURL + `/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then(response => response.json())
       .then(floors => {
         const floorMapSelector = document.getElementById('mapSelector');
@@ -126,9 +442,6 @@ export default function start() {
       })
       .catch(error => console.error('Error fetching floors:', error));
   }
-  //-------------------------------------------------------
-  //ONLY THE MAZE PARAMETERS CODE IS RELEVANT IN initialize()
-  //-------------------------------------------------------
   function initialize() {
     // Create the game
     thumbRaiser = new ThumbRaiser(

@@ -23,6 +23,12 @@ body {
   width: 100%;
 }
 
+.nice-width {
+  width: 45%;
+}
+
+
+
 input[type="submit"] {
   width: 100%;
   padding: 10px;
@@ -84,9 +90,11 @@ input[type="submit"] {
 }
 
 .form-fields-container {
+  flex: 1;
+  padding: 10px;
   display: flex;
-  justify-content: center;
-  margin: 50px;
+  justify-content: space-between; /* Adjust as needed: space-around, space-evenly, flex-start, flex-end */
+  margin: 8px 10px;
 }
 
 .form-field {
