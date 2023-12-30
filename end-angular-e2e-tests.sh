@@ -4,4 +4,6 @@
 
 (tmux kill-session -t backend >/dev/null && echo "Killed backend tmux session! Continuing...")
 
+(tmux kill-session -t gestao_tarefas >/dev/null && echo "Killed gestao_tarefas tmux session! Continuing...")
+
 echo "Done!"

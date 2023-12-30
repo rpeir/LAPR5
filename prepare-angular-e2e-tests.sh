@@ -1,11 +1,13 @@
 #!/bin/bash
 
 # config properties
-NG_FOLDER=./angular-app
+NG_FOLDER="./angular-app"
+GESTAO_TAREFAS_FOLDER="./modulo_gestao_tarefas/GestaoTarefas"
 DB_TEST_MONGO="test"
 DB_TEST_MYSQL="db"
 BACKEND_PORT=4000
 FRONTEND_PORT=4200
+GESTAO_TAREFAS_PORT=6000
 
 # users info
 CAMPUS_MANAGER_INFO='{
@@ -116,6 +118,13 @@ then
     exit 1
 fi
 
+# check if dotnet exist
+if ! command -v dotnet > /dev/null
+then
+    echo "dotnet could not be found. Install it!"
+    exit 1
+fi
+
 
 
 cd $NG_FOLDER &&
@@ -130,8 +139,8 @@ echo "MongoDB running! Continuing..."
 
 # check if mysql is running
 if ! pgrep -x mysqld >/dev/null; then
-        echo "Error: MySQL not running! Try 'sudo mysqld' or 'sudo systemctl start mysql' to start it!"
-        exit 1
+  echo "Error: MySQL not running! Try 'sudo mysqld' or 'sudo systemctl start mysql' to start it!"
+  exit 1
 fi
 echo "MySQL running! Continuing..."
 
@@ -159,7 +168,7 @@ fi
 (tmux kill-session -t backend >/dev/null && echo "Killed backend tmux session! Continuing...")
 
 if fuser -n tcp $BACKEND_PORT >/dev/null; then
-        echo "Detected other frontend running! Close it!"
+        echo "Detected other backend running! Close it!"
 	echo "Close it and press enter to continue."
         read REPLY
 else
@@ -168,6 +177,22 @@ fi
 
 
 (tmux new -s backend -d 'cd ../ && npm run start:test' && echo "Created backend tmux session! Continuing...") || (echo "Error creating backend tmux session" && exit 1)
+
+
+# run gestao_tarefas backend test
+(tmux kill-session -t gestao_tarefas >/dev/null && echo "Killed gestao_tarefas tmux session! Continuing...")
+
+if fuser -n tcp $GESTAO_TAREFAS_PORT >/dev/null; then
+        echo "Detected other gestao_tarefas running! Close it!"
+	echo "Close it and press enter to continue."
+        read REPLY
+else
+        echo "Not detected other gestao_tarefas running! Continuing...";
+fi
+
+
+(tmux new -s gestao_tarefas -d "cd ../$GESTAO_TAREFAS_FOLDER && dotnet run" && echo "Created gestao_tarefas tmux session! Continuing...") || (echo "Error creating gestao_tarefas tmux session" && exit 1)
+
 
 
 # create db roles
