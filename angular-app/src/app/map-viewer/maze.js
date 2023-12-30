@@ -181,19 +181,14 @@ export default class Maze extends THREE.Group {
     if (!floorMap.maze.elevators) {
       return;
     }
-
-    /*for (const elevatorConfig of floorMap.maze.elevators) {
-      const elevator = new Elevator({
-        modelUrl: './assets/map-renderer/models/gltf/Elevator/elevator1.glb',
-        //position: new THREE.Vector3(0, 0, 0),
-        position: this.cellToCartesian(elevatorConfig),
-        rotation: new THREE.Euler(0, 0, 0),
-        scale: new THREE.Vector3(0.1, 0.1, 0.1),
-      });
-      elevator.name = 'elevator';
-      this.add(elevator);
-    }*/
+    const geometry = new THREE.BoxGeometry(2, 1, 2);
+    const material = new THREE.MeshBasicMaterial({ color: 0x222222 });
+    const cube = new THREE.Mesh(geometry, material);
     this.elevatorLocation = floorMap.maze.elevators;
+    //let centeredElevator = [this.elevatorLocation+0.5, this.elevatorLocation+1];
+    let elevatorCartesian = this.cellToCartesian(this.elevatorLocation);
+    cube.position.set(elevatorCartesian.x+0.5, 0, elevatorCartesian.z+0.5);
+    this.add(cube);
   }
 
   // Store the player's initial position and direction
@@ -563,8 +558,6 @@ export default class Maze extends THREE.Group {
       return false;
     }
   }
-
-
 
   loadMap(description) {
     // Store the maze's size, map and exit location

@@ -73,8 +73,11 @@ export default class PathwayController implements IPathwayController {
   public async listPathways(req: Request, res: Response, next: NextFunction) {
     try {
       // @ts-ignore
-      if (req.auth.user.role.name !== 'campus manager') {
-        return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+      if (req.auth.user.role.name !== 'campus manager' && req.auth.user.role.name !== 'user') {
+        return res
+          .status(401)
+          .json('Não tem permissões para aceder a este recurso')
+          .send();
       }
       const buildingSource = req.query.buildingSource as string;
       const buildingDestination = req.query.buildingDestination as string;
@@ -96,8 +99,11 @@ export default class PathwayController implements IPathwayController {
 
   public async findAll(req: Request, res: Response, next: NextFunction) {
     // @ts-ignore
-    if (req.auth.user.role.name !== 'campus manager') {
-      return res.status(401).json('Não tem permissões para aceder a este recurso').send();
+    if (req.auth.user.role.name !== 'campus manager' && req.auth.user.role.name !== 'user') {
+      return res
+        .status(401)
+        .json('Não tem permissões para aceder a este recurso')
+        .send();
     }
     if (req.query.buildingSource || req.query.buildingDestination) {
       next(); return ;

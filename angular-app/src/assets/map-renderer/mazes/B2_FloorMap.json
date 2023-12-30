@@ -67,7 +67,7 @@
         "location": [5.5, 15]
       }
     ],
-    "elevators": [20, 6],
+    "elevators": [6, 20],
     "exitLocation": [
       {
         "floorId": "C_3",

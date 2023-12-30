@@ -16,9 +16,17 @@ export default function start() {
   let floorsOfBuildingWithElevator = [];
   let selectedFloor;
   let playerAuto = false;
+  const token = localStorage.getItem('token');
+  let pathFile = localStorage.getItem('pathFile');
 
   async function initializeAndAnimate() {
     try {
+      if (pathFile) {
+        pathJSON = JSON.parse(pathFile);
+        await loadJsonData(pathJSON);
+        pathFile = null;
+        localStorage.removeItem('pathFile');
+      }
       await changeMap();
       initialize();
       animate();
@@ -33,7 +41,11 @@ export default function start() {
       const fetchPromises = [];
       // Create an array of promises for each building's floors
       for (const building of buildings) {
-        const promise = fetch(environment.apiURL + `/api/floors/building?building=${encodeURIComponent(building)}`)
+        const promise = fetch(environment.apiURL + `/api/floors/building?building=${encodeURIComponent(building)}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
           .then(response => response.json())
           .then(floors => {
             for (const floor of floors) {
@@ -90,14 +102,26 @@ export default function start() {
       // Wait for pathJSON.pathInside[i] to be defined
       await waitFor(() => pathJSON.pathInside[i] !== undefined);
       await waitTime(2000);
-      //thumbRaiser.player.keyStates.forward = true;
-      //await waitTime(3000);
-      //thumbRaiser.player.keyStates.forward = false;
       await thumbRaiser.movePlayer(pathJSON.pathInside[i]);
-      //thumbRaiser.pathInsideMaze = pathJSON.pathInside[i];
-      //check if I need to wait for the player to finish the floor
       i++;
     }
+    notifyFinishedTask();
+  }
+
+  async function notifyFinishedTask() {
+    if (document.getElementById('task-popup')) {
+      return;
+    }
+    // create a new div element
+    const newDiv = document.createElement('div');
+    newDiv.setAttribute('id', 'task-popup');
+    const newContent = document.createTextNode('Task completed!');
+    newDiv.appendChild(newContent);
+    const currentDiv = document.getElementById('views-panel');
+    currentDiv.after(newDiv);
+    setTimeout(function() {
+      newDiv.remove();
+    }, 2500);
   }
 
   function waitTime(ms) {
@@ -171,8 +195,14 @@ export default function start() {
     } else {
       console.log('No match found');
     }
+
     const response = await fetch(
       environment.apiURL + `/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
     );
     let floors = await response.json();
     console.log(floors);
@@ -214,7 +244,7 @@ export default function start() {
     // Call the function recursively after 0.5 seconds
     setTimeout(function() {
       continuouslyCheckElevator();
-    }, 500);
+    }, 100);
   }
   continuouslyCheckElevator().then(r => {});
 
@@ -234,13 +264,17 @@ export default function start() {
     // Call the function recursively after 0.5 seconds
     setTimeout(function() {
       continuouslyCheckPathWay();
-    }, 250);
+    }, 100);
   }
   continuouslyCheckPathWay().then(r => {});
   // Function to fetch floors the elevator stepped on
   async function floorsServedByElevator() {
     let buildingDesignation;
-    const response = await fetch(environment.apiURL + '/api/buildings');
+    const response = await fetch(environment.apiURL + '/api/buildings', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const buildings = await response.json();
     buildings.forEach(building => {
       if (building.designation === selectedFloor.building) {
@@ -249,7 +283,11 @@ export default function start() {
     });
     const floors = [];
     try {
-      const response = await fetch(environment.apiURL + `/api/elevators/?buildingDesignation=${buildingDesignation}`);
+      const response = await fetch(environment.apiURL + `/api/elevators/?buildingDesignation=${buildingDesignation}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       const elevators = await response.json();
 
@@ -267,6 +305,11 @@ export default function start() {
     try {
       const responseFloors = await fetch(
         environment.apiURL + `/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
       );
       floorsOfBuildingWithElevator = await responseFloors.json();
     } catch (error) {
@@ -346,7 +389,11 @@ export default function start() {
 
   function fetchBuildings() {
     // Replace the URL with the endpoint that provides the list of buildings
-    fetch(environment.apiURL + '/api/buildings')
+    fetch(environment.apiURL + '/api/buildings', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then(response => response.json())
       .then(buildings => {
         const buildingSelector = document.getElementById('buildingSelector');
@@ -372,7 +419,11 @@ export default function start() {
   }
   async function fetchFloorsOfBuilding(buildingDesignation) {
     // Replace the URL with the endpoint that provides the list of floors for the selected building
-    await fetch(environment.apiURL + `/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`)
+    await fetch(environment.apiURL + `/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then(response => response.json())
       .then(floors => {
         const floorMapSelector = document.getElementById('mapSelector');
@@ -391,9 +442,6 @@ export default function start() {
       })
       .catch(error => console.error('Error fetching floors:', error));
   }
-  //-------------------------------------------------------
-  //ONLY THE MAZE PARAMETERS CODE IS RELEVANT IN initialize()
-  //-------------------------------------------------------
   function initialize() {
     // Create the game
     thumbRaiser = new ThumbRaiser(

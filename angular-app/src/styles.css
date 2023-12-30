@@ -33,3 +33,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   left: 40%;
   font-size: 35pt;
 }
+
+#task-popup {
+  position: fixed;
+  top: 40%;
+  background-color: rgba(255,255,255, 0.5);
+  padding: 20px;
+  left: 33%;
+  font-size: 60pt;
+}
