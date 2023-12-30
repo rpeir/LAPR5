@@ -2,7 +2,8 @@
 
 # config properties
 NG_FOLDER=./angular-app
-DB_TEST=test
+DB_TEST_MONGO="test"
+DB_TEST_MYSQL="db"
 BACKEND_PORT=4000
 FRONTEND_PORT=4200
 
@@ -108,21 +109,37 @@ then
     exit 1
 fi
 
+# check if mysql exist
+if ! command -v mysql > /dev/null
+then
+    echo "mysql could not be found. Install it!"
+    exit 1
+fi
+
+
 
 cd $NG_FOLDER &&
 
 
 # check if mongod is running
 if ! pgrep -x mongod >/dev/null; then
-	echo "Error: MongoDB not running! Try 'sudo mongod' or 'sudo systemctl enable mongod' to start it!"
+	echo "Error: MongoDB not running! Try 'sudo mongod' or 'sudo systemctl start mongod' to start it!"
 	exit 1
 fi
 echo "MongoDB running! Continuing..."
 
+# check if mysql is running
+if ! pgrep -x mysqld >/dev/null; then
+        echo "Error: MySQL not running! Try 'sudo mysqld' or 'sudo systemctl start mysql' to start it!"
+        exit 1
+fi
+echo "MySQL running! Continuing..."
 
-# clear test db
-((echo "use $DB_TEST\n db.dropDatabase()" | mongosh) && echo "Cleared test database! Continuing...") || (echo "Error clearing test database" && exit 1)
+# clear test db mongod
+( (echo "use $DB_TEST_MONGO\n db.dropDatabase()" | mongosh) && echo "Cleared mongoDB test database! Continuing...") || (echo "Error clearing mongoDB test database" && exit 1)
 
+# clear test db mysql
+( (echo "DROP SCHEMA $DB_TEST_MYSQL; exit;" | mysql -u root -p) && echo "Cleared MySQL test database! Continuing...") || (echo "Error clearing MySQL test database" && exit 1)
 
 # run frontend test
 (tmux kill-session -t frontend >/dev/null && echo "Killed frontend tmux session! Continuing...")
@@ -154,12 +171,12 @@ fi
 
 
 # create db roles
-((echo "use $DB_TEST\n db.roles.insertMany( $ROLES )" | mongosh)\
+( (echo "use $DB_TEST_MONGO\n db.roles.insertMany( $ROLES )" | mongosh)\
 && echo "Created db roles! Continuing...") || (echo "Error creating db roles" && exit 1)
 
 
 # create db users
-((echo "use $DB_TEST\n db.users.insertMany([ $TASK_MANAGER_INFO , $FLEET_MANAGER_INFO , $CAMPUS_MANAGER_INFO , $ADMIN_INFO , $USER_INFO ])" | mongosh)\
+( (echo "use $DB_TEST_MONGO\n db.users.insertMany([ $TASK_MANAGER_INFO , $FLEET_MANAGER_INFO , $CAMPUS_MANAGER_INFO , $ADMIN_INFO , $USER_INFO ])" | mongosh)\
 && echo "Created db users! Continuing...") || (echo "Error creating db users" && exit 1)
 
 

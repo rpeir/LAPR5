@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Task } from "../task/task";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TaskSequenceService } from "./task-sequence.service";
+import {FloorService} from "../floor/floor.service";
 
 @Component({
   selector: "app-get-task-sequence",
@@ -9,25 +10,31 @@ import { TaskSequenceService } from "./task-sequence.service";
   styleUrls: ["./get-task-sequence.component.css"]
 })
 export class GetTaskSequenceComponent implements OnInit {
-  constructor(private taskSequenceService: TaskSequenceService, private route: ActivatedRoute) {
+  constructor(
+    private taskSequenceService: TaskSequenceService,
+    private route: ActivatedRoute,
+    private floorService: FloorService
+  ) {
   }
 
   atLeastOneCheckboxChecked = false;
   tasks: Task[] = [];
-  displayedColumns = ["description",
+  displayedColumns = [
+    "description",
     "type",
     "userId",
     "status",
     "pickupRoomId",
     "deliveryRoomId",
-    "taskRequestId",
+    "identificationCode",
     "senderName",
     "receiverName",
     "senderContact",
     "receiverContact",
     "confirmationCode",
     "emergencyNumber",
-    "floorId"];
+    "floorNr",
+  ];
   activateNrGenerations = false;
   activateStabilization = false;
   activateIdealCost = false;
@@ -42,7 +49,13 @@ export class GetTaskSequenceComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.taskSequenceService.currentTasks.subscribe(tasks => this.tasks = tasks);
+    this.taskSequenceService.currentTasks.subscribe({
+      next: (tasks) => {
+       this.tasks = tasks;
+       this.getFloors(tasks);
+      }
+    }
+    );
   }
 
   getSequence() {
@@ -75,5 +88,17 @@ export class GetTaskSequenceComponent implements OnInit {
   validateCheckboxes() {
     this.atLeastOneCheckboxChecked =
       this.activateNrGenerations || this.activateStabilization || this.activateIdealCost;
+  }
+
+  private getFloors(tasks: Task[]) {
+    tasks.map((task) => {
+      if (task.floorId) {
+        this.floorService.getFloorById(task.floorId).subscribe({
+          next: (floor) => {
+            task.floor = floor;
+          }
+        })
+      }
+    })
   }
 }

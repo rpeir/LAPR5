@@ -21,7 +21,7 @@ interface TaskProps {
   senderContact?: string;
   receiverContact?: string;
   confirmationCode?: string;
-  EmergencyNumber?: string;
+  emergencyNumber?: string;
   floorId?: number;
 }
 
@@ -82,8 +82,8 @@ export class Task extends AggregateRoot<TaskProps>{
     return this.props.confirmationCode;
   }
 
-  get EmergencyNumber(): string | undefined {
-    return this.props.EmergencyNumber;
+  get emergencyNumber(): string | undefined {
+    return this.props.emergencyNumber;
   }
 
   get floorId(): number | undefined {

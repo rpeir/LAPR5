@@ -13,7 +13,12 @@ export default class FloorController implements IFloorController {
   public async getFloorById(req: Request, res: Response, next: NextFunction) {
     try {
       // @ts-ignore
-      if (req.auth.user.role.name !== 'campus manager' && req.auth.user.role.name !== 'user') {
+      if (req.auth.user.role.name !== 'campus manager'
+        // @ts-ignore
+        && req.auth.user.role.name !== 'user'
+        // @ts-ignore
+        && req.auth.user.role.name !== 'task manager'
+      ) {
         return res
           .status(401)
           .json('Não tem permissões para aceder a este recurso')
@@ -77,7 +82,12 @@ export default class FloorController implements IFloorController {
   public async getFloorsOfBuilding(req: Request, res: Response, next: NextFunction) {
     try {
       // @ts-ignore
-      if (req.auth.user.role.name !== 'campus manager' && req.auth.user.role.name !== 'user') {
+      if (req.auth.user.role.name !== 'campus manager'
+        // @ts-ignore
+        && req.auth.user.role.name !== 'user'
+        // @ts-ignore
+        && req.auth.user.role.name !== 'task manager'
+      ) {
         return res
           .status(401)
           .json('Não tem permissões para aceder a este recurso')
