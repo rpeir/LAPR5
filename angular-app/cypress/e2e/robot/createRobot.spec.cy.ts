@@ -1,5 +1,7 @@
 describe('Create Robot spec', () => {
   beforeEach(() => {
+    // @ts-ignore
+    cy.loginFleetManager();
     cy.visit('robots/create');
   });
   it('should create a new robot', () => {

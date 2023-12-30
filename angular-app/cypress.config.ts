@@ -17,6 +17,19 @@ export default defineConfig({
       "cypress/e2e/robot/*.ts",
       "cypress/e2e/task/*.ts",
       //...
-    ]
+    ],
+    env: {
+      TASK_MANAGER_EMAIL: "taskmanager@isep.ipp.pt",
+      TASK_MANAGER_PASSWORD: "Sapo--1234",
+      CAMPUS_MANAGER_EMAIL: "campusmanager@isep.ipp.pt",
+      CAMPUS_MANAGER_PASSWORD: "Sapo--1234",
+      FLEET_MANAGER_EMAIL: "fleetmanager@isep.ipp.pt",
+      FLEET_MANAGER_PASSWORD: "Sapo--1234",
+      USER_EMAIL: "1210123@isep.ipp.pt",
+      USER_PASSWORD: "Sapo--1234",
+      ADMIN_EMAIL: "sysadmin@isep.ipp.pt",
+      ADMIN_PASSWORD: "Sapo--1234",
+      API_BASE_URL: "http://localhost:4000",
+    }
   },
 });

@@ -4,6 +4,8 @@ import { Pathway } from "../../../src/app/pathway/pathway";
 
 describe('EditPathwayComponent', () => {
   beforeEach(() => {
+    // @ts-ignore
+    cy.loginCampusManager();
     cy.visit("pathways/edit");
   });
 

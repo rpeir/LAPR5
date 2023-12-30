@@ -3,6 +3,8 @@ import { RobotType } from "../../../src/app/robot-type/robot-type";
 describe('RobotTypeComponent', () => {
 
   beforeEach(() => {
+    // @ts-ignore
+    cy.loginFleetManager();
     cy.visit('robotTypes');
   });
 

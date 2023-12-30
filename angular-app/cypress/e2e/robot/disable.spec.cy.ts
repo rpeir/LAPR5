@@ -3,6 +3,8 @@ import { Robot } from "../../../src/app/robot/robot";
 describe('DisableRobotComponent', () => {
 
   beforeEach(() => {
+    // @ts-ignore
+    cy.loginFleetManager();
     cy.visit('robots/disable');
   });
 

@@ -2,6 +2,8 @@
 
 describe('PendingRequestsComponent', () => {
   beforeEach(() => {
+    // @ts-ignore
+    cy.loginTaskManager();
     cy.visit("tasks/pending");
   });
 

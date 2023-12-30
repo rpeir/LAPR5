@@ -2,6 +2,8 @@
 
 describe('CreateBuildingComponent', () => {
   beforeEach(() => {
+    // @ts-ignore
+    cy.loginCampusManager();
     cy.visit('/building/create');
   });
 

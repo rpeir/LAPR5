@@ -3,6 +3,8 @@ import { Room } from "../../../src/app/room/room";
 
 describe('CreateRoomComponent', () => {
   beforeEach(() => {
+    // @ts-ignore
+    cy.loginCampusManager();
     cy.visit("rooms/create");
   });
 

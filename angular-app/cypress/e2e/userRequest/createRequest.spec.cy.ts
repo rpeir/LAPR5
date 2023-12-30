@@ -1,6 +1,6 @@
 describe('CreateUserRequestComponent', () => {
   beforeEach(() => {
-    cy.visit('/api/auth/signUpRequest')
+    cy.visit('/signup')
   });
   it('should create a new user request', () => {
     const userData = {

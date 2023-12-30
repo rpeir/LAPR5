@@ -2,6 +2,8 @@ import { response } from 'express';
 
 describe('edit floor spec', () => {
   beforeEach(() => {
+    // @ts-ignore
+    cy.loginCampusManager();
     cy.visit('floors/edit');
   });
   it('should edit a floor', () => {
