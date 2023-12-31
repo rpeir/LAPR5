@@ -187,8 +187,7 @@ selecionarResto(Resto,QtdRestante,Restantes):-
     ordena_populacao(RandomResto,RandomRestoOrdenado),
     removerMultiplicaoRandom(RandomRestoOrdenado,RestoOrdenado),
     avalia_populacao(RestoOrdenado,PopulacaoAvaliada),!,
-    ordena_populacao(PopulacaoAvaliada,PopulacaoOrdenada),
-    separar_n_elementos(PopulacaoOrdenada, QtdRestante, Restantes, _).
+    separar_n_elementos(PopulacaoAvaliada, QtdRestante, Restantes, _).
 
 multiplicarPorRandom([],[]).
 multiplicarPorRandom([Individuo*V|Resto],[Individuo*V1|Resto1]):-
@@ -354,7 +353,17 @@ calcularCustoEntreTodasAsTarefas(ListaDeTarefas) :-
 %======================================
 % gerar ataravez de Permutacoes
 %======================================
-
+analisa:-
+   findall(ID, tarefa(ID, _, _, _, _), ListaTarefasIDs),
+   length(ListaTarefasIDs, NrTarefas),
+   write('Numero de tarefas: '), write(NrTarefas), nl,
+  get_time(T1),
+  (geraComPermutacoes;true),
+  get_time(T2),
+  T is T2 - T1,
+  write('Tempo de execucao: '),write(T),nl,
+  bestPermutation(ActualBestSolution),
+  write('Melhor solucao: '),write(ActualBestSolution),nl.
 
 geraComPermutacoes:-
       findall(Tarefa,tarefa(Tarefa,_,_,_,_),ListaTarefas),
