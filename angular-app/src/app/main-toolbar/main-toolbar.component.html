@@ -16,9 +16,6 @@
       <button id="obtain-execution-sequence" mat-menu-item [routerLink]="'/tasks/sequence'">
         <span>Obtain Execution Sequence</span>
       </button>
-      <button id="makeTaskRequest" mat-menu-item [routerLink]="'/tasks/makeTaskRequest'">
-        <span>Request a task</span>
-      </button>
     </div>
 
     <div id="campus-manager-options" *ngSwitchCase="'campus manager'">
@@ -34,9 +31,6 @@
       <button id="rooms-option" mat-menu-item [routerLink]="'/rooms'">
         <span>Rooms</span>
       </button>
-      <button id="makeTaskRequestCampusManager" mat-menu-item [routerLink]="'/tasks/makeTaskRequest'">
-        <span>Request a task</span>
-      </button>
       <button id="pathways-option" mat-menu-item [routerLink]="'/pathways'">
         <span>Pathways</span>
       </button>
@@ -48,9 +42,6 @@
       </button>
       <button id="robot-types-option" mat-menu-item [routerLink]="'/robotTypes'">
         <span>Robot types</span>
-      </button>
-      <button id="makeTaskRequestFleetManager" mat-menu-item [routerLink]="'/tasks/makeTaskRequest'">
-        <span>Request a task</span>
       </button>
     </div>
 
@@ -64,10 +55,7 @@
     </div>
 
     <div id="user-options" *ngSwitchCase="'user'">
-      <button id="request-task-option" mat-menu-item [routerLink]="'/tasks/request'">
-        <span>Request Task</span>
-      </button>
-      <button id="map-viewer-option" mat-menu-item [routerLink]="'/map-viewer'">
+      <button id="map-viewer-option" mat-menu-item (click)="goToMap()">
         <span>Map Viewer</span>
       </button>
       <button id="makeTaskRequestUser" mat-menu-item [routerLink]="'/tasks/makeTaskRequest'">

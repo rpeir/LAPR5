@@ -1,5 +1,7 @@
 describe('EditBuildingComponent', () => {
   beforeEach(() => {
+    // @ts-ignore
+    cy.loginCampusManager();
     cy.visit('/building/edit');
   });
   it('should edit a building', () => {

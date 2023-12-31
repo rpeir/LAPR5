@@ -11,11 +11,15 @@ import {Role} from "../user/role";
 export class MainToolbarComponent implements OnInit{
   userName : string = '';
   userRole? : Role | string;
-  constructor(private router: Router, private authService : AuthService) {}
+  constructor(private router: Router, private authService : AuthService) {
+  }
 
   ngOnInit() {
     this.userName = this.authService.getUser()?.firstName ?? 'Non logged user';
     this.userRole = this.authService.getUser()?.role;
   }
 
+  goToMap(){
+    window.location.href = '/map-viewer';
+  }
 }

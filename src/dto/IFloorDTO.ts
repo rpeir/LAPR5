@@ -17,6 +17,7 @@ export interface IFloorDTO {
           width: number;
           height: number;
         };
+        uppercorner: number[];
       }[];
       exits: {
         label: string;

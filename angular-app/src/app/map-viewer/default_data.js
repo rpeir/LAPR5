@@ -38,10 +38,6 @@ export const cubeTextureData = {
 };
 
 export const mazeData = {
-  url: './assets/map-renderer/mazes/Loquitas_10x10.json',
-  designCredits: 'Maze designed by Cecília Fernandes and Nikita.',
-  texturesCredits:
-    "Maze textures downloaded from <a href='https://www.texturecan.com/' target='_blank' rel='noopener'>TextureCan</a>.",
   scale: new THREE.Vector3(1.0, 1.0, 1.0),
   helpersColor: new THREE.Color(0xffffff),
 };

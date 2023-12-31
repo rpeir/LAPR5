@@ -48,8 +48,10 @@ export default class Player extends THREE.Group {
       forward: false,
       shiftKey: false,
     };
-
+    this.isInElevator = false;
+    this.isInPathway = false;
     this.loaded = false;
+    this.playerAuto = false;
 
     this.onLoad = function(description) {
       this.add(description.scene);

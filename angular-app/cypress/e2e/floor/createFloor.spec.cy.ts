@@ -2,6 +2,8 @@ import {intersection} from "lodash";
 
 describe('Create Floor spec', () => {
   beforeEach(() => {
+    // @ts-ignore
+    cy.loginCampusManager();
     cy.visit('floors/create');
   });
   it('should create a new floor',()=>{

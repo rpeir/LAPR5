@@ -17,6 +17,8 @@ export class TaskRequest {
   confirmationCode? : string;
   emergencyNumber? : string;
   floorId? : string;
+  identificationCode?: string;
+  createdAt?: Date;
   user? : User;
   pickupRoom? : Room;
   deliveryRoom? : Room;

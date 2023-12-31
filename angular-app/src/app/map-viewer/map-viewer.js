@@ -2,16 +2,30 @@ import * as THREE from 'three';
 import Orientation from './orientation.js';
 import ThumbRaiser from './thumb_raiser.js';
 import 'lodash';
-import { environment } from "../../environments/environment";
+import { environment } from '../../environments/environment';
 
 let thumbRaiser;
 
 export default function start() {
   let floormap; // The map of the selected floor
   let floorsOfBuilding = []; // The list of floors of the selected building
+  let floorsOfPath = [];
+  let pathJSON;
+  let floorsServed = [];
+  let floorMapsServed = [];
+  let floorsOfBuildingWithElevator = [];
+  let selectedFloor;
+  const token = localStorage.getItem('token');
+  let pathFile = localStorage.getItem('pathFile');
 
   async function initializeAndAnimate() {
     try {
+      if (pathFile) {
+        pathJSON = JSON.parse(pathFile);
+        await loadJsonData(pathJSON);
+        pathFile = null;
+        localStorage.removeItem('pathFile');
+      }
       await changeMap();
       initialize();
       animate();
@@ -19,7 +33,131 @@ export default function start() {
       console.error('An error occurred during initialization:', error);
     }
   }
+  // Function to load the json with a path
+  async function loadJsonData(jsonData) {
+    try {
+      const buildings = jsonData.buildings;
 
+      for (let i = 0, len = buildings.length; i < len; i++) {
+        try {
+          const response = await fetch(
+            `${environment.apiURL}/api/floors/building?building=${encodeURIComponent(buildings[i])}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+          const floors = await response.json();
+          for (const floor of floors) {
+            if (
+              !floorsOfPath.includes(floor) &&
+              jsonData.paths.find(
+                path =>
+                  path.floorSource === floor.description ||
+                  jsonData.paths.find(path => path.floorDestination === floor.description),
+              )
+            ) {
+              floorsOfPath.push(floor);
+            }
+          }
+        } catch (error) {
+          console.error(`Error fetching floors for building ${buildings[i]}:`, error);
+        }
+      }
+    } catch (error) {
+      console.error('Error processing JSON data:', error);
+    }
+    thumbRaiser.player.playerAuto = true;
+    // Start the automatic path
+    await changeMapsForAutomaticPath(jsonData.paths);
+    thumbRaiser.player.playerAuto = false;
+    floorsOfPath = [];
+  }
+  document.getElementById('loadJsonButton').addEventListener('click', function() {
+    const fileInput = document.getElementById('jsonFile');
+    const file = fileInput.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        try {
+          pathJSON = JSON.parse(event.target.result);
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          loadJsonData(pathJSON).then(r => console.log('Automatic path finished'));
+        } catch (error) {
+          console.error('Error parsing JSON:', error);
+        }
+      };
+      reader.readAsText(file);
+    } else {
+      console.error('No file selected.');
+    }
+  });
+  // Function to change the maps for the automatic path. It waits for the player to finish the current floor before changing the map
+  async function changeMapsForAutomaticPath() {
+    let oldFloor = floorsOfPath[0];
+    let i = 0;
+    for (const floor of floorsOfPath) {
+      selectedFloor = floor;
+      await waitFor(() => pathJSON.pathInside[i] !== undefined);
+      if (oldFloor.building !== floor.building) {
+        await notifyFloorChangeAuto(floor);
+      }
+      await thumbRaiser.changeMazeForAutoPlay(floor.floorMap, pathJSON.pathInside[i]);
+      await waitTime(300);
+      await thumbRaiser.movePlayer(pathJSON.pathInside[i]);
+      i++;
+      oldFloor = floor;
+    }
+    await notifyFinishedTask();
+  }
+
+  async function notifyFinishedTask() {
+    if (document.getElementById('task-popup')) {
+      return;
+    }
+    // create a new div element
+    const newDiv = document.createElement('div');
+    newDiv.setAttribute('id', 'task-popup');
+    const newContent = document.createTextNode('Task completed!');
+    newDiv.appendChild(newContent);
+    const currentDiv = document.getElementById('views-panel');
+    currentDiv.after(newDiv);
+    setTimeout(function() {
+      newDiv.remove();
+    }, 2500);
+  }
+  async function notifyFloorChangeAuto(floor) {
+    if (document.getElementById('notice-popup2')) {
+      return;
+    }
+    const newDiv = document.createElement('div');
+    newDiv.setAttribute('id', 'notice-popup2');
+    const newContent = document.createTextNode('Moving to floor ' + floor.description);
+    newDiv.appendChild(newContent);
+    const currentDiv = document.getElementById('views-panel');
+    currentDiv.after(newDiv);
+    setTimeout(function() {
+      newDiv.remove();
+    }, 2000);
+  }
+
+  function waitTime(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  // Utility function to wait for a condition to be true
+  function waitFor(conditionFunction) {
+    return new Promise(resolve => {
+      const checkCondition = () => {
+        if (conditionFunction()) {
+          resolve();
+        } else {
+          setTimeout(checkCondition, 100); // Check again in 100 milliseconds
+        }
+      };
+      checkCondition();
+    });
+  }
   document.addEventListener('DOMContentLoaded', function() {
     // Fetch buildings and set up event listener after the DOM is loaded
     fetchBuildings();
@@ -47,7 +185,7 @@ export default function start() {
     const selectedMap = mapSelector.value;
     try {
       if (!floorsOfBuilding || floorsOfBuilding.length === 0) {
-        //console.error('No floors available for the selected building.');
+        console.error('No floors available for the selected building.');
         return;
       }
       // Call the function to fetch the selected map
@@ -63,14 +201,199 @@ export default function start() {
     }
   }
 
+  async function notifyFloorChange(exit) {
+    if (document.getElementById('notice-popup')) {
+      return;
+    }
+    let buildingDesignation;
+    const regex = /([^_]+)_\d/;
+    const match = exit.floorId.match(regex);
+    if (match) {
+      buildingDesignation = match[1];
+    }
+    const response = await fetch(
+      environment.apiURL + `/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    let floors = await response.json();
+    console.log(floors);
+    const currentFloor = selectedFloor;
+    const floor = await floors.find(floor => floor.description === exit.floorId);
+    // create a new div element
+    const newDiv = document.createElement('div');
+    newDiv.setAttribute('id', 'notice-popup');
+    const newContent = document.createTextNode('Moving to floor floor ' + exit.floorId);
+    newDiv.appendChild(newContent);
+
+    const currentDiv = document.getElementById('views-panel');
+    currentDiv.after(newDiv);
+
+    setTimeout(function() {
+      newDiv.remove();
+    }, 3000);
+    try {
+      await thumbRaiser.changeMazeForAutoPlay(floor.floorMap);
+      selectedFloor = floor;
+      let newExitLocation = floor.floorMap.maze.exitLocation.find(exit => exit.floorId === currentFloor.description);
+      let newPosition = thumbRaiser.maze.cellToCartesian(newExitLocation.location);
+      thumbRaiser.player.position.set(newPosition.x, newPosition.y, newPosition.z);
+    } catch (error) {
+      console.error('Error changing map:', error);
+    }
+  }
+  async function continuouslyCheckElevator() {
+    // Check the value of the variable
+    if (thumbRaiser) {
+      if (thumbRaiser.player.isInElevator) {
+        await floorsServedByElevator();
+        if (thumbRaiser.player.playerAuto) {
+          await waitTime(1000);
+        }
+      } else {
+        if (document.getElementById('elevator-popup')) {
+          document.getElementById('elevator-popup').remove();
+        }
+      }
+    }
+    // Call the function recursively after 0.5 seconds
+    setTimeout(function() {
+      continuouslyCheckElevator();
+    }, 20);
+  }
+  continuouslyCheckElevator().then(r => {});
+
+  async function continuouslyCheckPathWay() {
+    if (thumbRaiser) {
+      if (thumbRaiser.player.isInPathway) {
+        if (thumbRaiser.closestExit.floorId) {
+          thumbRaiser.player.isInPathway = false;
+          await notifyFloorChange(thumbRaiser.closestExit);
+        }
+      } else {
+        if (document.getElementById('notice-popup')) {
+          document.getElementById('notice-popup').remove();
+        }
+      }
+    }
+    // Call the function recursively after 0.5 seconds
+    setTimeout(function() {
+      continuouslyCheckPathWay();
+    }, 50);
+  }
+  continuouslyCheckPathWay().then(r => {});
+  // Function to fetch floors the elevator stepped on
+  async function floorsServedByElevator() {
+    let buildingDesignation;
+    const response = await fetch(environment.apiURL + '/api/buildings', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const buildings = await response.json();
+    buildings.forEach(building => {
+      if (building.designation === selectedFloor.building) {
+        buildingDesignation = building.designation;
+      }
+    });
+    const floors = [];
+    try {
+      const response = await fetch(environment.apiURL + `/api/elevators/?buildingDesignation=${buildingDesignation}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const elevators = await response.json();
+
+      elevators.forEach(elevator => {
+        elevator.floorsServed.forEach(floor => {
+          if (!floors.includes(floor)) {
+            floors.push(floor);
+          }
+        });
+      });
+    } catch (error) {
+      console.error('Error fetching elevators:', error);
+    }
+    floorsServed = floors;
+    try {
+      const responseFloors = await fetch(
+        environment.apiURL + `/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      floorsOfBuildingWithElevator = await responseFloors.json();
+    } catch (error) {
+      console.error('Error fetching floors:', error);
+    }
+    for (const floorNr of floorsServed) {
+      const floor = floorsOfBuildingWithElevator.find(floor => floor.floorNr === floorNr);
+      if (floor) {
+        floorMapsServed.push(floor);
+      }
+    }
+    popupElevatorUi(buildingDesignation, floorMapsServed);
+  }
+
+  function popupElevatorUi(buildingName, floors) {
+    if (document.getElementById('elevator-popup')) {
+      floorMapsServed = [];
+      return;
+    }
+    // create a new div element
+    const newDiv = document.createElement('div');
+    newDiv.setAttribute('id', 'elevator-popup');
+    const newContent = document.createTextNode('Elevator ' + buildingName);
+    newDiv.appendChild(newContent);
+
+    floors.forEach(floor => {
+      const floorBtn = document.createElement('div');
+      floorBtn.setAttribute('class', 'floor-btn');
+      const floorText = document.createTextNode(floor.floorNr.toString());
+      floorBtn.append(floorText);
+      floorBtn.setAttribute('data-floor', floor.floorNr.toString());
+      newDiv.appendChild(floorBtn);
+    });
+
+    const currentDiv = document.getElementById('views-panel');
+    currentDiv.after(newDiv);
+    let floorFromButton;
+    const divs = document.querySelectorAll('.floor-btn');
+    divs.forEach(el =>
+      el.addEventListener('click', event => {
+        event.target.style.backgroundColor = 'red';
+        //clicked button floor data
+        floorFromButton = event.target.getAttribute('data-floor');
+        floors.forEach(floor => {
+          if (floor.floorNr === parseInt(floorFromButton)) {
+            selectedFloor = floor;
+            thumbRaiser.changeMazeForAutoPlay(floor.floorMap);
+            let position = thumbRaiser.maze.cellToCartesian(floor.floorMap.maze.elevators);
+            thumbRaiser.player.position.set(position.x, position.y, position.z);
+          }
+        });
+        setTimeout(function() {
+          document.getElementById('elevator-popup').remove();
+        }, 2000);
+      }),
+    );
+    if (thumbRaiser.player.playerAuto) {
+      document.querySelector(`[data-floor="${selectedFloor.floorNr}"]`).style.backgroundColor = 'red';
+    }
+    floorMapsServed = [];
+  }
+
   async function fetchAndSetMap(selectedMap) {
     try {
-      floormap = await floorsOfBuilding.find(floor => floor.floorNr === parseInt(selectedMap)).floorMap;
-      if (floormap) {
-        console.log('Fetched map:', floormap);
-      } else {
-        console.error('Selected floor not found');
-      }
+      selectedFloor = await floorsOfBuilding.find(floor => floor.floorNr === parseInt(selectedMap));
+      floormap = selectedFloor.floorMap;
       return floormap;
     } catch (error) {
       console.error('An error occurred while fetching and setting the map:', error);
@@ -80,7 +403,11 @@ export default function start() {
 
   function fetchBuildings() {
     // Replace the URL with the endpoint that provides the list of buildings
-    fetch(environment.apiURL+'/api/buildings')
+    fetch(environment.apiURL + '/api/buildings', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then(response => response.json())
       .then(buildings => {
         const buildingSelector = document.getElementById('buildingSelector');
@@ -96,18 +423,22 @@ export default function start() {
           buildingSelector.appendChild(option);
         });
       })
-      .then(() => {
-        //TODO: this isn't loading the map on page load
-        // Set the default building and fetch floors
+      .then(async () => {
         const buildingSelector = document.getElementById('buildingSelector');
         const defaultBuilding = buildingSelector.value;
-        fetchFloorsOfBuilding(defaultBuilding);
+        await fetchFloorsOfBuilding(defaultBuilding);
+        selectedFloor = floorsOfBuilding[0];
+        thumbRaiser.changeMaze(floorsOfBuilding[0].floorMap);
       })
       .catch(error => console.error('Error fetching buildings:', error));
   }
-  function fetchFloorsOfBuilding(buildingDesignation) {
+  async function fetchFloorsOfBuilding(buildingDesignation) {
     // Replace the URL with the endpoint that provides the list of floors for the selected building
-    fetch(environment.apiURL+`/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`)
+    await fetch(environment.apiURL + `/api/floors/building?building=${encodeURIComponent(buildingDesignation)}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then(response => response.json())
       .then(floors => {
         const floorMapSelector = document.getElementById('mapSelector');
@@ -126,47 +457,12 @@ export default function start() {
       })
       .catch(error => console.error('Error fetching floors:', error));
   }
-  //-------------------------------------------------------
-  //ONLY THE MAZE PARAMETERS CODE IS RELEVANT IN initialize()
-  //-------------------------------------------------------
   function initialize() {
     // Create the game
     thumbRaiser = new ThumbRaiser(
       {}, // General Parameters
       {
         enabled: true,
-        introductionClips: [
-          {
-            url: './assets/map-renderer/clips/el-gringo-12613.mp3',
-            position: 'initial', // Global (non-positional) audio object: ""; positional audio object: "scene x y z" (scene specific position in cartesian coordinates), "maze line column" (maze specific position in cell coordinates), "exit" (maze exit location), "initial" (player initial position), "player" (player current position), "spotlight" (spotlight current position)
-            referenceDistance: 1.0,
-            loop: false,
-            volume: 0.5,
-          },
-        ],
-        idleClips: [
-          {
-            url: './assets/map-renderer/clips/Clearing-Throat-Moderate-Speed-www.fesliyanstudios.com.mp3',
-            position: 'player',
-            referenceDistance: 1.0,
-            loop: false,
-            volume: 0.75,
-          },
-          {
-            url: './assets/map-renderer/clips/Small-Double-Cough-1-www.fesliyanstudios.com.mp3',
-            position: 'player',
-            referenceDistance: 1.0,
-            loop: false,
-            volume: 0.75,
-          },
-          {
-            url: './assets/map-renderer/clips/Yawn-A2-www.fesliyanstudios.com.mp3',
-            position: 'player',
-            referenceDistance: 1.0,
-            loop: false,
-            volume: 0.75,
-          },
-        ],
         deathClips: [
           {
             url: './assets/map-renderer/clips/176653326.mp3',
@@ -178,29 +474,6 @@ export default function start() {
           {
             url: './assets/map-renderer/clips/Horn+Squeeze+Clown.mp3',
             position: 'player',
-            referenceDistance: 1.0,
-            loop: false,
-            volume: 0.75,
-          },
-        ],
-        endClips: [
-          {
-            url: './assets/map-renderer/clips/Ba-Bum-Tss-Joke-Drum-A1-www.fesliyanstudios.com.mp3',
-            position: 'exit',
-            referenceDistance: 1.0,
-            loop: false,
-            volume: 2.0,
-          },
-          {
-            url: './assets/map-renderer/clips/yay-6326.mp3',
-            position: 'exit',
-            referenceDistance: 1.0,
-            loop: false,
-            volume: 0.75,
-          },
-          {
-            url: './assets/map-renderer/clips/crowd-cheer-ii-6263.mp3',
-            position: 'exit',
             referenceDistance: 1.0,
             loop: false,
             volume: 0.75,
@@ -238,19 +511,6 @@ export default function start() {
               "Skybox created by <a href='https://opengameart.org/content/red-eclipse-skyboxes' target='_blank' rel='noopener'>Red Eclipse</a>.",
           },
           {
-            // Flat sunset
-            name: 'Flat sunset',
-            texturePath: './assets/map-renderer/cube_textures/red-eclipse-skyboxes/skyboxes/',
-            texturePositiveXUrl: 'sunsetflat_ft.jpg',
-            textureNegativeXUrl: 'sunsetflat_bk.jpg',
-            texturePositiveYUrl: 'sunsetflat_up.jpg',
-            textureNegativeYUrl: 'sunsetflat_dn.jpg',
-            texturePositiveZUrl: 'sunsetflat_rt.jpg',
-            textureNegativeZUrl: 'sunsetflat_lf.jpg',
-            credits:
-              "Skybox created by <a href='https://opengameart.org/content/red-eclipse-skyboxes' target='_blank' rel='noopener'>Red Eclipse</a>.",
-          },
-          {
             // Calm sea
             name: 'Calm sea',
             texturePath: './assets/map-renderer/cube_textures/xonotic-skyboxes/skyboxes/calm_sea/',
@@ -264,19 +524,6 @@ export default function start() {
               "Skybox created by <a href='https://opengameart.org/content/xonotic-skyboxes' target='_blank' rel='noopener'>Xonotic</a>.",
           },
           {
-            // Distant sunset
-            name: 'Distant sunset',
-            texturePath: './assets/map-renderer/cube_textures/xonotic-skyboxes/skyboxes/distant_sunset/',
-            texturePositiveXUrl: 'distant_sunset_ft.jpg',
-            textureNegativeXUrl: 'distant_sunset_bk.jpg',
-            texturePositiveYUrl: 'distant_sunset_up.jpg',
-            textureNegativeYUrl: 'distant_sunset_dn.jpg',
-            texturePositiveZUrl: 'distant_sunset_rt.jpg',
-            textureNegativeZUrl: 'distant_sunset_lf.jpg',
-            credits:
-              "Skybox created by <a href='https://opengameart.org/content/xonotic-skyboxes' target='_blank' rel='noopener'>Xonotic</a>.",
-          },
-          {
             // Exosystem
             name: 'Exosystem',
             texturePath: './assets/map-renderer/cube_textures/xonotic-skyboxes/skyboxes/exosystem/',
@@ -286,19 +533,6 @@ export default function start() {
             textureNegativeYUrl: 'exosystem_dn.jpg',
             texturePositiveZUrl: 'exosystem_rt.jpg',
             textureNegativeZUrl: 'exosystem_lf.jpg',
-            credits:
-              "Skybox created by <a href='https://opengameart.org/content/xonotic-skyboxes' target='_blank' rel='noopener'>Xonotic</a>.",
-          },
-          {
-            // Heaven
-            name: 'Heaven',
-            texturePath: './assets/map-renderer/cube_textures/xonotic-skyboxes/skyboxes/heaven/',
-            texturePositiveXUrl: 'heaven_ft.jpg',
-            textureNegativeXUrl: 'heaven_bk.jpg',
-            texturePositiveYUrl: 'heaven_up.jpg',
-            textureNegativeYUrl: 'heaven_dn.jpg',
-            texturePositiveZUrl: 'heaven_rt.jpg',
-            textureNegativeZUrl: 'heaven_lf.jpg',
             credits:
               "Skybox created by <a href='https://opengameart.org/content/xonotic-skyboxes' target='_blank' rel='noopener'>Xonotic</a>.",
           },

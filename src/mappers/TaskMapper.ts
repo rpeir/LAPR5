@@ -15,24 +15,28 @@ export class TaskMapper extends Mapper<Task> {
     const senderContact = task.senderContact ? task.senderContact : undefined;
     const receiverContact = task.receiverContact ? task.receiverContact : undefined;
     const confirmationCode = task.confirmationCode ? task.confirmationCode : undefined;
-    const EmergencyNumber = task.EmergencyNumber ? task.EmergencyNumber : undefined;
+    const EmergencyNumber = task.emergencyNumber ? task.emergencyNumber : undefined;
     const floorId = task.floorId ? task.floorId : undefined;
+    // @ts-ignore
+    const robot = task.robot ? task.robot.nickName.value : task.robotId;
+    const pickupRoom = task.pickupRoomId.name ? task.pickupRoomId.name : task.pickupRoomId;
+    const deliveryRoom = task.deliveryRoomId.name ? task.deliveryRoomId.name : task.deliveryRoomId;
       return {
         id: task.id.toString(),
         type: task.type,
         userId: task.userId.firstName + " " + task.userId.lastName,
-        pickupRoomId: task.pickupRoomId.name,
-        deliveryRoomId: task.deliveryRoomId.name,
+        pickupRoomId: pickupRoom,
+        deliveryRoomId: deliveryRoom,
         status: task.status,
         identificationCode: task.identificationCode,
         description: task.description,
-        robot: task.robot.nickName.value,
+        robot: robot,
         senderName: senderName,
         receiverName: receiverName,
         senderContact: senderContact,
         receiverContact: receiverContact,
         confirmationCode: confirmationCode,
-        EmergencyNumber: EmergencyNumber,
+        emergencyNumber: EmergencyNumber,
         floorId: floorId
       } as ITaskDTO;
   }
@@ -52,7 +56,7 @@ export class TaskMapper extends Mapper<Task> {
     const senderContact = raw.senderContact ? raw.senderContact : undefined;
     const receiverContact = raw.receiverContact ? raw.receiverContact : undefined;
     const confirmationCode = raw.confirmationCode ? raw.confirmationCode : undefined;
-    const EmergencyNumber = raw.EmergencyNumber ? raw.EmergencyNumber : undefined;
+    const emergencyNumber = raw.emergencyNumber ? raw.emergencyNumber : undefined;
     const floorId = raw.floorId ? raw.floorId : undefined;
 
 
@@ -71,7 +75,7 @@ export class TaskMapper extends Mapper<Task> {
         senderContact: senderContact,
         receiverContact: receiverContact,
         confirmationCode: confirmationCode,
-        EmergencyNumber: EmergencyNumber,
+        emergencyNumber: emergencyNumber,
         floorId: floorId
       },
       raw.id
@@ -89,7 +93,7 @@ export class TaskMapper extends Mapper<Task> {
     const senderContact = task.senderContact ? task.senderContact : undefined;
     const receiverContact = task.receiverContact ? task.receiverContact : undefined;
     const confirmationCode = task.confirmationCode ? task.confirmationCode : undefined;
-    const EmergencyNumber = task.EmergencyNumber ? task.EmergencyNumber : undefined;
+    const EmergencyNumber = task.emergencyNumber ? task.emergencyNumber : undefined;
     const floorId = task.floorId ? task.floorId : undefined;
     return {
       id: task.id.toString(),
@@ -106,7 +110,7 @@ export class TaskMapper extends Mapper<Task> {
       senderContact: senderContact,
       receiverContact: receiverContact,
       confirmationCode: confirmationCode,
-      EmergencyNumber: EmergencyNumber,
+      emergencyNumber: EmergencyNumber,
       floorId: floorId
     } as TaskPersistence;
   }

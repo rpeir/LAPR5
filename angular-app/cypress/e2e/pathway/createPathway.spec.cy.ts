@@ -2,6 +2,8 @@ import {Pathway} from "../../../src/app/pathway/pathway";
 
 describe('Create Pathway Component', () => {
   beforeEach(() => {
+    // @ts-ignore
+    cy.loginCampusManager();
     cy.visit("pathways/create");
   });
   const DEFAULT_PATHWAY: Pathway = {

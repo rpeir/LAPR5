@@ -1,5 +1,7 @@
 describe('Update elevator spec', () => {
   beforeEach(() => {
+    // @ts-ignore
+    cy.loginCampusManager();
     cy.visit('elevator/update'); // Assuming '/create' is the route for your CreateComponent
   });
   it('should update a new elevator', () => {
