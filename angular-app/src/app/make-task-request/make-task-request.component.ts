@@ -57,8 +57,7 @@ export class MakeTaskRequestComponent implements OnInit {
     if (user != null) {
       this.taskRequest.userId = user?.id;
     }
-    console.log(this.taskRequest)
-    console.log(this.floorSource)
+
     this.taskService.createTaskRequest(this.taskRequest).subscribe({
       next: (data) => {
         window.alert(JSON.stringify(data));
