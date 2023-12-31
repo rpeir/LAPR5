@@ -396,7 +396,7 @@ export default class ThumbRaiser {
     this.thirdPersonViewCameraParameters = merge({}, cameraData, thirdPersonViewCameraParameters);
     this.topViewCameraParameters = merge({}, cameraData, topViewCameraParameters);
     this.miniMapCameraParameters = merge({}, cameraData, miniMapCameraParameters);
-
+    this.doorOpened = false;
     // Set the game state
     this.gameRunning = false;
 
@@ -535,7 +535,6 @@ export default class ThumbRaiser {
     // Build the credits panel
     this.buildCreditsPanel();
   }
-
   changeMaze(floorMap) {
     this.scene.remove(this.maze);
     this.mazeParameters = {
@@ -548,7 +547,7 @@ export default class ThumbRaiser {
     this.scene.add(this.maze);
   }
   // Function for auto play
-  changeMazeForAutoPlay(floorMap) {
+  changeMazeForAutoPlay(floorMap, playerPosition = null) {
     this.scene.remove(this.maze);
     this.mazeParameters = {
       mazeDescription: floorMap,
@@ -644,10 +643,10 @@ export default class ThumbRaiser {
         cursor = 'ns-resize';
         break;
       case 'dolly-in':
-        cursor = "url('./assets/map-viewer/cursors/dolly-in_16.png') 8 8, n-resize"; // Custom cursor plus a mandatory fallback cursor in case the icon fails to load
+        cursor = "url('./assets/map-renderer/cursors/dolly-in_16.png') 8 8, n-resize"; // Custom cursor plus a mandatory fallback cursor in case the icon fails to load
         break;
       case 'dolly-out':
-        cursor = "url('./assets/map-viewer/cursors/dolly-out_16.png') 8 8, s-resize"; // Custom cursor plus a mandatory fallback cursor in case the icon fails to load
+        cursor = "url('./assets/map-renderer/cursors/dolly-out_16.png') 8 8, s-resize"; // Custom cursor plus a mandatory fallback cursor in case the icon fails to load
         break;
       case 'zoom-in':
         cursor = 'zoom-in';
@@ -656,7 +655,7 @@ export default class ThumbRaiser {
         cursor = 'zoom-out';
         break;
       case 'orbit':
-        cursor = "url('./assets/map-viewer/cursors/orbit_32.png') 16 16, crosshair"; // Custom cursor plus a mandatory fallback cursor in case the icon fails to load
+        cursor = "url('./assets/map-renderer/cursors/orbit_32.png') 16 16, crosshair"; // Custom cursor plus a mandatory fallback cursor in case the icon fails to load
         break;
       case 'pan':
         cursor = 'all-scroll';
@@ -1234,14 +1233,22 @@ export default class ThumbRaiser {
     await this.computePlayerDirection(line1, column1, line2, column2);
     // Make the player move to the new position
     this.player.keyStates.forward = true;
+    //this.player.shiftKey = true;
     // Loop for checking if the robot has reached new position
     while (
-      Math.abs(this.player.position.x - newPosition.x) > 0.05 ||
-      Math.abs(this.player.position.z - newPosition.z) > 0.05
+      Math.abs(this.player.position.x - newPosition.x) > 0.06 ||
+      Math.abs(this.player.position.z - newPosition.z) > 0.06
     ) {
       await this.waitTime(1);
+      if (
+        Math.abs(this.player.position.x - newPosition.x) > 2 ||
+        Math.abs(this.player.position.z - newPosition.z) > 2
+      ) {
+        break;
+      }
     }
     this.player.keyStates.forward = false;
+    //this.player.shiftKey = false;
     this.player.position.set(newPosition.x, newPosition.y, newPosition.z);
   }
   //Function that computes player change of direction
@@ -1270,14 +1277,7 @@ export default class ThumbRaiser {
       if (this.audio.loaded() && this.maze.loaded && this.player.loaded) {
         // If all resources have been loaded
         // Add positional audio sources to objects
-        const types = [
-          //this.audio.introductionClips,
-          //this.audio.idleClips,
-          //this.audio.jumpClips,
-          this.audio.deathClips,
-          this.audio.danceClips,
-          this.audio.endClips,
-        ];
+        const types = [this.audio.deathClips];
         types.forEach(type => {
           type.forEach(clip => {
             let position = clip.position.split(' ');
@@ -1394,9 +1394,6 @@ export default class ThumbRaiser {
         // Create the clock
         this.clock = new THREE.Clock();
 
-        // Play an introduction clip
-        //this.audio.play(this.audio.introductionClips, false);
-
         // Start the game
         this.gameRunning = true;
       }
@@ -1446,16 +1443,6 @@ export default class ThumbRaiser {
         ) {
           this.audio.play(this.audio.deathClips, false);
           this.animations.fadeToAction('animation.robot-runner.death', 0.2);
-        }
-        if (
-          this.maze.collisionWithDoor(
-            this.collisionDetectionParameters.method,
-            position,
-            this.collisionDetectionParameters.method !== 'obb-aabb' ? this.player.radius : this.player.halfSize,
-            directionRad - this.player.defaultDirection,
-          )
-        ) {
-          this.audio.play(this.audio.deathClips, false);
         } else {
           if (playerTurned) {
             this.player.direction = directionDeg;
@@ -1470,8 +1457,20 @@ export default class ThumbRaiser {
               (cellPlayerLocation[0] === elevatorLocation[0] && cellPlayerLocation[1] === elevatorLocation[1] + 1) ||
               (cellPlayerLocation[0] === elevatorLocation[0] + 1 && cellPlayerLocation[1] === elevatorLocation[1]) ||
               (cellPlayerLocation[0] === elevatorLocation[0] + 1 && cellPlayerLocation[1] === elevatorLocation[1] + 1);
-            if (this.player.isInElevator) {
-              console.log('player is in elevator');
+            if (
+              this.maze.collisionWithDoor(
+                this.collisionDetectionParameters.method,
+                position,
+                this.collisionDetectionParameters.method !== 'obb-aabb' ? this.player.radius : this.player.halfSize,
+                directionRad - this.player.defaultDirection,
+              ) &&
+              !this.doorOpened
+            ) {
+              this.maze.openClosestDoor(this.player.position);
+              this.doorOpened = true;
+              this.waitTime(1500).then(() => {
+                this.doorOpened = false;
+              });
             }
             if (
               !(
@@ -1482,7 +1481,9 @@ export default class ThumbRaiser {
               this.player.position.z >= this.maze.cellToCartesian([this.maze.size.depth, 0]).z
             ) {
               this.closestExit = this.maze.closestExitLocation(this.player.position);
-              this.player.isInPathway = true;
+              if (!this.player.playerAuto) {
+                this.player.isInPathway = true;
+              }
             }
           } else {
             if (this.animations.idleTimeOut()) {
@@ -1581,5 +1582,8 @@ export default class ThumbRaiser {
         this.renderer.render(this.frame, this.camera2D); // Render the frame
       }
     }
+  }
+  waitTime(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }

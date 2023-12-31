@@ -11,6 +11,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-size: 60pt;
 }
 
+#notice-popup2 {
+  position: fixed;
+  top: 40%;
+  background-color: rgba(255,255,255, 0.5);
+  padding: 20px;
+  left: 33%;
+  font-size: 60pt;
+}
+
 .floor-btn {
   background-color: #888;
   border: 1px solid #222;
