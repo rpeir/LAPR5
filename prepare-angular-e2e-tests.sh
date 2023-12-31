@@ -5,12 +5,12 @@ BACKEND_FOLDER="./"
 NG_FOLDER="./angular-app"
 GESTAO_TAREFAS_FOLDER="./modulo_gestao_tarefas/GestaoTarefas"
 PLANEAMENTO_FOLDER="./modulo_planeamento"
-DB_TEST_MONGO="test"
-DB_TEST_MYSQL="db"
+DB_TEST_MONGO=test
 BACKEND_PORT=4000
 FRONTEND_PORT=4200
 PLANEAMENTO_PORT=5000
 GESTAO_TAREFAS_PORT=6000
+MIGRATIONS_FILE="Migrations.tar"
 
 # users info
 CAMPUS_MANAGER_INFO='{
@@ -141,6 +141,12 @@ then
     exit 1
 fi
 
+# ask if user has 'dotnet ef' installed
+echo "Ensure tou have 'dotnet ef' installed, or else gestao_tarefas wont work"
+echo "To install, try 'dotnet tool install --global dotnet-ef'"
+echo ""
+echo "If you are sure, press enter to continue"
+read -r REPLY
 ############################################
 
 # start the script
@@ -153,6 +159,12 @@ if ! pgrep -x mongod >/dev/null; then
 fi
 echo "MongoDB running! Continuing..."
 
+# clear test db mongod
+( ( echo "use $DB_TEST_MONGO\n db.dropDatabase()" | mongosh ) &&
+echo "Cleared mongoDB test database! Continuing..." ) || ( echo "Error clearing mongoDB test database" && exit 1 )
+
+############################################
+
 # check if mysql is running
 if ! pgrep -x mysqld >/dev/null; then
   echo "Error: MySQL not running! Try 'sudo mysqld' or 'sudo systemctl start mysql' to start it!"
@@ -160,13 +172,16 @@ if ! pgrep -x mysqld >/dev/null; then
 fi
 echo "MySQL running! Continuing..."
 
-# clear test db mongod
-( ( echo "use $DB_TEST_MONGO\n db.dropDatabase()" | mongosh ) &&
-echo "Cleared mongoDB test database! Continuing..." ) || ( echo "Error clearing mongoDB test database" && exit 1 )
-
 # clear test db mysql
-( ( echo "DROP SCHEMA $DB_TEST_MYSQL; exit;" | mysql -u root -p ) &&
+echo "Enter the password to MySQL root user (By Default: NO PASSWORD [Just press enter])"
+echo "DROP SCHEMA db;" | mysql -u root -p
+( ( echo "CREATE SCHEMA db;" | mysql -u root -p ) &&
 echo "Cleared MySQL test database! Continuing..." ) || ( echo "Error clearing MySQL test database" && exit 1 )
+
+# tar the normal migrations
+( tar -c -p -f $MIGRATIONS_FILE $GESTAO_TAREFAS_FOLDER/Migrations  && echo "Compacted normal gestao_tarefas migrations. Continuing..." &&
+rm -r $GESTAO_TAREFAS_FOLDER/Migrations/ && echo "Removed normal gestao_tarefas migrations. Continuing..." ) ||
+( echo "Error compacting the old migrations" && exit 1 )
 
 ############################################
 
@@ -220,9 +235,16 @@ else
         echo "Not detected other gestao_tarefas running! Continuing...";
 fi
 
+# create initial gestao_tarefas db (ef migration and ef update)
+ASPNETCORE_ENVIRONMENT=Test
+
+( tmux new -s gestao_tarefas -d
+tmux send-keys -t gestao_tarefas "ASPNETCORE_ENVIRONMENT=Test" C-m &&
+tmux send-keys -t gestao_tarefas "cd $GESTAO_TAREFAS_FOLDER" C-m &&
+tmux send-keys -t gestao_tarefas "dotnet ef migrations add InitialCreate -- --environment Test" C-m &&
+tmux send-keys -t gestao_tarefas "dotnet ef database update -- --environment Test" C-m &&
 # run gestao_tarefas test
-( tmux new -s gestao_tarefas -d &&
-tmux send-keys -t gestao_tarefas "cd $GESTAO_TAREFAS_FOLDER && dotnet run" C-m &&
+tmux send-keys -t gestao_tarefas "dotnet run --launch-profile $ASPNETCORE_ENVIRONMENT" C-m &&
 echo "Created gestao_tarefas tmux session! Continuing..." ) || ( echo "Error creating gestao_tarefas tmux session" && exit 1 )
 
 ############################################
@@ -264,4 +286,6 @@ echo ""
 echo "To acess tmux sessions, run 'tmux a -t <session_name>', where <session_name> is one of the following:"
 echo "frontend, backend, gestao_tarefas, planeamento"
 echo ""
-echo "To deactivate the test environment, run the script 'end-angular-e2e-tests.sh'"
+echo "To deactivate the test environment, don't forget to run the script 'end-angular-e2e-tests.sh'"
+echo "It will stop all the running machines and restore the normal gestao_tarefas migrations"
+echo "NOTE: Please check 'tmux a -t gestao_tarefas', it has much potencial to failure"
