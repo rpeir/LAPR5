@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { TaskService } from "../task/task.service";
 import { Task } from "../task/task";
-import { entries } from "lodash";
 import { Router } from "@angular/router";
 import { TaskSequenceService } from "../get-task-sequence/task-sequence.service";
+import {FloorService} from "../floor/floor.service";
 
 @Component({
   selector: "app-task-sequence",
@@ -12,7 +12,12 @@ import { TaskSequenceService } from "../get-task-sequence/task-sequence.service"
 })
 export class TaskSequenceComponent implements OnInit {
 
-  constructor(private taskService: TaskService, private router: Router, private taskSequenceService: TaskSequenceService) {
+  constructor(
+    private taskService: TaskService,
+    private router: Router,
+    private taskSequenceService: TaskSequenceService,
+    private floorService: FloorService
+  ) {
   }
   selectedTasks: Task[] = [];
 
@@ -23,18 +28,20 @@ export class TaskSequenceComponent implements OnInit {
     'status',
     'pickupRoomId',
     'deliveryRoomId',
-    'taskRequestId',
+    'identificationCode',
     'senderName',
     'receiverName',
     'senderContact',
     'receiverContact',
     'confirmationCode',
     'emergencyNumber',
-    'floorId'];
+    'floorNr',
+  ];
 
   ngOnInit(): void {
     this.taskService.getPendingTasks().subscribe({
         next: async (data) => {
+          this.getFloors(data);
           this.organizeTasksByRobot(data);
         },
         error: (error) => {
@@ -62,6 +69,18 @@ export class TaskSequenceComponent implements OnInit {
 
   getTaskSequence(tasks: Task[]) {
     this.taskSequenceService.changeTasks(tasks);
-      this.router.navigate(['/tasks/startSequence']);
+    this.router.navigate(['/tasks/startSequence']);
+  }
+
+  private getFloors(data: Task[]) {
+    data.map((task) => {
+      if (task.floorId) {
+        this.floorService.getFloorById(task.floorId).subscribe({
+          next: (floor) => {
+            task.floor = floor;
+          }
+        })
+      }
+    })
   }
 }

@@ -29,9 +29,9 @@
         <mat-header-cell *matHeaderCellDef> Delivery Room</mat-header-cell>
         <mat-cell *matCellDef="let element"> {{ element.deliveryRoomId }}</mat-cell>
       </ng-container>
-      <ng-container matColumnDef="taskRequestId">
-        <mat-header-cell *matHeaderCellDef> Task Request Id</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.taskRequestId }}</mat-cell>
+      <ng-container matColumnDef="identificationCode">
+        <mat-header-cell *matHeaderCellDef> Identification Code</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.identificationCode }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="senderName">
         <mat-header-cell *matHeaderCellDef> Sender Name</mat-header-cell>
@@ -57,9 +57,9 @@
         <mat-header-cell *matHeaderCellDef> Emergency Number</mat-header-cell>
         <mat-cell *matCellDef="let element"> {{ element.emergencyNumber }}</mat-cell>
       </ng-container>
-      <ng-container matColumnDef="floorId">
-        <mat-header-cell *matHeaderCellDef> Floor Id</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.floorId }}</mat-cell>
+      <ng-container matColumnDef="floorNr">
+        <mat-header-cell *matHeaderCellDef> Floor </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element?.floor?.floorNr }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="action">
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -202,9 +202,9 @@
           <mat-header-cell *matHeaderCellDef> Delivery Room</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.deliveryRoomId }}</mat-cell>
         </ng-container>
-        <ng-container matColumnDef="taskRequestId">
-          <mat-header-cell *matHeaderCellDef> Task Request Id</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ element.taskRequestId }}</mat-cell>
+        <ng-container matColumnDef="identificationCode">
+          <mat-header-cell *matHeaderCellDef> Identification Code</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.identificationCode }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="senderName">
           <mat-header-cell *matHeaderCellDef> Sender Name</mat-header-cell>
@@ -230,9 +230,9 @@
           <mat-header-cell *matHeaderCellDef> Emergency Number</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.emergencyNumber }}</mat-cell>
         </ng-container>
-        <ng-container matColumnDef="floorId">
-          <mat-header-cell *matHeaderCellDef> Floor Id</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ element.floorId }}</mat-cell>
+        <ng-container matColumnDef="floorNr">
+          <mat-header-cell *matHeaderCellDef> Floor</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element?.floor?.floorNr }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="action">
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

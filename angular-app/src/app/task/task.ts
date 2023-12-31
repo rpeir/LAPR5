@@ -1,4 +1,4 @@
-import { Robot } from "../robot/robot";
+import {Floor} from "../floor/floor";
 
 export class Task {
   id!: string;
@@ -17,4 +17,5 @@ export class Task {
   confirmationCode?: string;
   EmergencyNumber?: string;
   floorId?: string;
+  floor?: Floor;
 }

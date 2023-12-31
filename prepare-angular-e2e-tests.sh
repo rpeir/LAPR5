@@ -1,10 +1,16 @@
 #!/bin/bash
 
 # config properties
-NG_FOLDER=./angular-app
-DB_TEST=test
+BACKEND_FOLDER="./"
+NG_FOLDER="./angular-app"
+GESTAO_TAREFAS_FOLDER="./modulo_gestao_tarefas/GestaoTarefas"
+PLANEAMENTO_FOLDER="./modulo_planeamento"
+DB_TEST_MONGO="test"
+DB_TEST_MYSQL="db"
 BACKEND_PORT=4000
 FRONTEND_PORT=4200
+PLANEAMENTO_PORT=5000
+GESTAO_TAREFAS_PORT=6000
 
 # users info
 CAMPUS_MANAGER_INFO='{
@@ -83,11 +89,10 @@ ROLES='[{
   "name": "admin"
 }]
 '
-
-
-# start script
+############################################
 
 # check if needed commans exist
+# check if mongosh exist
 if ! command -v mongosh > /dev/null
 then
     echo "mongosh could not be found. Install it!"
@@ -108,59 +113,155 @@ then
     exit 1
 fi
 
+# check if mysql exist
+if ! command -v mysql > /dev/null
+then
+    echo "mysql could not be found. Install it!"
+    exit 1
+fi
 
-cd $NG_FOLDER &&
+# check if dotnet exist
+if ! command -v dotnet > /dev/null
+then
+    echo "dotnet could not be found. Install it!"
+    exit 1
+fi
 
+# check if npm exist
+if ! command -v npm > /dev/null
+then
+    echo "npm could not be found. Install it!"
+    exit 1
+fi
+
+# check if swipl exist
+if ! command -v swipl > /dev/null
+then
+    echo "swipl could not be found. Install it!"
+    exit 1
+fi
+
+############################################
+
+# start the script
+echo "Starting..."
 
 # check if mongod is running
 if ! pgrep -x mongod >/dev/null; then
-	echo "Error: MongoDB not running! Try 'sudo mongod' or 'sudo systemctl enable mongod' to start it!"
+	echo "Error: MongoDB not running! Try 'sudo mongod' or 'sudo systemctl start mongod' to start it!"
 	exit 1
 fi
 echo "MongoDB running! Continuing..."
 
+# check if mysql is running
+if ! pgrep -x mysqld >/dev/null; then
+  echo "Error: MySQL not running! Try 'sudo mysqld' or 'sudo systemctl start mysql' to start it!"
+  exit 1
+fi
+echo "MySQL running! Continuing..."
 
-# clear test db
-((echo "use $DB_TEST\n db.dropDatabase()" | mongosh) && echo "Cleared test database! Continuing...") || (echo "Error clearing test database" && exit 1)
+# clear test db mongod
+( ( echo "use $DB_TEST_MONGO\n db.dropDatabase()" | mongosh ) &&
+echo "Cleared mongoDB test database! Continuing..." ) || ( echo "Error clearing mongoDB test database" && exit 1 )
 
+# clear test db mysql
+( ( echo "DROP SCHEMA $DB_TEST_MYSQL; exit;" | mysql -u root -p ) &&
+echo "Cleared MySQL test database! Continuing..." ) || ( echo "Error clearing MySQL test database" && exit 1 )
 
-# run frontend test
-(tmux kill-session -t frontend >/dev/null && echo "Killed frontend tmux session! Continuing...")
+############################################
 
+# kill frontend test tmux
+( tmux kill-session -t frontend >/dev/null && echo "Killed frontend tmux session! Continuing..." )
+
+# check if frontend port is being used
 if fuser -n tcp $FRONTEND_PORT >/dev/null; then
 	echo "Detected other frontend running! Close it!"
 	echo "Close it and press enter to continue."
-	read REPLY
+	read -r REPLY
 else
 	echo "Not detected other frontend running! Continuing...";
 fi
 
-(tmux new -s frontend -d 'npm run start-test' && echo "Created frontend tmux session! Continuing...") || (echo "Error creating frontend tmux session" && exit 1)
+# run frontend test
+( tmux new-session -d -s frontend &&
+tmux send-keys -t frontend "cd $NG_FOLDER && npm run start-test" C-m &&
+echo "Created frontend tmux session! Continuing..." ) || ( echo "Error creating frontend tmux session" && exit 1 )
 
+############################################
 
-# run backend test
-(tmux kill-session -t backend >/dev/null && echo "Killed backend tmux session! Continuing...")
+# kill backend test tmux
+( tmux kill-session -t backend >/dev/null && echo "Killed backend tmux session! Continuing..." )
 
+# check if backend port is being used
 if fuser -n tcp $BACKEND_PORT >/dev/null; then
-        echo "Detected other frontend running! Close it!"
+        echo "Detected other backend running! Close it!"
 	echo "Close it and press enter to continue."
         read REPLY
 else
         echo "Not detected other backend running! Continuing...";
 fi
 
+# run backend test
+( tmux new -s backend -d &&
+tmux send-keys -t backend "cd $BACKEND_FOLDER && npm run start:test" C-m &&
+echo "Created backend tmux session! Continuing..." ) || ( echo "Error creating backend tmux session" && exit 1 )
 
-(tmux new -s backend -d 'cd ../ && npm run start:test' && echo "Created backend tmux session! Continuing...") || (echo "Error creating backend tmux session" && exit 1)
+############################################
 
+# kill gestao_tarefas test tmux
+( tmux kill-session -t gestao_tarefas >/dev/null && echo "Killed gestao_tarefas tmux session! Continuing..." )
+
+# check if gestao_tarefas port is being used
+if fuser -n tcp $GESTAO_TAREFAS_PORT >/dev/null; then
+        echo "Detected other gestao_tarefas running! Close it!"
+	echo "Close it and press enter to continue."
+        read -r REPLY
+else
+        echo "Not detected other gestao_tarefas running! Continuing...";
+fi
+
+# run gestao_tarefas test
+( tmux new -s gestao_tarefas -d &&
+tmux send-keys -t gestao_tarefas "cd $GESTAO_TAREFAS_FOLDER && dotnet run" C-m &&
+echo "Created gestao_tarefas tmux session! Continuing..." ) || ( echo "Error creating gestao_tarefas tmux session" && exit 1 )
+
+############################################
+
+# kill planeamento test tmux
+( tmux kill-session -t planeamento >/dev/null && echo "Killed planeamento tmux session! Continuing..." )
+
+# check if planeamento port is being used
+if fuser -n tcp $PLANEAMENTO_PORT >/dev/null; then
+        echo "Detected other planeamento running! Close it!"
+	echo "Close it and press enter to continue."
+        read -r REPLY
+else
+        echo "Not detected other planeamento running! Continuing...";
+fi
+
+# run planeamento test
+( tmux new -s planeamento -d &&
+tmux send-keys -t planeamento "cd $PLANEAMENTO_FOLDER && swipl env/test.pl src/server.pl" C-m &&
+echo "Created planeamento tmux session! Continuing..." ) || ( echo "Error creating planeamento tmux session" && exit 1 )
+
+############################################
 
 # create db roles
-((echo "use $DB_TEST\n db.roles.insertMany( $ROLES )" | mongosh)\
-&& echo "Created db roles! Continuing...") || (echo "Error creating db roles" && exit 1)
+( ( echo "use $DB_TEST_MONGO\n db.roles.insertMany( $ROLES )" | mongosh ) &&
+echo "Created db roles! Continuing..." ) || ( echo "Error creating db roles" && exit 1 )
 
 
 # create db users
-((echo "use $DB_TEST\n db.users.insertMany([ $TASK_MANAGER_INFO , $FLEET_MANAGER_INFO , $CAMPUS_MANAGER_INFO , $ADMIN_INFO , $USER_INFO ])" | mongosh)\
-&& echo "Created db users! Continuing...") || (echo "Error creating db users" && exit 1)
+( ( echo "use $DB_TEST_MONGO\n db.users.insertMany([ $TASK_MANAGER_INFO , $FLEET_MANAGER_INFO , $CAMPUS_MANAGER_INFO , $ADMIN_INFO , $USER_INFO ])" | mongosh ) &&
+echo "Created db users! Continuing...") || ( echo "Error creating db users" && exit 1 )
 
+############################################
 
-echo "Done! Everithing is ready to run e2e angular tests"
+echo ""
+echo "Done! Check if everithing went ok, and it is ready to run e2e angular tests"
+echo "To run e2e angular tests, run 'npm run e2e' in $NG_FOLDER"
+echo ""
+echo "To acess tmux sessions, run 'tmux a -t <session_name>', where <session_name> is one of the following:"
+echo "frontend, backend, gestao_tarefas, planeamento"
+echo ""
+echo "To deactivate the test environment, run the script 'end-angular-e2e-tests.sh'"
