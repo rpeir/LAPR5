@@ -20,15 +20,16 @@ export default function start() {
 
   async function initializeAndAnimate() {
     try {
+      await changeMap();
+      initialize();
+      animate();
+      await waitTime(2500);
       if (pathFile) {
         pathJSON = JSON.parse(pathFile);
         await loadJsonData(pathJSON);
         pathFile = null;
         localStorage.removeItem('pathFile');
       }
-      await changeMap();
-      initialize();
-      animate();
     } catch (error) {
       console.error('An error occurred during initialization:', error);
     }
@@ -37,7 +38,6 @@ export default function start() {
   async function loadJsonData(jsonData) {
     try {
       const buildings = jsonData.buildings;
-
       for (let i = 0, len = buildings.length; i < len; i++) {
         try {
           const response = await fetch(
@@ -49,6 +49,7 @@ export default function start() {
             },
           );
           const floors = await response.json();
+          console.log(floors);
           for (const floor of floors) {
             if (
               !floorsOfPath.includes(floor) &&
@@ -68,7 +69,6 @@ export default function start() {
     } catch (error) {
       console.error('Error processing JSON data:', error);
     }
-    thumbRaiser.player.playerAuto = true;
     // Start the automatic path
     await changeMapsForAutomaticPath(jsonData.paths);
     thumbRaiser.player.playerAuto = false;
@@ -96,6 +96,7 @@ export default function start() {
   // Function to change the maps for the automatic path. It waits for the player to finish the current floor before changing the map
   async function changeMapsForAutomaticPath() {
     let oldFloor = floorsOfPath[0];
+    console.log(floorsOfPath);
     let i = 0;
     for (const floor of floorsOfPath) {
       selectedFloor = floor;
