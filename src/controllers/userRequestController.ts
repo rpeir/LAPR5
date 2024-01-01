@@ -18,7 +18,7 @@ export default class UserRequestController implements IUserRequestController {
   public async listAllRequests(req: Request, res: Response, next: NextFunction) {
     try {
       // @ts-ignore
-      if (req.auth.user.role.name !== 'campus manager' && req.auth.user.role.name !== 'user') {
+      if (req.auth.user.role.name !== 'admin' && req.auth.user.role.name !== 'user') {
         return res
           .status(401)
           .json('Não tem permissões para aceder a este recurso')
