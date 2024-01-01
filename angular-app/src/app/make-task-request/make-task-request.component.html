@@ -6,14 +6,14 @@
   <form (ngSubmit)="createTaskRequest()">
 
 
-    <mat-form-field  class="full-width">
+    <mat-form-field data-cy="description" class="full-width">
       <mat-label>Task description</mat-label>
       <input matInput [(ngModel)]="taskRequest.description" name="description" placeholder="Max 250 characters">
     </mat-form-field>
 
     <div class="stopping-criteria-container">
-      <mat-radio-group
-        aria-labelledby="example-radio-group-label"
+      <mat-radio-group data-cy="type"
+                       aria-labelledby="example-radio-group-label"
         [(ngModel)]="taskRequest.type"
         name="taskType">
         <mat-label>Select a taskType</mat-label>
@@ -81,7 +81,7 @@
       </div>
 
       <div class="form-fields-container">
-        <mat-form-field class="nice-width">
+        <mat-form-field class="nice-width" data-cy="pickupRoomId" >
           <mat-label>Select a source room</mat-label>
           <mat-select [(ngModel)]="taskRequest.pickupRoomId" name="roomSource">
             <mat-option *ngFor="let room of sourceRooms" [value]="room.name" [matTooltip]="getRoomInfo(room)">
@@ -90,7 +90,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="nice-width">
+        <mat-form-field class="nice-width" data-cy="deliveryRoomId" >
           <mat-label>Select a destination room</mat-label>
           <mat-select [(ngModel)]="taskRequest.deliveryRoomId" name="roomDestination">
             <mat-option *ngFor="let room of destinationRooms" [value]="room.name" [matTooltip]="getRoomInfo(room)">
@@ -102,31 +102,31 @@
     </div>
 
     <div *ngIf="taskRequest.type == taskTypes.delivery">
-      <mat-form-field  class="full-width">
+      <mat-form-field  class="full-width" data-cy="senderName" >
         <mat-label>Sender Name</mat-label>
         <input matInput [(ngModel)]="taskRequest.senderName" name="senderName">
         <input matInput placeholder="Max 250 characters">
       </mat-form-field>
 
-      <mat-form-field class="full-width">
+      <mat-form-field class="full-width" data-cy="receiverName" >
         <mat-label>Receiver Name</mat-label>
         <input matInput [(ngModel)]="taskRequest.receiverName" name="receiverName">
         <input matInput placeholder="Max 250 characters">
       </mat-form-field>
 
-      <mat-form-field  class="full-width">
+      <mat-form-field  class="full-width" data-cy="senderContact" >
         <mat-label>Sender Contact</mat-label>
         <input matInput [(ngModel)]="taskRequest.senderContact" name="senderContact">
         <input matInput placeholder="Max 250 characters">
       </mat-form-field>
 
-      <mat-form-field  class="full-width">
+      <mat-form-field  class="full-width" data-cy="receiverContact" >
         <mat-label>Receiver Contact</mat-label>
         <input matInput [(ngModel)]="taskRequest.receiverContact" name="receiverContact">
         <input matInput placeholder="Max 250 characters">
       </mat-form-field>
 
-      <mat-form-field  class="full-width">
+      <mat-form-field  class="full-width" data-cy="confirmationCode" >
         <mat-label>Confirmation Code</mat-label>
         <input matInput [(ngModel)]="taskRequest.confirmationCode" name="confirmationCode">
         <input matInput placeholder="Max 250 characters">
@@ -143,7 +143,7 @@
     </div>
 
     <div>
-      <input type="submit" data-cy="input" value="create">
+      <input type="submit" data-cy="submit" value="create">
     </div>
 
   </form>
