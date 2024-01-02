@@ -1,0 +1,256 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype polyline
+
+class node13 as "@angular/.../index.d.ts" {
+   Component: 
+   OnInit: 
+}
+class node31 as "@angular/.../index.d.ts" {
+   ComponentFixture: 
+   TestBed: 
+}
+class node3 as "@types/.../Vector2.d.ts" {
+   Vector2: 
+}
+class node22 as "@types/.../index.d.ts"
+class node27 as "@types/.../index.d.ts"
+class node19 as "BufferGeometryUtils.js"
+class node8 as "GLTFLoader.js" {
+   GLTFLoader: 
+}
+class node9 as "OBB.js" {
+   OBB: 
+}
+class node21 as "environments/environment.ts" {
+   environment: 
+}
+class node24 as "lil-gui.module.min.js" {
+   GUI: 
+}
+class node6 as "map-viewer/animations.js" {
+   THREE: 
+}
+class node29 as "map-viewer/audio.js" {
+   THREE: 
+}
+class node30 as "map-viewer/camera.js" {
+   THREE: 
+}
+class node20 as "map-viewer/cubetexture.js" {
+   THREE: 
+}
+class node10 as "map-viewer/default_data.js" {
+   Orientation: 
+   THREE: 
+   ambientLightData: 
+   audioData: 
+   cameraData: 
+   collisionDetectionData: 
+   cubeTextureData: 
+   directionalLightData: 
+   flashLightData: 
+   fogData: 
+   generalData: 
+   mazeData: 
+   playerData: 
+   shadowsData: 
+   spotLightData: 
+}
+class node17 as "map-viewer/elevator.js" {
+   GLTFLoader: 
+   THREE: 
+}
+class node2 as "map-viewer/fog.js" {
+   THREE: 
+   merge: 
+}
+class node26 as "map-viewer/ground.js" {
+   MultiTexturedMaterial: 
+   THREE: 
+   merge: 
+}
+class node14 as "map-viewer/helpers.js" {
+   BoxHelper: 
+   CylinderHelper: 
+   THREE: 
+}
+class node25 as "map-viewer/lights.js" {
+   AmbientLight: 
+   DirectionalLight: 
+   FlashLight: 
+   Orientation: 
+   SpotLight: 
+   THREE: 
+   merge: 
+}
+class node5 as "map-viewer/map-viewer.component.spec.ts" {
+   ComponentFixture: 
+   MapViewerComponent: 
+   TestBed: 
+}
+class node15 as "map-viewer/map-viewer.component.ts" {
+   Component: 
+   MapViewerComponent: 
+   OnInit: 
+   start: 
+}
+class node4 as "map-viewer/map-viewer.js" {
+   Orientation: 
+   THREE: 
+   ThumbRaiser: 
+   environment: 
+   index.d.ts: 
+}
+class node28 as "map-viewer/material.js" {
+   THREE: 
+   merge: 
+}
+class node12 as "map-viewer/maze.js" {
+   BufferGeometryUtils: 
+   Ground: 
+   OBB: 
+   THREE: 
+   Wall: 
+   merge: 
+}
+class node11 as "map-viewer/merge.js" {
+   merge: 
+}
+class node16 as "map-viewer/orientation.js" {
+   Vector2: 
+}
+class node23 as "map-viewer/player.js" {
+   BoxHelper: 
+   CylinderHelper: 
+   GLTFLoader: 
+   THREE: 
+   merge: 
+}
+class node1 as "map-viewer/thumb_raiser.js" {
+   AmbientLight: 
+   Animations: 
+   Audio: 
+   Camera: 
+   CubeTexture: 
+   DirectionalLight: 
+   FlashLight: 
+   Fog: 
+   Maze: 
+   Orientation: 
+   Player: 
+   SpotLight: 
+   Stats: 
+   THREE: 
+   UserInterface: 
+   ambientLightData: 
+   audioData: 
+   cameraData: 
+   collisionDetectionData: 
+   cubeTextureData: 
+   directionalLightData: 
+   flashLightData: 
+   fogData: 
+   generalData: 
+   mazeData: 
+   merge: 
+   playerData: 
+   shadowsData: 
+   spotLightData: 
+}
+class node7 as "map-viewer/user_interface.js" {
+   CubeTexture: 
+   GUI: 
+   Orientation: 
+   THREE: 
+}
+class node18 as "map-viewer/wall.js" {
+   BufferGeometryUtils: 
+   MultiTexturedMaterial: 
+   THREE: 
+   merge: 
+}
+class node0 as "stats.module.js"
+
+node6   <-[#595959,plain]-  node22 
+node29  <-[#595959,plain]-  node22 
+node30  <-[#595959,plain]-  node22 
+node20  <-[#595959,plain]-  node22 
+node10  <-[#595959,plain]-  node22 
+node10  <-[#595959,plain]-  node16 
+node17  <-[#595959,plain]-  node22 
+node17  <-[#595959,plain]-  node8  
+node2   <-[#595959,plain]-  node22 
+node2   <-[#595959,plain]-  node11 
+node26  <-[#595959,plain]-  node22 
+node26  <-[#595959,plain]-  node28 
+node26  <-[#595959,plain]-  node11 
+node14  <-[#595959,plain]-  node22 
+node25  <-[#595959,plain]-  node22 
+node25  <-[#595959,plain]-  node11 
+node25  <-[#595959,plain]-  node16 
+node5   <-[#595959,plain]-  node31 
+node5   <-[#595959,plain]-  node31 
+node5   <-[#595959,plain]-  node15 
+node15  <-[#595959,plain]-  node13 
+node15  <-[#595959,plain]-  node13 
+node15  <-[#595959,plain]-  node4  
+node4   <-[#595959,plain]-  node22 
+node4   <-[#595959,plain]-  node27 
+node4   <-[#595959,plain]-  node21 
+node4   <-[#595959,plain]-  node16 
+node4   <-[#595959,plain]-  node1  
+node28  <-[#595959,plain]-  node22 
+node28  <-[#595959,plain]-  node11 
+node12  <-[#595959,plain]-  node22 
+node12  <-[#595959,plain]-  node19 
+node12  <-[#595959,plain]-  node9  
+node12  <-[#595959,plain]-  node26 
+node12  <-[#595959,plain]-  node11 
+node12  <-[#595959,plain]-  node18 
+node16  <-[#595959,plain]-  node3  
+node23  <-[#595959,plain]-  node22 
+node23  <-[#595959,plain]-  node8  
+node23  <-[#595959,plain]-  node14 
+node23  <-[#595959,plain]-  node14 
+node23  <-[#595959,plain]-  node11 
+node1   <-[#595959,plain]-  node22 
+node1   <-[#595959,plain]-  node6  
+node1   <-[#595959,plain]-  node29 
+node1   <-[#595959,plain]-  node30 
+node1   <-[#595959,plain]-  node20 
+node1   <-[#595959,plain]-  node10 
+node1   <-[#595959,plain]-  node10 
+node1   <-[#595959,plain]-  node10 
+node1   <-[#595959,plain]-  node10 
+node1   <-[#595959,plain]-  node10 
+node1   <-[#595959,plain]-  node10 
+node1   <-[#595959,plain]-  node10 
+node1   <-[#595959,plain]-  node10 
+node1   <-[#595959,plain]-  node10 
+node1   <-[#595959,plain]-  node10 
+node1   <-[#595959,plain]-  node10 
+node1   <-[#595959,plain]-  node10 
+node1   <-[#595959,plain]-  node10 
+node1   <-[#595959,plain]-  node2  
+node1   <-[#595959,plain]-  node25 
+node1   <-[#595959,plain]-  node25 
+node1   <-[#595959,plain]-  node25 
+node1   <-[#595959,plain]-  node25 
+node1   <-[#595959,plain]-  node12 
+node1   <-[#595959,plain]-  node11 
+node1   <-[#595959,plain]-  node16 
+node1   <-[#595959,plain]-  node23 
+node1   <-[#595959,plain]-  node7  
+node1   <-[#595959,plain]-  node0  
+node7   <-[#595959,plain]-  node22 
+node7   <-[#595959,plain]-  node24 
+node7   <-[#595959,plain]-  node20 
+node7   <-[#595959,plain]-  node16 
+node18  <-[#595959,plain]-  node22 
+node18  <-[#595959,plain]-  node19 
+node18  <-[#595959,plain]-  node28 
+node18  <-[#595959,plain]-  node11 
+@enduml
