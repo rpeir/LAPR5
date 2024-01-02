@@ -68,4 +68,17 @@ export default (app: Router) => {
     (req, res, next) => ctrl.consultRobotsByTaskType(req, res, next),
   );
   route.use(middlewares.validateBody);
+
+  route.get(
+    "/:robotType",
+    middlewares.isAuth,
+    middlewares.verifyToken,
+    celebrate({
+      params: Joi.object({
+        robotType: Joi.string().required(),
+      })
+    }),
+    (req, res, next) => ctrl.consultRobotsByRobotType(req, res, next),
+  );
+  route.use(middlewares.validateBody);
 };

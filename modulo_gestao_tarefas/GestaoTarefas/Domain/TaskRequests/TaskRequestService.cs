@@ -6,6 +6,9 @@ using GestaoTarefas.Domain.Shared;
 using GestaoTarefas.Domain.TaskTypes;
 using Humanizer;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using GestaoTarefas.Domain.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GestaoTarefas.Domain.TaskRequests;
 
@@ -16,6 +19,8 @@ public class TaskRequestService
   private readonly IDeliveryTaskRequestRepository _delRepo;
   private readonly ITaskRequestRepository _reqRepo;
   private readonly ITaskRequestMapper<TaskRequest, TaskRequestDto> _reqMapper;
+
+  private readonly TaskService _taskService;
 
   public TaskRequestService(IUnitOfWork unitOfWork, ITaskRequestRepository reqRepo,
     IDeliveryTaskRequestRepository delRepo, ISurveillanceTaskRequestRepository surRepo,
@@ -84,6 +89,32 @@ public class TaskRequestService
     return _reqMapper.ToDtoList(list).ToList();
   }
 
+  // GetByStatusUserTimeAsync
+  public async SYSTasks.Task<List<TaskRequestDto>> GetByStatusUserTimeAsync(string statusDto, string userIdDto, string startTimeDto, string endTimeDto)
+  {
+    RequestStatus? status = null;
+    Guid? userId = null;
+    DateTime? startTime = null;
+    DateTime? endTime = null;
+
+    try
+    {
+      if (statusDto != null) status = statusDto.ToStatus();
+      if (userIdDto != null) userId = new Guid(userIdDto);
+      if (startTimeDto != null) startTime = DateTime.Parse(startTimeDto);
+      if (endTimeDto != null) endTime = DateTime.Parse(endTimeDto);
+    }
+    catch (Exception e)
+    {
+      throw new ArgumentException(e.Message);
+    }
+
+    var list = await this._reqRepo.GetByStatusUserTimeAsync(
+      status: status, userId: userId, startTime: startTime, endTime: endTime);
+
+    return _reqMapper.ToDtoList(list).ToList();
+  }
+
   public async SYSTasks.Task<TaskRequestDto> RejectAsync(TaskRequestId id)
   {
     var task = await this._reqRepo.GetByIdAsync(id);
@@ -107,4 +138,23 @@ public class TaskRequestService
     return _reqMapper.ToDto(task);
   }
 
+  public async SYSTasks.Task<List<TaskRequestDto>> GetByTasksAsync(List<TaskDto> tasksWithRobots)
+  {
+    var list = await this._reqRepo.GetByTaskIdsAsync(tasksWithRobots);
+    return _reqMapper.ToDtoList(list).ToList();
+  }
+  //
+  public async SYSTasks.Task<List<TaskRequestDto>> FindRequestsWithAllFilters(List<TaskRequestDto> resultNoRobot, List<TaskRequestDto> taskRequestsWithTasksAssigned)
+  {
+    List<TaskRequestDto> result = new List<TaskRequestDto>();
+    List<String> identificationCodes = taskRequestsWithTasksAssigned.Select(t => t.IdentificationCode).ToList();
+    foreach (var request in resultNoRobot)
+    {
+      if (identificationCodes.Contains(request.IdentificationCode))
+      {
+        result.Add(request);
+      }
+    }
+    return result;
+  }
 }
