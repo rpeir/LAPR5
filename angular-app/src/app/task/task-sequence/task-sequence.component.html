@@ -3,12 +3,12 @@
 <div class="container">
   <h2 class="text-center">Select a robot to execute sequence</h2>
   <br>
+  <mat-spinner  class="text-center" *ngIf="waiting"></mat-spinner>
   <div *ngFor="let robotTask of robotTasks">
     <mat-card>
       <mat-card-content class="example-card">
         <button mat-raised-button color="accent" (click)="getTaskSequence(robotTask.tasks)">{{robotTask.robot }}</button>
-        <br>
-        <div>
+        <div class="example-card">
               <mat-table [dataSource]="robotTask.tasks" class="mat-elevation-z8">
                 <ng-container matColumnDef="description">
                   <mat-header-cell *matHeaderCellDef> Description</mat-header-cell>

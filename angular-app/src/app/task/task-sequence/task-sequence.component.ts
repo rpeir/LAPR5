@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { TaskService } from "../task/task.service";
-import { Task } from "../task/task";
+import { TaskService } from "../task.service";
+import { Task } from "../task";
 import { Router } from "@angular/router";
 import { TaskSequenceService } from "../get-task-sequence/task-sequence.service";
-import {FloorService} from "../floor/floor.service";
+import {FloorService} from "../../floor/floor.service";
 
 @Component({
   selector: "app-task-sequence",
@@ -37,15 +37,18 @@ export class TaskSequenceComponent implements OnInit {
     'emergencyNumber',
     'floorNr',
   ];
+  waiting: boolean = true;
 
   ngOnInit(): void {
     this.taskService.getPendingTasks().subscribe({
         next: async (data) => {
           this.getFloors(data);
           this.organizeTasksByRobot(data);
+          this.waiting = false;
         },
         error: (error) => {
           window.alert(error.error.error);
+          this.waiting = false;
         }
       }
     );

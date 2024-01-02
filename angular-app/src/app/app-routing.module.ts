@@ -35,8 +35,8 @@ import { CreateUserComponent } from './user/create-user/create-user.component';
 import { RegisterUserComponent } from './user/register-user/register-user.component';
 import { VerifyAuthService } from './auth/verify-auth.service';
 import { PendingRequestsComponent } from './task/pending-requests/pending-requests.component';
-import { TaskSequenceComponent } from './task-sequence/task-sequence.component';
-import { GetTaskSequenceComponent } from './get-task-sequence/get-task-sequence.component';
+import { TaskSequenceComponent } from './task/task-sequence/task-sequence.component';
+import { GetTaskSequenceComponent } from './task/get-task-sequence/get-task-sequence.component';
 import { HomeComponent } from './home/home.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import {
