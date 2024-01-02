@@ -36,7 +36,7 @@ public class TaskRequestRepository : BaseRepository<TaskRequest, TaskRequestId>,
     var ids = tasksWithRobots.Select(t => t.IdentificationCode).ToList();
 
     return await this.Objs
-      .Where(r => ids.Contains(r.IdentificationCode.ToString())).ToListAsync();
+      .Where(r => ids.Contains(r.IdentificationCode.Value)).ToListAsync();
   }
 
   public async Task<IEnumerable<TaskRequest>> GetByStatusUserTimeAsync(

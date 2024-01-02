@@ -26,7 +26,7 @@ export default class RobotService implements IRobotService {
       if (!robotType) {
         return Result.fail<IRobotDTO[]>('Robot type must be provided');
       }
-      const robotTypeOrError = await this.robotTypeRepo.findByName(robotType);
+      const robotTypeOrError = await this.robotTypeRepo.findById(robotType);
       if (!robotTypeOrError) {
         return Result.fail<IRobotDTO[]>('Robot type not found');
       }
