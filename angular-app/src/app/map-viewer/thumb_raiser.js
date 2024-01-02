@@ -578,8 +578,6 @@ export default class ThumbRaiser {
     [
       this.audio.credits,
       this.cubeTexture.credits,
-      this.maze.designCredits,
-      this.maze.texturesCredits,
       this.player.credits,
     ].forEach(element => {
       if (element !== '') {

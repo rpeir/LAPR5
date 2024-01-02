@@ -101,13 +101,13 @@ export default function start() {
     let i = 0;
     for (const floor of floorsOfPath) {
       selectedFloor = floor;
+      document.getElementById('currentFloor').innerText = selectedFloor.description;
       await waitFor(() => pathJSON.pathInside[i] !== undefined);
       if (oldFloor.building !== floor.building) {
         await notifyFloorChangeAuto(floor);
       }
       await thumbRaiser.changeMazeForAutoPlay(floor.floorMap, pathJSON.pathInside[i]);
       await waitTime(300);
-      document.getElementById('currentFloor').innerText = selectedFloor.description;
       await thumbRaiser.movePlayer(pathJSON.pathInside[i]);
       i++;
       oldFloor = floor;
