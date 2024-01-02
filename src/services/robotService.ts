@@ -19,7 +19,26 @@ export default class RobotService implements IRobotService {
   constructor(
     @Inject(config.repos.robot.name) private robotRepo: IRobotRepo,
     @Inject(config.repos.robotType.name) private robotTypeRepo: IRobotTypeRepo
-  ) {
+  ) {}
+
+  public async consultRobotsByRobotType(robotType: string): Promise<Result<IRobotDTO[]>> {
+    try {
+      if (!robotType) {
+        return Result.fail<IRobotDTO[]>('Robot type must be provided');
+      }
+      const robotTypeOrError = await this.robotTypeRepo.findByName(robotType);
+      if (!robotTypeOrError) {
+        return Result.fail<IRobotDTO[]>('Robot type not found');
+      }
+      // array with only one element
+      const robotTypeArray = [];
+      robotTypeArray.push(robotTypeOrError);
+      const robots = await this.robotRepo.findByRobotType(robotTypeArray);
+      const robotsDTO = robots.map((robot) => RobotMap.toDTO(robot) as IRobotDTO);
+      return Result.ok<IRobotDTO[]>(robotsDTO);
+    } catch (err) {
+      throw err;
+    }
   }
   public async consultRobotsByTaskType(taskType: string): Promise<Result<IRobotDTO[]>> {
     try {

@@ -4,6 +4,7 @@ using System.Linq;
 using SYSTasks = System.Threading.Tasks;
 using GestaoTarefas.Domain.Shared;
 using GestaoTarefas.Domain.TaskRequests;
+using Microsoft.Extensions.Primitives;
 
 namespace GestaoTarefas.Domain.Tasks;
 
@@ -88,4 +89,19 @@ public class TaskService
     return this._taskMapper.ToDto(task);
   }
 
+  public async SYSTasks.Task<List<TaskDto>> GetByRobotsAsync(List<String> robotIds)
+  {
+    List<Guid> ids = new List<Guid>();
+    // transform each string robotId in a Guid robotId
+    foreach (var robotId in robotIds)
+    {
+      ids.Add(Guid.Parse(robotId));
+      if (!Guid.TryParse(robotId, out Guid result))
+        throw new ArgumentException("Invalid robotId");
+    }
+    // get tasks by robotIds
+    var list = await this._taskRepo.GetByRobotsAsync(ids);
+
+    return _taskMapper.ToDtoList(list).ToList();
+  }
 }

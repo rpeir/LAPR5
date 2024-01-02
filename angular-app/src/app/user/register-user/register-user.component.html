@@ -7,7 +7,7 @@
       <br>
       <form>
         <!-- Select Register -->
-        <mat-form-field class="full-width">
+        <mat-form-field data-cy="request" class="full-width">
           <mat-label>Select an user request</mat-label>
           <mat-select [(ngModel)]="request" name="email">
             <mat-option *ngFor="let userRequest of requests" [value]="userRequest">
@@ -16,10 +16,10 @@
           </mat-select>
         </mat-form-field>
         <div>
-          <button mat-raised-button color="accent" (click)="acceptUser(request)" *ngIf="request">
+          <button mat-raised-button data-cy="accept" color="accent" (click)="acceptUser(request)" *ngIf="request">
             Accept
           </button>
-          <button mat-raised-button color="warn" (click)="declineUser(request)" *ngIf="request">
+          <button mat-raised-button data-cy="decline" color="warn" (click)="declineUser(request)" *ngIf="request">
             Decline
           </button>
         </div>

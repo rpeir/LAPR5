@@ -73,7 +73,7 @@ export default class PathwayController implements IPathwayController {
   public async listPathways(req: Request, res: Response, next: NextFunction) {
     try {
       // @ts-ignore
-      if (req.auth.user.role.name !== 'campus manager' && req.auth.user.role.name !== 'user') {
+      if (req.auth.user.role.name !== 'campus manager' && req.auth.user.role.name !== 'user' && req.auth.user.role.name !== 'task manager') {
         return res
           .status(401)
           .json('Não tem permissões para aceder a este recurso')
@@ -99,7 +99,7 @@ export default class PathwayController implements IPathwayController {
 
   public async findAll(req: Request, res: Response, next: NextFunction) {
     // @ts-ignore
-    if (req.auth.user.role.name !== 'campus manager' && req.auth.user.role.name !== 'user') {
+    if (req.auth.user.role.name !== 'campus manager' && req.auth.user.role.name !== 'user' && req.auth.user.role.name !== 'task manager') {
       return res
         .status(401)
         .json('Não tem permissões para aceder a este recurso')

@@ -12,6 +12,7 @@ import {IUserDTO} from "../../../../src/dto/IUserDTO";
 export class UserService{
   constructor(private httpClient: HttpClient) { }
   private baseUrl= environment.apiURL + '/api/auth';
+  private userUrl=environment.apiURL+ '/api/users';
   private newUrl=environment.apiURL+ '/api/userRequests'
 
   createManager(user: User) {
@@ -38,5 +39,9 @@ export class UserService{
 
   deleteUser(id: string) {
     return this.httpClient.delete<User>(this.baseUrl+"/"+id);
+  }
+
+  getUtentes() {
+    return this.httpClient.get<User[]>(this.userUrl+"/utentes");
   }
 }

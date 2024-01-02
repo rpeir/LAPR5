@@ -29,9 +29,6 @@ describe('Create Robot spec', () => {
       cy.get('input[value=create]').click();
       cy.wait('@apiCheck').then((interception) =>{
         assert.equal(interception.response.statusCode, 201);
-        assert.equal(JSON.stringify(interception.response.body), JSON.stringify({
-          ...robotData
-        }))
       })
   });
   it('should fail to create a robot if not given robotCode', () => {

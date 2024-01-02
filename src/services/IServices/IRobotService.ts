@@ -6,4 +6,5 @@ export default interface IRobotService {
   disableRobot(body: IRobotDTO): Promise<Result<IRobotDTO>>;
   consultAllRobots(): Promise<Result<IRobotDTO[]>>;
   consultRobotsByTaskType(taskType: string): Promise<Result<IRobotDTO[]>>;
+  consultRobotsByRobotType(robotType: string): Promise<Result<IRobotDTO[]>>;
 }

@@ -17,9 +17,8 @@ export default defineConfig({
       "cypress/e2e/robot/*.ts",
       "cypress/e2e/task/*.ts",
       "cypress/e2e/userRequest/*.ts",
-    //  "cypress/e2e/sysadm/*.ts",
+      "cypress/e2e/sysadm/*.ts",
       "cypress/e2e/manager/*.ts",
-      //"cypress/e2e/account/*.ts",
       //...
     ],
     env: {

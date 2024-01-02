@@ -1,0 +1,24 @@
+
+/* main */
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
+  /* Add more styling for the main content area */
+}
+
+#loading {
+  width: 100%;
+}
+
+
+#search-fields {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px;
+
+  /* Add styles for the search box */
+}

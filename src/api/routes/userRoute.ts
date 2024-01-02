@@ -106,6 +106,13 @@ export default (app: Router) => {
 
   route.get('/me', middlewares.isAuth, middlewares.attachCurrentUser, user_controller.getMe);
 
+  route.get(
+    '/utentes',
+    middlewares.isAuth,
+    middlewares.verifyToken,
+    (req,res,next) => user_controller.getUtentes(req, res,next)
+  )
+
   app.use('/auth', route);
 
   route.post(
