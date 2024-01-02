@@ -95,6 +95,7 @@ export default class TaskAdapter implements ITaskAdapter {
       let i = 0;
       for (let param of params) {
         if (i === 0) { urlString += "?" } else { urlString += "&"}
+        i++;
         urlString += param[0] + "=" + param[1];
       }
       const res = await axios.get(urlString);

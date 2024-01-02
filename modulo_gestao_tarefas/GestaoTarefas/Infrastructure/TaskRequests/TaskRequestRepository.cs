@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GestaoTarefas.Domain.Shared;
 using GestaoTarefas.Domain.TaskRequests;
 using GestaoTarefas.Domain.Tasks;
 using GestaoTarefas.Domain.TaskTypes;
@@ -33,10 +34,12 @@ public class TaskRequestRepository : BaseRepository<TaskRequest, TaskRequestId>,
 
   public async Task<IEnumerable<TaskRequest>> GetByTaskIdsAsync(List<TaskDto> tasksWithRobots)
   {
-    var ids = tasksWithRobots.Select(t => t.IdentificationCode).ToList();
+    var stringIds = tasksWithRobots.Select(t => t.IdentificationCode).ToList();
+    var ids = new List<IdentificationCode>();
+    stringIds.ForEach((id) => ids.Add(new IdentificationCode(id)));
 
     return await this.Objs
-      .Where(r => ids.Contains(r.IdentificationCode.ToString())).ToListAsync();
+      .Where(r => ids.Contains(r.IdentificationCode)).ToListAsync();
   }
 
   public async Task<IEnumerable<TaskRequest>> GetByStatusUserTimeAsync(

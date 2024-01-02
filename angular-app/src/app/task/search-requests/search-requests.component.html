@@ -10,21 +10,21 @@
         <mat-form-field id="select-status">
           <mat-label>Status</mat-label>
           <mat-select [(ngModel)]="status">
-            <mat-option [value]="undefined"> None </mat-option>
+            <mat-option [value]="undefined"> All </mat-option>
             <mat-option *ngFor="let status of statuses" [value]="status">{{ status | titlecase }}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field id="select-robot-type">
           <mat-label>Robot Type</mat-label>
           <mat-select [(ngModel)]="type">
-            <mat-option [value]="undefined"> None </mat-option>
+            <mat-option [value]="undefined"> All </mat-option>
             <mat-option *ngFor="let type of robotTypes" [value]="type">{{ type.name }}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field id="select-user">
           <mat-label>User</mat-label>
           <mat-select [(ngModel)]="user">
-            <mat-option [value]="undefined"> None </mat-option>
+            <mat-option [value]="undefined"> All </mat-option>
             <mat-option *ngFor="let user of users" [value]="user">
               {{ user.firstName + " " + user.lastName + " (" + user.email + ")" }}
             </mat-option>
