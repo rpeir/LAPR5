@@ -58,7 +58,7 @@ export class TaskService {
       params = params.append('status', status);
     }
     if (roboType) {
-      params = params.append('roboType', roboType);
+      params = params.append('robotType', roboType);
     }
     if (startTime) {
       params = params.append('startTime', startTime.toJSON());
