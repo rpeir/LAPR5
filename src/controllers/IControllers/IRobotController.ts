@@ -5,4 +5,5 @@ export default interface IRobotController {
   disableRobot(req: Request, res: Response, next: NextFunction);
   consultAllRobots(req: Request, res: Response, next: NextFunction);
   consultRobotsByTaskType(req: Request, res: Response, next: NextFunction);
+  consultRobotsByRobotType(req: Request, res: Response, next: NextFunction);
 }

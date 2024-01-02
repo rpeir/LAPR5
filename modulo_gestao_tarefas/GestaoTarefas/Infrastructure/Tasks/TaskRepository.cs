@@ -21,4 +21,11 @@ public class TaskRepository : BaseRepository<Task, TaskId>, ITaskRepository
     return  await this.Objs
       .Where(t => t.Status.Equals(Status.Pending)).ToListAsync();
   }
+
+  public async Task<List<Task>> GetByRobotsAsync(List<Guid> ids)
+  {
+    //return tasks where the robotId is in the list of ids
+    return await this.Objs
+      .Where(t => ids.Contains(t.RobotId)).ToListAsync();
+  }
 }

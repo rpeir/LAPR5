@@ -136,6 +136,12 @@
     </div>
   </div>
 
+  <div style="margin-bottom: 20px;"></div>
+
+  <button mat-raised-button color="primary" class="custom-button" (click)="redirectToMapViewer()" [disabled]="!localStorage.getItem('pathFile')">
+    Visualize Path in Map Viewer
+  </button>
+
 
   </div>
 </body>

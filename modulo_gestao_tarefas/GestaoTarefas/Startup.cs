@@ -11,7 +11,6 @@ using GestaoTarefas.Domain.Shared;
 using GestaoTarefas.Domain.TaskRequests;
 using GestaoTarefas.Domain.Tasks;
 using GestaoTarefas.Infrastructure.Tasks;
-using GestaoTarefas.Domain.Tasks;
 using GestaoTarefas.Infrastructure.TaskRequests;
 
 

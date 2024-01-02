@@ -42,4 +42,12 @@ export const campusManagerGuard: CanActivateFn = (route, state) => {
   return autorized;
 }
 
+export const combinedGuard: CanActivateFn = (route, state) => {
+  const autorized = inject(AuthService).isCampusManager() || inject(AuthService).isTaskManager() || inject(AuthService).isUser();
+  if (!autorized) {
+    inject(Router).navigate(["/login"]);
+  }
+  return autorized;
+}
+
 

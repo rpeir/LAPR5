@@ -547,7 +547,7 @@ export default class ThumbRaiser {
     this.scene.add(this.maze);
   }
   // Function for auto play
-  changeMazeForAutoPlay(floorMap, playerPosition = null) {
+  async changeMazeForAutoPlay(floorMap, playerPosition = null) {
     this.scene.remove(this.maze);
     this.mazeParameters = {
       mazeDescription: floorMap,
@@ -1233,6 +1233,7 @@ export default class ThumbRaiser {
     await this.computePlayerDirection(line1, column1, line2, column2);
     // Make the player move to the new position
     this.player.keyStates.forward = true;
+    this.player.playerAuto = true;
     //this.player.shiftKey = true;
     // Loop for checking if the robot has reached new position
     while (
