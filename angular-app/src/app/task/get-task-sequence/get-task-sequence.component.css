@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-  width: 100%; /* Change to a percentage or remove for full width */
+  width: 90%; /* Change to a percentage or remove for full width */
   height: 800px;
   padding: 20px;
   background-color: #fff;
@@ -80,4 +80,42 @@ input[type="submit"] {
 .task-property {
   flex: 1;
   margin-bottom: 8px;
+  justify-content: center;
+}
+
+.form-fields-container {
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+}
+
+.form-field {
+  margin-right: 10px; /* Adjust margin as needed */
+}
+
+.stopping-criteria-container {
+  display: flex;
+  flex-direction: column; /* Arrange items in a column */
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
+  text-align: center; /* Center text within the container */
+}
+
+.criteria-label {
+  margin-bottom: 10px; /* Add margin between label and checkboxes */
+}
+
+.example-margin {
+  margin: 5px; /* Add margin around checkboxes */
+}
+
+.error-message {
+  color: red;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* or adjust the height as needed */
 }

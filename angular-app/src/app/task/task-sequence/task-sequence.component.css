@@ -38,6 +38,7 @@ input[type="submit"] {
   color: #333;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px;
 }
 
 .mat-table {
@@ -80,35 +81,4 @@ input[type="submit"] {
 .task-property {
   flex: 1;
   margin-bottom: 8px;
-  justify-content: center;
-}
-
-.form-fields-container {
-  display: flex;
-  justify-content: center;
-  margin: 50px;
-}
-
-.form-field {
-  margin-right: 10px; /* Adjust margin as needed */
-}
-
-.stopping-criteria-container {
-  display: flex;
-  flex-direction: column; /* Arrange items in a column */
-  align-items: center; /* Center items horizontally */
-  justify-content: center; /* Center items vertically */
-  text-align: center; /* Center text within the container */
-}
-
-.criteria-label {
-  margin-bottom: 10px; /* Add margin between label and checkboxes */
-}
-
-.example-margin {
-  margin: 5px; /* Add margin around checkboxes */
-}
-
-.error-message {
-  color: red;
 }

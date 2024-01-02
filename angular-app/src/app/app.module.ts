@@ -60,11 +60,11 @@ import { CreateUserComponent } from "./user/create-user/create-user.component";
 import { RegisterUserComponent } from "./user/register-user/register-user.component";
 import { AuthenticationInterceptor } from "./auth/authentication.interceptor";
 import { PendingRequestsComponent } from './task/pending-requests/pending-requests.component';
-import { TaskSequenceComponent } from './task-sequence/task-sequence.component';
+import { TaskSequenceComponent } from './task/task-sequence/task-sequence.component';
 import { SelectRobotComponent } from './task/pending-requests/select-robot/select-robot.component';
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatTableModule } from "@angular/material/table";
-import { GetTaskSequenceComponent } from './get-task-sequence/get-task-sequence.component';
+import { GetTaskSequenceComponent } from './task/get-task-sequence/get-task-sequence.component';
 import { HomeComponent } from './home/home.component';
 import { NgOptimizedImage } from "@angular/common";
 import { LogoutComponent } from './auth/logout/logout.component';
@@ -82,6 +82,7 @@ import { SearchRequestsComponent } from './task/search-requests/search-requests.
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import { TaskSequenceParamsTipComponent } from './task/task-sequence-parms-tip/task-sequence-params-tip.component';
 
 @NgModule({
   declarations: [
@@ -141,7 +142,8 @@ import {MatNativeDateModule} from "@angular/material/core";
     PrivacyPolicyComponent,
     CopyDataComponent,
     DeleteAccountComponent,
-    SearchRequestsComponent
+    SearchRequestsComponent,
+    TaskSequenceParamsTipComponent
   ],
   imports: [
     BrowserModule,
