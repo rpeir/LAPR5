@@ -53,6 +53,7 @@ import { MakeTaskRequestComponent } from './make-task-request/make-task-request.
 import { CopyDataComponent } from './account/copy-data/copy-data.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { DeleteAccountComponent } from './account/delete-account/delete-account.component';
+import {SearchRequestsComponent} from "./task/search-requests/search-requests.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [VerifyAuthService] },
@@ -109,6 +110,7 @@ const routes: Routes = [
   { path: 'account', component: AccountComponent },
   { path: 'tasks/makeTaskRequest', component: MakeTaskRequestComponent, canActivate: [userGuard] },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
+  { path: 'taskRequests/search', component : SearchRequestsComponent, canActivate: [taskManagerGuard] },
   { path: '**', redirectTo: '' },
 ];
 

@@ -8,4 +8,5 @@ export default interface IUserService  {
   userSignUpRequest(userDTO: IUserRequestDTO):Promise<Result<IUserRequestDTO>>;
   updateUser(dto: IUserDTO): Promise<Result<IUserDTO>>;
   deleteUser(id: string): Promise<Result<boolean>>;
+  getUtentes(): Promise<Result<IUserDTO[]>>;
 }

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import { environment } from "../../environments/environment";
 import { Task } from "./task";
 import { TaskRequest } from "./taskRequest";
@@ -42,5 +42,31 @@ export class TaskService {
       observe: 'body',
       responseType: 'json',
     });
+  }
+
+  getAllTaskRequests() {
+    return this.httpClient.get<TaskRequest[]>(`${this.requestsUrl}`, {observe: "body", responseType: "json"});
+  }
+
+  getTaskRequestByParams(userId?:string, status?:string, roboType?:string, startTime?:Date, endTime?:Date) {
+    // params are in the form of a query string
+    let params = new HttpParams();
+    if (userId) {
+      params = params.append('userId', userId);
+    }
+    if (status) {
+      params = params.append('status', status);
+    }
+    if (roboType) {
+      params = params.append('robotType', roboType);
+    }
+    if (startTime) {
+      params = params.append('startTime', startTime.toJSON());
+    }
+    if (endTime) {
+      params = params.append('endTime', endTime.toJSON());
+    }
+
+    return this.httpClient.get<TaskRequest[]>(`${this.requestsUrl}`, {params: params, responseType: "json"});
   }
 }

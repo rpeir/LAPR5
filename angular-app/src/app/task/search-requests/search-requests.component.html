@@ -1,0 +1,121 @@
+<app-main-toolbar></app-main-toolbar>
+
+<main>
+  <div *ngIf="loading" id="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+  <div *ngIf="!loading" id="main-page">
+    <div id="search-box">
+      <div id="search-fields">
+        <mat-form-field id="select-status">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="status">
+            <mat-option [value]="undefined"> All </mat-option>
+            <mat-option *ngFor="let status of statuses" [value]="status">{{ status | titlecase }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field id="select-robot-type">
+          <mat-label>Robot Type</mat-label>
+          <mat-select [(ngModel)]="type">
+            <mat-option [value]="undefined"> All </mat-option>
+            <mat-option *ngFor="let type of robotTypes" [value]="type">{{ type.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field id="select-user">
+          <mat-label>User</mat-label>
+          <mat-select [(ngModel)]="user">
+            <mat-option [value]="undefined"> All </mat-option>
+            <mat-option *ngFor="let user of users" [value]="user">
+              {{ user.firstName + " " + user.lastName + " (" + user.email + ")" }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+        <mat-form-field id="select-start-date">
+          <mat-label>Date Range</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Start date" [(ngModel)]="startDate">
+            <input matEndDate placeholder="End date" [(ngModel)]="endDate">
+          </mat-date-range-input>
+          <mat-hint>DD/MM/YYYY - DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+        <button matTooltip="Search" mat-fab id="search-button" (click)="search()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+    </div>
+
+
+    <div *ngIf="requests" id="table-search">
+      <mat-table [dataSource]="requests">
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef> Description</mat-header-cell>
+          <mat-cell *matCellDef="let request"> {{ request?.description }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <mat-header-cell *matHeaderCellDef> Type</mat-header-cell>
+          <mat-cell *matCellDef="let request"> {{ request?.type }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="user">
+          <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
+          <mat-cell *matCellDef="let request"> {{ request?.user?.firstName + " " + request?.user?.lastName }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="requestStatus">
+          <mat-header-cell *matHeaderCellDef>Request Status</mat-header-cell>
+          <mat-cell *matCellDef="let request"> {{ request?.requestStatus }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="pickupRoom">
+          <mat-header-cell *matHeaderCellDef> Pickup Room</mat-header-cell>
+          <mat-cell *matCellDef="let request"> {{ request?.pickupRoom?.name }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="deliveryRoom">
+          <mat-header-cell *matHeaderCellDef> Delivery Room</mat-header-cell>
+          <mat-cell *matCellDef="let request"> {{ request?.deliveryRoom?.name }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="identificationCode">
+          <mat-header-cell *matHeaderCellDef> Identification Code</mat-header-cell>
+          <mat-cell *matCellDef="let request"> {{ request?.identificationCode }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="senderName">
+          <mat-header-cell *matHeaderCellDef> Sender Name</mat-header-cell>
+          <mat-cell *matCellDef="let request"> {{ request?.senderName }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="receiverName">
+          <mat-header-cell *matHeaderCellDef> Receiver Name</mat-header-cell>
+          <mat-cell *matCellDef="let request"> {{ request?.receiverName }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="senderContact">
+          <mat-header-cell *matHeaderCellDef> Sender Contact</mat-header-cell>
+          <mat-cell *matCellDef="let request"> {{ request?.senderContact }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="receiverContact">
+          <mat-header-cell *matHeaderCellDef> Receiver Contact</mat-header-cell>
+          <mat-cell *matCellDef="let request"> {{ request?.receiverContact }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="confirmationCode">
+          <mat-header-cell *matHeaderCellDef> Confirmation Code</mat-header-cell>
+          <mat-cell *matCellDef="let request"> {{ request?.confirmationCode }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="emergencyNumber">
+          <mat-header-cell *matHeaderCellDef> Emergency Number</mat-header-cell>
+          <mat-cell *matCellDef="let request"> {{ request?.emergencyNumber }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="floorNr">
+          <mat-header-cell *matHeaderCellDef> Floor</mat-header-cell>
+          <mat-cell *matCellDef="let request"> {{ request?.floor?.floorNr }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="createdAt">
+          <mat-header-cell *matHeaderCellDef> Floor</mat-header-cell>
+          <mat-cell *matCellDef="let request"> {{ request?.createdAt | date : 'd/M/yy, h:mm' }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+        </ng-container>
+      </mat-table>
+    </div>
+  </div>
+
+</main>
