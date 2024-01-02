@@ -51,7 +51,7 @@ export default {
   /**
    * Host of task server
    */
-  tasksHost: process.env.TASK_HOST || 'localhost', // TODO: change to deployment host
+  tasksHost: process.env.TASK_HOST || 'vs521.dei.isep.ipp.pt',
 
   /**
    * API configs
