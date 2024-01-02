@@ -27,6 +27,9 @@ export default class TaskController implements ITaskController {
       if (params.some(([key, value]) => key === 'robotType')) {
         const robotType = params.find(([key, value]) => key === 'robotType')[1];
         const robotIds = await this.robotService.consultRobotsByRobotType(robotType);
+        if (robotIds.getValue().length == 0) {
+          return res.status(200).json([]);
+        }
         // add robotIds to robotId string separated by commas and no final comma
         for (const robot of robotIds.getValue()) {
           robotId += robot.id + ',';
