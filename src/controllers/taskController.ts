@@ -8,16 +8,36 @@ import { GenericAppError } from "../core/logic/AppError";
 import UnexpectedError = GenericAppError.UnexpectedError;
 import InvalidRequestError = GenericAppError.InvalidRequestError;
 
+import IRobotService from "../services/IServices/IRobotService";
+
 @Service()
 export default class TaskController implements ITaskController {
   constructor(
-    @Inject(config.services.task.name) private taskService: ITaskService
+    @Inject(config.services.task.name) private taskService: ITaskService,
+    @Inject(config.services.robot.name) private robotService: IRobotService
   ) {}
 
   public async getTaskRequests(req: Request, res: Response, next: NextFunction) {
     try {
+      let robotId = '';
       // @ts-ignore
       const params : [string, string][] = Object.entries(req.query);
+
+      // if params contains robotType, find robotId list
+      if (params.some(([key, value]) => key === 'robotType')) {
+        const robotType = params.find(([key, value]) => key === 'robotType')[1];
+        const robotIds = await this.robotService.consultRobotsByRobotType(robotType);
+        // add robotIds to robotId string separated by commas and no final comma
+        for (const robot of robotIds.getValue()) {
+          robotId += robot.id + ',';
+        }
+        // remove robotType from params and add robotId
+        params.push(['robotId', robotId.slice(0, -1)]);
+        params.splice(
+          params.findIndex(([key, value]) => key === 'robotType'),
+          1,
+        );
+      }
 
       const tasks = await this.taskService.getTaskRequests(params);
 
@@ -27,7 +47,7 @@ export default class TaskController implements ITaskController {
       if (error instanceof InvalidRequestError) {
         return res.status(error.errorValue().statusCode).json(error.errorValue().error);
       } else {
-        return next(error)
+        return next(error);
       }
     }
   }

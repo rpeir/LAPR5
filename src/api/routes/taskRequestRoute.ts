@@ -3,7 +3,7 @@ import { Container } from 'typedi';
 import config from '../../../config';
 import { celebrate, Joi } from 'celebrate';
 import middlewares from '../middlewares';
-import ITaskController from "../../controllers/IControllers/ITaskController";
+import ITaskController from '../../controllers/IControllers/ITaskController';
 
 const route = Router();
 export default (app: Router) => {
@@ -14,6 +14,15 @@ export default (app: Router) => {
     '',
     middlewares.isAuth,
     middlewares.verifyToken,
+    celebrate({
+      query: Joi.object({
+        status: Joi.string(),
+        robotType: Joi.string(),
+        userId: Joi.string(),
+        startTime: Joi.string(),
+        endTime: Joi.string(),
+      }),
+    }),
     (req, res, next) => {
       ctrl.getTaskRequests(req, res, next);
     },
@@ -54,7 +63,7 @@ export default (app: Router) => {
     (req, res, next) => {
       ctrl.rejectTask(req, res, next);
     },
-  )
+  );
 
   route.use(middlewares.validateBody);
 };
