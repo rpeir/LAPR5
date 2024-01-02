@@ -78,6 +78,10 @@ import { MakeTaskRequestComponent } from './make-task-request/make-task-request.
 import { MatRadioModule } from "@angular/material/radio";
 import { MatSliderModule } from "@angular/material/slider";
 import { DeleteAccountComponent} from "./account/delete-account/delete-account.component";
+import { SearchRequestsComponent } from './task/search-requests/search-requests.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -136,7 +140,8 @@ import { DeleteAccountComponent} from "./account/delete-account/delete-account.c
     ConsentComponent,
     PrivacyPolicyComponent,
     CopyDataComponent,
-    DeleteAccountComponent
+    DeleteAccountComponent,
+    SearchRequestsComponent
   ],
   imports: [
     BrowserModule,
@@ -162,7 +167,10 @@ import { DeleteAccountComponent} from "./account/delete-account/delete-account.c
     NgOptimizedImage,
     MatTabsModule,
     MatRadioModule,
-    MatSliderModule
+    MatSliderModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

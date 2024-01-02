@@ -8,6 +8,7 @@ import { User } from "../domain/user/user";
 import { UserId } from "../domain/user/userId";
 import { UserEmail } from "../domain/user/userEmail";
 import { UserMap } from "../mappers/UserMap";
+import {Role} from "../domain/role/role";
 
 @Service()
 export default class UserRepo implements IUserRepo {
@@ -68,6 +69,21 @@ export default class UserRepo implements IUserRepo {
 
     if( userRecord != null) {
       return UserMap.toDomain(userRecord);
+    }
+    else
+      return null;
+  }
+
+  public async findByRole(role : Role): Promise<User[]> {
+    const query = { role: role.id.toValue() };
+
+    const userRecords = await this.userSchema.find( query );
+    let users : User[] = [];
+    if (userRecords != null) {
+     for (let userRecord of userRecords) {
+       users.push(await UserMap.toDomain(userRecord));
+     }
+      return users;
     }
     else
       return null;

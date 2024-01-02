@@ -120,8 +120,6 @@ export default class UserService implements IUserService{
       throw e;
     }
   }
-
-
   public async SignIn(email: string, password: string): Promise<Result<{ userDTO: IUserDTO, token: string }>> {
 
     const user = await this.userRepo.findByEmail( UserEmail.create(email).getValue());
@@ -146,6 +144,7 @@ export default class UserService implements IUserService{
       throw new Error('Invalid Password');
     }
   }
+
 
   private generateToken(user) {
     const today = new Date();
@@ -195,7 +194,6 @@ export default class UserService implements IUserService{
       return Result.fail<Role>("Couldn't find role by id=" + roleId);
     }
   }
-
 
   public async userSignUpRequest(userDTO: IUserRequestDTO): Promise<Result<IUserRequestDTO>> {
     try {
@@ -263,6 +261,14 @@ export default class UserService implements IUserService{
       throw e;
     }
   }
+
+  public async getUtentes(): Promise<Result<IUserDTO[]>> {
+    const utenteRole = await this.roleRepo.findByName("user");
+    const users = await this.userRepo.findByRole(utenteRole);
+    if (!users) return Result.fail<IUserDTO[]>('Erro ao obter utentes');
+    return Result.ok<IUserDTO[]>(users.map(user => UserMap.toDTO(user)));
+  }
+
   public async updateUser(dto: IUserDTO): Promise<Result<IUserDTO>> {
     const user : User = await this.userRepo.findById(dto.id);
     if (!user) return Result.fail<IUserDTO>('Utilizador não registado');

@@ -11,6 +11,27 @@ import { IUserDTO } from '../dto/IUserDTO';
 import IUserService from "../services/IServices/IUserService";
 import IUserRequestService from "../services/IServices/IUserRequestService";
 
+export async function getUtentes(req, res: Response, next: NextFunction) {
+
+  // @ts-ignore
+  if (req.auth.user.role.name !== 'task manager') {
+    return res
+      .status(401)
+      .json('Não tem permissões para aceder a este recurso')
+      .send();
+  }
+
+  const userService = Container.get(config.services.user.name) as IUserService;
+
+  const usersDTO = await userService.getUtentes();
+
+  if (usersDTO.isFailure) return res.status(402).json(usersDTO.error);
+
+  return res.status(200).json(usersDTO.getValue());
+
+}
+
+
 export async function updateUser(req, res: Response, next: NextFunction) {
 
   const id = req.auth.id;
