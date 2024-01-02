@@ -53,7 +53,6 @@ export const playerData = {
   turningSpeed: 75.0, // Expressed in degrees / second
   runningFactor: 2.0, // Affects walking speed and turning speed
   keyCodes: {
-    realisticViewMode: 'KeyR',
     fixedView: 'Digit1',
     firstPersonView: 'Digit2',
     thirdPersonView: 'Digit3',

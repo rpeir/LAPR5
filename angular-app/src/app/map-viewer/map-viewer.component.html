@@ -1,6 +1,9 @@
 <div id="container">
   <div id="views-panel">
     <div>
+      Current floor <span id="currentFloor"></span>
+    </div>
+    <div>
       <label>Select Building:</label>
       <select id="buildingSelector"></select>
     </div>
@@ -9,9 +12,9 @@
       <select id="mapSelector"></select>
     </div>
     <div id="upload-section">
-      <label for="jsonFile">Upload JSON File:</label>
+      <label for="jsonFile">Upload Automatic Path (JSON):</label>
       <input type="file" id="jsonFile" accept=".json">
-      <button id="loadJsonButton">Load JSON</button>
+      <button id="loadJsonButton">Load File</button>
     </div>
     <table class="views">
       <tr>
@@ -120,10 +123,6 @@
         <th colspan="2" style="text-align: left">Set view mode</th>
       </tr>
       <tr>
-        <td></td>
-        <td>Stabilized view mode / realistic view mode</td>
-      </tr>
-      <tr>
         <th colspan="2" style="text-align: left">Display / select / hide views</th>
       </tr>
       <tr>
@@ -228,12 +227,6 @@
   </div>
   <div id="subwindows-panel">
     <table class="subwindows">
-      <tr>
-        <td>
-          Realistic view mode:
-          <input type="checkbox" id="realistic">
-        </td>
-      </tr>
       <tr>
         <td>
           Fixed view:

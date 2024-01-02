@@ -30,6 +30,7 @@ export default function start() {
         pathFile = null;
         localStorage.removeItem('pathFile');
       }
+      document.getElementById('currentFloor').innerText = selectedFloor.description;
     } catch (error) {
       console.error('An error occurred during initialization:', error);
     }
@@ -106,6 +107,7 @@ export default function start() {
       }
       await thumbRaiser.changeMazeForAutoPlay(floor.floorMap, pathJSON.pathInside[i]);
       await waitTime(300);
+      document.getElementById('currentFloor').innerText = selectedFloor.description;
       await thumbRaiser.movePlayer(pathJSON.pathInside[i]);
       i++;
       oldFloor = floor;
@@ -239,6 +241,7 @@ export default function start() {
     try {
       await thumbRaiser.changeMazeForAutoPlay(floor.floorMap);
       selectedFloor = floor;
+      document.getElementById('currentFloor').innerText = selectedFloor.description;
       let newExitLocation = floor.floorMap.maze.exitLocation.find(exit => exit.floorId === currentFloor.description);
       let newPosition = thumbRaiser.maze.cellToCartesian(newExitLocation.location);
       thumbRaiser.player.position.set(newPosition.x, newPosition.y, newPosition.z);
@@ -375,7 +378,7 @@ export default function start() {
         floors.forEach(floor => {
           if (floor.floorNr === parseInt(floorFromButton)) {
             selectedFloor = floor;
-            thumbRaiser.changeMazeForAutoPlay(floor.floorMap);
+            thumbRaiser.changeMazeForAutoPlay(floor.floorMap).then(r => document.getElementById('currentFloor').innerText = selectedFloor.description);
             let position = thumbRaiser.maze.cellToCartesian(floor.floorMap.maze.elevators);
             thumbRaiser.player.position.set(position.x, position.y, position.z);
           }
@@ -395,6 +398,7 @@ export default function start() {
     try {
       selectedFloor = await floorsOfBuilding.find(floor => floor.floorNr === parseInt(selectedMap));
       floormap = selectedFloor.floorMap;
+      document.getElementById('currentFloor').innerText = selectedFloor.description;
       return floormap;
     } catch (error) {
       console.error('An error occurred while fetching and setting the map:', error);
@@ -430,6 +434,7 @@ export default function start() {
         await fetchFloorsOfBuilding(defaultBuilding);
         selectedFloor = floorsOfBuilding[0];
         thumbRaiser.changeMaze(floorsOfBuilding[0].floorMap);
+        document.getElementById('currentFloor').innerText = selectedFloor.description;
       })
       .catch(error => console.error('Error fetching buildings:', error));
   }

@@ -94,7 +94,7 @@ import UserInterface from './user_interface.js';
  *  defaultDirection: Float,
  *  turningSpeed: Float,
  *  runningFactor: Float,
- *  keyCodes: { realisticViewMode: String, fixedView: String, firstPersonView: String, thirdPersonView: String, topView: String, miniMap: String, statistics: String, userInterface: String, help: String, boundingVolumes: String, ambientLight: String, directionalLight: String, spotLight: String, flashLight: String, shadows: String, fog: String, left: String, right: String, backward: String, forward: String, jump: String, yes: String, no: String, wave: String, punch: String, thumbsUp: String }
+ *  keyCodes: { fixedView: String, firstPersonView: String, thirdPersonView: String, topView: String, miniMap: String, statistics: String, userInterface: String, help: String, boundingVolumes: String, ambientLight: String, directionalLight: String, spotLight: String, flashLight: String, shadows: String, fog: String, left: String, right: String, backward: String, forward: String, jump: String, yes: String, no: String, wave: String, punch: String, thumbsUp: String }
  * }
  *
  * ambientLightParameters = {
@@ -489,8 +489,6 @@ export default class ThumbRaiser {
     this.keyboardHelpPanel = document.getElementById('keyboard-help-panel');
     this.creditsPanel = document.getElementById('credits-panel');
     this.subwindowsPanel = document.getElementById('subwindows-panel');
-    this.realisticViewMode = { checkBox: document.getElementById('realistic') };
-    this.realisticViewMode.checkBox.checked = false;
     this.fixedViewCamera.checkBox = document.getElementById('fixed');
     this.fixedViewCamera.checkBox.checked = true;
     this.firstPersonViewCamera.checkBox = document.getElementById('first-person');
@@ -766,11 +764,6 @@ export default class ThumbRaiser {
     }
   }
 
-  setRealisticViewMode(mode) {
-    // Stabilized view mode: false; realistic view mode: true
-    this.realisticViewMode.checkBox.checked = mode;
-  }
-
   setViewportVisibility(camera) {
     // Primary viewports only; the secondary (mini-map) viewport visibility is set separately
 
@@ -912,10 +905,7 @@ export default class ThumbRaiser {
       ) {
         event.preventDefault();
       }
-      if (event.code === this.player.keyCodes.realisticViewMode && state) {
-        // Stabilized view mode / realistic view mode
-        this.setRealisticViewMode(!this.realisticViewMode.checkBox.checked);
-      } else if (event.code === this.player.keyCodes.fixedView && state) {
+      if (event.code === this.player.keyCodes.fixedView && state) {
         // Display / select / hide fixed view
         this.setViewportVisibility(this.fixedViewCamera);
       } else if (event.code === this.player.keyCodes.firstPersonView && state) {
@@ -1512,7 +1502,6 @@ export default class ThumbRaiser {
       this.thirdPersonViewCamera.playerOrientation = orientation;
       this.thirdPersonViewCamera.setTarget(target);
       const directionRad = THREE.MathUtils.degToRad(this.player.direction);
-      if (!this.realisticViewMode.checkBox.checked) {
         this.firstPersonViewCamera.playerOrientation = orientation;
         this.firstPersonViewCamera.setTarget(target);
         this.flashLight.playerOrientation = orientation;
@@ -1522,21 +1511,6 @@ export default class ThumbRaiser {
           this.player.position.z + this.player.radius * Math.cos(directionRad),
         );
         this.flashLight.setTarget(target);
-      } else {
-        this.player.headEnd.getWorldQuaternion(orientation);
-        this.player.face.getWorldPosition(target);
-        this.firstPersonViewCamera.playerOrientation = orientation;
-        this.firstPersonViewCamera.setTarget(target);
-        this.flashLight.playerOrientation = orientation;
-        target.add(
-          new THREE.Vector3(
-            this.player.radius * Math.sin(directionRad),
-            this.player.size.y - this.player.face.worldPosition.y,
-            this.player.radius * Math.cos(directionRad),
-          ),
-        );
-        this.flashLight.setTarget(target);
-      }
 
       // Update statistics
       this.statistics.update();

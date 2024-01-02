@@ -13,7 +13,7 @@ import { CylinderHelper, BoxHelper } from './helpers.js';
  *  defaultDirection: Float,
  *  turningSpeed: Float,
  *  runningFactor: Float,
- *  keyCodes: { realisticViewMode: String, fixedView: String, firstPersonView: String, thirdPersonView: String, topView: String, miniMap: String, statistics: String, userInterface: String, help: String, boundingVolumes: String, ambientLight: String, directionalLight: String, spotLight: String, flashLight: String, shadows: String, fog: String, left: String, right: String, backward: String, forward: String, jump: String, yes: String, no: String, wave: String, punch: String, thumbsUp: String }
+ *  keyCodes: { fixedView: String, firstPersonView: String, thirdPersonView: String, topView: String, miniMap: String, statistics: String, userInterface: String, help: String, boundingVolumes: String, ambientLight: String, directionalLight: String, spotLight: String, flashLight: String, shadows: String, fog: String, left: String, right: String, backward: String, forward: String, jump: String, yes: String, no: String, wave: String, punch: String, thumbsUp: String }
  * }
  */
 export default class Player extends THREE.Group {
@@ -26,7 +26,6 @@ export default class Player extends THREE.Group {
 
     // Initialize keyboard key states
     this.keyStates = {
-      realisticViewMode: false,
       fixedView: false,
       firstPersonView: false,
       thirdPersonView: false,
