@@ -82,6 +82,7 @@ import { SearchRequestsComponent } from './task/search-requests/search-requests.
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {MatSortModule} from "@angular/material/sort";
 import { TaskSequenceParamsTipComponent } from './task/task-sequence-parms-tip/task-sequence-params-tip.component';
 
 @NgModule({
@@ -145,35 +146,36 @@ import { TaskSequenceParamsTipComponent } from './task/task-sequence-parms-tip/t
     SearchRequestsComponent,
     TaskSequenceParamsTipComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatMenuModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    FormsModule,
-    HttpClientModule,
-    MatInputModule,
-    MatSelectModule,
-    MatTooltipModule,
-    MatCardModule,
-    MatSidenavModule,
-    MatListModule,
-    MatProgressSpinnerModule,
-    MatCheckboxModule,
-    MatTableModule,
-    MatDialogModule,
-    NgOptimizedImage,
-    MatTabsModule,
-    MatRadioModule,
-    MatSliderModule,
-    MatAutocompleteModule,
-    MatDatepickerModule,
-    MatNativeDateModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatMenuModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        FormsModule,
+        HttpClientModule,
+        MatInputModule,
+        MatSelectModule,
+        MatTooltipModule,
+        MatCardModule,
+        MatSidenavModule,
+        MatListModule,
+        MatProgressSpinnerModule,
+        MatCheckboxModule,
+        MatTableModule,
+        MatDialogModule,
+        NgOptimizedImage,
+        MatTabsModule,
+        MatRadioModule,
+        MatSliderModule,
+        MatAutocompleteModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatSortModule
+    ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthenticationInterceptor,

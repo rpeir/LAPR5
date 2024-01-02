@@ -4,6 +4,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 20px;
 
   /* Add more styling for the main content area */
@@ -22,3 +23,8 @@ main {
 
   /* Add styles for the search box */
 }
+
+mat-header-row {
+  background: lightgreen;
+}
+
