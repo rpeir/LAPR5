@@ -11,7 +11,7 @@ export class TaskSequenceService {
   private passedTasks = new BehaviorSubject<Task[]>(new Array<Task>());
   currentTasks = this.passedTasks.asObservable();
 
-  private taskUrl = environment.apiURL + "/api/planning/tasksSequence";
+  private taskUrl = environment.apiURL + "/api/planning/taskSequence";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -27,6 +27,6 @@ export class TaskSequenceService {
     &crossOverProbability=${crossOverProbability}
     &mutationProbability=${mutationProbability}
     &populationSize=${populationSize}
-    &elitismRate=${elitismRate}` , {tasks}, {observe: "body", responseType: "json"});
+    &elitismRate=${elitismRate}` , tasks, {observe: "body", responseType: "json"});
   }
 }
