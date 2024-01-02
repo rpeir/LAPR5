@@ -78,6 +78,7 @@ export default class UserRequestService implements IUserRequestService{
       }
       const newState = RequestState.create({ state: 'rejected' });
       req.changeState(newState.getValue());
+      req.deleteReq();
       await this.reqRepo.save(req);
     }catch (err){
       throw Result.fail(err);
