@@ -1,7 +1,9 @@
 <app-main-toolbar></app-main-toolbar>
 <body class="RobDroneGo">
 <div class="container">
-  <h2 class="text-center">Selected tasks</h2>
+  <h2 class="text-center">Selected tasks
+    <button mat-button (click)="openDialog()"> <mat-icon class="icon">lightbulb</mat-icon></button>
+  </h2>
   <br>
   <div>
     <mat-table [dataSource]="tasks" class="mat-elevation-z8">
@@ -179,8 +181,10 @@
     </div>
   </form>
 
+  <mat-spinner class="spinner-container" *ngIf="waiting"></mat-spinner>
+
   <div *ngIf="taskSequence">
-    <h2 class="text-center">Task Sequence</h2>
+    <h2 class="form-fields-container">Task Sequence</h2>
 
     <mat-table [dataSource]="taskSequence" class="mat-elevation-z8">
       <ng-container matColumnDef="description">

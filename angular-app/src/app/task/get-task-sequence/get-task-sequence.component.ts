@@ -1,8 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { Task } from "../task/task";
+import { Task } from "../task";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TaskSequenceService } from "./task-sequence.service";
-import {FloorService} from "../floor/floor.service";
+import {FloorService} from "../../floor/floor.service";
+import { MatDialog } from "@angular/material/dialog";
+import { TaskSequenceParamsTipComponent } from "../task-sequence-parms-tip/task-sequence-params-tip.component";
 
 @Component({
   selector: "app-get-task-sequence",
@@ -12,8 +14,8 @@ import {FloorService} from "../floor/floor.service";
 export class GetTaskSequenceComponent implements OnInit {
   constructor(
     private taskSequenceService: TaskSequenceService,
-    private route: ActivatedRoute,
-    private floorService: FloorService
+    private floorService: FloorService,
+    private dialog: MatDialog
   ) {
   }
 
@@ -46,6 +48,7 @@ export class GetTaskSequenceComponent implements OnInit {
   populationSize: number = 0;
   crossOverProbability: number = 0;
   elitismRate: number = 0
+  waiting: boolean = false;
 
 
   ngOnInit(): void {
@@ -59,12 +62,15 @@ export class GetTaskSequenceComponent implements OnInit {
   }
 
   getSequence() {
+    this.waiting = true;
     this.taskSequenceService.getSequence(this.nrGenerations, this.stabilizationCriteriaValue, this.idealCost, this.crossOverProbability, this.mutationProbability, this.populationSize, this.elitismRate, this.tasks).subscribe({
         next: taskSequence => {
+          this.waiting = false;
           this.taskSequence = taskSequence;
         },
         error: err => {
-          window.alert(err);
+          window.alert(JSON.stringify(err.error.error));
+          this.waiting = false;
         }
       }
     )
@@ -101,4 +107,9 @@ export class GetTaskSequenceComponent implements OnInit {
       }
     })
   }
+
+  openDialog() {
+    this.dialog.open(TaskSequenceParamsTipComponent);
+  }
+
 }
