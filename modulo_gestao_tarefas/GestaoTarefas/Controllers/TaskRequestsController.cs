@@ -31,16 +31,6 @@ public class TaskRequestsController : ControllerBase
       // GET: api/TaskRequests (all)
       if (Request.Query.Count == 0) return await _service.GetAllAsync();
 
-
-      // GET: api/TaskRequests?status=xyz&userId=xyz
-      if (Request.Query.ContainsKey("status") || Request.Query.ContainsKey("userId"))
-      {
-        return await this._service.GetByStatusUserAsync(
-          statusDto: Request.Query["status"],
-          userIdDto: Request.Query["userId"]
-          );
-      }
-
       // GET: api/TaskRequests?status=xyz&robotId=xyz,xyz,xyz&userId=xyz&startTime=time1&endTime=time2
       if (Request.Query.ContainsKey("status") || Request.Query.ContainsKey("robotId") || Request.Query.ContainsKey("userId") || Request.Query.ContainsKey("startTime") || Request.Query.ContainsKey("endTime"))
       {
