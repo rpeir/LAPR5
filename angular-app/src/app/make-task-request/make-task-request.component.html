@@ -19,10 +19,10 @@
         <mat-label>Select a taskType</mat-label>
         <br>
         <div class="form-field">
-          <mat-radio-button class="example-radio-button" [value]="taskTypes.surveillance">
+          <mat-radio-button data-cy="surveillance-type" class="example-radio-button" [value]="taskTypes.surveillance">
             {{taskTypes.surveillance}}
           </mat-radio-button>
-          <mat-radio-button class="example-radio-button" [value]="taskTypes.delivery" (click)="changeToSurveillance()">
+          <mat-radio-button data-cy="delivery-type" class="example-radio-button" [value]="taskTypes.delivery" (click)="changeToSurveillance()">
             {{taskTypes.delivery}}
           </mat-radio-button>
         </div>
