@@ -200,7 +200,7 @@ export default class PlanningController implements IPlanningController {
       const stabilizationCriteriaValue = req.query.stabilizationCriteriaValue as string;
       const idealCost = req.query.idealCost as string;
       const populationSize = req.query.populationSize as string;
-      const crossoverProbability = req.query.crossoverProbability as string;
+      const crossoverProbability = req.query.crossOverProbability as string;
       const mutationProbability = req.query.mutationProbability as string;
       const elitismRate = req.query.elitismRate as string;
       const taskDTOS = req.body as ITaskDTO[];

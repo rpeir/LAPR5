@@ -6,7 +6,8 @@
   <div *ngFor="let robotTask of robotTasks">
     <mat-card>
       <mat-card-content class="example-card">
-        <button mat-button (click)="getTaskSequence(robotTask.tasks)">{{robotTask.robot }}</button>
+        <button mat-raised-button color="accent" (click)="getTaskSequence(robotTask.tasks)">{{robotTask.robot }}</button>
+        <br>
         <div>
               <mat-table [dataSource]="robotTask.tasks" class="mat-elevation-z8">
                 <ng-container matColumnDef="description">
