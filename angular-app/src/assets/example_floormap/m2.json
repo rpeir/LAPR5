@@ -5,15 +5,15 @@
       [3, 2, 2, 2, 2, 3, 2, 1],
       [1, 0, 0, 0, 0, 1, 0, 1],
       [1, 0, 0, 0, 0, 1, 0, 1],
-      [3, 2, 2, 0, 2, 2, 0, 1],
-      [0, 0, 0, 0, 0, 0, 0, 1],
+      [3, 2, 2, 5, 2, 2, 5, 1],
+      [1, 0, 0, 0, 0, 0, 0, 1],
       [1, 0, 0, 0, 0, 0, 0, 0],
-      [3, 2, 2, 0, 3, 2, 0, 1],
+      [3, 2, 2, 5, 3, 2, 5, 1],
       [1, 0, 0, 0, 1, 0, 0, 1],
       [1, 0, 0, 0, 1, 0, 0, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1]
+      [2, 2, 2, 2, 2, 2, 2, 0]
     ],
-    "elevators": [5,0],
+    "elevators": [4,0],
     "rooms": [
       {
         "roomId": "M201",
@@ -56,24 +56,24 @@
     ]
   },
   "ground": {
-    "size": { "width":7, "height": 0.0625, "depth": 9 },
-    "segments": { "width": 1, "height": 1, "depth": 1 },
+    "size": { "width": 7.0 , "height": 0.0625, "depth": 9.0 },
+    "segments": { "width": 64, "height": 1, "depth": 64 },
     "primaryColor": "0xffffff",
     "maps": {
       "color": {
-        "url": "./textures/ground_0003_2k_372HqZ/ground_0003_color_2k.jpg"
+        "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_basecolor.jpg"
       },
       "ao": {
-        "url": "./textures/ground_0003_2k_372HqZ/ground_0003_ao_2k.jpg",
+        "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_ambientOcclusion.jpg",
         "intensity": 1.0
       },
       "displacement": {
-        "url": "",
+        "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_height.png",
         "scale": 1.0,
-        "bias": 0.0
+        "bias": -0.53
       },
       "normal": {
-        "url": "./textures/ground_0003_2k_372HqZ/ground_0003_normal_opengl_2k.png",
+        "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_normal.jpg",
         "type": 0,
         "scale": { "x": 2.0, "y": 2.0 }
       },
@@ -82,7 +82,7 @@
         "scale": 1.0
       },
       "roughness": {
-        "url": "./textures/ground_0003_2k_372HqZ/ground_0003_roughness_2k.jpg",
+        "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_roughness.jpg",
         "rough": 1.0
       }
     },
@@ -91,26 +91,26 @@
     "repeat": { "u": 4.0, "v": 4.0 },
     "magFilter": 1,
     "minFilter": 5,
-    "secondaryColor": "0x6b554b"
+    "secondaryColor": "0x858585"
   },
   "wall": {
-    "segments": { "width": 1, "height": 1 },
+    "segments": { "width": 16, "height": 16 },
     "primaryColor": "0xffffff",
     "maps": {
       "color": {
-        "url": "./textures/concrete_0007_2k_xtGY5J/concrete_0007_color_2k.jpg"
+        "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_COLOR.jpg"
       },
       "ao": {
-        "url": "./textures/concrete_0007_2k_xtGY5J/concrete_0007_ao_2k.jpg",
+        "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_OCC.jpg",
         "intensity": 1.0
       },
       "displacement": {
-        "url": "",
-        "scale": 1.0,
-        "bias": 0.0
+        "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_DISP.png",
+        "scale": 0.5,
+        "bias": -0.25
       },
       "normal": {
-        "url": "./textures/concrete_0007_2k_xtGY5J/concrete_0007_normal_opengl_2k.png",
+        "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_NORM.jpg",
         "type": 0,
         "scale": { "x": 2.0, "y": 2.0 }
       },
@@ -119,7 +119,7 @@
         "scale": 1.0
       },
       "roughness": {
-        "url": "./textures/concrete_0007_2k_xtGY5J/concrete_0007_roughness_2k.jpg",
+        "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_ROUGH.jpg",
         "rough": 1.0
       }
     },
@@ -128,10 +128,10 @@
     "repeat": { "u": 2.0, "v": 1.0 },
     "magFilter": 1,
     "minFilter": 5,
-    "secondaryColor": "0x6b554b"
+    "secondaryColor": "0xffffff"
   },
   "player": {
-    "initialPosition": [7.0, 6.0],
-    "initialDirection": 0.0
+    "initialPosition": [0.0, 0.0],
+    "initialDirection": 90.0
   }
 }
