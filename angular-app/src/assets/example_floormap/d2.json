@@ -42,7 +42,7 @@
           "roomId": "D201",
           "position": [
             4,
-            4
+            3
           ],
           "size": {
             "width": 4,
@@ -64,7 +64,7 @@
           "roomId": "D203",
           "position": [
             9,
-            4
+            3
           ],
           "size": {
             "width": 4,
@@ -86,7 +86,7 @@
           "roomId": "D205",
           "position": [
             14,
-            4
+            3
           ],
           "size": {
             "width": 4,

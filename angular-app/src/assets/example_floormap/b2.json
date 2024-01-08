@@ -20,7 +20,7 @@
       "rooms": [
         {
           "roomId": "B201",
-          "position": [],
+          "position": [0,0],
           "uppercorner": [
             0,
             0
@@ -30,7 +30,7 @@
           "roomId": "B202",
           "position": [
             3,
-            12
+            11
           ],
           "uppercorner": [
             2,
@@ -41,7 +41,7 @@
           "roomId": "B203",
           "position": [
             6,
-            6
+            5
           ],
           "uppercorner": [
             0,
@@ -52,7 +52,7 @@
           "roomId": "B205",
           "position": [
             6,
-            18
+            17
           ],
           "uppercorner": [
             0,
@@ -62,7 +62,7 @@
         {
           "roomId": "B207",
           "position": [
-            4,
+            3,
             19
           ],
           "uppercorner": [

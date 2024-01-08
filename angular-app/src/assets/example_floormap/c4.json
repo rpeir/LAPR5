@@ -37,7 +37,7 @@
           "roomId": "C401",
           "position": [
             6,
-            6
+            5
           ],
           "size": {
             "width": 4,
@@ -47,7 +47,7 @@
         {
           "roomId": "C402",
           "position": [
-            5,
+            4,
             10
           ],
           "size": {
@@ -58,7 +58,7 @@
         {
           "roomId": "C404",
           "position": [
-            11,
+            10,
             10
           ],
           "size": {

@@ -22,7 +22,7 @@
           "roomId": "APN",
           "position": [
             5,
-            10
+            9
           ],
           "uppercorner": [
             0,
@@ -31,7 +31,7 @@
         },
         {
           "roomId": "BengA",
-          "position": [],
+          "position": [0,0],
           "uppercorner": [
             0,
             10
@@ -39,7 +39,7 @@
         },
         {
           "roomId": "K1",
-          "position": [],
+          "position": [0,0],
           "uppercorner": [
             0,
             14
@@ -47,7 +47,7 @@
         },
         {
           "roomId": "K2",
-          "position": [],
+          "position": [0,0],
           "uppercorner": [
             0,
             18
@@ -55,7 +55,7 @@
         },
         {
           "roomId": "R1",
-          "position": [],
+          "position": [0,0],
           "uppercorner": [
             8,
             10
@@ -63,7 +63,7 @@
         },
         {
           "roomId": "R2",
-          "position": [],
+          "position": [0,0],
           "uppercorner": [
             8,
             18

@@ -32,7 +32,7 @@
           "roomId": "D101",
           "position": [
             3,
-            2
+            1
           ],
           "size": {
             "width": 2,
@@ -54,7 +54,7 @@
           "roomId": "D103",
           "position": [
             9,
-            4
+            3
           ],
           "size": {
             "width": 4,
@@ -76,7 +76,7 @@
           "roomId": "D105",
           "position": [
             15,
-            4
+            3
           ],
           "size": {
             "width": 4,
