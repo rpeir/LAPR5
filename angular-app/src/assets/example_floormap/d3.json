@@ -48,7 +48,7 @@
         {
           "roomId": "D301",
           "position": [
-            10,
+            8,
             4
           ],
           "size": {
@@ -59,8 +59,8 @@
         {
           "roomId": "D302",
           "position": [
-            10,
-            9
+            8,
+            8
           ],
           "size": {
             "width": 4,
@@ -70,7 +70,7 @@
         {
           "roomId": "D303",
           "position": [
-            11.5,
+            11,
             4
           ],
           "size": {
@@ -81,8 +81,8 @@
         {
           "roomId": "D104",
           "position": [
-            11.5,
-            9
+            11,
+            8
           ],
           "size": {
             "width": 4,

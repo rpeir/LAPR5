@@ -41,7 +41,7 @@
         {
           "roomId": "D201",
           "position": [
-            4.5,
+            4,
             4
           ],
           "size": {
@@ -52,8 +52,8 @@
         {
           "roomId": "D202",
           "position": [
-            10,
-            7.3
+            9,
+            6
           ],
           "size": {
             "width": 6,
@@ -63,7 +63,7 @@
         {
           "roomId": "D203",
           "position": [
-            10,
+            9,
             4
           ],
           "size": {
@@ -74,8 +74,8 @@
         {
           "roomId": "D204",
           "position": [
-            14.5,
-            8.5
+            14,
+            8
           ],
           "size": {
             "width": 4,
@@ -85,8 +85,8 @@
         {
           "roomId": "D205",
           "position": [
-            14.5,
-            3.5
+            14,
+            4
           ],
           "size": {
             "width": 4,
@@ -96,9 +96,8 @@
         {
           "roomId": "D206",
           "position": [
-            17,
-            6,
-            2
+            16,
+            6
           ],
           "size": {
             "width": 4,

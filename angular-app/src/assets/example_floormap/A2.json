@@ -1,0 +1,169 @@
+{
+    "maze": {
+        "size": { "width": 22, "depth": 10 },
+        "map": [
+            [3,2,2,2,3,2,2,2,3,2,2,2,3,2,2,2,3,2,2,2,3,2,1],
+            [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1],
+            [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,3,5,2,2,0,0,1],
+            [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,1],
+            [1,0,0,0,3,2,5,2,2,5,2,2,2,5,2,2,0,0,0,0,0,0,0],
+            [1,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [3,2,2,2,2,2,5,2,3,5,2,2,3,5,2,2,1,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,3,5,2,2,2,2,1],
+            [1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,1],
+            [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0]
+        ],
+        "exits": [
+            { "label": "A201", "position": [5.15, 6] },
+            { "label": "A202", "position": [5.15, 7.5] },
+            { "label": "A203", "position": [3.80, 7.5] },
+            { "label": "A204", "position": [5.15, 9.5] },
+            { "label": "A205", "position": [3.80, 9.5] },
+            { "label": "A206", "position": [5.15, 12.15] },
+            { "label": "A207", "position": [3.80, 12.15] },
+            { "label": "A208", "position": [6.5, 14.80] },
+            { "label": "A209", "position": [2.5, 14.80]}
+        ],
+        "rooms": [
+            {
+                "roomId": "A201",
+                "position": [5, 4],
+                "size": [4, 6],
+                "uppercorner": [0,0]
+            },
+            {
+                "roomId": "A202",
+                "position": [6, 6],
+                "size": [8, 4],
+                "uppercorner": [0,6]
+            },
+            {
+                "roomId": "A203",
+                "position": [4, 6],
+                "size": [4, 4],
+                "uppercorner": [4,0]
+            },
+            {
+                "roomId": "A204",
+                "position": [6, 9],
+                "size": [4, 4],
+                "uppercorner": [8,6]
+            },
+            {
+                "roomId": "A205",
+                "position": [4, 9],
+                "size": [4, 4],
+                "uppercorner": [8,0]
+            },
+            {
+                "roomId": "A206",
+                "position": [6, 13],
+                "size": [4, 4],
+                "uppercorner": [12,6]
+            },
+            {
+                "roomId": "A207",
+                "position": [4, 13],
+                "size": [4, 4],
+                "uppercorner": [12,0]
+            },
+            {
+                "roomId": "A208",
+                "position": [8, 17],
+                "size": [6, 2],
+                "uppercorner": [16,8]
+            },
+            {
+                "roomId": "A209",
+                "position": [2, 17],
+                "size": [4, 2],
+                "uppercorner": [16,0]
+            }
+        ],
+        "elevators": [0,20],
+        "exitLocation": [{
+            "floorId": "B_2",
+            "location": [4, 22]
+        }]
+    },
+    "ground": {
+        "size": { "width": 22.0, "height": 0.0625, "depth": 10.0 },
+        "segments": { "width": 64, "height": 1, "depth": 64 },
+        "primaryColor": "0xffffff",
+        "maps": {
+            "color": {
+          "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_basecolor.jpg"
+            },
+            "ao": {
+          "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_ambientOcclusion.jpg",
+                "intensity": 1.0
+            },
+            "displacement": {
+          "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_height.png",
+                "scale": 1.0,
+                "bias": -0.53
+            },
+            "normal": {
+          "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_normal.jpg",
+                "type": 0,
+                "scale": { "x": 2.0, "y": 2.0 }
+            },
+            "bump": {
+                "url": "",
+                "scale": 1.0
+            },
+            "roughness": {
+          "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_roughness.jpg",
+                "rough": 1.0
+            }
+        },
+        "wrapS": 1,
+        "wrapT": 1,
+        "repeat": { "u": 4.0, "v": 4.0 },
+        "magFilter": 1,
+        "minFilter": 5,
+        "secondaryColor": "0x858585"
+    },
+    "wall": {
+        "segments": { "width": 16, "height": 16 },
+        "primaryColor": "0xffffff",
+        "maps": {
+            "color": {
+          "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_COLOR.jpg"
+            },
+            "ao": {
+          "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_OCC.jpg",
+                "intensity": 1.0
+            },
+            "displacement": {
+          "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_DISP.png",
+                "scale": 0.5,
+                "bias": -0.25
+            },
+            "normal": {
+          "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_NORM.jpg",
+                "type": 0,
+                "scale": { "x": 2.0, "y": 2.0 }
+                },
+            "bump": {
+                "url": "",
+                "scale": 1.0
+            },
+            "roughness": {
+          "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_ROUGH.jpg",
+                "rough": 1.0
+            }
+        },
+        "wrapS": 1,
+        "wrapT": 0,
+        "repeat": { "u": 2.0, "v": 1.0 },
+        "magFilter": 1,
+        "minFilter": 5,
+        "secondaryColor": "0xffffff"
+    },
+    "player": {
+        "initialPosition": [0.0, 6.0],
+        "initialDirection": 90.0
+    }
+}

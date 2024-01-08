@@ -1,105 +1,188 @@
 {
     "maze": {
-        "size": { "width": 22, "depth": 10 },
-        "map": [
-            [3,2,2,2,2,2,2,2,2,2,3,2,2,2,3,2,2,2,3,2,3,2,1],
-            [1,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,1,0,1],
-			      [1,0,0,0,0,0,0,0,0,0,3,2,2,2,2,2,2,2,2,2,0,0,1],
-			      [1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1],
-			      [1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1],
-			      [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-			      [1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1],
-			      [1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1],
-			      [1,0,0,0,0,0,0,0,0,0,3,2,2,2,1,0,0,0,3,2,2,2,1],
-			      [1,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1],
-            [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0]
-        ],
-        "exits": [
-            { "label": "auditorio", "location": [5, 10] }
-        ],
-        "elevators": [1,19.5],
-        "exitLocation": [{
-            "floorId": "floor",
-            "location": [3, 3]
-        }]
+      "size": {
+        "width": 22,
+        "depth": 10
+      },
+      "map": [
+        [3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 2, 2, 2, 3, 2, 3, 2, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 2, 2, 1, 0, 0, 0, 3, 2, 2, 2, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+        [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0]
+      ],
+      "rooms": [
+        {
+          "roomId": "APN",
+          "position": [
+            5,
+            10
+          ],
+          "uppercorner": [
+            0,
+            0
+          ]
+        },
+        {
+          "roomId": "BengA",
+          "position": [],
+          "uppercorner": [
+            0,
+            10
+          ]
+        },
+        {
+          "roomId": "K1",
+          "position": [],
+          "uppercorner": [
+            0,
+            14
+          ]
+        },
+        {
+          "roomId": "K2",
+          "position": [],
+          "uppercorner": [
+            0,
+            18
+          ]
+        },
+        {
+          "roomId": "R1",
+          "position": [],
+          "uppercorner": [
+            8,
+            10
+          ]
+        },
+        {
+          "roomId": "R2",
+          "position": [],
+          "uppercorner": [
+            8,
+            18
+          ]
+        }
+      ],
+      "elevators": [
+        0,
+        20
+      ],
+      "exitLocation": [
+        {
+          "floorId": "",
+          "location": []
+        }
+      ]
     },
     "ground": {
-        "size": { "width": 22.0, "height": 0.0625, "depth": 10.0 },
-        "segments": { "width": 64, "height": 1, "depth": 64 },
-        "primaryColor": "0xffffff",
-        "maps": {
-            "color": {
-                "url": "./assets/map-renderer/textures/ground_0003_2k_372HqZ/ground_0003_color_2k.jpg"
-            },
-            "ao": {
-                "url": "./assets/map-renderer//textures/ground_0003_2k_372HqZ/ground_0003_ao_2k.jpg",
-                "intensity": 1.0
-            },
-            "displacement": {
-                "url": "./assets/map-renderer/textures/ground_0003_2k_372HqZ/ground_0003_height_2k.png",
-                "scale": 1.0,
-                "bias": -0.53
-            },
-            "normal": {
-                "url": "./assets/map-renderer/textures/ground_0003_2k_372HqZ/ground_0003_normal_opengl_2k.png",
-                "type": 0,
-                "scale": { "x": 2.0, "y": 2.0 }
-            },
-            "bump": {
-                "url": "",
-                "scale": 1.0
-            },
-            "roughness": {
-                "url": "./assets/map-renderer/textures/ground_0003_2k_372HqZ/ground_0003_roughness_2k.jpg",
-                "rough": 1.0
-            }
+      "size": {
+        "width": 22,
+        "height": 0.0625,
+        "depth": 10
+      },
+      "segments": {
+        "width": 64,
+        "height": 1,
+        "depth": 64
+      },
+      "primaryColor": "0xffffff",
+      "maps": {
+        "color": {
+          "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_basecolor.jpg"
         },
-        "wrapS": 1,
-        "wrapT": 1,
-        "repeat": { "u": 4.0, "v": 4.0 },
-        "magFilter": 1,
-        "minFilter": 5,
-        "secondaryColor": "0x858585"
+        "ao": {
+          "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_ambientOcclusion.jpg",
+          "intensity": 1
+        },
+        "displacement": {
+          "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_height.png",
+          "scale": 1,
+          "bias": -0.53
+        },
+        "normal": {
+          "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_normal.jpg",
+          "scale": {
+            "x": 2,
+            "y": 2
+          }
+        },
+        "bump": {
+          "url": "",
+          "scale": 1
+        },
+        "roughness": {
+          "url": "./assets/map-renderer/textures/wood-floor/Wood_Floor_010_roughness.jpg",
+          "rough": 1
+        }
+      },
+      "wrapS": 1,
+      "wrapT": 1,
+      "repeat": {
+        "u": 4,
+        "v": 4
+      },
+      "magFilter": 1,
+      "minFilter": 5,
+      "secondaryColor": "0x858585"
     },
     "wall": {
-        "segments": { "width": 16, "height": 16 },
-        "primaryColor": "0xffffff",
-        "maps": {
-            "color": {
-                "url": "./assets/map-renderer/textures/concrete_0007_2k_xtGY5J/concrete_0007_color_2k.jpg"
-            },
-            "ao": {
-                "url": "./assets/map-renderer/textures/concrete_0007_2k_xtGY5J/concrete_0007_ao_2k.jpg",
-                "intensity": 1.0
-            },
-            "displacement": {
-                "url": "./map-renderer/assets/textures/concrete_0007_2k_xtGY5J/concrete_0007_height_2k.png",
-                "scale": 0.5,
-                "bias": -0.25
-            },
-            "normal": {
-                "url": "./assets/map-renderer/textures/concrete_0007_2k_xtGY5J/concrete_0007_normal_opengl_2k.png",
-                "type": 0,
-                "scale": { "x": 2.0, "y": 2.0 }
-                },
-            "bump": {
-                "url": "",
-                "scale": 1.0
-            },
-            "roughness": {
-                "url": "./assets/map-renderer/textures/concrete_0007_2k_xtGY5J/concrete_0007_roughness_2k.jpg",
-                "rough": 1.0
-            }
+      "segments": {
+        "width": 16,
+        "height": 16
+      },
+      "primaryColor": "0xffffff",
+      "maps": {
+        "color": {
+          "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_COLOR.jpg"
         },
-        "wrapS": 1,
-        "wrapT": 0,
-        "repeat": { "u": 2.0, "v": 1.0 },
-        "magFilter": 1,
-        "minFilter": 5,
-        "secondaryColor": "0x858585"
+        "ao": {
+          "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_OCC.jpg",
+          "intensity": 1
+        },
+        "displacement": {
+          "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_DISP.png",
+          "scale": 0.5,
+          "bias": -0.25
+        },
+        "normal": {
+          "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_NORM.jpg",
+          "scale": {
+            "x": 2,
+            "y": 2
+          }
+        },
+        "bump": {
+          "url": "",
+          "scale": 1
+        },
+        "roughness": {
+          "url": "./assets/map-renderer/textures/plaster/Plaster_Rough_001_ROUGH.jpg",
+          "rough": 1
+        }
+      },
+      "wrapS": 1,
+      "wrapT": 0,
+      "repeat": {
+        "u": 2,
+        "v": 1
+      },
+      "magFilter": 1,
+      "minFilter": 5,
+      "secondaryColor": "0xffffff"
     },
     "player": {
-        "initialPosition": [0.0, 6.0],
-        "initialDirection": 90.0
+      "initialPosition": [
+        0,
+        6
+      ],
+      "initialDirection": 90
     }
-}
+  }
+

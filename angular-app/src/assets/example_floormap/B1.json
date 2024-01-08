@@ -21,23 +21,23 @@
         {
           "roomId": "B101",
           "position": [
-            1,
-            4
+            4,
+            1
           ],
           "size": [4,4],
           "uppercorner": [0,0]
         },
         {
           "roomId": "B102",
-          "position": [1,6],
+          "position": [6,1],
           "size": [4,4],
           "uppercorner": [0,0]
         },
         {
           "roomId": "B103",
           "position": [
-            6,
-            4
+            4,
+            6
           ],
           "size": [8,4],
           "uppercorner": [0,0]
@@ -45,8 +45,8 @@
         {
           "roomId": "B104",
           "position": [
-            6,
-            8
+            8,
+            6
           ],
           "size": [4,4],
           "uppercorner": [0,0]
@@ -54,8 +54,8 @@
         {
           "roomId": "B105",
           "position": [
-            13,
-            4
+            4,
+            13
           ],
           "size": [6,4],
           "uppercorner": [0,0]
@@ -63,8 +63,8 @@
         {
           "roomId": "B106",
           "position": [
-            16,
-            6
+            6,
+            16
           ],
           "size": [8,4],
           "uppercorner": [0,0]
@@ -72,8 +72,8 @@
         {
           "roomId": "B106B",
           "position": [
-            19,
-            4
+            8,
+            19
           ],
           "size": [4,2],
           "uppercorner": [0,0]
@@ -81,8 +81,8 @@
         {
           "roomId": "B107",
           "position": [
-            19,
-            8
+            4,
+            19
           ],
           "size": [4,4],
           "uppercorner": [0,0]
