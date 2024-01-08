@@ -84,7 +84,7 @@
         "elevators": [0,20],
         "exitLocation": [{
             "floorId": "B_2",
-            "location": [4, 22]
+            "location": [4, 21]
         }]
     },
     "ground": {
